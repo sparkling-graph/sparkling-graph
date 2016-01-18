@@ -6,8 +6,12 @@ scala: 2.10.6
 cache:
   directories:
   - "$HOME/.m2"
+  - "$HOME/.ivy2/cache"
+  - "$HOME/.sbt/boot/"
 script:
 - sbt clean coverage test && sbt coverageAggregate
+- find $HOME/.sbt -name "*.lock" | xargs rm
+- find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
 after_success:
 - sbt coveralls
 - sbt unidoc && sbt ghpages-push-site
