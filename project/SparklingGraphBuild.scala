@@ -1,18 +1,31 @@
 package sparkling.graph
 
+import com.typesafe.sbt.SbtGhPages.ghpages
+import com.typesafe.sbt.SbtSite.site
 import sbt.Keys._
 import sbt._
-
-
+import sbtunidoc.Plugin.{ScalaUnidoc, unidocSettings}
+import com.typesafe.sbt.SbtGit.GitKeys._
 object SparklingGraphBuild extends Build {
   lazy val buildSettings = Dependencies.Versions ++ Seq(
     organization := "pl.edu.wroc.engine",
     version := "0.0.1-SNAPSHOT",
-    parallelExecution in test := false
+    parallelExecution in test := false,
+    autoAPIMappings := true
   )
 
+  val ghRef= sys.props.getOrElse("GH_REF", default = "git")
+  val ghHost=sys.props.getOrElse("GH_HOST", default = "github.com:sparkling-graph/sparkling-graph.git")
+
   lazy val root = Project(id = "sparkling-graph",
-    base = file("."), settings = buildSettings) aggregate(api, loaders, operators, examples)
+    base = file("."), settings = buildSettings)
+    .settings(unidocSettings: _*)
+    .settings(site.settings ++ ghpages.settings: _*)
+    .settings(
+      site.addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), "latest/api"),
+      gitRemoteRepo := s"${ghRef}@${ghHost}"
+    )
+    .aggregate(api, loaders, operators, examples)
 
   lazy val loaders = Project(id = "sparkling-graph-loaders",
     base = file("loaders")).aggregate(api).dependsOn(api)
