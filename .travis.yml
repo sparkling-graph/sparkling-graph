@@ -12,12 +12,11 @@ before_script:
 - git config --global user.name "Travis CI"
 -  git config --global user.email "riomus@gmail.com"
 script:
-- sbt clean coverage test && sbt coverageAggregate
+- sbt ;clean ;coverage ;test ;coverageAggregate
 - find $HOME/.sbt -name "*.lock" | xargs rm
 - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
 after_success:
-- sbt coveralls
-- sbt unidoc && sbt ghpages-push-site
+- sbt ;coveralls ;unidoc ;ghpages-push-site
 env:
   global:
   - SBT_GHPAGES_COMMIT_MESSAGE='[ci skip] page update'
