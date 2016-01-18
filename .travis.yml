@@ -1,7 +1,5 @@
-language: scala
-jdk: oraclejdk7
+language: scala 
+jdk: oraclejdk8
 sudo: false
 before_install: umask 0022
-matrix:
-  include:
-    - scala: 2.10.6
+scala: 2.10.6
