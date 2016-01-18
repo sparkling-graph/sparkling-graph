@@ -1,8 +1,12 @@
 package sparkling.graph
 
-import com.typesafe.sbt.SbtGhPages.ghpages
+import com.typesafe.sbt.SbtGhPages.{ ghpages}
+import com.typesafe.sbt.SbtGhPages.GhPagesKeys._
+import com.typesafe.sbt.SbtGit.{GitKeys, git}
 import com.typesafe.sbt.SbtSite.site
+import com.typesafe.sbt.git.{ConsoleGitRunner, GitRunner}
 import sbt.Keys._
+import sbt.Scoped.RichTaskable3
 import sbt._
 import sbtunidoc.Plugin.{ScalaUnidoc, unidocSettings}
 import com.typesafe.sbt.SbtGit.GitKeys._
@@ -14,8 +18,15 @@ object SparklingGraphBuild extends Build {
     autoAPIMappings := true
   )
 
-  val ghRef= sys.props.getOrElse("GH_REF", default = "git")
-  val ghHost=sys.props.getOrElse("GH_HOST", default = "github.com:sparkling-graph/sparkling-graph.git")
+  val ghToken= sys.env.getOrElse("GH_TOKEN", default = "git")
+  val ghHost=sys.env.getOrElse("GH_HOST", default = "github.com/sparkling-graph/sparkling-graph.git")
+  val ghRepo=s"https://${ghToken}@${ghHost}"
+  val commitMessage = sys.env.getOrElse("SBT_GHPAGES_COMMIT_MESSAGE", "updated site")
+  private def pushSite0: RichTaskable3[File, GitRunner, TaskStreams]#App[Unit] = (synchLocal, GitKeys.gitRunner, streams) map { (repo, git, s) =>
+    git("add", ".")(repo, s.log)
+    git("commit", "-m", commitMessage, "--allow-empty")(repo, s.log)
+    git("push", "--force", "--quiet",s"${ghRepo}","origin:gh-pages")(repo, s.log)
+  }
 
   lazy val root = Project(id = "sparkling-graph",
     base = file("."), settings = buildSettings)
@@ -23,7 +34,8 @@ object SparklingGraphBuild extends Build {
     .settings(site.settings ++ ghpages.settings: _*)
     .settings(
       site.addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), "latest/api"),
-      gitRemoteRepo := s"https://${ghRef}@${ghHost}"
+      gitRemoteRepo := ghRepo,
+      pushSite <<= pushSite0
     )
     .aggregate(api, loaders, operators, examples)
 
