@@ -23,7 +23,7 @@ object SparklingGraphBuild extends Build {
     .settings(site.settings ++ ghpages.settings: _*)
     .settings(
       site.addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), "latest/api"),
-      gitRemoteRepo := s"${ghRef}@${ghHost}"
+      gitRemoteRepo := s"https://${ghRef}@${ghHost}"
     )
     .aggregate(api, loaders, operators, examples)
 
