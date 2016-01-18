@@ -21,11 +21,11 @@ object SparklingGraphBuild extends Build {
   val ghToken= sys.env.getOrElse("GH_TOKEN", default = "git")
   val ghHost=sys.env.getOrElse("GH_HOST", default = "github.com/sparkling-graph/sparkling-graph.git")
   val ghRepo=s"https://${ghToken}@${ghHost}"
-  val commitMessage = sys.env.getOrElse("SBT_GHPAGES_COMMIT_MESSAGE", "updated site")
+  val commitMessage = sys.env.getOrElse("SBT_GHPAGES_COMMIT_MESSAGE", "[ci skip] updated site")
   private def pushSite0: RichTaskable3[File, GitRunner, TaskStreams]#App[Unit] = (synchLocal, GitKeys.gitRunner, streams) map { (repo, git, s) =>
     git("add", ".")(repo, s.log)
     git("commit", "-m", commitMessage, "--allow-empty")(repo, s.log)
-    git("push", "--force", "--quiet",s"${ghRepo}","origin:gh-pages")(repo, s.log)
+    git("push", "--force", "--quiet",s"${ghRepo}")(repo, s.log)
   }
 
   lazy val root = Project(id = "sparkling-graph",
