@@ -10,6 +10,7 @@ script:
 - sbt clean coverage test && sbt coverageAggregate
 after_success:
 - sbt coveralls
+- sbt unidoc && sbt ghpages-push-site
 env:
   global:
   - secure: C2heW4+NDn5YLMVkHj8BVL+ixuBI2sufJGidiIxHTdBfq1Gf0bJGTKyLMvAKoQfuuPaUTpxFSx5JlVdhaSEfK06JFMDBTYTh2mkAYgFTQLJRU8d7NZ07vECsXwaHk56ZP0BLGpdvXp8kWutEYl7pZJKYzQwVzItrKYQcQ+rZX8ZX1Tyz7LTh4X6291XkwuoWRL4rC3xecFGvONyDdphowetRNWUe067wsbXXmeRzdcaptR54kBnfJkdJzCyhPPThCc/fnOJtL1DpEcMrMSgEMaJLEF8xdSR+BpLg2NCOJ+QPQrfsJErrbh3Lq1mf2EV60JJPh56Fl7w9YXMsBdss+lbkAmn53e4vQ7t1SIfhuYAl6+CUE3TN/nzUKHqi06S5YC8XIReh6K4zWRGlE4CXajvPznWDqTv5kRLRDiRh41wKMfXmk//iwDK34EaRZ+SWFdO4ltPmC/VI0wutfNm+b5hz1G4V/KUX5vJ6AULLCcIuSIXt1bWuBMMvwssd7PtQDKubKTlnoL0Dv9zl9ceQ+JdGV5kISGY6KOz7HTHUnFTeQ4tIhCrnrLKmbk3IAo+wQMPr+1uzmTXYQSJ7++/C07msMx0x+K5VyWcoAwo6RttGzDbDbFcRn86OhS9lxUp9K8Zp3STW3lHjGmf+fS7U9w6ZCTYH9n8f+TcysPt46rk=
