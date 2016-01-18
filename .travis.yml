@@ -8,6 +8,9 @@ cache:
   - "$HOME/.m2"
   - "$HOME/.ivy2/cache"
   - "$HOME/.sbt/boot/"
+before_script:
+- git config --global user.name "Travis CI"
+-  git config --global user.email "riomus@gmail.com"
 script:
 - sbt clean coverage test && sbt coverageAggregate
 - find $HOME/.sbt -name "*.lock" | xargs rm
