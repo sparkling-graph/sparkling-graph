@@ -34,3 +34,8 @@
 * ML
   *  Link prediction
   *  Vertex classification
+  *  
+  
+# How to
+
+Please check API and example, in depth docs will be created soon.
