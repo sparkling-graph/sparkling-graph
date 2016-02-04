@@ -38,3 +38,17 @@
 # How to
 
 Please check API and examples, in depth docs will be created soon.
+
+# Citation
+If you use SparklingGraph in your research and publish it, please consider citing us, it will help us get funding for making the library better.
+Currently manuscript is in preparation, so please us following references:
+
+* ``` Bartusiak R. (2016). SparklingGraph: large scale, distributed graph processing made easy. Manuscript in preparation. ```
+* ```
+@unpublished{sparkling-graph
+title={SparklingGraph: large scale, distributed graph processing made easy},
+author={Bartusiak R.},
+note = {Manuscript in preparation},
+year = {2016}
+}
+```
