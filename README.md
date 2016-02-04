@@ -34,7 +34,6 @@
 * ML
   *  Link prediction
   *  Vertex classification
-  *  
   
 # How to
 
