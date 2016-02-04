@@ -38,4 +38,4 @@
   
 # How to
 
-Please check API and example, in depth docs will be created soon.
+Please check API and examples, in depth docs will be created soon.
