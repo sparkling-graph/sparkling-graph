@@ -17,6 +17,7 @@ script:
 - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
 after_success:
 - sbt ';coveralls ;ghpages-push-site'
+- sbt publish
 env:
   global:
   - SBT_GHPAGES_COMMIT_MESSAGE='[ci skip] page update'
