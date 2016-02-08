@@ -6,17 +6,19 @@ import com.typesafe.sbt.SbtGit.GitKeys
 import com.typesafe.sbt.SbtGit.GitKeys._
 import com.typesafe.sbt.SbtSite.site
 import com.typesafe.sbt.git.GitRunner
+import com.typesafe.sbt.pgp.PgpKeys
 import sbt.Keys._
 import sbt.Scoped.RichTaskable3
 import sbt._
 import sbtunidoc.Plugin.{ScalaUnidoc, unidocSettings}
-import sbtrelease.ReleasePlugin.autoImport.releaseUseGlobalVersion
+import sbtrelease.ReleasePlugin.autoImport.releasePublishArtifactsAction
 
 object SparklingGraphBuild extends Build {
   lazy val buildSettings = Dependencies.Versions ++ Seq(
     organization := "ml.sparkling",
     parallelExecution in test := false,
-    autoAPIMappings := true
+    autoAPIMappings := true,
+    releasePublishArtifactsAction := PgpKeys.publishSigned.value
   )
   lazy val root = Project(id = "sparkling-graph",
     base = file("."), settings = buildSettings)
