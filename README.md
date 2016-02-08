@@ -11,6 +11,11 @@ resolvers +=  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repo
 libraryDependencies += ml.sparkling % sparkling-graph-loaders % 0.0.2-SNAPSHOT
 libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.2-SNAPSHOT
 ```
+## Release
+```
+libraryDependencies += ml.sparkling % sparkling-graph-loaders % 0.0.1
+libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.1
+```
 
 # Current features
 
