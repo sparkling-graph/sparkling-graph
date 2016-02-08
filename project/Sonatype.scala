@@ -9,16 +9,9 @@ object Sonatype extends AutoPlugin {
 
   override def trigger = allRequirements
 
-
-  if (username.isDefined && password.isDefined) {
-    credentials += Credentials(
-      "Sonatype Nexus Repository Manager",
-      "oss.sonatype.org",
-      username.get,
-      password.get)
-
-  } else {
-    credentials ++= Seq()
+  (username, password) match {
+    case (Some(u), Some(p)) => credentials += Credentials( "Sonatype Nexus Repository Manager","oss.sonatype.org", u, p)
+    case (_, _) => credentials ++= Seq()
   }
 
 
