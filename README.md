@@ -2,6 +2,15 @@
 
 [![Build Status](https://travis-ci.org/sparkling-graph/sparkling-graph.svg?branch=master)](https://travis-ci.org/sparkling-graph/sparkling-graph) [![Documentation Status](https://readthedocs.org/projects/sparkling-graph/badge/?version=latest)](http://sparkling-graph.readthedocs.org/en/latest/?badge=latest) [![Coverage Status](https://coveralls.io/repos/github/sparkling-graph/sparkling-graph/badge.svg?branch=master)](https://coveralls.io/github/sparkling-graph/sparkling-graph?branch=master) [API](http://sparkling-graph.github.io/sparkling-graph/latest/api/) |  [Spark packages](http://spark-packages.org/package/sparkling-graph/sparkling-graph)
 
+# Dependencies
+## Snapshot
+```
+resolvers +=  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+```
+```
+libraryDependencies += ml.sparkling % sparkling-graph-loaders % 0.0.2-SNAPSHOT
+libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.2-SNAPSHOT
+```
 
 # Current features
 
@@ -38,6 +47,8 @@
 # How to
 
 Please check API and examples, in depth docs will be created soon.
+
+
 
 # Citation
 If you use SparklingGraph in your research and publish it, please consider citing us, it will help us get funding for making the library better.
