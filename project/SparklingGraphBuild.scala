@@ -10,11 +10,11 @@ import sbt.Keys._
 import sbt.Scoped.RichTaskable3
 import sbt._
 import sbtunidoc.Plugin.{ScalaUnidoc, unidocSettings}
+import sbtrelease.ReleasePlugin.autoImport.releaseUseGlobalVersion
 
 object SparklingGraphBuild extends Build {
   lazy val buildSettings = Dependencies.Versions ++ Seq(
     organization := "ml.sparkling",
-    version := "0.0.1-SNAPSHOT",
     parallelExecution in test := false,
     autoAPIMappings := true
   )
