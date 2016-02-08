@@ -18,13 +18,6 @@ object Publish extends AutoPlugin {
     },
     pomExtra := (
       <url>https://sparkling.ml</url>
-        <licenses>
-          <license>
-            <name>GNU GENERAL PUBLIC LICENSE</name>
-            <url>http://www.gnu.org/licenses/gpl-3.0.en.html</url>
-            <distribution>repo</distribution>
-          </license>
-        </licenses>
         <scm>
           <url>git@github.com:sparkling-graph/sparkling-graph.git</url>
           <connection>scm:git:git@github.com:sparkling-graph/sparkling-graph.git</connection>
