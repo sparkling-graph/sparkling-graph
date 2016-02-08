@@ -1,27 +1,44 @@
+package ml.sparkling.graph
 
-import sbt._
 import sbt.Keys._
-import java.io.File
+import sbt._
 
 object Publish extends AutoPlugin {
 
 
-  override def trigger = allRequirements
-
   override lazy val projectSettings = Seq(
-    crossPaths := false,
-    publishTo := graphPublishTo.value,
-    organizationName := "engine",
-    organizationHomepage := Some(url("http://engine.pwr.wroc.pl/")),
     publishMavenStyle := true,
-    pomIncludeRepository := { x => false }
+    pomIncludeRepository := { _ => false },
+    publishTo := {
+      val nexus = "https://oss.sonatype.org/"
+      if (isSnapshot.value)
+        Some("snapshots" at nexus + "content/repositories/snapshots")
+      else
+        Some("releases" at nexus + "service/local/staging/deploy/maven2")
+    },
+    pomExtra := (
+      <url>https://sparkling.ml</url>
+        <licenses>
+          <license>
+            <name>GNU GENERAL PUBLIC LICENSE</name>
+            <url>http://www.gnu.org/licenses/gpl-3.0.en.html</url>
+            <distribution>repo</distribution>
+          </license>
+        </licenses>
+        <scm>
+          <url>git@github.com:sparkling-graph/sparkling-graph.git</url>
+          <connection>scm:git:git@github.com:sparkling-graph/sparkling-graph.git</connection>
+        </scm>
+        <developers>
+          <developer>
+            <id>riomus</id>
+            <name>Roman Bartusiak</name>
+            <url>http://www.riomus.ml</url>
+          </developer>
+        </developers>)
   )
 
-  private def graphPublishTo = Def.setting {
-    localRepo()
-  }
+  override def trigger = allRequirements
 
-  private def localRepo() =
-    Some(Resolver.file("file",  new File(Path.userHome.absolutePath+"/.m2/repository")))
 
 }

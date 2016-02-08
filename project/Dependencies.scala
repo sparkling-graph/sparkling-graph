@@ -1,4 +1,4 @@
-package sparkling.graph
+package ml.sparkling.graph
 
 import sbt.Keys._
 import sbt._
@@ -12,9 +12,19 @@ object Dependencies {
     scalaVersion := crossScalaVersions.value.head,
     sparkVersion := "1.5.2"
   )
+  val l = libraryDependencies
+
+  import Compile._
+  val r = resolvers
+  val graphx = l ++= Seq(Provided.sparkCore.value, Provided.sparkGraphx.value)
+  val sparkSQL = l ++= Seq(Provided.sparkSQL.value)
+  val sparkMLLib = l ++= Seq(Provided.sparkMLLib.value)
+  val sparkCSV = l ++= Seq(Compile.sparkCSV, Provided.sparkSQL.value)
+  val test = l ++= Seq(Compile.Test.scalatest.value)
+  val fastUtils = l ++= Seq(Compile.fastUtils)
 
   object Compile {
-    val fastUtils="it.unimi.dsi" % "fastutil" % "7.0.8"
+    val fastUtils = "it.unimi.dsi" % "fastutil" % "7.0.8"
 
     val sparkCSV = "com.databricks" %% "spark-csv" % "1.2.0"
 
@@ -40,23 +50,5 @@ object Dependencies {
     }
 
   }
-
-  import Compile._
-
-  val l = libraryDependencies
-
-  val r = resolvers
-
-  val graphx = l ++= Seq(Provided.sparkCore.value, Provided.sparkGraphx.value)
-
-  val sparkSQL=l++=Seq(Provided.sparkSQL.value)
-
-  val sparkMLLib=l++=Seq(Provided.sparkMLLib.value)
-
-  val sparkCSV = l ++= Seq(Compile.sparkCSV,Provided.sparkSQL.value)
-
-  val test=l++=Seq(Compile.Test.scalatest.value)
-
-  val fastUtils=l++=Seq(Compile.fastUtils)
 
 }

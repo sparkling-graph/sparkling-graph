@@ -1,4 +1,3 @@
-import sparkling.graph._
 
 
 SparklingGraphBuild.buildSettings
