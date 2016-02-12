@@ -41,6 +41,7 @@ libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.2
   * Betweenness
 * Comunity detection methods
   * Modularity maximization
+  * SCAN
   * Infomap 
 * API
   *  Random walk
