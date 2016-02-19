@@ -30,7 +30,7 @@ object SparklingGraphBuild extends Build {
       gitRemoteRepo := ghRepo,
       pushSite <<= pushSite0
     )
-    .aggregate(api, loaders, operators, examples)
+    .aggregate(api, loaders, operators, examples,experiments)
   lazy val loaders = Project(id = "sparkling-graph-loaders",
     base = file("loaders")).aggregate(api).dependsOn(api)
   lazy val operators = Project(id = "sparkling-graph-operators",
