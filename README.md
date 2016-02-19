@@ -8,13 +8,13 @@
 resolvers +=  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 ```
 ```
-libraryDependencies += ml.sparkling % sparkling-graph-loaders % 0.0.3-SNAPSHOT
-libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.3-SNAPSHOT
+libraryDependencies += ml.sparkling % sparkling-graph-loaders % 0.0.4-SNAPSHOT
+libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.4-SNAPSHOT
 ```
 ## Release
 ```
-libraryDependencies += ml.sparkling % sparkling-graph-loaders % 0.0.2
-libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.2
+libraryDependencies += ml.sparkling % sparkling-graph-loaders % 0.0.3
+libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.3
 ```
 
 # Current features
