@@ -8,13 +8,13 @@
 resolvers +=  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 ```
 ```
-libraryDependencies += ml.sparkling % sparkling-graph-loaders % 0.0.2-SNAPSHOT
-libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.2-SNAPSHOT
+libraryDependencies += ml.sparkling % sparkling-graph-loaders % 0.0.3-SNAPSHOT
+libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.3-SNAPSHOT
 ```
 ## Release
 ```
-libraryDependencies += ml.sparkling % sparkling-graph-loaders % 0.0.1
-libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.1
+libraryDependencies += ml.sparkling % sparkling-graph-loaders % 0.0.2
+libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.2
 ```
 
 # Current features
@@ -41,6 +41,7 @@ libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.1
   * Betweenness
 * Comunity detection methods
   * Modularity maximization
+  * SCAN
   * Infomap 
 * API
   *  Random walk
