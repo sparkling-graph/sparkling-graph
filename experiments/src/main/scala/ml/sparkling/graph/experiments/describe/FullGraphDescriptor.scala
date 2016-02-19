@@ -1,10 +1,10 @@
 package ml.sparkling.graph.experiments.describe
 
 import ml.sparkling.graph.api.operators.measures.{VertexMeasureConfiguration, VertexMeasure}
-import ml.sparkling.graph.operators.measures.{VertexEmbeddedness, NeighborConnectivity, Degree}
+import ml.sparkling.graph.operators.measures.{VertexEmbeddedness, NeighborhoodConnectivity, Degree}
 import ml.sparkling.graph.operators.measures.closenes.Closeness
 import ml.sparkling.graph.operators.measures.clustering.LocalClustering
-import ml.sparkling.graph.operators.measures.eigenvector.Eigenvector
+import ml.sparkling.graph.operators.measures.eigenvector.EigenvectorCentrality
 import ml.sparkling.graph.operators.measures.hits.Hits
 import org.apache.spark.graphx.{VertexId,  Graph}
 import scala.reflect.ClassTag
@@ -15,9 +15,9 @@ import scala.reflect.ClassTag
  */
 object FullGraphDescriptor {
   private val measures: List[(String, VertexMeasure[_ >: Double with (Double, Double) with (Int, Int)])] = List(
-    ("Eigenvector", Eigenvector),
+    ("Eigenvector", EigenvectorCentrality),
     ("Hits", Hits),
-    ("NeighborConnectivity", NeighborConnectivity),
+    ("NeighborConnectivity", NeighborhoodConnectivity),
     ("Closeness", Closeness),
     ("Degree", Degree),
     ("VertexEmbeddedness", VertexEmbeddedness),

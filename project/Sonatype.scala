@@ -9,10 +9,11 @@ object Sonatype extends AutoPlugin {
 
   override def trigger = allRequirements
 
-  (username, password) match {
-    case (Some(u), Some(p)) => credentials += Credentials( "Sonatype Nexus Repository Manager","oss.sonatype.org", u, p)
-    case (_, _) => credentials ++= Seq()
+  val toAdd=(username, password) match {
+    case (Some(u), Some(p)) => Seq(Credentials( "Sonatype Nexus Repository Manager","oss.sonatype.org", u, p))
+    case (_, _) => Seq()
   }
 
+  credentials++=toAdd
 
 }

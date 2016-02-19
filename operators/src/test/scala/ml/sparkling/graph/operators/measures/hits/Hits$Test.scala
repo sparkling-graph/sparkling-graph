@@ -1,7 +1,7 @@
 package ml.sparkling.graph.operators.measures.hits
 
 import ml.sparkling.graph.operators.SparkTest
-import ml.sparkling.graph.operators.measures.eigenvector.Eigenvector
+import ml.sparkling.graph.operators.measures.eigenvector.EigenvectorCentrality
 import org.apache.spark.graphx.{PartitionStrategy, GraphLoader, Graph}
 
 /**

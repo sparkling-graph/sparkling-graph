@@ -8,10 +8,10 @@ import scala.reflect.ClassTag
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-object NeighborConnectivity extends VertexMeasure[Double] {
+object NeighborhoodConnectivity extends VertexMeasure[Double] {
 
   /**
-   * Generic neighbour connectivity method, should be used for extensions
+   * Generic Neighborhood Connectivity method, should be used for extensions
    * @param graph - computation graph
    * @param vertexMeasureConfiguration - configuration of computation
    * @tparam VD - vertex data type
@@ -36,7 +36,7 @@ object NeighborConnectivity extends VertexMeasure[Double] {
   }
 
   /**
-   * Computes neighbour connectivity  of each vertex
+   * Computes Neighborhood Connectivity  of each vertex
    * @param graph - computation graph
    * @param vertexMeasureConfiguration - configuration of computation
    * @param num - numeric for @ED

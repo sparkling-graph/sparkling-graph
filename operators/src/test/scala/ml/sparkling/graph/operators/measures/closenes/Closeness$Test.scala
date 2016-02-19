@@ -3,7 +3,7 @@ package ml.sparkling.graph.operators.measures.closenes
 import ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration
 import ml.sparkling.graph.operators.SparkTest
 import ml.sparkling.graph.operators.measures.clustering.LocalClustering
-import ml.sparkling.graph.operators.measures.eigenvector.Eigenvector
+import ml.sparkling.graph.operators.measures.eigenvector.EigenvectorCentrality
 import org.apache.spark.graphx.lib.ShortestPaths
 import org.apache.spark.graphx.{PartitionStrategy, GraphLoader, Graph}
 import org.scalatest.FunSuite

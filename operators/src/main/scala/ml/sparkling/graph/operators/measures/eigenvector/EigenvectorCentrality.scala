@@ -9,10 +9,10 @@ import scala.reflect.ClassTag
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-object Eigenvector extends VertexMeasure[Double]{
+object EigenvectorCentrality extends VertexMeasure[Double]{
 
   /**
-   * Generic eignevector computation method, should be used for extensions, computations are done until @continuePredicate gives true
+   * Generic Eigenvector Centrality computation method, should be used for extensions, computations are done until @continuePredicate gives true
    * @param graph - computation graph
    * @param vertexMeasureConfiguration - configuration of computation
    * @param continuePredicate - convergence predicate
@@ -51,7 +51,7 @@ object Eigenvector extends VertexMeasure[Double]{
     computationGraph
   }
   /**
-   * Computes eigenvector for each vertex
+   * Computes Eigenvector Centrality for each vertex in graph
    * @param graph - computation graph
    * @param vertexMeasureConfiguration - configuration of computation
    * @param num - numeric for @ED
