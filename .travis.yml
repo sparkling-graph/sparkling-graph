@@ -2,7 +2,9 @@ language: scala
 jdk: oraclejdk8
 sudo: false
 before_install: umask 0022
-scala: 2.10.6
+scala: 
+  - 2.10.6
+  - 2.11.7
 cache:
   directories:
   - "$HOME/.m2"
@@ -16,7 +18,8 @@ script:
 - find $HOME/.sbt -name "*.lock" | xargs rm
 - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
 after_success:
-- sbt ';coveralls ;ghpages-push-site'
+- sbt ghpages-push-site
+- sbt coveralls
 - sbt publish
 env:
   global:
