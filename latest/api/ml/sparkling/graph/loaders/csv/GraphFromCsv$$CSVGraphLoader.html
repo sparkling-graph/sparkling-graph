@@ -2,17 +2,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>VertexMeasure - ml.sparkling.graph.api.operators.measures.VertexMeasure</title>
-          <meta name="description" content="VertexMeasure - ml.sparkling.graph.api.operators.measures.VertexMeasure" />
-          <meta name="keywords" content="VertexMeasure ml.sparkling.graph.api.operators.measures.VertexMeasure" />
+          <title>CSVGraphLoader - ml.sparkling.graph.loaders.csv.GraphFromCsv.CSVGraphLoader</title>
+          <meta name="description" content="CSVGraphLoader - ml.sparkling.graph.loaders.csv.GraphFromCsv.CSVGraphLoader" />
+          <meta name="keywords" content="CSVGraphLoader ml.sparkling.graph.loaders.csv.GraphFromCsv.CSVGraphLoader" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
-      <link href="../../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
-      <link href="../../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
       <script type="text/javascript">
          if(top === self) {
-            var url = '../../../../../../index.html';
-            var hash = 'ml.sparkling.graph.api.operators.measures.VertexMeasure';
+            var url = '../../../../../index.html';
+            var hash = 'ml.sparkling.graph.loaders.csv.GraphFromCsv$$CSVGraphLoader';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -24,28 +24,24 @@
         </head>
         <body class="type">
       <div id="definition">
-        <img src="../../../../../../lib/trait_big.png" />
-        <p id="owner"><a href="../../../../../package.html" class="extype" name="ml">ml</a>.<a href="../../../../package.html" class="extype" name="ml.sparkling">sparkling</a>.<a href="../../../package.html" class="extype" name="ml.sparkling.graph">graph</a>.<a href="../../package.html" class="extype" name="ml.sparkling.graph.api">api</a>.<a href="../package.html" class="extype" name="ml.sparkling.graph.api.operators">operators</a>.<a href="package.html" class="extype" name="ml.sparkling.graph.api.operators.measures">measures</a></p>
-        <h1>VertexMeasure</h1>
+        <img src="../../../../../lib/class_big.png" />
+        <p id="owner"><a href="../../../../package.html" class="extype" name="ml">ml</a>.<a href="../../../package.html" class="extype" name="ml.sparkling">sparkling</a>.<a href="../../package.html" class="extype" name="ml.sparkling.graph">graph</a>.<a href="../package.html" class="extype" name="ml.sparkling.graph.loaders">loaders</a>.<a href="package.html" class="extype" name="ml.sparkling.graph.loaders.csv">csv</a>.<a href="GraphFromCsv$.html" class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv">GraphFromCsv</a></p>
+        <h1>CSVGraphLoader</h1>
       </div>
 
       <h4 id="signature" class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
-        <span class="kind">trait</span>
+        <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">VertexMeasure</span><span class="tparams">[<span name="OV">OV</span>]</span><span class="result"> extends <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></span>
+        <span class="name">CSVGraphLoader</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result"> extends <a href="../../api/loaders/GraphLoading$$GraphLoader.html" class="extype" name="ml.sparkling.graph.api.loaders.GraphLoading.GraphLoader">GraphLoader</a> with <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Product" class="extype" target="_top">Product</a> with <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
-</p></div><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Any" class="extype" target="_top">Any</a></div>
-        </div><div class="toggleContainer block">
-          <span class="toggle">Known Subclasses</span>
-          <div class="subClasses hiddenContent"><a href="../../../operators/measures/closenes/Closeness$.html" class="extype" name="ml.sparkling.graph.operators.measures.closenes.Closeness">Closeness</a>, <a href="../../../operators/measures/Degree$.html" class="extype" name="ml.sparkling.graph.operators.measures.Degree">Degree</a>, <a href="../../../operators/measures/eigenvector/EigenvectorCentrality$.html" class="extype" name="ml.sparkling.graph.operators.measures.eigenvector.EigenvectorCentrality">EigenvectorCentrality</a>, <a href="../../../operators/measures/hits/Hits$.html" class="extype" name="ml.sparkling.graph.operators.measures.hits.Hits">Hits</a>, <a href="../../../operators/measures/clustering/LocalClustering$.html" class="extype" name="ml.sparkling.graph.operators.measures.clustering.LocalClustering">LocalClustering</a>, <a href="../../../operators/measures/NeighborhoodConnectivity$.html" class="extype" name="ml.sparkling.graph.operators.measures.NeighborhoodConnectivity">NeighborhoodConnectivity</a>, <a href="../../../operators/measures/VertexEmbeddedness$.html" class="extype" name="ml.sparkling.graph.operators.measures.VertexEmbeddedness">VertexEmbeddedness</a></div>
+          <div class="superTypes hiddenContent"><a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Serializable" class="extype" target="_top">Serializable</a>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Product" class="extype" target="_top">Product</a>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Equals" class="extype" target="_top">Equals</a>, <a href="../../api/loaders/GraphLoading$$GraphLoader.html" class="extype" name="ml.sparkling.graph.api.loaders.GraphLoading.GraphLoader">GraphLoader</a>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Any" class="extype" target="_top">Any</a></div>
         </div></div>
         
 
@@ -63,7 +59,7 @@
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="ml.sparkling.graph.api.operators.measures.VertexMeasure"><span>VertexMeasure</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.CSVGraphLoader"><span>CSVGraphLoader</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.Product"><span>Product</span></li><li class="in" name="scala.Equals"><span>Equals</span></li><li class="in" name="ml.sparkling.graph.api.loaders.GraphLoading.GraphLoader"><span>GraphLoader</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -81,30 +77,30 @@
 
       <div id="template">
         <div id="allMembers">
-        
-
-        
-
-        <div id="values" class="values members">
-              <h3>Abstract Value Members</h3>
-              <ol><li name="ml.sparkling.graph.api.operators.measures.VertexMeasure#compute" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="compute[VD,ED](graph:org.apache.spark.graphx.Graph[VD,ED],vertexMeasureConfiguration:ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration[VD,ED])(implicitevidence$3:scala.reflect.ClassTag[VD],implicitevidence$4:scala.reflect.ClassTag[ED],implicitnum:Numeric[ED]):org.apache.spark.graphx.Graph[OV,_]"></a>
-      <a id="compute[VD,ED](Graph[VD,ED],VertexMeasureConfiguration[VD,ED])(ClassTag[VD],ClassTag[ED],Numeric[ED]):Graph[OV,_]"></a>
+        <div id="constructors" class="members">
+              <h3>Instance Constructors</h3>
+              <ol><li name="ml.sparkling.graph.loaders.csv.GraphFromCsv.CSVGraphLoader#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(path:String):ml.sparkling.graph.loaders.csv.GraphFromCsv.CSVGraphLoader"></a>
+      <a id="&lt;init&gt;:CSVGraphLoader"></a>
       <h4 class="signature">
       <span class="modifier_kind">
-        <span class="modifier">abstract </span>
-        <span class="kind">def</span>
+        <span class="modifier"></span>
+        <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">compute</span><span class="tparams">[<span name="VD">VD</span>, <span name="ED">ED</span>]</span><span class="params">(<span name="graph">graph: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.compute.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.compute.ED">ED</span>]</span>, <span name="vertexMeasureConfiguration">vertexMeasureConfiguration: <a href="VertexMeasureConfiguration.html" class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration">VertexMeasureConfiguration</a>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.compute.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.compute.ED">ED</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.compute.VD">VD</span>]</span>, <span name="arg1">arg1: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.compute.ED">ED</span>]</span>, <span name="num">num: <span class="extype" name="scala.Numeric">Numeric</span>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.compute.ED">ED</span>]</span>)</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.OV">OV</span>, _]</span>
+        <span class="name">CSVGraphLoader</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>)</span>
       </span>
       </h4>
       
     </li></ol>
             </div>
 
+        
+
+        
+
         <div id="values" class="values members">
-              <h3>Concrete Value Members</h3>
+              <h3>Value Members</h3>
               <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="!=(x$1:AnyRef):Boolean"></a>
       <a id="!=(AnyRef):Boolean"></a>
@@ -195,26 +191,13 @@
         <span class="name">clone</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="ml.sparkling.graph.api.operators.measures.VertexMeasure#compute" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="compute[VD,ED](graph:org.apache.spark.graphx.Graph[VD,ED])(implicitevidence$1:scala.reflect.ClassTag[VD],implicitevidence$2:scala.reflect.ClassTag[ED],implicitnum:Numeric[ED]):org.apache.spark.graphx.Graph[OV,_]"></a>
-      <a id="compute[VD,ED](Graph[VD,ED])(ClassTag[VD],ClassTag[ED],Numeric[ED]):Graph[OV,_]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">compute</span><span class="tparams">[<span name="VD">VD</span>, <span name="ED">ED</span>]</span><span class="params">(<span name="graph">graph: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.compute.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.compute.ED">ED</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.compute.VD">VD</span>]</span>, <span name="arg1">arg1: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.compute.ED">ED</span>]</span>, <span name="num">num: <span class="extype" name="scala.Numeric">Numeric</span>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.compute.ED">ED</span>]</span>)</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.OV">OV</span>, _]</span>
-      </span>
-      </h4>
-      
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -228,19 +211,6 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="scala.AnyRef#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="equals(x$1:Any):Boolean"></a>
-      <a id="equals(Any):Boolean"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Any" class="extype" target="_top">Any</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <a id="finalize():Unit"></a>
@@ -253,7 +223,7 @@
         <span class="name">finalize</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[java.lang.Throwable]</span>
@@ -273,19 +243,6 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="hashCode():Int"></a>
-      <a id="hashCode():Int"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Int" class="extype" target="_top">Int</a></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <a id="isInstanceOf[T0]:Boolean"></a>
@@ -299,6 +256,19 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="ml.sparkling.graph.loaders.csv.GraphFromCsv.CSVGraphLoader#load" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="load[VD,ED](parameters:List[ml.sparkling.graph.api.loaders.GraphLoading.Parameter])(implicitevidence$1:scala.reflect.ClassTag[VD],implicitevidence$2:scala.reflect.ClassTag[ED],implicitsc:org.apache.spark.SparkContext):org.apache.spark.graphx.Graph[VD,ED]"></a>
+      <a id="load[VD,ED](List[Parameter])(ClassTag[VD],ClassTag[ED],SparkContext):Graph[VD,ED]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">load</span><span class="tparams">[<span name="VD">VD</span>, <span name="ED">ED</span>]</span><span class="params">(<span name="parameters">parameters: <span class="extype" name="scala.List">List</span>[<a href="../../api/loaders/GraphLoading$$Parameter.html" class="extype" name="ml.sparkling.graph.api.loaders.GraphLoading.Parameter">Parameter</a>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.CSVGraphLoader.load.VD">VD</span>]</span>, <span name="arg1">arg1: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.CSVGraphLoader.load.ED">ED</span>]</span>, <span name="sc">sc: <span class="extype" name="org.apache.spark.SparkContext">SparkContext</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.CSVGraphLoader.load.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.CSVGraphLoader.load.ED">ED</span>]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.CSVGraphLoader">CSVGraphLoader</a> → <a href="../../api/loaders/GraphLoading$$GraphLoader.html" class="extype" name="ml.sparkling.graph.api.loaders.GraphLoading.GraphLoader">GraphLoader</a></dd></dl></div>
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -338,6 +308,19 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="ml.sparkling.graph.loaders.csv.GraphFromCsv.CSVGraphLoader#path" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="path:String"></a>
+      <a id="path:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">path</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4>
+      
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -351,19 +334,6 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="scala.AnyRef#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="toString():String"></a>
-      <a id="toString():String"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>
@@ -430,7 +400,17 @@
         </div>
 
         <div id="inheritedMembers">
-        <div class="parent" name="scala.AnyRef">
+        <div class="parent" name="scala.Serializable">
+              <h3>Inherited from <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></h3>
+            </div><div class="parent" name="java.io.Serializable">
+              <h3>Inherited from <span class="extype" name="java.io.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="scala.Product">
+              <h3>Inherited from <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Product" class="extype" target="_top">Product</a></h3>
+            </div><div class="parent" name="scala.Equals">
+              <h3>Inherited from <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Equals" class="extype" target="_top">Equals</a></h3>
+            </div><div class="parent" name="ml.sparkling.graph.api.loaders.GraphLoading.GraphLoader">
+              <h3>Inherited from <a href="../../api/loaders/GraphLoading$$GraphLoader.html" class="extype" name="ml.sparkling.graph.api.loaders.GraphLoading.GraphLoader">GraphLoader</a></h3>
+            </div><div class="parent" name="scala.AnyRef">
               <h3>Inherited from <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></h3>
             </div><div class="parent" name="scala.Any">
               <h3>Inherited from <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Any" class="extype" target="_top">Any</a></h3>
@@ -450,6 +430,6 @@
       <div id="tooltip"></div>
 
       <div id="footer">  </div>
-      <script defer="defer" type="text/javascript" id="jquery-js" src="../../../../../../lib/jquery.js"></script><script defer="defer" type="text/javascript" id="jquery-ui-js" src="../../../../../../lib/jquery-ui.js"></script><script defer="defer" type="text/javascript" id="tools-tooltip-js" src="../../../../../../lib/tools.tooltip.js"></script><script defer="defer" type="text/javascript" id="template-js" src="../../../../../../lib/template.js"></script>
+      <script defer="defer" type="text/javascript" id="jquery-js" src="../../../../../lib/jquery.js"></script><script defer="defer" type="text/javascript" id="jquery-ui-js" src="../../../../../lib/jquery-ui.js"></script><script defer="defer" type="text/javascript" id="tools-tooltip-js" src="../../../../../lib/tools.tooltip.js"></script><script defer="defer" type="text/javascript" id="template-js" src="../../../../../lib/template.js"></script>
     </body>
       </html>
