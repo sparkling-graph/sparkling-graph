@@ -10,4 +10,5 @@ import IterativeComputation.VertexPredicate
  */
 case class ByIdPredicate(vertex:VertexId) extends VertexPredicate with Serializable {
   override def apply(v1: VertexId): Boolean = v1==vertex
+
 }

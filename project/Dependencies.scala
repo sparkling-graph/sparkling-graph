@@ -20,7 +20,7 @@ object Dependencies {
   val sparkSQL = l ++= Seq(Provided.sparkSQL.value)
   val sparkMLLib = l ++= Seq(Provided.sparkMLLib.value)
   val sparkCSV = l ++= Seq(Compile.sparkCSV, Provided.sparkSQL.value)
-  val test = l ++= Seq(Compile.Test.scalatest.value)
+  val test = l ++= Seq(Compile.Test.scalatest.value,Compile.Test.mockito.value)
   val fastUtils = l ++= Seq(Compile.fastUtils)
 
   object Compile {
@@ -31,6 +31,9 @@ object Dependencies {
     object Test {
       val scalatest = Def.setting {
         "org.scalatest" %% "scalatest" % "2.2.4" % "test"
+      }
+      val mockito = Def.setting {
+        "org.mockito" % "mockito-all" % "1.10.19" % "test"
       }
     }
 
