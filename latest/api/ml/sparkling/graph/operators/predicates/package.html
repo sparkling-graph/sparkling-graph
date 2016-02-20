@@ -1,4 +1,5 @@
-<!DOCTYPE html >
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
           <title>predicates - ml.sparkling.graph.operators.predicates</title>
@@ -8,11 +9,6 @@
           
       <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
       <link href="../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
-      <script type="text/javascript" src="../../../../../lib/jquery.js" id="jquery-js"></script>
-      <script type="text/javascript" src="../../../../../lib/jquery-ui.js"></script>
-      <script type="text/javascript" src="../../../../../lib/template.js"></script>
-      <script type="text/javascript" src="../../../../../lib/tools.tooltip.js"></script>
-      
       <script type="text/javascript">
          if(top === self) {
             var url = '../../../../../index.html';
@@ -28,13 +24,9 @@
         </head>
         <body class="value">
       <div id="definition">
-        <img alt="Package" src="../../../../../lib/package_big.png" />
+        <img src="../../../../../lib/package_big.png" />
         <p id="owner"><a href="../../../../package.html" class="extype" name="ml">ml</a>.<a href="../../../package.html" class="extype" name="ml.sparkling">sparkling</a>.<a href="../../package.html" class="extype" name="ml.sparkling.graph">graph</a>.<a href="../package.html" class="extype" name="ml.sparkling.graph.operators">operators</a></p>
-        <h1>predicates</h1><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.package" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
+        <h1>predicates</h1>
       </div>
 
       <h4 id="signature" class="signature">
@@ -66,8 +58,8 @@
 
         <div id="types" class="types members">
               <h3>Type Members</h3>
-              <ol><li name="ml.sparkling.graph.operators.predicates.ByIdPredicate" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="ByIdPredicateextendsml.sparkling.graph.api.operators.IterativeComputation.VertexPredicatewithSerializablewithProduct"></a>
+              <ol><li name="ml.sparkling.graph.operators.predicates.ByIdPredicate" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ByIdPredicateextendsorg.apache.spark.graphx.VertexId=&gt;BooleanwithSerializablewithProduct"></a>
       <a id="ByIdPredicate:ByIdPredicate"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -75,18 +67,12 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a href="ByIdPredicate.html"><span class="name">ByIdPredicate</span></a><span class="params">(<span name="vertex">vertex: <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span></span>)</span><span class="result"> extends <a href="../../api/operators/IterativeComputation$.html#VertexPredicate=org.apache.spark.graphx.VertexId=&gt;Boolean" class="extmbr" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate">VertexPredicate</a> with <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Serializable" class="extype" target="_top">Serializable</a> with <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Product" class="extype" target="_top">Product</a></span>
+        <a href="ByIdPredicate.html"><span class="name">ByIdPredicate</span></a><span class="params">(<span name="vertex">vertex: <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span></span>)</span><span class="result"> extends (<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>) ⇒ <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Boolean" class="extype" target="_top">Boolean</a> with <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Serializable" class="extype" target="_top">Serializable</a> with <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Product" class="extype" target="_top">Product</a></span>
       </span>
-      </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.package@ByIdPredicateextendsml.sparkling.graph.api.operators.IterativeComputation.VertexPredicatewithSerializablewithProduct" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).</p><div class="fullcomment"><div class="comment cmt"><p>Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
-Predicate for single vertexId
-</p></div></div>
-    </li><li name="ml.sparkling.graph.operators.predicates.ByIdsPredicate" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="ByIdsPredicateextendsml.sparkling.graph.api.operators.IterativeComputation.VertexPredicatewithSerializablewithProduct"></a>
+      </h4>
+      <p class="comment cmt">Created by Roman Bartusiak (roman.</p>
+    </li><li name="ml.sparkling.graph.operators.predicates.ByIdsPredicate" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ByIdsPredicateextendsorg.apache.spark.graphx.VertexId=&gt;BooleanwithSerializablewithProduct"></a>
       <a id="ByIdsPredicate:ByIdsPredicate"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -94,16 +80,10 @@ Predicate for single vertexId
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a href="ByIdsPredicate.html"><span class="name">ByIdsPredicate</span></a><span class="params">(<span name="vertex">vertex: <span class="extype" name="scala.List">List</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>]</span>)</span><span class="result"> extends <a href="../../api/operators/IterativeComputation$.html#VertexPredicate=org.apache.spark.graphx.VertexId=&gt;Boolean" class="extmbr" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate">VertexPredicate</a> with <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Serializable" class="extype" target="_top">Serializable</a> with <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Product" class="extype" target="_top">Product</a></span>
+        <a href="ByIdsPredicate.html"><span class="name">ByIdsPredicate</span></a><span class="params">(<span name="vertex">vertex: <span class="extype" name="scala.List">List</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>]</span>)</span><span class="result"> extends (<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>) ⇒ <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Boolean" class="extype" target="_top">Boolean</a> with <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Serializable" class="extype" target="_top">Serializable</a> with <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Product" class="extype" target="_top">Product</a></span>
       </span>
-      </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.package@ByIdsPredicateextendsml.sparkling.graph.api.operators.IterativeComputation.VertexPredicatewithSerializablewithProduct" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).</p><div class="fullcomment"><div class="comment cmt"><p>Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
-Predicate for list of vertexIds
-</p></div></div>
+      </h4>
+      <p class="comment cmt">Created by Roman Bartusiak (roman.</p>
     </li></ol>
             </div>
 
@@ -111,7 +91,7 @@ Predicate for list of vertexIds
 
         <div id="values" class="values members">
               <h3>Value Members</h3>
-              <ol><li name="ml.sparkling.graph.operators.predicates.AllPathPredicate" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+              <ol><li name="ml.sparkling.graph.operators.predicates.AllPathPredicate" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="AllPathPredicate"></a>
       <a id="AllPathPredicate:AllPathPredicate"></a>
       <h4 class="signature">
@@ -120,16 +100,10 @@ Predicate for list of vertexIds
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <a href="AllPathPredicate$.html"><span class="name">AllPathPredicate</span></a><span class="result"> extends <a href="../../api/operators/IterativeComputation$.html#VertexPredicate=org.apache.spark.graphx.VertexId=&gt;Boolean" class="extmbr" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate">VertexPredicate</a> with <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
+        <a href="AllPathPredicate$.html"><span class="name">AllPathPredicate</span></a><span class="result"> extends (<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>) ⇒ <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Boolean" class="extype" target="_top">Boolean</a> with <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
       </span>
-      </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.package@AllPathPredicate" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).</p><div class="fullcomment"><div class="comment cmt"><p>Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
-Always true predicate
-</p></div></div>
+      </h4>
+      <p class="comment cmt">Created by Roman Bartusiak (roman.</p>
     </li></ol>
             </div>
 
@@ -155,7 +129,6 @@ Always true predicate
       <div id="tooltip"></div>
 
       <div id="footer">  </div>
-
-
+      <script defer="defer" type="text/javascript" id="jquery-js" src="../../../../../lib/jquery.js"></script><script defer="defer" type="text/javascript" id="jquery-ui-js" src="../../../../../lib/jquery-ui.js"></script><script defer="defer" type="text/javascript" id="tools-tooltip-js" src="../../../../../lib/tools.tooltip.js"></script><script defer="defer" type="text/javascript" id="template-js" src="../../../../../lib/template.js"></script>
     </body>
       </html>
