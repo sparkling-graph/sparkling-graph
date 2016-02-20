@@ -34,10 +34,10 @@ object EigenvectorCentrality extends VertexMeasure[Double]{
       val iterationRDD=computationGraph.aggregateMessages[Double](
       sendMsg = (context)=>{
         context.sendToDst(num.toDouble(context.attr)*context.srcAttr)
-        context.sendToSrc(0.)
+        context.sendToSrc(0d)
         if(vertexMeasureConfiguration.treatAsUndirected){
           context.sendToSrc(num.toDouble(context.attr)*context.dstAttr)
-          context.sendToDst(0.)
+          context.sendToDst(0d)
         }
       },
       mergeMsg = (a,b)=>a+b)

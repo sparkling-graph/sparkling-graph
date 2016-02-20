@@ -29,7 +29,7 @@ object VertexEmbeddedness extends VertexMeasure[Double] {
       val sizeOfIntersection=intersectSize(neighbours1,neighbours2)
          val denominator = neighbours1.size()+neighbours2.size()-sizeOfIntersection
             val numerator = sizeOfIntersection.toDouble
-            if (denominator == 0) 0. else numerator / denominator
+            if (denominator == 0) 0d else numerator / denominator
       }
       val message=messageCreator(edgeContext.srcAttr,edgeContext.dstAttr)
       edgeContext.sendToSrc(message)
@@ -41,7 +41,7 @@ object VertexEmbeddedness extends VertexMeasure[Double] {
     mergeMsg=(a,b)=>a+b)
     firstLevelNeighboursGraph.outerJoinVertices(embeddednessSums)((vId,oldValue,newValue)=>(newValue.getOrElse(0d),oldValue)).mapVertices { case (vId, (numerator, neighbours)) => {
       val myNeghboursSize = neighbours.size()
-      if (myNeghboursSize == 0) 0. else numerator / neighbours.size()
+      if (myNeghboursSize == 0) 0d else numerator / neighbours.size()
     }
     }
 

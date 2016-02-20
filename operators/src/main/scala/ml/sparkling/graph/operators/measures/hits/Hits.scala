@@ -29,7 +29,7 @@ object Hits extends VertexMeasure[(Double,Double)]{
       val newAuths = computationGraph.aggregateMessages[Double](
         sendMsg = (context)=>{
           context.sendToDst(context.srcAttr._1)
-          context.sendToSrc(0.)
+          context.sendToSrc(0d)
           },
         mergeMsg = (a,b)=>a+b)
       val normAuths = newAuths.map(e => e._2).max()
@@ -38,7 +38,7 @@ object Hits extends VertexMeasure[(Double,Double)]{
       val newHubs = computationGraph.aggregateMessages[Double](
         sendMsg = (context)=>{
           context.sendToSrc(context.dstAttr._2)
-          context.sendToDst(0.)
+          context.sendToDst(0d)
           },
         mergeMsg = (a,b)=>a+b)
       val normHubs = newHubs.map(e => e._2).max()
