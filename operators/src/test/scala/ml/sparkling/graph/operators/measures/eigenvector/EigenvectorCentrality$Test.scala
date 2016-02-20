@@ -20,7 +20,7 @@ class EigenvectorCentrality$Test extends SparkTest{
     val result=EigenvectorCentrality.compute(graph)
     Then("Should calculate eigenvector correctly")
     result.vertices.collect().sortBy(t=>t._1).map(_._2).zip(Array(
-      0., 0., 0., 0., 0.
+      0d, 0d, 0d, 0d, 0d
     )).foreach{case (a,b)=>{a should be (b +- 1e-5 )}}
   }
 

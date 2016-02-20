@@ -21,7 +21,7 @@ class VertexEmbeddedness$Test extends SparkTest {
     val result = VertexEmbeddedness.compute(graph)
     Then("Should calculate Vertex embeddedness  correctly")
     result.vertices.collect().sortBy(t => t._1).map(_._2) should equal (Array(
-      0.,0.,0.,0.,0.
+      0d,0d,0d,0d,0d
     ))
   }
 
@@ -33,7 +33,7 @@ class VertexEmbeddedness$Test extends SparkTest {
     val result = VertexEmbeddedness.compute(graph,VertexMeasureConfiguration[Int,Int](true))
     Then("Should calculate Vertex embeddedness  correctly")
     result.vertices.collect().sortBy(t => t._1).map(_._2) should equal (Array(
-      0.,0.,0.,0.,0.
+      0d,0d,0d,0d,0d
     ))
   }
 

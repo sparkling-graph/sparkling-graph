@@ -20,7 +20,7 @@ class Hits$Test extends SparkTest {
     val result = Hits.computeHits(graph)
     Then("Should calculate hits correctly")
     result.vertices.collect().sortBy(t => t._1).map(_._2).zip(Array(
-      (0.25,0.), (0.25,0.25),(0.25,0.25),(0.25,0.25),(0.,0.25)
+      (0.25,0d), (0.25,0.25),(0.25,0.25),(0.25,0.25),(0d,0.25)
     )).foreach {
       case ((a,b),(c,d)) => {
         a should be (c +- 1e-5)

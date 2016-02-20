@@ -32,7 +32,7 @@ class LocalClustering$Test  extends SparkTest{
     val localClustering=LocalClustering.compute(graph)
     Then("Should calculate local clustering correctly")
     localClustering.vertices.collect().sortBy(t=>t._1) should equal (Array(
-      (1,0.5), (2,0.), (3,0.), (4,0.5)
+      (1,0.5), (2,0d), (3,0d), (4,0.5)
     ))
   }
 
