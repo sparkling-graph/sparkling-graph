@@ -1,6 +1,6 @@
 package ml.sparkling.graph.loaders.csv.providers
 
-import ml.sparkling.graph.api.loaders.Types
+import ml.sparkling.graph.loaders.csv.types.Types
 import ml.sparkling.graph.loaders.csv.utils.DefaultTransformers
 import org.apache.spark.graphx.VertexId
 import org.apache.spark.sql.Row

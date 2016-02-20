@@ -1,6 +1,6 @@
 package ml.sparkling.graph.loaders.csv.providers
 
-import ml.sparkling.graph.api.loaders.Types
+import ml.sparkling.graph.loaders.csv.types.Types
 import org.apache.spark.graphx._
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{DataFrame, Row}

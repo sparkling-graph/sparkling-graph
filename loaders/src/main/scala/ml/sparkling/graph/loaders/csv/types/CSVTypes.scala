@@ -1,4 +1,4 @@
-package ml.sparkling.graph.api.loaders
+package ml.sparkling.graph.loaders.csv.types
 
 import org.apache.spark.graphx.Graph
 import org.apache.spark.sql.{DataFrame, Row}

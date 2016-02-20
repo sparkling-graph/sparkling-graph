@@ -1,8 +1,8 @@
 package ml.sparkling.graph.loaders.csv
 
 
-import ml.sparkling.graph.api.loaders.{CSVTypes, Types}
 import ml.sparkling.graph.loaders.csv.providers.{VertexProviders, EdgeProviders, GraphProviders}
+import ml.sparkling.graph.loaders.csv.types.{CSVTypes, Types}
 import ml.sparkling.graph.loaders.csv.utils.DefaultTransformers
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx._
