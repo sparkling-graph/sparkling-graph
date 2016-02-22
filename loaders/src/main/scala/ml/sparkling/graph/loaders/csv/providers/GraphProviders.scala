@@ -13,7 +13,7 @@ import scala.reflect.ClassTag
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
 object GraphProviders {
-  private val DefaultStorageLevel=StorageLevel.MEMORY_ONLY
+  val DefaultStorageLevel=StorageLevel.MEMORY_ONLY
   def simpleGraphBuilder[VD: ClassTag, ED: ClassTag](defaultVertex: VD,
                                                      vertexProvider: Row => Seq[(VertexId, VD)],
                                                      edgeProvider: Row => Seq[Edge[ED]],

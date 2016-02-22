@@ -22,6 +22,11 @@ class SingleVertexProcessor[VD, ED](computedVertexId:VertexId) extends PathProce
   }
 
   override def mergePathContainers(map1: Double, map2: Double)(implicit num: Numeric[ED]): Double = {
+    (map1,map2) match{
+      case (0d,_)=> map2
+      case (_,0d)=> map1
+      case _ =>Math.min(map1,map2)
+    }
     if(map1==0d)
       map2
     else if(map2==0d)
