@@ -17,7 +17,7 @@ class LocalClustering$Test  extends SparkTest{
     val filePath = getClass.getResource("/graphs/5_nodes_directed")
     val graph:Graph[Int,Int]=GraphLoader.edgeListFile(sc,filePath.toString).cache()
     When("Computes local clustering")
-    val localClustering=LocalClustering.compute(graph)
+    val localClustering=LocalClustering.computeInOut(graph)
     Then("Should calculate local clustering correctly")
     val verticesSortedById=localClustering.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById should equal (Array(
@@ -30,7 +30,7 @@ class LocalClustering$Test  extends SparkTest{
     val filePath = getClass.getResource("/graphs/4_nodes_full")
     val graph:Graph[Int,Int]=GraphLoader.edgeListFile(sc,filePath.toString).cache()
     When("Computes local clustering")
-    val localClustering=LocalClustering.compute(graph)
+    val localClustering=LocalClustering.computeInOut(graph)
     Then("Should calculate local clustering correctly")
     val verticesSortedById=localClustering.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById should equal (Array(
@@ -57,11 +57,11 @@ class LocalClustering$Test  extends SparkTest{
     val filePath = getClass.getResource("/graphs/4_nodes_full")
     val graph:Graph[Int,Int]=GraphLoader.edgeListFile(sc,filePath.toString).cache()
     When("Computes local clustering")
-    val localClustering=LocalClustering.compute(graph)
+    val localClustering=LocalClustering.computeInOut(graph)
     val localClusteringIterative=LocalClustering.compute(graph,VertexMeasureConfiguration[Int,Int]((g:Graph[Int,Int])=>1l))
     Then("Should calculate local clustering correctly")
-    val verticesSortedById=localClustering.vertices.collect().sortBy(t=>t._1)
-    verticesSortedById should equal (localClusteringIterative.vertices.collect().sortBy(t=>t._1))
+    val verticesSortedById=localClustering.vertices.collect().sortBy{case (vId,data)=>vId}
+    verticesSortedById should equal (localClusteringIterative.vertices.collect().sortBy{case (vId,data)=>vId})
   }
 
 }

@@ -21,7 +21,7 @@ class Closeness$Test extends SparkTest{
     val filePath = getClass.getResource("/graphs/5_nodes_directed")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes closeness")
-    val result=Closeness.compute(graph)
+    val result=Closeness.computeInOut(graph)
     Then("Should calculate closeness correctly")
     val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById .map{case (vId,data)=>data} .zip(Array(
@@ -37,7 +37,7 @@ class Closeness$Test extends SparkTest{
     val filePath = getClass.getResource("/graphs/4_nodes_full")
     val graph:Graph[Int,Int]=GraphLoader.edgeListFile(sc,filePath.toString).cache()
     When("Computes Closeness")
-    val result=Closeness.compute(graph)
+    val result=Closeness.computeInOut(graph)
     Then("Should calculate Closeness correctly")
     val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById .map{case (vId,data)=>data} .zip(Array(

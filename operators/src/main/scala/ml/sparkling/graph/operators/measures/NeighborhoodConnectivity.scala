@@ -19,8 +19,10 @@ object NeighborhoodConnectivity extends VertexMeasure[Double] {
    * @return graph where each vertex is associated with its  neighbour connectivity
    */
   def computeNeighborConnectivity[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED]) = {
-    val graphWithInOutDegree=Degree.computeDegree(graph, vertexMeasureConfiguration)
-    val graphWithOutDegree =graphWithInOutDegree.mapVertices((vId, data) => data._1)
+    val graphWithInOutDegree=Degree.computeInOut(graph, vertexMeasureConfiguration)
+    val graphWithOutDegree =graphWithInOutDegree.mapVertices{
+      case (vId, (out,in)) => out
+    }
     val connectivityRdd = graphWithOutDegree.mapVertices((vId,degree)=>(degree,1))
       .aggregateMessages[(Int,Int)](
         sendMsg=context=>{

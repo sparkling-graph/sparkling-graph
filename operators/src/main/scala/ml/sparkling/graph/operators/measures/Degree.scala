@@ -17,7 +17,7 @@ object Degree extends VertexMeasure[(Int, Int)] {
    * @tparam ED - edge data type
    * @return graph where each vertex is associated with its  degree (out,in)
    */
-  def computeDegree[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED]) = {
+  def computeInOut[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED]) = {
     vertexMeasureConfiguration.treatAsUndirected match{
       case true  =>     graph.outerJoinVertices[Int,(Int,Int)](graph.degrees)((vId,oldValue,newValue)=>(newValue.getOrElse(0),newValue.getOrElse(0)))
       case _ =>   graph.outerJoinVertices[Int,Int](graph.outDegrees)((vId,oldValue,newValue)=>newValue.getOrElse(0))
@@ -35,7 +35,7 @@ object Degree extends VertexMeasure[(Int, Int)] {
    * @return graph where each vertex is associated with its  degree (out,in)
    */
   override def compute[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED])(implicit num: Numeric[ED]) = {
-    computeDegree(graph, vertexMeasureConfiguration)
+    computeInOut(graph, vertexMeasureConfiguration)
   }
 
 }

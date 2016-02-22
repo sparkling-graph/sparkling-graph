@@ -24,7 +24,7 @@ class ShortestPathsAlgorithm$Test  extends SparkTest{
     val shortestPaths=ShortestPathsAlgorithm.computeShortestPaths(graph)
     Then("Should calculate shortest paths correctly")
       val verticesSortedById=shortestPaths.vertices.collect().sortBy{case (vId,data)=>vId}
-      verticesSortedById.map(t=>(t._1,t._2.mapValues(s=>s.map(l=>l.toList)))) should equal (Array(
+      verticesSortedById.map{case (vId,data)=>(vId,data.mapValues(s=>s.map(l=>l.toList)))} should equal (Array(
       (1,Map(2 -> Set(List(1d)), 3 -> Set(List(2d,2d)), 4 -> Set(List(3d,3d,2d)), 5 -> Set(List(4d,4d,3d,2d)))),
       (2,Map(3 -> Set(List(1d)), 4 -> Set(List(2d,3d)), 5 -> Set(List(3d,4d,3d)) )),
       (3,Map(4 -> Set(List(1d)), 5 -> Set(List(2d,4d)))),

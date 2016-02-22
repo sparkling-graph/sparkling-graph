@@ -33,13 +33,14 @@ class WithPathProcessor[VD,ED]() extends  PathProcessor[VD,ED,Map[VertexId,(ED,S
     (num.plus(distance,set._1),set._2.map(vertexId :: _))
   }
 
-  private def mergePathSets(set1:Option[PathsSet],set2:Option[PathsSet])(implicit num:Numeric[ED]): PathsSet ={
-    (set1 :: set2 :: Nil).flatten.reduce((a,b)=>{
-      num.compare(a._1,b._1).signum match{
-        case 0=> (a._1,a._2++b._2)
-        case 1=>b
-        case -1=>a
-      }
-    })
+  private def mergePathSets(pathSet1:Option[PathsSet],pathSet2:Option[PathsSet])(implicit num:Numeric[ED]): PathsSet ={
+    (pathSet1 :: pathSet2 :: Nil).flatten[PathsSet].reduce[PathsSet]{
+      case ((edge1,set1),(edge2,set2))=>
+        num.compare(edge1,edge2).signum match{
+          case 0=> (edge1,set1++set2)
+          case 1=>(edge2,set2)
+          case -1=>(edge1,set1)
+        }
+    }
   }
 }

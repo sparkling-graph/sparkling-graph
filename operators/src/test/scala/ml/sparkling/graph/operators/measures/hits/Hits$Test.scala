@@ -17,9 +17,9 @@ class Hits$Test extends SparkTest {
     val filePath = getClass.getResource("/graphs/5_nodes_directed")
     val graph: Graph[Int, Int] = loadGraph(filePath.toString)
     When("Computes Hits")
-    val result = Hits.computeHits(graph)
+    val result = Hits.computeBasic(graph)
     Then("Should calculate hits correctly")
-    result.vertices.collect().sortBy(t => t._1).map(_._2).zip(Array(
+    result.vertices.collect().sortBy{case (vId,data)=>vId}.map{case (vId,data)=>data}.zip(Array(
       (0.25,0d), (0.25,0.25),(0.25,0.25),(0.25,0.25),(0d,0.25)
     )).foreach {
       case ((a,b),(c,d)) => {
@@ -34,9 +34,9 @@ class Hits$Test extends SparkTest {
     val filePath = getClass.getResource("/graphs/4_nodes_full")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes Hits")
-    val result=Hits.computeHits(graph)
+    val result=Hits.computeBasic(graph)
     Then("Should calculate Hits correctly")
-    result.vertices.collect().sortBy(t => t._1).map(_._2).zip(Array(
+    result.vertices.collect().sortBy{case (vId,data)=>vId}.map{case (vId,data)=>data}.zip(Array(
       (0.44504187450168503,0.19806226306818242),
       (0.19806226497496957,0.4450418674109515),
       (1.9336832073590722e-13,0.3568958695205176),

@@ -20,7 +20,7 @@ object Hits extends VertexMeasure[(Double, Double)] {
    * @tparam ED - edge data type
    * @return graph where each vertex is associated with its hits (hub,auth) values
    */
-  def computeHits[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], continuePredicate: ContinuePredicate = convergencePredicate(1e-8), normalize: Boolean = true) = {
+  def computeBasic[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], continuePredicate: ContinuePredicate = convergencePredicate(1e-8), normalize: Boolean = true) = {
     var iteration = 0
     var oldValues = (0d, 0d) // (hub,auth)
     var newValues = (0d, 0d)
@@ -29,7 +29,9 @@ object Hits extends VertexMeasure[(Double, Double)] {
     while (continuePredicate(iteration, oldValues, newValues) || iteration == 0) {
       val withNewAuths = computationGraph.aggregateMessages[Double](
         sendMsg = context=>{
-          val sourceHub: Double = context.srcAttr._1
+          val sourceHub: Double = context.srcAttr match{
+           case  (hub,auth) => hub
+          }
           context.sendToDst(sourceHub)
           context.sendToSrc(0d)
           },
@@ -42,21 +44,28 @@ object Hits extends VertexMeasure[(Double, Double)] {
       withNewAuths.unpersist()
       val withNewHubs = computationGraph.aggregateMessages[Double](
         sendMsg = (context)=>{
-          val destinationAuth: Double = context.dstAttr._2
+          val destinationAuth: Double = context.dstAttr match{
+           case  (hub,auth) => auth
+          }
           context.sendToSrc(destinationAuth)
           context.sendToDst(0d)
           },
         mergeMsg = (a,b)=>a+b)
       val normHubs = withNewHubs.map{case (vId,hub) => hub}.max()
-      computationGraph = computationGraph.outerJoinVertices(withNewHubs)((vId, oldValue, newValue) => (newValue.getOrElse(0d) / normHubs, oldValue._2))
+      computationGraph = computationGraph.outerJoinVertices(withNewHubs){
+        case (vId, (hub,auth), Some(newValue)) => (newValue/normHubs, auth)
+        case (vId, (hub,auth), None) => (0d, auth)
+      }
       withNewHubs.unpersist()
       oldValues = newValues
       newValues = computationGraph.vertices.map{case (vId,(hub,auth)) => (hub,auth)}.fold((0d, 0d))(sumHubAuthTuples)
-      newValues = (newValues._1 / numVertices, newValues._2 / numVertices)
+      newValues = newValues match{
+        case (hub,auth)=> (hub/numVertices,auth/numVertices)
+      }
       iteration += 1
     }
     if (normalize) {
-      val sum = computationGraph.vertices.map(t => t._2).fold((0d, 0d))(sumHubAuthTuples)
+      val sum = computationGraph.vertices.values.fold((0d, 0d))(sumHubAuthTuples)
       computationGraph.mapVertices(normalizeHubAuthBy(sum))
     } else {
       computationGraph
@@ -90,5 +99,5 @@ object Hits extends VertexMeasure[(Double, Double)] {
    * @tparam ED - edge data type
    * @return graph where each vertex is associated with its hits values (hub,auth)
    */
-  override def compute[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED])(implicit num: Numeric[ED]): Graph[(Double, Double), ED] = computeHits(graph)
+  override def compute[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED])(implicit num: Numeric[ED]): Graph[(Double, Double), ED] = computeBasic(graph)
 }

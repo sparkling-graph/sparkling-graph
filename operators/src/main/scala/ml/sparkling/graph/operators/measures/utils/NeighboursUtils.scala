@@ -40,7 +40,7 @@ object NeighboursUtils {
                                                     treatAsUndirected: Boolean = false,
                                                     vertexPredicate: VertexPredicate = AllPathPredicate) = {
 
-    val withNeighboursVertices = graph.mapVertices((vId,Data)=>new NeighbourSet())
+    val withNeighboursVertices = graph.mapVertices((vId,data)=>new NeighbourSet())
      .aggregateMessages[NeighbourSet](
         sendMsg=(edgeContext)=>{
           edgeContext.sendToSrc(if(vertexPredicate(edgeContext.dstId)) setWith(edgeContext.dstId) else new NeighbourSet(0))

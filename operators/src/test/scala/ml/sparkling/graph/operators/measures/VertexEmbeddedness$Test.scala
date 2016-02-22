@@ -18,10 +18,10 @@ class VertexEmbeddedness$Test extends SparkTest {
     val filePath = getClass.getResource("/graphs/5_nodes_directed")
     val graph: Graph[Int, Int] = loadGraph(filePath.toString)
     When("Computes Vertex embeddedness ")
-    val result = VertexEmbeddedness.compute(graph)
+    val result = VertexEmbeddedness.computeInOut(graph)
     Then("Should calculate Vertex embeddedness  correctly")
     val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}
-    verticesSortedById .map(_._2) should equal (Array(
+    verticesSortedById.map{case (vId,data)=>data}  should equal (Array(
       0d,0d,0d,0d,0d
     ))
   }
@@ -44,7 +44,7 @@ class VertexEmbeddedness$Test extends SparkTest {
     val filePath = getClass.getResource("/graphs/4_nodes_full")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes Vertex embeddedness")
-    val result= VertexEmbeddedness.compute(graph)
+    val result= VertexEmbeddedness.computeInOut(graph)
     Then("Should calculate Vertex embeddedness correctly")
     val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById .map{case (vId,data)=>data} should equal (Array(
@@ -70,7 +70,7 @@ class VertexEmbeddedness$Test extends SparkTest {
     val filePath = getClass.getResource("/graphs/4_nodes_full")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes Vertex embeddedness")
-    val result= VertexEmbeddedness.compute(graph)
+    val result= VertexEmbeddedness.computeInOut(graph)
     val resultIterative= VertexEmbeddedness.compute(graph,VertexMeasureConfiguration[Int,Int]((g:Graph[Int,Int])=>1l))
     Then("Should calculate Vertex embeddedness correctly")
     val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}
