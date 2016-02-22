@@ -81,14 +81,14 @@ class FastUtilWithPath[VD,ED]() extends  PathProcessor[VD,ED,WithPathContainer]{
   private def mergePathSets(set1:JPathCollection,set2:JPathCollection)(implicit num:Numeric[ED]): JPathCollection ={
     val firstSetLength=if(set1.size()==0) {java.lang.Double.MAX_VALUE.asInstanceOf[JDouble]} else {set1.iterator().next().get(0)}
     val secondSetLength=if(set2.size()==0) {java.lang.Double.MAX_VALUE.asInstanceOf[JDouble]} else { set2.iterator().next().get(0)}
-    if(firstSetLength>secondSetLength){
-      set2
-    }else if(firstSetLength<secondSetLength){
-      set1
-    }else{
-      val set1Clone= set1.asInstanceOf[PathsSet].clone()
-      set1Clone.addAll(set2)
-      set1Clone
+    firstSetLength compareTo secondSetLength signum match{
+      case 0=>{
+        val set1Clone= set1.asInstanceOf[PathsSet].clone()
+        set1Clone.addAll(set2)
+        set1Clone
+      }
+      case 1 => set2
+      case -1 => set1
     }
   }
   private def getPathsContainer(size:Int=50): JPathCollection ={
