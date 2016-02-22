@@ -77,7 +77,7 @@ object NeighboursUtils {
     val withSecondLevelNeighboursVertices = withNeighboursVertices
       .mapVertices((vId,neighbourSet)=>mapWith(vId,neighbourSet))
      .aggregateMessages[NeighboursMap](
-        sendMsg=(edgeContext)=>{
+        sendMsg=edgeContext=>{
           edgeContext.sendToSrc(if(vertexPredicate(edgeContext.dstId)) edgeContext.dstAttr else new NeighboursMap(0))
           edgeContext.sendToDst(new NeighboursMap(0))
           if(treatAsUndirected){
