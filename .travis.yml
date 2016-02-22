@@ -3,8 +3,8 @@ jdk: oraclejdk8
 sudo: false
 before_install: umask 0022
 scala:
-- 2.10.6
-- 2.11.7
+  - 2.10.6
+  - 2.11.7
 cache:
   directories:
   - "$HOME/.m2"
@@ -14,11 +14,11 @@ before_script:
 - git config --global user.name "Travis CI"
 - git config --global user.email "riomus@gmail.com"
 script:
-- sbt clean coverage test && sbt coverageReport && sbt coverageAggregate
+- sbt clean coverage test && sbt coverageAggregate
 - find $HOME/.sbt -name "*.lock" | xargs rm
 - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
 after_success:
-- sbt codacyCoverage
+- bash <(curl -s https://codecov.io/bash)
 - sbt ghpages-push-site
 - sbt publish
 env:
@@ -29,4 +29,3 @@ env:
   - secure: k0Ms8O6kYP5LhWozlrEZ/YdgqOKeE20/eMvCHBloWgLi+hLG+LWvZVG7v2BWcHTRVORwhCf0HDwm111M1pv9YCFhtKFrPILmabv68MxwH3AaBy/ZQlBlAyoazU2AdOcH7zpoovccd/wPakcVJ7CemRNJmHdipGelt5juC9MeZr6fGt7f3dCO49u37Gs/I6UpOaSP8JXVhsPhrYlhvwteBFL77uf34EGWSN1BgwahyUw1iI+g4r2gRokDen4hPetgKVx299Ds891vpXQWFC3p4Hm6Mo1iLTcu2CHXVf0hIfG70FUaSazyZ3pMGhMo87HSIoCL8Odhnb+nClGRYv8l6ICSXX8qor1E/fXCM3Zg55Is28aRJ6qtTa0MD50J+Q1o4xkEXXQmX8HWWulwue7DOwaYeERgqilzqAK8f1kn9pLkao0cK42eS1ge9hjycG4WYSMjlYTEtQ92o0/dLdiayEzCC0ZSt4+A/uxGG2MyfePLwTbcyGqbxzc+L/uiToVS14MeCIUSGhZA7aq9mBItVUyiBdeaXYs+Xx1r3hAm/oOLAf+izjUhnyNmObv7VXcebXLo9x9deNT+CFotxO/4XddGY5ccjY0UnoHkM82j/KCtI3LyKd86z8RjwODQ9pwc/Syf/M1DYRIEKHN/DkbvA3ctsiG3SfCtIE6ioa2cQW8=
   - secure: V+TJlEGki5cmw5ZTBKmXjtXShEG7HcnF1vq15nRtKv9o7bLK719/+0n7kLkHzicovUWKiinIadQ5160XukgPcKaWhz3CAIi1ZDP8gynMiiy8p/GR+cUcIFMSPr4FKGVs90Vx8ba9nsPNXBRbM00esAe4Kk+CtPL1OzLf1MUKv/Wl8Wt058udRLmqwt4vWDIIoVaAuAfwdk+b1eab+rKxaw76MmwKCe79uaPdvRPWNgD+jtrzMmn67H56b51WX+XAYGCgmpdZZWxoMZeai8bcmYoX06zrZ3VvvBdici1LMuV/cwmPxAZ6B9BvR6yMumbksEdUPe1xlqLGfJkf5l5QLR+Qb+jk3UTQw2znzN5xzEw+ABtWWUOvN/kPIc5rdx4AYACu4Z5oUHfDmh0lLzcSz7tyis7JIsqO0YWQKe3fyHJftwjyBeNCaK8oJbli4t3AUxJlM4WOFeYCtKQkCzHSuCBDIBFilIijYEmWYxuXTgAZGeOw3FbNTMArjLFxwO5s3JDpR1pldEyn+toHYgCz3fIN/DJOqQ8hbYlW1RDfxI87WZ50aY/Cfiko6llNCXfforNpCQHs+O4+NDDxOiEQ+sDvQ/oaKJbjDdF4boOcfLLR2C0UaQ/gs4L1u6zVb8pU8YzC98MZOq7+8uwk2EUo7kcYWHg+kAOjdDiR4qTk0zs=
   - secure: CuxDj9QaRytfJ9g8JukBah9HyZT8oyRGq8bFGz3B3R2+W0ojZ7eTA0lzSCcwIAfrx6FcCRIc6Zu+ZIBcOVW5qwrVu2XTXo2bEvnnPqKIZjjiYP8JEPSD7+0zXlgzJd79bBF/Bb71SvYeZ8N68Idl8MrCBj1YUR95bizYiaCclnL+XrIV4h8PKZ3Cuh5tmi9XUIPLTje0guHi6GF+cTEGH7BQ5vXqlk1AIHH0SCJHUZ6p6zbM/+500km+BfLdd3p3l7NYDHngKisOlIeX1MkbxyGjmXHEwKP1xAOqcUZmsQDEULIEZvvVo3yVEVAWy8dWhQRVcN3v6jLe7Z8zt9/tDVsC15Hncmfy9BbuqM8HmgXi8l5qjcipSrltrgyKK/IlmNKmIlLtNNlvU0QV0cvYY6JnBmv3JX6hjlCRsnNUKq36lbqPLH/n+jSJChPE2QnceqZvKjrj66lpwx3MYRu3cbvpfP1NOXb5vJ4tf2h5SRQ0gTDBdejsnNwjpmIsGAx2WW+TU5MEveVHFUtcN22YVL20yJ2+C0QSVjY/9vdQbNIbHDZ58IGZ0fy8zgjpGKhll+8xnI4HKmBDbOAXbpuUWlDc+2iRl6pJGqelqLy4bk57xf7WUj18e56XOMP8gY+tqJJC2X6lM2kMoq82pGi4gX/HBNlXHKXyszu7DF094s0=
-  - secure: BoSQSlDHNYvyGgG310sTT3v/rhXUuxjd+NnaLVwKtNkoJDmjQFnjLG1wRbeqaLxsaRYj1JDOPNbJ1dNHQ76UA0C39j4zRrVckf+JvKIx4/8SuYYG5nz6Jy8isBFjM2X5IL1BbdesfiEe/cWNVTl9jWqPuByvofnBX9K94vr64ktwqaA6bT2T9mTgpqxDp8RcVtFvtnx4rHB5MEQCQRO4+cqJZox9P1I7521Pst6voNFX19WlYE6i1Gm4E49NQEcm0sr2uVAECxqcUmngTf9xdyx2Hkutdkk+2G0iN0D6txn8SMANTAGL28FAAWa17t+BbxFAcxeXML+AJ43w1NCOEioI8NksUzAit3y5oSwJJkHa+Q3qu6YencN7yHWVt0b3vErNG+0vX1IhzyFNfms2i3GuQvdfgRFJnUZ0WUx0/n1LatWSKWAY29Vp2gXZqyBNWknu0rJ2X03qva4z8aCOBeEFtJ26l7VGc7sHiNnZ+8uDKVytp3FJ9ClxPleOftA+hPl4FKHLIdixNRYz9FL5H/whXY3jQlSFDgde2rMrXqaXitqY/tClyJuES0oSiENeHd3bQZug8F3DYrhe2s8PW4WGq+eL542uesBSV5ydMMNDRIsRGr+UPLyLKMwG7HJ0dYn9IEtg74Jv8QsBRCRWGyPcDbS2APmOtp8xDyyOuvA=
