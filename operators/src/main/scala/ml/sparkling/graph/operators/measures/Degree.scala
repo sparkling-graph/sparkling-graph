@@ -18,11 +18,9 @@ object Degree extends VertexMeasure[(Int, Int)] {
    * @return graph where each vertex is associated with its  degree (out,in)
    */
   def computeDegree[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED]) = {
-    //
-    if (vertexMeasureConfiguration.treatAsUndirected) {
-      graph.outerJoinVertices[Int,(Int,Int)](graph.degrees)((vId,oldValue,newValue)=>(newValue.getOrElse(0),newValue.getOrElse(0)))
-    } else {
-      graph.outerJoinVertices[Int,Int](graph.outDegrees)((vId,oldValue,newValue)=>newValue.getOrElse(0))
+    vertexMeasureConfiguration.treatAsUndirected match{
+      case true  =>     graph.outerJoinVertices[Int,(Int,Int)](graph.degrees)((vId,oldValue,newValue)=>(newValue.getOrElse(0),newValue.getOrElse(0)))
+      case _ =>   graph.outerJoinVertices[Int,Int](graph.outDegrees)((vId,oldValue,newValue)=>newValue.getOrElse(0))
       .outerJoinVertices[Int,(Int,Int)](graph.inDegrees)((vId,oldValue,newValue)=>(oldValue,newValue.getOrElse(0)))
     }
   }

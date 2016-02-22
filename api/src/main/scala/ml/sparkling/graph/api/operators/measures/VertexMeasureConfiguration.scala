@@ -16,20 +16,16 @@ case class VertexMeasureConfiguration[VD: ClassTag, ED: ClassTag](val bucketSize
 
 object VertexMeasureConfiguration {
 
-  def apply[VD:ClassTag, ED:ClassTag]() = {
+  def apply[VD:ClassTag, ED:ClassTag]() =
     new VertexMeasureConfiguration[VD, ED]( wholeGraphBucket[VD, ED] _)
-  }
 
-  def apply[VD:ClassTag, ED:ClassTag](treatAsUndirected:Boolean) = {
+  def apply[VD:ClassTag, ED:ClassTag](treatAsUndirected:Boolean) =
     new VertexMeasureConfiguration[VD, ED]( wholeGraphBucket[VD, ED] _,treatAsUndirected)
-  }
 
-  def apply[VD:ClassTag, ED:ClassTag](treatAsUndirected:Boolean,bucketSizeProvider:BucketSizeProvider[VD, ED]) = {
+  def apply[VD:ClassTag, ED:ClassTag](treatAsUndirected:Boolean,bucketSizeProvider:BucketSizeProvider[VD, ED]) =
     new VertexMeasureConfiguration[VD, ED](bucketSizeProvider,treatAsUndirected)
-  }
 
-  def apply[VD:ClassTag, ED:ClassTag](bucketSizeProvider:BucketSizeProvider[VD, ED]) = {
+  def apply[VD:ClassTag, ED:ClassTag](bucketSizeProvider:BucketSizeProvider[VD, ED]) =
     new VertexMeasureConfiguration[VD, ED](bucketSizeProvider)
-  }
 
 }

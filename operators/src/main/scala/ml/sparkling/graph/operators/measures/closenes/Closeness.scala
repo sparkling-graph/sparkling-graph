@@ -31,7 +31,9 @@ object Closeness extends VertexMeasure[Double]{
       val shortestPaths= ShortestPathsAlgorithm.computeSingleShortestPathsLengths(graph, startVid,treatAsUndirected=vertexMeasureConfiguration.treatAsUndirected)
       distanceSumGraph=distanceSumGraph.outerJoinVertices(shortestPaths.vertices)((vId,oldValue,newValue)=>{
         val toProcessValue=newValue.flatMap(value=>Option((if(value!=0d) 1 else 0,value))).getOrElse((0,0d))
-        (oldValue._1+toProcessValue._1,oldValue._2+toProcessValue._2)
+        val pathCountOut: Long = oldValue._1 + toProcessValue._1
+        val pathLengthSumOut: Double = oldValue._2 + toProcessValue._2
+        (pathCountOut,pathLengthSumOut)
       })
       shortestPaths.unpersist()
     })
