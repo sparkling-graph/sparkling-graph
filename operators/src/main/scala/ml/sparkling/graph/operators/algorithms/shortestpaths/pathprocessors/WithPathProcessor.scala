@@ -29,8 +29,11 @@ class WithPathProcessor[VD,ED]() extends  PathProcessor[VD,ED,Map[VertexId,(ED,S
    map.filterKeys(_!=targetVertexId).mapValues(extendPathsSet(_,vertexId,distance)).map(identity)
   }
 
-  private def extendPathsSet(set:PathsSet,vertexId:VertexId,distance:ED)(implicit num:Numeric[ED]):PathsSet={
-    (num.plus(distance,set._1),set._2.map(vertexId :: _))
+  private def extendPathsSet(pathSet:PathsSet,vertexId:VertexId,distance:ED)(implicit num:Numeric[ED]):PathsSet={
+    pathSet match{
+      case (edge,set) =>  (num.plus(distance,edge),set.map(vertexId :: _))
+    }
+
   }
 
   private def mergePathSets(pathSet1:Option[PathsSet],pathSet2:Option[PathsSet])(implicit num:Numeric[ED]): PathsSet ={

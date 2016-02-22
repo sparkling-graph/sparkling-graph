@@ -43,7 +43,7 @@ object Hits extends VertexMeasure[(Double, Double)] {
       }
       withNewAuths.unpersist()
       val withNewHubs = computationGraph.aggregateMessages[Double](
-        sendMsg = (context)=>{
+        sendMsg = context=>{
           val destinationAuth: Double = context.dstAttr match{
            case  (hub,auth) => auth
           }

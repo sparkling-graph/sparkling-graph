@@ -42,7 +42,7 @@ object NeighboursUtils {
 
     val withNeighboursVertices = graph.mapVertices((vId,data)=>new NeighbourSet())
      .aggregateMessages[NeighbourSet](
-        sendMsg=(edgeContext)=>{
+        sendMsg=edgeContext=>{
           edgeContext.sendToSrc(if(vertexPredicate(edgeContext.dstId)) setWith(edgeContext.dstId) else new NeighbourSet(0))
           edgeContext.sendToDst(new NeighbourSet(0))
           if(treatAsUndirected){
