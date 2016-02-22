@@ -23,8 +23,8 @@ class Closeness$Test extends SparkTest{
     When("Computes closeness")
     val result=Closeness.compute(graph)
     Then("Should calculate closeness correctly")
-    val verticesSortedById=result.vertices.collect().sortBy(t=>t._1)
-    verticesSortedById .map(_._2).zip(Array(
+    val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}
+    verticesSortedById .map{case (vId,data)=>data} .zip(Array(
       0.4, 0.375, 1d/3, 0.25, 0d
     )).foreach{case (a,b)=>{a should be (b +- 1e-5 )}}
   }
@@ -39,8 +39,8 @@ class Closeness$Test extends SparkTest{
     When("Computes Closeness")
     val result=Closeness.compute(graph)
     Then("Should calculate Closeness correctly")
-    val verticesSortedById=result.vertices.collect().sortBy(t=>t._1)
-    verticesSortedById .map(_._2).zip(Array(
+    val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}
+    verticesSortedById .map{case (vId,data)=>data} .zip(Array(
       0.75, 0.5, 0.6, 0.75
     )).foreach{case (a,b)=>{a should be (b +- 1e-5 )}}
   }
@@ -52,8 +52,8 @@ class Closeness$Test extends SparkTest{
     When("Computes Closeness")
     val result=Closeness.compute(graph,VertexMeasureConfiguration[Int,Int](true))
     Then("Should calculate Closeness correctly")
-    val verticesSortedById=result.vertices.collect().sortBy(t=>t._1)
-    verticesSortedById .map(_._2).zip(Array(
+    val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}
+    verticesSortedById .map{case (vId,data)=>data} .zip(Array(
       1d,1d,1d,1d
     )).foreach{case (a,b)=>{a should be (b +- 1e-5 )}}
   }

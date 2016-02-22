@@ -37,7 +37,7 @@ class CSVLoader$Test extends FlatSpec with BeforeAndAfter with GivenWhenThen wit
     Then("Graph should be loaded correctly")
     graph.vertices.count() should equal(6)
     graph.edges.count() should equal(5)
-    graph.edges.collect().map(edge => edge.attr) should equal((0 until 5).map(x => 1))
+    graph.edges.collect().map(_.attr) should equal((0 until 5).map(x => 1))
   }
 
 
@@ -49,7 +49,7 @@ class CSVLoader$Test extends FlatSpec with BeforeAndAfter with GivenWhenThen wit
     Then("Graph should be loaded correctly")
     graph.vertices.count() should equal(6)
     graph.edges.count() should equal(4)
-    graph.vertices.collect().map(t => t._1).sorted should equal(0 until 6)
+    graph.vertices.collect().map{case (vId,data)=> vId}.sorted should equal(0 until 6)
   }
 
   "File that need vertices indexing and has not standard columns arragement" should "be loaded" in {
@@ -60,7 +60,7 @@ class CSVLoader$Test extends FlatSpec with BeforeAndAfter with GivenWhenThen wit
     Then("Graph should be loaded correctly")
     graph.vertices.count() should equal(3)
     graph.edges.count() should equal(3)
-    graph.vertices.collect().map(t => t._2).sorted should equal(List("adam", "marcin", "tomek"))
+    graph.vertices.collect().map{case (vId,data)=> data}.sorted should equal(List("adam", "marcin", "tomek"))
   }
 
 

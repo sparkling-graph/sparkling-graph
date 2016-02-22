@@ -27,12 +27,6 @@ class SingleVertexProcessor[VD, ED](computedVertexId:VertexId) extends PathProce
       case (_,0d)=> map1
       case _ =>Math.min(map1,map2)
     }
-    if(map1==0d)
-      map2
-    else if(map2==0d)
-      map1
-    else
-    Math.min(map1,map2)
   }
 
   override def putNewPath(map: Double, to: VertexId, weight: ED)(implicit num: Numeric[ED]): Double = {

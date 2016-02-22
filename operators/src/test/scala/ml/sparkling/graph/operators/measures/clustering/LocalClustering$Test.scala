@@ -19,7 +19,7 @@ class LocalClustering$Test  extends SparkTest{
     When("Computes local clustering")
     val localClustering=LocalClustering.compute(graph)
     Then("Should calculate local clustering correctly")
-    val verticesSortedById=localClustering.vertices.collect().sortBy(t=>t._1)
+    val verticesSortedById=localClustering.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById should equal (Array(
       (1,0.0), (2,0.0), (3,0.0), (4,0.0), (5,0.0)
     ))
@@ -32,7 +32,7 @@ class LocalClustering$Test  extends SparkTest{
     When("Computes local clustering")
     val localClustering=LocalClustering.compute(graph)
     Then("Should calculate local clustering correctly")
-    val verticesSortedById=localClustering.vertices.collect().sortBy(t=>t._1)
+    val verticesSortedById=localClustering.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById should equal (Array(
       (1,0.5), (2,0d), (3,0d), (4,0.5)
     ))
@@ -45,7 +45,7 @@ class LocalClustering$Test  extends SparkTest{
     When("Computes local clustering")
     val localClustering=LocalClustering.compute(graph,VertexMeasureConfiguration[Int,Int](true))
     Then("Should calculate local clustering correctly")
-    val verticesSortedById=localClustering.vertices.collect().sortBy(t=>t._1)
+    val verticesSortedById=localClustering.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById  should equal (Array(
       (1,1), (2,1), (3,1), (4,1)
     ))
