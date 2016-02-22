@@ -14,7 +14,7 @@ import scala.reflect.ClassTag
  */
 object GraphProviders {
   val defaultStorageLevel=StorageLevel.MEMORY_ONLY
-  def simpleGraphBuilder[VD: ClassTag, ED: ClassTag](defaultVertex: VD,
+  def simpleGraphBuilder[VD: ClassTag, ED: ClassTag](defaultVertex: Option[VD]=None,
                                                      vertexProvider: Row => Seq[(VertexId, VD)],
                                                      edgeProvider: Row => Seq[Edge[ED]],
                                                      edgeStorageLevel: StorageLevel = defaultStorageLevel,
@@ -28,10 +28,14 @@ object GraphProviders {
 
     val vertices: RDD[(VertexId, VD)] = mapRows(vertexProvider)
     val edges: RDD[Edge[ED]] = mapRows(edgeProvider)
-    Graph(vertices,edges,defaultVertex,edgeStorageLevel,vertexStorageLevel)
+    defaultVertex match{
+      case None => Graph(vertices,edges,edgeStorageLevel=edgeStorageLevel,vertexStorageLevel=vertexStorageLevel)
+      case Some(defaultVertexValue)=> Graph(vertices,edges,defaultVertexValue,edgeStorageLevel,vertexStorageLevel)
+    }
+
   }
 
-  def indexedGraphBuilder[VD: ClassTag, ED: ClassTag](defaultVertex: VD,
+  def indexedGraphBuilder[VD:ClassTag, ED: ClassTag](defaultVertex: Option[VD]=None,
                                                       vertexProvider: (Row, ToVertexId[VD]) => Seq[(VertexId, VD)],
                                                       edgeProvider: (Row, ToVertexId[VD]) => Seq[Edge[ED]],
                                                       columnsToIndex: Seq[Int],

@@ -56,7 +56,7 @@ class CSVLoader$Test extends FlatSpec with BeforeAndAfter with GivenWhenThen wit
     Given("complex file path")
     val filePath = getClass.getResource("/multiColumn.csv")
     When("Loads graph")
-    val graph = CSVLoader.loadGraphFromCSVWitVertexIndexing(filePath.toString,defaultVertex = "",column1=1,column2=3)
+    val graph = CSVLoader.loadGraphFromCSVWitVertexIndexing[String,Double](filePath.toString,column1=1,column2=3)
     Then("Graph should be loaded correctly")
     graph.vertices.count() should equal(3)
     graph.edges.count() should equal(3)
@@ -68,7 +68,7 @@ class CSVLoader$Test extends FlatSpec with BeforeAndAfter with GivenWhenThen wit
     Given("complex file path")
     val filePath = getClass.getResource("/multiColumn.csv")
     When("Loads graph")
-    val graph = CSVLoader.loadGraphFromCSVWitVertexIndexing(filePath.toString,defaultVertex = "",column1=1,column2=3,edgeAttributeProvider = PropertyProviders.longAttributeProvider(5) _)
+    val graph = CSVLoader.loadGraphFromCSVWitVertexIndexing(filePath.toString,column1=1,column2=3,edgeAttributeProvider = PropertyProviders.longAttributeProvider(5) _)
     Then("Attribute should be extracted correctly")
     graph.edges.collect().map(_.attr).sorted should equal(List(15,32,56))
   }
@@ -77,7 +77,7 @@ class CSVLoader$Test extends FlatSpec with BeforeAndAfter with GivenWhenThen wit
     Given("complex file path")
     val filePath = getClass.getResource("/multiColumn.csv")
     When("Loads graph")
-    val graph = CSVLoader.loadGraphFromCSVWitVertexIndexing(filePath.toString,defaultVertex = "",column1=1,column2=3,edgeAttributeProvider = PropertyProviders.doubleAttributeProvider(6) _)
+    val graph = CSVLoader.loadGraphFromCSVWitVertexIndexing(filePath.toString,column1=1,column2=3,edgeAttributeProvider = PropertyProviders.doubleAttributeProvider(6) _)
     Then("Attribute should be extracted correctly")
     graph.edges.collect().map(_.attr).sorted should equal(List(1.25,1.34,1.58))
   }

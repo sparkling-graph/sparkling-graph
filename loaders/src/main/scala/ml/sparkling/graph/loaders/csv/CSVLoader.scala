@@ -63,7 +63,7 @@ object CSVLoader {
                        csvLoaderConfig: CsvLoaderConfig = CsvLoaderConfig(),
                        column1: Int = 0,
                        column2: Int = 1,
-                        defaultVertex:String="<EMPTY VERTEX>",
+                        defaultVertex:Option[String]=Option(""),
                        partitions:Int=0)
                       (implicit sc: SparkContext): Graph[String, Double] = {
     loadGraphFromCSV(file, simpleGraphBuilder(defaultVertex = defaultVertex,
@@ -87,7 +87,7 @@ object CSVLoader {
 
   def loadGraphFromCSVWitVertexIndexing[VD: ClassTag, ED: ClassTag](file: String,
                                                                     csvLoaderConfig: CsvLoaderConfig = CsvLoaderConfig(),
-                                                                    defaultVertex: VD = null,
+                                                                    defaultVertex: Option[VD]=Option("").asInstanceOf[Option[VD]],
                                                                     column1: Int = 0,
                                                                     column2: Int = 1,
                                                                     edgeAttributeProvider: EdgeAttributeExtractor[ED] = defaultEdgeAttribute _,

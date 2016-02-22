@@ -13,8 +13,8 @@ object DataFrameReaderConfigurator {
       reader.option("delimiter",cSVLoaderConfig.delimiter)
       reader.option("quote",cSVLoaderConfig.quote)
      cSVLoaderConfig.schema match{
-       case null => reader.option("inferSchema",cSVLoaderConfig.inferSchema.toString)
-       case _ => reader.schema(cSVLoaderConfig.schema)
+       case None => reader.option("inferSchema",cSVLoaderConfig.inferSchema.toString)
+       case Some(schema) => reader.schema(schema)
       }
       reader
     }

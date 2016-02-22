@@ -78,14 +78,12 @@ def main(args:Array[String])={
 
 
   val graph = if (partitionNumber != -1)
-    CSVLoader.loadGraphFromCSVWitVertexIndexing(file,
+    CSVLoader.loadGraphFromCSVWitVertexIndexing[String,Double](file,
       new CsvLoaderConfig(delimiter = delimiter),
-      defaultVertex = "<NO VERTEX>",
       edgeAttributeProvider = Utils.getEdgeAttributeProvider(edgeField), partitions = partitionNumber)
   else
-    CSVLoader.loadGraphFromCSVWitVertexIndexing(file,
-      new CsvLoaderConfig(delimiter = delimiter),
-      defaultVertex = "<NO VERTEX>", edgeAttributeProvider = Utils.getEdgeAttributeProvider(edgeField))
+    CSVLoader.loadGraphFromCSVWitVertexIndexing[String,Double](file,
+      new CsvLoaderConfig(delimiter = delimiter), edgeAttributeProvider = Utils.getEdgeAttributeProvider(edgeField))
    partitionedGraph = if (graphPartitions != -1) {
     graph.partitionBy(PartitionStrategy.EdgePartition2D, graphPartitions).cache()
   } else {

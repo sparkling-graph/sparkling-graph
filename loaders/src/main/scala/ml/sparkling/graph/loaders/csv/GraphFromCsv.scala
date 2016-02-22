@@ -34,8 +34,8 @@ object GraphFromCsv {
               case FirstVertexColumn(c)=>conf.columnOne=c;conf
               case SecondVertexColumn(c)=>conf.columnTwo=c;conf
               case Partitions(p)=>conf.partitions=p;conf
-              case DefaultVertex(v:VD)=>conf.defaultVertex=v;conf
-              case Schema(s)=>conf.csvLoaderConfig.schema=s;conf
+              case DefaultVertex(v:VD)=>conf.defaultVertex=Option(v);conf
+              case Schema(s)=>conf.csvLoaderConfig.schema=Option(s);conf
               case EdgeValue(value)=>conf.edgeProvider=valueEdge[VD,ED](value.asInstanceOf[ED]);conf;
               case EdgeColumn(column)=>conf.edgeProvider=columnEdge[VD,ED](column);conf;
               case NoHeader=>conf.csvLoaderConfig.header=false;conf
@@ -57,7 +57,7 @@ object GraphFromCsv {
 
     case class LoaderConfiguration[V:ClassTag,E:ClassTag](
                                                            var edgeProvider:EdgeProvider[E],
-                                                           var defaultVertex:V,
+                                                           var defaultVertex:Option[V]=None,
                                                            var columnOne: Integer=0,
                                       var columnTwo:Integer=1,
                                       var partitions:Integer=0,
@@ -105,20 +105,20 @@ object GraphFromCsv {
       case `integer` => 1.asInstanceOf[E]
       case ClassTag.Double => 1d.asInstanceOf[E]
       case ClassTag.Float => 1f.asInstanceOf[E]
-      case typ=>log.debug(s"Unsuported edge type, please configure edge attribute provider ${typ}"); null.asInstanceOf[E]
+      case typ=>log.debug(s"Unsuported edge type, please configure edge attribute provider ${typ}"); "".asInstanceOf[E]
     }
   }
 
-  def vertexDefaultValue[V:ClassTag]():V={
+  def vertexDefaultValue[V:ClassTag]():Option[V]={
     val string=implicitly[ClassTag[String]]
     val integer=implicitly[ClassTag[Integer]]
     implicitly[ClassTag[V]] match{
-      case `string`  => "".asInstanceOf[V]
-      case ClassTag.Int => 1.asInstanceOf[V]
-      case `integer` => 1.asInstanceOf[V]
-      case ClassTag.Double => 1d.asInstanceOf[V]
-      case ClassTag.Float => 1f.asInstanceOf[V]
-      case typ=>log.debug(s"Unsuported edge type, please configure edge attribute provider ${typ}"); null.asInstanceOf[V]
+      case `string`  => Option("".asInstanceOf[V])
+      case ClassTag.Int => Option(1.asInstanceOf[V])
+      case `integer` => Option(1.asInstanceOf[V])
+      case ClassTag.Double => Option(1d.asInstanceOf[V])
+      case ClassTag.Float => Option(1f.asInstanceOf[V])
+      case typ=>log.debug(s"Unsuported edge type, please configure edge attribute provider ${typ}"); Option("").asInstanceOf[Option[V]]
     }
   }
 
