@@ -64,8 +64,8 @@ object Hits extends VertexMeasure[(Double, Double)] {
 
   def normalizeHubAuthBy(denominator:(Double,Double))(vId:VertexId,data:(Double,Double)):(Double,Double)={
     val normalizedHub=data._1/denominator._1
-    val c=data._2/denominator._2
-    (normalizedHub,normalizedHub)
+    val normalizedAuth=data._2/denominator._2
+    (normalizedHub,normalizedAuth)
   }
   
   def sumHubAuthTuples(t1:(Double,Double),t2:(Double,Double)):(Double,Double)={

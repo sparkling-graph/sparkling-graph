@@ -31,9 +31,20 @@ object NeighborhoodConnectivity extends VertexMeasure[Double] {
             context.sendToSrc((0,0))
           }
         },
-        mergeMsg= (t1,t2) => (t1._1+t2._1,t1._2+t2._2))
-      .mapValues(t => if (t._2 == 0) 0 else t._1.toDouble / t._2)
+        mergeMsg=addTuples)
+      .mapValues(
+        t=> t match {
+          case (_, 0) => 0
+          case (degresSum, countsSum) => degresSum.toDouble/countsSum
+        }
+    )
     graph.outerJoinVertices(connectivityRdd)((vId, oldValue, newValue) => newValue.getOrElse(0d))
+  }
+
+  def addTuples(t1:(Int,Int),t2:(Int,Int)):(Int,Int)={
+    val sumDegress=t1._1+t2._2
+    val sumCounts=t1._2+t2._2
+    (sumDegress,sumCounts)
   }
 
   /**

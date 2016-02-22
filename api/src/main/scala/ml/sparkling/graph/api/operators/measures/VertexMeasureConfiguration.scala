@@ -9,10 +9,7 @@ import scala.reflect.ClassTag
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
 case class VertexMeasureConfiguration[VD: ClassTag, ED: ClassTag](val bucketSizeProvider: BucketSizeProvider[VD, ED],
-                                                                   val treatAsUndirected: Boolean = false) {
-
-}
-
+                                                                   val treatAsUndirected: Boolean = false)
 
 object VertexMeasureConfiguration {
 
