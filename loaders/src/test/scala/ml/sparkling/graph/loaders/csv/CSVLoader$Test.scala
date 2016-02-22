@@ -13,20 +13,16 @@ class CSVLoader$Test extends FlatSpec with BeforeAndAfter with GivenWhenThen wit
   private val master = "local[2]"
   private val appName = "example-spark"
 
-  private implicit var sc: SparkContext = _
-
+  implicit var sc:SparkContext=None.orNull
   before {
     val conf = new SparkConf()
       .setMaster(master)
       .setAppName(appName)
-
     sc = new SparkContext(conf)
   }
 
   after {
-    if (sc != null) {
-      sc.stop()
-    }
+    sc.stop()
   }
 
   "Simple csv file " should "be loaded and edges should have default attribute 1" in {

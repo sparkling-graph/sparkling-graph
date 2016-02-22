@@ -13,8 +13,7 @@ abstract class SparkTest  extends FlatSpec with BeforeAndAfter with GivenWhenThe
   val master = "local[8]"
   def appName:String
 
-  implicit var sc: SparkContext = _
-
+  implicit var sc:SparkContext=None.orNull
   before {
     val conf = new SparkConf()
       .setMaster(master)
@@ -23,9 +22,7 @@ abstract class SparkTest  extends FlatSpec with BeforeAndAfter with GivenWhenThe
   }
 
   after {
-    if (sc != null) {
       sc.stop()
-    }
   }
 
   def loadGraph(file:String)={

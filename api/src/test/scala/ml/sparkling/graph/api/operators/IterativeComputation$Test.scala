@@ -14,8 +14,7 @@ class IterativeComputation$Test extends FlatSpec with BeforeAndAfter{
   val master = "local[*]"
   def appName:String="InterativeComputationTest"
 
-  implicit var sc: SparkContext = _
-
+  implicit var sc:SparkContext=None.orNull
   before {
     val conf = new SparkConf()
       .setMaster(master)
@@ -24,9 +23,7 @@ class IterativeComputation$Test extends FlatSpec with BeforeAndAfter{
   }
 
   after {
-    if (sc != null) {
-      sc.stop()
-    }
+    sc.stop()
   }
 
   def loadGraph(file:String)={
