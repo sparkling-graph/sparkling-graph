@@ -20,5 +20,5 @@ trait ShortestPaths {
    * @tparam ED -  edge type
    * @return - Graph where each vertex contains all its shortest paths, with structure of them
    */
-  def computeShortestPaths[VD, ED:ClassTag](graph: Graph[VD, ED], vertexPredicate:VertexPredicate, treatAsUndirected: Boolean = false)(implicit num: Numeric[ED]): Graph[WithPathContainer, ED]
+  def compute[VD, ED:ClassTag](graph: Graph[VD, ED], vertexPredicate:VertexPredicate, treatAsUndirected: Boolean = false)(implicit num: Numeric[ED]): Graph[WithPathContainer, ED]
 }

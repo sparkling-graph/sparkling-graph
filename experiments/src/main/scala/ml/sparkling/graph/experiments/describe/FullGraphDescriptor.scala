@@ -47,8 +47,9 @@ object FullGraphDescriptor {
       val graphMeasures = measure match {
         case m: VertexMeasure[Any@unchecked] => m.compute(cachedGraph, vertexMeasureConfiguration)
       }
-      outGraph.outerJoinVertices(graphMeasures.vertices)(extendValueList)
-        .vertices.map(t => s"${t._1};${t._2.reverse.mkString(";")}").saveAsTextFile(s"${directory}/${measureName}")
+      val outputCSV=outGraph.outerJoinVertices(graphMeasures.vertices)(extendValueList)
+        .vertices.map(t => s"${t._1};${t._2.reverse.mkString(";")}")
+      outputCSV.saveAsTextFile(s"${directory}/${measureName}")
       graphMeasures.unpersist()
     }
     }

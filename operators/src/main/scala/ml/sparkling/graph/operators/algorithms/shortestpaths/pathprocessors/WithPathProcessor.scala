@@ -35,12 +35,10 @@ class WithPathProcessor[VD,ED]() extends  PathProcessor[VD,ED,Map[VertexId,(ED,S
 
   private def mergePathSets(set1:Option[PathsSet],set2:Option[PathsSet])(implicit num:Numeric[ED]): PathsSet ={
     (set1 :: set2 :: Nil).flatten.reduce((a,b)=>{
-      if(num.gt(a._1,b._1)){
-        b
-      }else if(num.gt(b._1,a._1)){
-        a
-      }else{
-        (a._1,a._2++b._2)
+      num.compare(a._1,b._1).signum match{
+        case 0=> (a._1,a._2++b._2)
+        case 1=>b
+        case -1=>a
       }
     })
   }
