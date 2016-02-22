@@ -29,7 +29,7 @@ libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.4
   *  Eigenvector
   *  Hits
   *  Neighbor connectivity
-  *  Vetex embeddedness
+  *  Vertex embeddedness
 * Experiments
   *  Describe graph using all measures to CSV files
 
