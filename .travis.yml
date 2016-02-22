@@ -18,7 +18,7 @@ script:
 - find $HOME/.sbt -name "*.lock" | xargs rm
 - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
 after_success:
-- sbt coveralls
+- bash <(curl -s https://codecov.io/bash)
 - sbt ghpages-push-site
 - sbt publish
 env:
