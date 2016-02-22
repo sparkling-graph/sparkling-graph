@@ -229,14 +229,14 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">computeHits</span><span class="tparams">[<span name="VD">VD</span>, <span name="ED">ED</span>]</span><span class="params">(<span name="graph">graph: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.operators.measures.hits.Hits.computeHits.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.operators.measures.hits.Hits.computeHits.ED">ED</span>]</span>, <span name="continuePredicate">continuePredicate: <a href="HitsUtils$.html#ContinuePredicate=(Long,(Double,Double),(Double,Double))=&gt;Boolean" class="extmbr" name="ml.sparkling.graph.operators.measures.hits.HitsUtils.ContinuePredicate">ContinuePredicate</a> = <span class="symbol"><span class="name"><a href="HitsUtils$.html">convergencePredicate(1e-8)</a></span></span></span>, <span name="normalize">normalize: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Boolean" class="extype" target="_top">Boolean</a> = <span class="symbol">true</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.operators.measures.hits.Hits.computeHits.VD">VD</span>]</span>, <span name="arg1">arg1: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.operators.measures.hits.Hits.computeHits.ED">ED</span>]</span>)</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[(<a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Double" class="extype" target="_top">Double</a>, <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Double" class="extype" target="_top">Double</a>), <span class="extype" name="ml.sparkling.graph.operators.measures.hits.Hits.computeHits.ED">ED</span>]</span>
+        <span class="name">computeHits</span><span class="tparams">[<span name="VD">VD</span>, <span name="ED">ED</span>]</span><span class="params">(<span name="graph">graph: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.operators.measures.hits.Hits.computeHits.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.operators.measures.hits.Hits.computeHits.ED">ED</span>]</span>, <span name="continuePredicate">continuePredicate: <a href="HitsUtils$.html#ContinuePredicate=(Long,(Double,Double),(Double,Double))=&gt;Boolean" class="extmbr" name="ml.sparkling.graph.operators.measures.hits.HitsUtils.ContinuePredicate">ContinuePredicate</a> = <span class="symbol"><span class="name"><a href="../../../../../package.html">convergencePredicate(1e-8)</a></span></span></span>, <span name="normalize">normalize: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Boolean" class="extype" target="_top">Boolean</a> = <span class="symbol">true</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.operators.measures.hits.Hits.computeHits.VD">VD</span>]</span>, <span name="arg1">arg1: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.operators.measures.hits.Hits.computeHits.ED">ED</span>]</span>)</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[(<a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Double" class="extype" target="_top">Double</a>, <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Double" class="extype" target="_top">Double</a>), <span class="extype" name="ml.sparkling.graph.operators.measures.hits.Hits.computeHits.ED">ED</span>]</span>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.hits.Hits$@computeHits[VD,ED](graph:org.apache.spark.graphx.Graph[VD,ED],continuePredicate:ml.sparkling.graph.operators.measures.hits.HitsUtils.ContinuePredicate,normalize:Boolean)(implicitevidence$1:scala.reflect.ClassTag[VD],implicitevidence$2:scala.reflect.ClassTag[ED]):org.apache.spark.graphx.Graph[(Double,Double),ED]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Generic hits (hub,auth) computation method, should be used for extensions, computations are done until @continuePredicate gives true</p><div class="fullcomment"><div class="comment cmt"><p>Generic hits (hub,auth) computation method, should be used for extensions, computations are done until @continuePredicate gives true</p></div><dl class="paramcmts block"><dt class="tparam">VD</dt><dd class="cmt"><p>- vertex data type</p></dd><dt class="tparam">ED</dt><dd class="cmt"><p>- edge data type</p></dd><dt class="param">graph</dt><dd class="cmt"><p>- computation graph</p></dd><dt class="param">continuePredicate</dt><dd class="cmt"><p>- convergence predicate</p></dd><dt class="param">normalize</dt><dd class="cmt"><p>- if true, output values are normalized</p></dd><dt>returns</dt><dd class="cmt"><p>graph where each vertex is associated with its eigenvector</p></dd></dl></div>
+      <p class="shortcomment cmt">Generic hits (hub,auth) computation method, should be used for extensions, computations are done until @continuePredicate gives true</p><div class="fullcomment"><div class="comment cmt"><p>Generic hits (hub,auth) computation method, should be used for extensions, computations are done until @continuePredicate gives true</p></div><dl class="paramcmts block"><dt class="tparam">VD</dt><dd class="cmt"><p>- vertex data type</p></dd><dt class="tparam">ED</dt><dd class="cmt"><p>- edge data type</p></dd><dt class="param">graph</dt><dd class="cmt"><p>- computation graph</p></dd><dt class="param">continuePredicate</dt><dd class="cmt"><p>- convergence predicate</p></dd><dt class="param">normalize</dt><dd class="cmt"><p>- if true, output values are normalized</p></dd><dt>returns</dt><dd class="cmt"><p>graph where each vertex is associated with its hits (hub,auth) values</p></dd></dl></div>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -362,6 +362,23 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="ml.sparkling.graph.operators.measures.hits.Hits#normalizeHubAuthBy" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="normalizeHubAuthBy(denominator:(Double,Double))(vId:org.apache.spark.graphx.VertexId,data:(Double,Double)):(Double,Double)"></a>
+      <a id="normalizeHubAuthBy((Double,Double))(VertexId,(Double,Double)):(Double,Double)"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">normalizeHubAuthBy</span><span class="params">(<span name="denominator">denominator: (<a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Double" class="extype" target="_top">Double</a>, <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Double" class="extype" target="_top">Double</a>)</span>)</span><span class="params">(<span name="vId">vId: <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span></span>, <span name="data">data: (<a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Double" class="extype" target="_top">Double</a>, <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Double" class="extype" target="_top">Double</a>)</span>)</span><span class="result">: (<a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Double" class="extype" target="_top">Double</a>, <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Double" class="extype" target="_top">Double</a>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.hits.Hits$@normalizeHubAuthBy(denominator:(Double,Double))(vId:org.apache.spark.graphx.VertexId,data:(Double,Double)):(Double,Double)" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="notify():Unit"></a>
       <a id="notify():Unit"></a>
@@ -396,6 +413,23 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="ml.sparkling.graph.operators.measures.hits.Hits#sumHubAuthTuples" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="sumHubAuthTuples(t1:(Double,Double),t2:(Double,Double)):(Double,Double)"></a>
+      <a id="sumHubAuthTuples((Double,Double),(Double,Double)):(Double,Double)"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">sumHubAuthTuples</span><span class="params">(<span name="t1">t1: (<a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Double" class="extype" target="_top">Double</a>, <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Double" class="extype" target="_top">Double</a>)</span>, <span name="t2">t2: (<a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Double" class="extype" target="_top">Double</a>, <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Double" class="extype" target="_top">Double</a>)</span>)</span><span class="result">: (<a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Double" class="extype" target="_top">Double</a>, <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Double" class="extype" target="_top">Double</a>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.hits.Hits$@sumHubAuthTuples(t1:(Double,Double),t2:(Double,Double)):(Double,Double)" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
