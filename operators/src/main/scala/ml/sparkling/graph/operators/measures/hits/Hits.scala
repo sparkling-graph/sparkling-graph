@@ -28,15 +28,17 @@ object Hits extends VertexMeasure[(Double, Double)] {
     var computationGraph = graph.mapVertices((vId, data) => (1d / numVertices, 1d / numVertices))
     while (continuePredicate(iteration, oldValues, newValues) || iteration == 0) {
       val withNewAuths = computationGraph.aggregateMessages[Double](
-        sendMsg = (context)=>{
+        sendMsg = context=>{
           val sourceHub: Double = context.srcAttr._1
           context.sendToDst(sourceHub)
           context.sendToSrc(0d)
           },
         mergeMsg = (a,b)=>a+b)
-      val newAuths: RDD[Double] = withNewAuths.map(e => e._2)
-      val normAuths = newAuths.max()
-      computationGraph = computationGraph.outerJoinVertices(withNewAuths)((vId, oldValue, newValue) => (oldValue._1, newValue.getOrElse(0d) / normAuths))
+      val normAuths = withNewAuths.map{case (vId,auth) => auth}.max()
+      computationGraph = computationGraph.outerJoinVertices(withNewAuths){
+        case (vId, (hub,auth), Some(newValue)) => (hub, newValue / normAuths)
+        case (vId, (hub,auth), None) => (hub, 0d)
+      }
       withNewAuths.unpersist()
       val withNewHubs = computationGraph.aggregateMessages[Double](
         sendMsg = (context)=>{
@@ -45,12 +47,11 @@ object Hits extends VertexMeasure[(Double, Double)] {
           context.sendToDst(0d)
           },
         mergeMsg = (a,b)=>a+b)
-      val newHubs: RDD[Double] = withNewHubs.map(e => e._2)
-      val normHubs = newHubs.max()
+      val normHubs = withNewHubs.map{case (vId,hub) => hub}.max()
       computationGraph = computationGraph.outerJoinVertices(withNewHubs)((vId, oldValue, newValue) => (newValue.getOrElse(0d) / normHubs, oldValue._2))
       withNewHubs.unpersist()
       oldValues = newValues
-      newValues = computationGraph.vertices.map(t => t._2).fold((0d, 0d))(sumHubAuthTuples)
+      newValues = computationGraph.vertices.map{case (vId,(hub,auth)) => (hub,auth)}.fold((0d, 0d))(sumHubAuthTuples)
       newValues = (newValues._1 / numVertices, newValues._2 / numVertices)
       iteration += 1
     }
@@ -63,15 +64,21 @@ object Hits extends VertexMeasure[(Double, Double)] {
   }
 
   def normalizeHubAuthBy(denominator:(Double,Double))(vId:VertexId,data:(Double,Double)):(Double,Double)={
-    val normalizedHub=data._1/denominator._1
-    val normalizedAuth=data._2/denominator._2
-    (normalizedHub,normalizedAuth)
+    (denominator,data) match{
+      case ((hubDenominator,authDenominator),(hub,auth))=>
+        val normalizedHub=hub/hubDenominator
+        val normalizedAuth=auth/authDenominator
+        (normalizedHub,normalizedAuth)
+    }
   }
   
   def sumHubAuthTuples(t1:(Double,Double),t2:(Double,Double)):(Double,Double)={
-    val sumHub=t1._1+t2._1
-    val sumAuth=t1._2+t2._2
-    (sumHub,sumAuth)
+    (t1,t2) match{
+      case ((hub1,auth1),(hub2,auth2))=>
+        val sumHub=hub1+hub2
+        val sumAuth=auth1+auth2
+        (sumHub,sumAuth)
+    }
   }
 
   /**

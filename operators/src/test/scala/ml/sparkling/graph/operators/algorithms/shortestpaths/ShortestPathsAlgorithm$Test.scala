@@ -23,7 +23,7 @@ class ShortestPathsAlgorithm$Test  extends SparkTest{
     When("Loads graph")
     val shortestPaths=ShortestPathsAlgorithm.computeShortestPaths(graph)
     Then("Should calculate shortest paths correctly")
-      val verticesSortedById=shortestPaths.vertices.collect().sortBy(t=>t._1)
+      val verticesSortedById=shortestPaths.vertices.collect().sortBy{case (vId,data)=>vId}
       verticesSortedById.map(t=>(t._1,t._2.mapValues(s=>s.map(l=>l.toList)))) should equal (Array(
       (1,Map(2 -> Set(List(1d)), 3 -> Set(List(2d,2d)), 4 -> Set(List(3d,3d,2d)), 5 -> Set(List(4d,4d,3d,2d)))),
       (2,Map(3 -> Set(List(1d)), 4 -> Set(List(2d,3d)), 5 -> Set(List(3d,4d,3d)) )),
@@ -40,7 +40,7 @@ class ShortestPathsAlgorithm$Test  extends SparkTest{
     When("Loads graph")
     val shortestPaths=ShortestPathsAlgorithm.computeSingleShortestPathsLengths(graph,1)
     Then("Should calculate shortest paths correctly")
-    val verticesSortedById=shortestPaths.vertices.collect().sortBy(t=>t._1)
+    val verticesSortedById=shortestPaths.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById should equal (Array(
       (1,0),
       (2,0),
@@ -57,7 +57,7 @@ class ShortestPathsAlgorithm$Test  extends SparkTest{
     When("Loads graph")
     val shortestPaths=ShortestPathsAlgorithm.computeSingleShortestPathsLengths(graph,2l)
     Then("Should calculate shortest paths correctly")
-    val verticesSortedById=shortestPaths.vertices.collect().sortBy(t=>t._1)
+    val verticesSortedById=shortestPaths.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById should equal (Array(
       (1,1),
       (2,0),
@@ -79,8 +79,8 @@ class ShortestPathsAlgorithm$Test  extends SparkTest{
     val shortestPathsAsUndirected=ShortestPathsAlgorithm.computeShortestPaths(grapDirected,treatAsUndirected = true)
     val shortestPathsUndirected=ShortestPathsAlgorithm.computeShortestPaths(graphUndirected)
     Then("Should calculate shortest paths correctly")
-    val verticesSortedById=shortestPathsAsUndirected.vertices.collect().sortBy(_._1)
-    verticesSortedById should equal (shortestPathsUndirected.vertices.collect().sortBy(_._1))
+    val verticesSortedById=shortestPathsAsUndirected.vertices.collect().sortBy{case (vId,data)=>vId}
+    verticesSortedById should equal (shortestPathsUndirected.vertices.collect().sortBy{case (vId,data)=>vId})
   }
 
 }

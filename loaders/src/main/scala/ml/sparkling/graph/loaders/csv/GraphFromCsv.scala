@@ -89,11 +89,11 @@ object GraphFromCsv {
   }
 
   def valueEdge[VD:ClassTag,ED:ClassTag](value:ED)={
-    EdgeProviders.twoColumnsMakesEdge[VD,ED](_:Int,_:Int,_:Row,numberToVertexId _,(row)=>value)
+    EdgeProviders.twoColumnsMakesEdge[VD,ED](_:Int,_:Int,_:Row,numberToVertexId _,row=>value)
   }
 
   def columnEdge[VD:ClassTag,ED:ClassTag](column:Int)={
-    EdgeProviders.twoColumnsMakesEdge[VD,ED](_:Int,_:Int,_:Row,numberToVertexId _,(row)=>row.getAs[ED](column))
+    EdgeProviders.twoColumnsMakesEdge[VD,ED](_:Int,_:Int,_:Row,numberToVertexId _,row=>row.getAs[ED](column))
   }
 
   def rowToType[E:ClassTag](row:Row):E={

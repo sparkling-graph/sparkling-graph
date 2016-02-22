@@ -23,7 +23,7 @@ object NeighborhoodConnectivity extends VertexMeasure[Double] {
     val graphWithOutDegree =graphWithInOutDegree.mapVertices((vId, data) => data._1)
     val connectivityRdd = graphWithOutDegree.mapVertices((vId,degree)=>(degree,1))
       .aggregateMessages[(Int,Int)](
-        sendMsg=(context)=>{
+        sendMsg=context=>{
           context.sendToSrc(context.dstAttr)
           context.sendToDst((0,0))
           if(vertexMeasureConfiguration.treatAsUndirected) {
@@ -42,9 +42,13 @@ object NeighborhoodConnectivity extends VertexMeasure[Double] {
   }
 
   def addTuples(t1:(Int,Int),t2:(Int,Int)):(Int,Int)={
-    val sumDegress=t1._1+t2._1
-    val sumCounts=t1._2+t2._2
-    (sumDegress,sumCounts)
+    (t1,t2) match{
+      case ((t1Degress,t1Counts),(t2Degress,t2Counts))=>
+        val sumDegress=t1Degress+t2Degress
+        val sumCounts=t1Counts+t2Counts
+        (sumDegress,sumCounts)
+    }
+
   }
 
   /**

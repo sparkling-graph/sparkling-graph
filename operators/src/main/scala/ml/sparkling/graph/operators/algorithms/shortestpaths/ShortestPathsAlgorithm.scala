@@ -106,7 +106,7 @@ object ShortestPathsAlgorithm  {
     val bucketSize=bucketSizeProvider(graph)
     val graphSize=graph.numVertices
     var outGraph:Graph[FastUtilWithDistance.DataMap ,ED] = graph.mapVertices((vId,data)=>new FastUtilWithDistance.DataMap)
-    (1l until graphSize+1 by bucketSize).foreach((startVId)=>{
+    (1l until graphSize+1 by bucketSize).foreach(startVId=>{
       val vertexPredicate=ByIdsPredicate((startVId until startVId+bucketSize).toList)
       val computed=computeShortestPathsLengths(graph,vertexPredicate,treatAsUndirected)
       outGraph=outGraph.outerJoinVertices(computed.vertices)((vId,outMap,computedMap)=>{
