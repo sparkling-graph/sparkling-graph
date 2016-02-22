@@ -20,7 +20,8 @@ class VertexEmbeddedness$Test extends SparkTest {
     When("Computes Vertex embeddedness ")
     val result = VertexEmbeddedness.compute(graph)
     Then("Should calculate Vertex embeddedness  correctly")
-    result.vertices.collect().sortBy(t => t._1).map(_._2) should equal (Array(
+    val verticesSortedById=result.vertices.collect().sortBy(t=>t._1)
+    verticesSortedById .map(_._2) should equal (Array(
       0d,0d,0d,0d,0d
     ))
   }
@@ -32,7 +33,8 @@ class VertexEmbeddedness$Test extends SparkTest {
     When("Computes Vertex embeddedness ")
     val result = VertexEmbeddedness.compute(graph,VertexMeasureConfiguration[Int,Int](true))
     Then("Should calculate Vertex embeddedness  correctly")
-    result.vertices.collect().sortBy(t => t._1).map(_._2) should equal (Array(
+    val verticesSortedById=result.vertices.collect().sortBy(t=>t._1)
+    verticesSortedById .map(_._2) should equal (Array(
       0d,0d,0d,0d,0d
     ))
   }
@@ -44,7 +46,8 @@ class VertexEmbeddedness$Test extends SparkTest {
     When("Computes Vertex embeddedness")
     val result= VertexEmbeddedness.compute(graph)
     Then("Should calculate Vertex embeddedness correctly")
-    result.vertices.collect().sortBy(t => t._1).map(_._2) should equal (Array(
+    val verticesSortedById=result.vertices.collect().sortBy(t=>t._1)
+    verticesSortedById .map(_._2) should equal (Array(
       0.25,0,0,1d/6
     ))
   }
@@ -56,7 +59,8 @@ class VertexEmbeddedness$Test extends SparkTest {
     When("Computes Vertex embeddedness")
     val result= VertexEmbeddedness.compute(graph,VertexMeasureConfiguration[Int,Int](true))
     Then("Should calculate Vertex embeddedness correctly")
-    result.vertices.collect().sortBy(t => t._1).map(_._2) should equal (Array(
+    val verticesSortedById=result.vertices.collect().sortBy(t=>t._1)
+    verticesSortedById .map(_._2) should equal (Array(
      0.5,0.5,0.5,0.5
     ))
   }
@@ -69,6 +73,7 @@ class VertexEmbeddedness$Test extends SparkTest {
     val result= VertexEmbeddedness.compute(graph)
     val resultIterative= VertexEmbeddedness.compute(graph,VertexMeasureConfiguration[Int,Int]((g:Graph[Int,Int])=>1l))
     Then("Should calculate Vertex embeddedness correctly")
-    resultIterative.vertices.collect().sortBy(t => t._1).map(_._2) should equal (result.vertices.collect().sortBy(t => t._1).map(_._2))
+    val verticesSortedById=result.vertices.collect().sortBy(t=>t._1)
+    verticesSortedById .map(_._2) should equal (result.vertices.collect().sortBy(t => t._1).map(_._2))
   }
 }

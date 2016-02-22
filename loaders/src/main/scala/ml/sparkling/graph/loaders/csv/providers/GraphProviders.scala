@@ -13,12 +13,12 @@ import scala.reflect.ClassTag
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
 object GraphProviders {
-  val DefaultStorageLevel=StorageLevel.MEMORY_ONLY
+  val defaultStorageLevel=StorageLevel.MEMORY_ONLY
   def simpleGraphBuilder[VD: ClassTag, ED: ClassTag](defaultVertex: VD,
                                                      vertexProvider: Row => Seq[(VertexId, VD)],
                                                      edgeProvider: Row => Seq[Edge[ED]],
-                                                     edgeStorageLevel: StorageLevel = DefaultStorageLevel,
-                                                     vertexStorageLevel: StorageLevel =DefaultStorageLevel)
+                                                     edgeStorageLevel: StorageLevel = defaultStorageLevel,
+                                                     vertexStorageLevel: StorageLevel =defaultStorageLevel)
                                                     (dataFrame: DataFrame): Graph[VD, ED] = {
     def mapRows[MT: ClassTag](mappingFunction: (Row) => Seq[MT]): RDD[MT] = {
       dataFrame.rdd.mapPartitionsWithIndex((id, rowIterator) => {
@@ -35,8 +35,8 @@ object GraphProviders {
                                                       vertexProvider: (Row, ToVertexId[VD]) => Seq[(VertexId, VD)],
                                                       edgeProvider: (Row, ToVertexId[VD]) => Seq[Edge[ED]],
                                                       columnsToIndex: Seq[Int],
-                                                      edgeStorageLevel: StorageLevel = DefaultStorageLevel,
-                                                      vertexStorageLevel: StorageLevel = DefaultStorageLevel)
+                                                      edgeStorageLevel: StorageLevel = defaultStorageLevel,
+                                                      vertexStorageLevel: StorageLevel = defaultStorageLevel)
                                                      (dataFrame: DataFrame): Graph[VD, ED] = {
 
     val index = dataFrame.flatMap(row => columnsToIndex.map(row(_)))

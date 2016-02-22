@@ -21,7 +21,8 @@ class NeighborhoodConnectivity$Test extends SparkTest {
     When("Computes Neighbor connectivity ")
     val result = NeighborhoodConnectivity.compute(graph)
     Then("Should calculate Neighbor connectivity  correctly")
-    result.vertices.collect().sortBy(t => t._1).map(_._2) should equal (Array(
+    val verticesSortedById=result.vertices.collect().sortBy(t=>t._1)
+    verticesSortedById .map(_._2) should equal (Array(
       1d,1d,1d,0d,0d
     ))
   }
@@ -33,7 +34,8 @@ class NeighborhoodConnectivity$Test extends SparkTest {
     When("Computes Neighbor connectivity ")
     val result = NeighborhoodConnectivity.compute(graph,VertexMeasureConfiguration[Int,Int](true))
     Then("Should calculate Neighbor connectivity  correctly")
-    result.vertices.collect().sortBy(t => t._1).map(_._2) should equal (Array(
+    val verticesSortedById=result.vertices.collect().sortBy(t=>t._1)
+    verticesSortedById .map(_._2) should equal (Array(
       2d,1.5,2d,1.5,2d
     ))
   }
@@ -45,7 +47,8 @@ class NeighborhoodConnectivity$Test extends SparkTest {
     When("Computes Neighbor connectivity")
     val result=NeighborhoodConnectivity.compute(graph)
     Then("Should calculate Neighbor connectivity correctly")
-    result.vertices.collect().sortBy(t => t._1).map(_._2) should equal (Array(
+    val verticesSortedById=result.vertices.collect().sortBy(t=>t._1)
+    verticesSortedById .map(_._2) should equal (Array(
       1d,1d,2d,1.5
     ))
   }
@@ -57,7 +60,8 @@ class NeighborhoodConnectivity$Test extends SparkTest {
     When("Computes Neighbor connectivity")
     val result=NeighborhoodConnectivity.compute(graph,VertexMeasureConfiguration[Int,Int](true))
     Then("Should calculate Neighbor connectivity correctly")
-    result.vertices.collect().sortBy(t => t._1).map(_._2) should equal (Array(
+    val verticesSortedById=result.vertices.collect().sortBy(t=>t._1)
+    verticesSortedById .map(_._2) should equal (Array(
       3d,3d,3d,3d
     ))
   }
