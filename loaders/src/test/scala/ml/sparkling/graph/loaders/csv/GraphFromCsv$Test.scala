@@ -3,13 +3,13 @@ package ml.sparkling.graph.loaders.csv
 import ml.sparkling.graph.api.loaders.GraphLoading.{Parameter, LoadGraph}
 import ml.sparkling.graph.loaders.csv.GraphFromCsv.CSV
 import ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderParameters.{EdgeValue, NoHeader}
+import org.apache.spark.SparkContext
 
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-class GraphFromCsv$Test extends SparkTest {
-  override def appName: String = "GraphFromCsv$Test"
+class GraphFromCsv$Test(implicit sc:SparkContext)  extends MeasureTest {
 
   "CSV with standard format" should "be loaded by default" in{
     Given("CSV path")

@@ -1,15 +1,15 @@
 package ml.sparkling.graph.operators.measures.hits
 
-import ml.sparkling.graph.operators.SparkTest
+import ml.sparkling.graph.operators.{MeasureTest, SparkTest}
 import ml.sparkling.graph.operators.measures.eigenvector.EigenvectorCentrality
+import org.apache.spark.SparkContext
 import org.apache.spark.graphx.{PartitionStrategy, GraphLoader, Graph}
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-class Hits$Test extends SparkTest {
+class Hits$Test(implicit sc:SparkContext)  extends MeasureTest  {
 
-  def appName = "hits-test"
 
 
   "Hits  for line graph" should "be correctly calculated" in {

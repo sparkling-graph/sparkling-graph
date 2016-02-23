@@ -8,22 +8,8 @@ import org.scalatest.{BeforeAndAfter, FlatSpec, GivenWhenThen, Matchers}
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-class CSVLoader$Test extends FlatSpec with BeforeAndAfter with GivenWhenThen with Matchers {
+class CSVLoader$Test(implicit sc:SparkContext)  extends MeasureTest{
 
-  private val master = "local[2]"
-  private val appName = "example-spark"
-
-  implicit var sc:SparkContext=None.orNull
-  before {
-    val conf = new SparkConf()
-      .setMaster(master)
-      .setAppName(appName)
-    sc = new SparkContext(conf)
-  }
-
-  after {
-    sc.stop()
-  }
 
   "Simple csv file " should "be loaded and edges should have default attribute 1" in {
     Given("file path")

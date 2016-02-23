@@ -105,11 +105,11 @@ object ShortestPathsAlgorithm  {
   def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[VD,ED], treatAsUndirected: Boolean = false)(implicit num: Numeric[ED]) = {
     val bucketSize=bucketSizeProvider(graph)
     val graphSize=graph.numVertices
-    var outGraph:Graph[FastUtilWithDistance.DataMap ,ED] = graph.mapVertices((vId,data)=>new FastUtilWithDistance.DataMap)
-    (1l until graphSize+1 by bucketSize).foreach(startVId=>{
+    val outGraph:Graph[FastUtilWithDistance.DataMap ,ED] = graph.mapVertices((vId,data)=>new FastUtilWithDistance.DataMap)
+    (1l until graphSize+1 by bucketSize).foldLeft(outGraph)((acc,startVId)=>{
       val vertexPredicate=ByIdsPredicate((startVId until startVId+bucketSize).toList)
       val computed=computeShortestPathsLengths(graph,vertexPredicate,treatAsUndirected)
-      outGraph=outGraph.outerJoinVertices(computed.vertices)((vId,outMap,computedMap)=>{
+      acc.outerJoinVertices(computed.vertices)((vId,outMap,computedMap)=>{
         computedMap.flatMap(m=>{outMap.putAll(m.asInstanceOf[FastUtilWithDistance.DataMap]);Option(outMap)}).getOrElse(outMap)
       })
     })

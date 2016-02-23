@@ -1,16 +1,16 @@
 package ml.sparkling.graph.operators.measures
 
 import ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration
-import ml.sparkling.graph.operators.SparkTest
+import ml.sparkling.graph.operators.{MeasureTest, SparkTest}
+import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
 import org.scalatest.FunSuite
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-class VertexEmbeddedness$Test extends SparkTest {
+class VertexEmbeddedness$Test (implicit sc:SparkContext) extends MeasureTest {
 
-  def appName = "vertex-enbeddedness-test"
 
 
   "Vertex embeddedness for directed line graph" should "be correctly calculated" in {
@@ -18,7 +18,7 @@ class VertexEmbeddedness$Test extends SparkTest {
     val filePath = getClass.getResource("/graphs/5_nodes_directed")
     val graph: Graph[Int, Int] = loadGraph(filePath.toString)
     When("Computes Vertex embeddedness ")
-    val result = VertexEmbeddedness.computeInOut(graph)
+    val result = VertexEmbeddedness.compute(graph)
     Then("Should calculate Vertex embeddedness  correctly")
     val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById.map{case (vId,data)=>data}  should equal (Array(
@@ -44,7 +44,7 @@ class VertexEmbeddedness$Test extends SparkTest {
     val filePath = getClass.getResource("/graphs/4_nodes_full")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes Vertex embeddedness")
-    val result= VertexEmbeddedness.computeInOut(graph)
+    val result= VertexEmbeddedness.compute(graph)
     Then("Should calculate Vertex embeddedness correctly")
     val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById .map{case (vId,data)=>data} should equal (Array(
@@ -70,7 +70,7 @@ class VertexEmbeddedness$Test extends SparkTest {
     val filePath = getClass.getResource("/graphs/4_nodes_full")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes Vertex embeddedness")
-    val result= VertexEmbeddedness.computeInOut(graph)
+    val result= VertexEmbeddedness.compute(graph)
     val resultIterative= VertexEmbeddedness.compute(graph,VertexMeasureConfiguration[Int,Int]((g:Graph[Int,Int])=>1l))
     Then("Should calculate Vertex embeddedness correctly")
     val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}

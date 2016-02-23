@@ -1,7 +1,7 @@
 package ml.sparkling.graph.operators.algorithms.shortestpaths
 
 import it.unimi.dsi.fastutil.longs.{Long2DoubleMap, Long2DoubleMaps}
-import ml.sparkling.graph.operators.SparkTest
+import ml.sparkling.graph.operators.{MeasureTest, SparkTest}
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.graphx.{VertexId, Graph, GraphLoader}
 import org.apache.spark.{SparkConf, SparkContext}
@@ -11,15 +11,14 @@ import scala.collection.JavaConversions._
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-class ShortestPathsAlgorithm$Test  extends SparkTest{
+class ShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extends MeasureTest  {
 
-  def  appName = "shortest-paths-test"
 
 
     "Shortest paths for simple graph" should "be correctly calculated" in{
     Given("graph")
     val filePath = getClass.getResource("/graphs/5_nodes_directed")
-    val graph:Graph[Int,Int]=GraphLoader.edgeListFile(sc,filePath.toString)
+    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Loads graph")
     val shortestPaths=ShortestPathsAlgorithm.computeShortestPaths(graph)
     Then("Should calculate shortest paths correctly")
@@ -36,7 +35,7 @@ class ShortestPathsAlgorithm$Test  extends SparkTest{
   "Single shortest paths 1 for simple graph" should "be correctly calculated" in{
     Given("graph")
     val filePath = getClass.getResource("/graphs/5_nodes_directed")
-    val graph:Graph[Int,Int]=GraphLoader.edgeListFile(sc,filePath.toString)
+    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Loads graph")
     val shortestPaths=ShortestPathsAlgorithm.computeSingleShortestPathsLengths(graph,1)
     Then("Should calculate shortest paths correctly")
@@ -53,7 +52,7 @@ class ShortestPathsAlgorithm$Test  extends SparkTest{
   "Single shortest paths 2 for simple graph" should "be correctly calculated" in{
     Given("graph")
     val filePath = getClass.getResource("/graphs/5_nodes_directed")
-    val graph:Graph[Int,Int]=GraphLoader.edgeListFile(sc,filePath.toString)
+    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Loads graph")
     val shortestPaths=ShortestPathsAlgorithm.computeSingleShortestPathsLengths(graph,2l)
     Then("Should calculate shortest paths correctly")
@@ -73,8 +72,8 @@ class ShortestPathsAlgorithm$Test  extends SparkTest{
     Given("graph")
     val filePathDirected = getClass.getResource("/graphs/5_nodes_directed")
     val filePathUndirected = getClass.getResource("/graphs/5_nodes_undirected")
-    val grapDirected=GraphLoader.edgeListFile(sc,filePathDirected.toString)
-    val graphUndirected=GraphLoader.edgeListFile(sc,filePathUndirected.toString)
+    val grapDirected=loadGraph(filePathDirected.toString)
+    val graphUndirected=loadGraph(filePathUndirected.toString)
     When("Loads graph")
     val shortestPathsAsUndirected=ShortestPathsAlgorithm.computeShortestPaths(grapDirected,treatAsUndirected = true)
     val shortestPathsUndirected=ShortestPathsAlgorithm.computeShortestPaths(graphUndirected)

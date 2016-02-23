@@ -1,34 +1,35 @@
 package ml.sparkling.graph.loaders.csv
 
-import org.apache.spark.graphx.{GraphLoader, PartitionStrategy}
+
 import org.apache.spark.{SparkConf, SparkContext}
-import org.scalatest.{BeforeAndAfter, FlatSpec, GivenWhenThen, Matchers}
+import org.scalatest._
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-abstract class SparkTest  extends FlatSpec with BeforeAndAfter with GivenWhenThen with Matchers {
+class SparkTest extends Suite with BeforeAndAfterAll {
 
-  val master = "local[8]"
-  def appName:String
+  val master = "local[*]"
 
-  implicit var sc: SparkContext = _
+  def appName: String = "operators-tests"
 
-  before {
+  implicit val sc: SparkContext = {
     val conf = new SparkConf()
       .setMaster(master)
       .setAppName(appName)
-    sc = new SparkContext(conf)
+    new SparkContext(conf)
   }
 
-  after {
-    if (sc != null) {
-      sc.stop()
-    }
+  override def afterAll() = {
+    sc.stop()
   }
 
-  def loadGraph(file:String)={
-    GraphLoader.edgeListFile(sc,file.toString).partitionBy(PartitionStrategy.EdgePartition2D,16).cache()
+  override def nestedSuites = {
+    Vector(
+     new CSVLoader$Test,
+    new GraphFromCsv$Test
+    )
   }
+
 
 }

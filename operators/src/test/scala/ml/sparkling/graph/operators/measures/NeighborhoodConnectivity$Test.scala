@@ -1,17 +1,17 @@
 package ml.sparkling.graph.operators.measures
 
 import ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration
-import ml.sparkling.graph.operators.SparkTest
+import ml.sparkling.graph.operators.{MeasureTest, SparkTest}
 import ml.sparkling.graph.operators.measures.hits.Hits
+import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
 import org.scalatest.FunSuite
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-class NeighborhoodConnectivity$Test extends SparkTest {
+class NeighborhoodConnectivity$Test(implicit sc:SparkContext)  extends MeasureTest {
 
-  def appName = "neighbor-connectivity-test"
 
 
   "Neighbor connectivity for directed line graph" should "be correctly calculated" in {
@@ -19,7 +19,7 @@ class NeighborhoodConnectivity$Test extends SparkTest {
     val filePath = getClass.getResource("/graphs/5_nodes_directed")
     val graph: Graph[Int, Int] = loadGraph(filePath.toString)
     When("Computes Neighbor connectivity ")
-    val result = NeighborhoodConnectivity.computeInOut(graph)
+    val result = NeighborhoodConnectivity.compute(graph)
     Then("Should calculate Neighbor connectivity  correctly")
     val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById .map{case (vId,data)=>data} should equal (Array(
@@ -45,7 +45,7 @@ class NeighborhoodConnectivity$Test extends SparkTest {
     val filePath = getClass.getResource("/graphs/4_nodes_full")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes Neighbor connectivity")
-    val result=NeighborhoodConnectivity.computeInOut(graph)
+    val result=NeighborhoodConnectivity.compute(graph)
     Then("Should calculate Neighbor connectivity correctly")
     val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById .map{case (vId,data)=>data} should equal (Array(

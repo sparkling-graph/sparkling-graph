@@ -1,23 +1,22 @@
 package ml.sparkling.graph.operators.measures.clustering
 
 import ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration
-import ml.sparkling.graph.operators.SparkTest
+import ml.sparkling.graph.operators.{MeasureTest, SparkTest}
+import org.apache.spark.SparkContext
 import org.apache.spark.graphx.{GraphLoader, Graph}
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-class LocalClustering$Test  extends SparkTest{
-
-  def appName = "local-clustering-test"
+class LocalClustering$Test(implicit sc:SparkContext)    extends MeasureTest  {
 
 
   "Local clustering for line graph" should "be correctly calculated" in{
     Given("graph")
     val filePath = getClass.getResource("/graphs/5_nodes_directed")
-    val graph:Graph[Int,Int]=GraphLoader.edgeListFile(sc,filePath.toString).cache()
+    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes local clustering")
-    val localClustering=LocalClustering.computeInOut(graph)
+    val localClustering=LocalClustering.compute(graph)
     Then("Should calculate local clustering correctly")
     val verticesSortedById=localClustering.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById should equal (Array(
@@ -28,9 +27,9 @@ class LocalClustering$Test  extends SparkTest{
   "Local clustering for full directed graph " should "be correctly calculated" in{
     Given("graph")
     val filePath = getClass.getResource("/graphs/4_nodes_full")
-    val graph:Graph[Int,Int]=GraphLoader.edgeListFile(sc,filePath.toString).cache()
+    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes local clustering")
-    val localClustering=LocalClustering.computeInOut(graph)
+    val localClustering=LocalClustering.compute(graph)
     Then("Should calculate local clustering correctly")
     val verticesSortedById=localClustering.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById should equal (Array(
@@ -41,7 +40,7 @@ class LocalClustering$Test  extends SparkTest{
   "Local clustering for full undirected graph " should "be correctly calculated" in{
     Given("graph")
     val filePath = getClass.getResource("/graphs/4_nodes_full")
-    val graph:Graph[Int,Int]=GraphLoader.edgeListFile(sc,filePath.toString).cache()
+    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes local clustering")
     val localClustering=LocalClustering.compute(graph,VertexMeasureConfiguration[Int,Int](true))
     Then("Should calculate local clustering correctly")
@@ -55,9 +54,9 @@ class LocalClustering$Test  extends SparkTest{
   "Local clustering for full directed graph " should "be correctly calculated using iterative approach" in{
     Given("graph")
     val filePath = getClass.getResource("/graphs/4_nodes_full")
-    val graph:Graph[Int,Int]=GraphLoader.edgeListFile(sc,filePath.toString).cache()
+    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes local clustering")
-    val localClustering=LocalClustering.computeInOut(graph)
+    val localClustering=LocalClustering.compute(graph)
     val localClusteringIterative=LocalClustering.compute(graph,VertexMeasureConfiguration[Int,Int]((g:Graph[Int,Int])=>1l))
     Then("Should calculate local clustering correctly")
     val verticesSortedById=localClustering.vertices.collect().sortBy{case (vId,data)=>vId}

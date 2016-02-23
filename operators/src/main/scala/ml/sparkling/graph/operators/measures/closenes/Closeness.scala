@@ -26,10 +26,10 @@ object Closeness extends VertexMeasure[Double] {
                                                closenessFunction: ClosenessFunction,
                                                vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED])(implicit num: Numeric[ED]): Graph[Double, ED] = {
     val graphSize = graph.numVertices
-    var distanceSumGraph = graph.mapVertices((vId, data) => (0l, 0d))
-    (1l until graphSize + 1).foreach(startVid => {
+    val distanceSumGraph = graph.mapVertices((vId, data) => (0l, 0d))
+    (1l until graphSize + 1).foldLeft(distanceSumGraph)((distanceSumGraph,startVid) => {
       val shortestPaths = ShortestPathsAlgorithm.computeSingleShortestPathsLengths(graph, startVid, treatAsUndirected = vertexMeasureConfiguration.treatAsUndirected)
-      distanceSumGraph = distanceSumGraph.outerJoinVertices(shortestPaths.vertices)((vId, oldValue, newValue) => {
+      val out=distanceSumGraph.outerJoinVertices(shortestPaths.vertices)((vId, oldValue, newValue) => {
         val newValueMapped = newValue.map {
           case 0d => (0l, 0d)
           case other => (1l, other)
@@ -44,8 +44,8 @@ object Closeness extends VertexMeasure[Double] {
         }
       })
       shortestPaths.unpersist()
-    })
-    distanceSumGraph.mapVertices((vId, sum) => closenessFunction.tupled(sum))
+      out
+    }).mapVertices((vId, sum) => closenessFunction.tupled(sum))
   }
 
   /**

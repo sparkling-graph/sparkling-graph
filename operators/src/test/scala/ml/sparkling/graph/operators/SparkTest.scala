@@ -1,32 +1,45 @@
 package ml.sparkling.graph.operators
 
-import ml.sparkling.graph.operators.measures.clustering.LocalClustering
-import org.apache.spark.graphx.{PartitionStrategy, GraphLoader, Graph}
+import ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgorithm$Test
+import ml.sparkling.graph.operators.measures.closenes.Closeness$Test
+import ml.sparkling.graph.operators.measures.clustering.LocalClustering$Test
+import ml.sparkling.graph.operators.measures.eigenvector.EigenvectorCentrality$Test
+import ml.sparkling.graph.operators.measures.hits.Hits$Test
+import ml.sparkling.graph.operators.measures.{NeighborhoodConnectivity$Test, VertexEmbeddedness$Test}
 import org.apache.spark.{SparkConf, SparkContext}
-import org.scalatest.{Matchers, GivenWhenThen, BeforeAndAfter, FlatSpec}
+import org.scalatest._
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-abstract class SparkTest  extends FlatSpec with BeforeAndAfter with GivenWhenThen with Matchers {
+class SparkTest extends Suite with BeforeAndAfterAll {
 
-  val master = "local[8]"
-  def appName:String
+  val master = "local[*]"
 
-  implicit var sc:SparkContext=None.orNull
-  before {
+  def appName: String = "operators-tests"
+
+  implicit val sc: SparkContext = {
     val conf = new SparkConf()
       .setMaster(master)
       .setAppName(appName)
-    sc = new SparkContext(conf)
+    new SparkContext(conf)
   }
 
-  after {
-      sc.stop()
+  override def afterAll() = {
+    sc.stop()
   }
 
-  def loadGraph(file:String)={
-    GraphLoader.edgeListFile(sc,file.toString).partitionBy(PartitionStrategy.EdgePartition2D,16).cache()
+  override def nestedSuites = {
+    Vector(
+      new VertexEmbeddedness$Test,
+      new NeighborhoodConnectivity$Test,
+      new Hits$Test,
+      new EigenvectorCentrality$Test,
+      new LocalClustering$Test,
+      new Closeness$Test,
+      new ShortestPathsAlgorithm$Test
+    )
   }
+
 
 }

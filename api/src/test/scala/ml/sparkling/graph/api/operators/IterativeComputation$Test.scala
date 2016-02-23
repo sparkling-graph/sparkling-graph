@@ -14,12 +14,11 @@ class IterativeComputation$Test extends FlatSpec with BeforeAndAfter{
   val master = "local[*]"
   def appName:String="InterativeComputationTest"
 
-  implicit var sc:SparkContext=None.orNull
-  before {
+  implicit val sc:SparkContext= {
     val conf = new SparkConf()
       .setMaster(master)
       .setAppName(appName)
-    sc = new SparkContext(conf)
+    new SparkContext(conf)
   }
 
   after {
