@@ -204,6 +204,23 @@ Computes degree of each vertex
       </a>
     </span>
       <p class="shortcomment cmt">Computes degree of each vertex, returns degree in format (inDegree,outDegree)</p><div class="fullcomment"><div class="comment cmt"><p>Computes degree of each vertex, returns degree in format (inDegree,outDegree)</p></div><dl class="paramcmts block"><dt class="tparam">VD</dt><dd class="cmt"><p>- vertex data type</p></dd><dt class="tparam">ED</dt><dd class="cmt"><p>- edge data type</p></dd><dt class="param">graph</dt><dd class="cmt"><p>- computation graph</p></dd><dt class="param">vertexMeasureConfiguration</dt><dd class="cmt"><p>- configuration of computation</p></dd><dt class="param">num</dt><dd class="cmt"><p>- numeric for @ED</p></dd><dt>returns</dt><dd class="cmt"><p>graph where each vertex is associated with its  degree (out,in)</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="ml.sparkling.graph.operators.measures.Degree">Degree</a> → <a href="../../api/operators/measures/VertexMeasure.html" class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure">VertexMeasure</a></dd></dl></div>
+    </li><li name="ml.sparkling.graph.api.operators.measures.VertexMeasure#compute" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="compute[VD,ED](graph:org.apache.spark.graphx.Graph[VD,ED])(implicitevidence$1:scala.reflect.ClassTag[VD],implicitevidence$2:scala.reflect.ClassTag[ED],implicitnum:Numeric[ED]):org.apache.spark.graphx.Graph[OV,_]"></a>
+      <a id="compute[VD,ED](Graph[VD,ED])(ClassTag[VD],ClassTag[ED],Numeric[ED]):Graph[(Int,Int),_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">compute</span><span class="tparams">[<span name="VD">VD</span>, <span name="ED">ED</span>]</span><span class="params">(<span name="graph">graph: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.compute.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.compute.ED">ED</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.compute.VD">VD</span>]</span>, <span name="arg1">arg1: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.compute.ED">ED</span>]</span>, <span name="num">num: <span class="extype" name="scala.Numeric">Numeric</span>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.compute.ED">ED</span>]</span>)</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[(<a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Int" class="extype" target="_top">Int</a>, <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Int" class="extype" target="_top">Int</a>), _]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.measures.Degree$@compute[VD,ED](graph:org.apache.spark.graphx.Graph[VD,ED])(implicitevidence$1:scala.reflect.ClassTag[VD],implicitevidence$2:scala.reflect.ClassTag[ED],implicitnum:Numeric[ED]):org.apache.spark.graphx.Graph[OV,_]" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../api/operators/measures/VertexMeasure.html" class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure">VertexMeasure</a></dd></dl></div>
     </li><li name="ml.sparkling.graph.operators.measures.Degree#computeInOut" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="computeInOut[VD,ED](graph:org.apache.spark.graphx.Graph[VD,ED],vertexMeasureConfiguration:ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration[VD,ED])(implicitevidence$1:scala.reflect.ClassTag[VD],implicitevidence$2:scala.reflect.ClassTag[ED]):org.apache.spark.graphx.Graph[(Int,Int),ED]"></a>
       <a id="computeInOut[VD,ED](Graph[VD,ED],VertexMeasureConfiguration[VD,ED])(ClassTag[VD],ClassTag[ED]):Graph[(Int,Int),ED]"></a>
@@ -221,23 +238,6 @@ Computes degree of each vertex
       </a>
     </span>
       <p class="shortcomment cmt">Generic degree method, should be used for extensions, returns degree in format (inDegree,outDegree)</p><div class="fullcomment"><div class="comment cmt"><p>Generic degree method, should be used for extensions, returns degree in format (inDegree,outDegree)</p></div><dl class="paramcmts block"><dt class="tparam">VD</dt><dd class="cmt"><p>- vertex data type</p></dd><dt class="tparam">ED</dt><dd class="cmt"><p>- edge data type</p></dd><dt class="param">graph</dt><dd class="cmt"><p>- computation graph</p></dd><dt class="param">vertexMeasureConfiguration</dt><dd class="cmt"><p>- configuration of computation</p></dd><dt>returns</dt><dd class="cmt"><p>graph where each vertex is associated with its  degree (out,in)</p></dd></dl></div>
-    </li><li name="ml.sparkling.graph.api.operators.measures.VertexMeasure#computeInOut" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="computeInOut[VD,ED](graph:org.apache.spark.graphx.Graph[VD,ED])(implicitevidence$1:scala.reflect.ClassTag[VD],implicitevidence$2:scala.reflect.ClassTag[ED],implicitnum:Numeric[ED]):org.apache.spark.graphx.Graph[OV,_]"></a>
-      <a id="computeInOut[VD,ED](Graph[VD,ED])(ClassTag[VD],ClassTag[ED],Numeric[ED]):Graph[(Int,Int),_]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">computeInOut</span><span class="tparams">[<span name="VD">VD</span>, <span name="ED">ED</span>]</span><span class="params">(<span name="graph">graph: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.computeInOut.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.computeInOut.ED">ED</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.computeInOut.VD">VD</span>]</span>, <span name="arg1">arg1: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.computeInOut.ED">ED</span>]</span>, <span name="num">num: <span class="extype" name="scala.Numeric">Numeric</span>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure.computeInOut.ED">ED</span>]</span>)</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[(<a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Int" class="extype" target="_top">Int</a>, <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Int" class="extype" target="_top">Int</a>), _]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.measures.Degree$@computeInOut[VD,ED](graph:org.apache.spark.graphx.Graph[VD,ED])(implicitevidence$1:scala.reflect.ClassTag[VD],implicitevidence$2:scala.reflect.ClassTag[ED],implicitnum:Numeric[ED]):org.apache.spark.graphx.Graph[OV,_]" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../api/operators/measures/VertexMeasure.html" class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasure">VertexMeasure</a></dd></dl></div>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
