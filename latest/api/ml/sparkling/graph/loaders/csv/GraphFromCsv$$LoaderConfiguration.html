@@ -2,9 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>EdgeColumn - ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderParameters.EdgeColumn</title>
-          <meta name="description" content="EdgeColumn - ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderParameters.EdgeColumn" />
-          <meta name="keywords" content="EdgeColumn ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderParameters.EdgeColumn" />
+          <title>LoaderConfiguration - ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration</title>
+          <meta name="description" content="LoaderConfiguration - ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration" />
+          <meta name="keywords" content="LoaderConfiguration ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -12,7 +12,7 @@
       <script type="text/javascript">
          if(top === self) {
             var url = '../../../../../index.html';
-            var hash = 'ml.sparkling.graph.loaders.csv.GraphFromCsv$$LoaderParameters$$EdgeColumn';
+            var hash = 'ml.sparkling.graph.loaders.csv.GraphFromCsv$$LoaderConfiguration';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -25,8 +25,8 @@
         <body class="type">
       <div id="definition">
         <img src="../../../../../lib/class_big.png" />
-        <p id="owner"><a href="../../../../package.html" class="extype" name="ml">ml</a>.<a href="../../../package.html" class="extype" name="ml.sparkling">sparkling</a>.<a href="../../package.html" class="extype" name="ml.sparkling.graph">graph</a>.<a href="../package.html" class="extype" name="ml.sparkling.graph.loaders">loaders</a>.<a href="package.html" class="extype" name="ml.sparkling.graph.loaders.csv">csv</a>.<a href="GraphFromCsv$.html" class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv">GraphFromCsv</a>.<a href="GraphFromCsv$$LoaderParameters$.html" class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderParameters">LoaderParameters</a></p>
-        <h1>EdgeColumn</h1>
+        <p id="owner"><a href="../../../../package.html" class="extype" name="ml">ml</a>.<a href="../../../package.html" class="extype" name="ml.sparkling">sparkling</a>.<a href="../../package.html" class="extype" name="ml.sparkling.graph">graph</a>.<a href="../package.html" class="extype" name="ml.sparkling.graph.loaders">loaders</a>.<a href="package.html" class="extype" name="ml.sparkling.graph.loaders.csv">csv</a>.<a href="GraphFromCsv$.html" class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv">GraphFromCsv</a></p>
+        <h1>LoaderConfiguration</h1>
       </div>
 
       <h4 id="signature" class="signature">
@@ -35,14 +35,13 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">EdgeColumn</span><span class="params">(<span name="value">value: <span class="extype" name="java.lang.Integer">Integer</span></span>)</span><span class="result"> extends <a href="../../api/loaders/GraphLoading$$WithValueParameter.html" class="extype" name="ml.sparkling.graph.api.loaders.GraphLoading.WithValueParameter">WithValueParameter</a>[<span class="extype" name="java.lang.Integer">Integer</span>] with <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Product" class="extype" target="_top">Product</a> with <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
+        <span class="name">LoaderConfiguration</span><span class="tparams">[<span name="V">V</span>, <span name="E">E</span>]</span><span class="params">(<span name="edgeProvider">edgeProvider: (<a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Int" class="extype" target="_top">Int</a>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Int" class="extype" target="_top">Int</a>, <span class="extype" name="org.apache.spark.sql.Row">Row</span>, (<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.V">V</span>) ⇒ <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>) ⇒ <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="org.apache.spark.graphx.Edge">Edge</span>[<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.E">E</span>]]</span>, <span name="loader">loader: (<a href="" class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration">LoaderConfiguration</a>[<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.V">V</span>, <span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.E">E</span>]) ⇒ (<span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span>) ⇒ <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.V">V</span>, <span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.E">E</span>]</span>, <span name="defaultVertex">defaultVertex: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Option" class="extype" target="_top">Option</a>[<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.V">V</span>] = <span class="symbol">scala.None</span></span>, <span name="columnOne">columnOne: <span class="extype" name="java.lang.Integer">Integer</span> = <span class="symbol">scala.this.Predef.int2Integer(0)</span></span>, <span name="columnTwo">columnTwo: <span class="extype" name="java.lang.Integer">Integer</span> = <span class="symbol">scala.this.Predef.int2Integer(1)</span></span>, <span name="partitions">partitions: <span class="extype" name="java.lang.Integer">Integer</span> = <span class="symbol">scala.this.Predef.int2Integer(0)</span></span>, <span name="csvLoaderConfig">csvLoaderConfig: <a href="CsvLoaderConfig.html" class="extype" name="ml.sparkling.graph.loaders.csv.CsvLoaderConfig">CsvLoaderConfig</a> = <span class="defval" name="CsvLoaderConfig.apply(CsvLoaderConfig.apply$default$1, CsvLoaderConfig.apply$default$2, CsvLoaderConfig.apply$default$3, CsvLoaderConfig.apply$default$4, CsvLoaderConfig.apply$default$5)">...</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="evidence$1">evidence$1: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.V">V</span>]</span>, <span name="evidence$2">evidence$2: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.E">E</span>]</span>)</span><span class="result"> extends <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Product" class="extype" target="_top">Product</a> with <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Id of column used as edge value</p></div><dl class="paramcmts block"><dt class="param">value</dt><dd class="cmt"><p>
-</p></dd></dl><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Serializable" class="extype" target="_top">Serializable</a>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Product" class="extype" target="_top">Product</a>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Equals" class="extype" target="_top">Equals</a>, <a href="../../api/loaders/GraphLoading$$WithValueParameter.html" class="extype" name="ml.sparkling.graph.api.loaders.GraphLoading.WithValueParameter">WithValueParameter</a>[<span class="extype" name="java.lang.Integer">Integer</span>], <a href="../../api/loaders/GraphLoading$$Parameter.html" class="extype" name="ml.sparkling.graph.api.loaders.GraphLoading.Parameter">Parameter</a>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Any" class="extype" target="_top">Any</a></div>
+          <div class="superTypes hiddenContent"><a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Serializable" class="extype" target="_top">Serializable</a>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Product" class="extype" target="_top">Product</a>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Equals" class="extype" target="_top">Equals</a>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Any" class="extype" target="_top">Any</a></div>
         </div></div>
         
 
@@ -60,7 +59,7 @@
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderParameters.EdgeColumn"><span>EdgeColumn</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.Product"><span>Product</span></li><li class="in" name="scala.Equals"><span>Equals</span></li><li class="in" name="ml.sparkling.graph.api.loaders.GraphLoading.WithValueParameter"><span>WithValueParameter</span></li><li class="in" name="ml.sparkling.graph.api.loaders.GraphLoading.Parameter"><span>Parameter</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration"><span>LoaderConfiguration</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.Product"><span>Product</span></li><li class="in" name="scala.Equals"><span>Equals</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -80,20 +79,19 @@
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderParameters.EdgeColumn#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(value:Integer):ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderParameters.EdgeColumn"></a>
-      <a id="&lt;init&gt;:EdgeColumn"></a>
+              <ol><li name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(edgeProvider:(Int,Int,org.apache.spark.sql.Row,V=&gt;org.apache.spark.graphx.VertexId)=&gt;Seq[org.apache.spark.graphx.Edge[E]],loader:ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration[V,E]=&gt;(org.apache.spark.sql.DataFrame=&gt;org.apache.spark.graphx.Graph[V,E]),defaultVertex:Option[V],columnOne:Integer,columnTwo:Integer,partitions:Integer,csvLoaderConfig:ml.sparkling.graph.loaders.csv.CsvLoaderConfig)(implicitevidence$1:scala.reflect.ClassTag[V],implicitevidence$2:scala.reflect.ClassTag[E]):ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration[V,E]"></a>
+      <a id="&lt;init&gt;:LoaderConfiguration[V,E]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">EdgeColumn</span><span class="params">(<span name="value">value: <span class="extype" name="java.lang.Integer">Integer</span></span>)</span>
+        <span class="name">LoaderConfiguration</span><span class="params">(<span name="edgeProvider">edgeProvider: (<a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Int" class="extype" target="_top">Int</a>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Int" class="extype" target="_top">Int</a>, <span class="extype" name="org.apache.spark.sql.Row">Row</span>, (<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.V">V</span>) ⇒ <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>) ⇒ <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="org.apache.spark.graphx.Edge">Edge</span>[<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.E">E</span>]]</span>, <span name="loader">loader: (<a href="" class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration">LoaderConfiguration</a>[<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.V">V</span>, <span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.E">E</span>]) ⇒ (<span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span>) ⇒ <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.V">V</span>, <span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.E">E</span>]</span>, <span name="defaultVertex">defaultVertex: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Option" class="extype" target="_top">Option</a>[<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.V">V</span>] = <span class="symbol">scala.None</span></span>, <span name="columnOne">columnOne: <span class="extype" name="java.lang.Integer">Integer</span> = <span class="symbol">scala.this.Predef.int2Integer(0)</span></span>, <span name="columnTwo">columnTwo: <span class="extype" name="java.lang.Integer">Integer</span> = <span class="symbol">scala.this.Predef.int2Integer(1)</span></span>, <span name="partitions">partitions: <span class="extype" name="java.lang.Integer">Integer</span> = <span class="symbol">scala.this.Predef.int2Integer(0)</span></span>, <span name="csvLoaderConfig">csvLoaderConfig: <a href="CsvLoaderConfig.html" class="extype" name="ml.sparkling.graph.loaders.csv.CsvLoaderConfig">CsvLoaderConfig</a> = <span class="defval" name="CsvLoaderConfig.apply(CsvLoaderConfig.apply$default$1, CsvLoaderConfig.apply$default$2, CsvLoaderConfig.apply$default$3, CsvLoaderConfig.apply$default$4, CsvLoaderConfig.apply$default$5)">...</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.V">V</span>]</span>, <span name="arg1">arg1: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.E">E</span>]</span>)</span>
       </span>
       </h4>
-      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">value</dt><dd class="cmt"><p>
-</p></dd></dl></div>
+      
     </li></ol>
             </div>
 
@@ -200,6 +198,71 @@
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration#columnOne" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="columnOne:Integer"></a>
+      <a id="columnOne:Integer"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">columnOne</span><span class="result">: <span class="extype" name="java.lang.Integer">Integer</span></span>
+      </span>
+      </h4>
+      
+    </li><li name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration#columnTwo" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="columnTwo:Integer"></a>
+      <a id="columnTwo:Integer"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">columnTwo</span><span class="result">: <span class="extype" name="java.lang.Integer">Integer</span></span>
+      </span>
+      </h4>
+      
+    </li><li name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration#csvLoaderConfig" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="csvLoaderConfig:ml.sparkling.graph.loaders.csv.CsvLoaderConfig"></a>
+      <a id="csvLoaderConfig:CsvLoaderConfig"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">csvLoaderConfig</span><span class="result">: <a href="CsvLoaderConfig.html" class="extype" name="ml.sparkling.graph.loaders.csv.CsvLoaderConfig">CsvLoaderConfig</a></span>
+      </span>
+      </h4>
+      
+    </li><li name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration#defaultVertex" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="defaultVertex:Option[V]"></a>
+      <a id="defaultVertex:Option[V]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">defaultVertex</span><span class="result">: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Option" class="extype" target="_top">Option</a>[<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.V">V</span>]</span>
+      </span>
+      </h4>
+      
+    </li><li name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration#edgeProvider" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="edgeProvider:(Int,Int,org.apache.spark.sql.Row,V=&gt;org.apache.spark.graphx.VertexId)=&gt;Seq[org.apache.spark.graphx.Edge[E]]"></a>
+      <a id="edgeProvider:(Int,Int,Row,(V)⇒VertexId)⇒Seq[Edge[E]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">edgeProvider</span><span class="result">: (<a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Int" class="extype" target="_top">Int</a>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Int" class="extype" target="_top">Int</a>, <span class="extype" name="org.apache.spark.sql.Row">Row</span>, (<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.V">V</span>) ⇒ <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>) ⇒ <span class="extype" name="scala.Seq">Seq</span>[<span class="extype" name="org.apache.spark.graphx.Edge">Edge</span>[<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.E">E</span>]]</span>
+      </span>
+      </h4>
+      
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -258,6 +321,19 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration#loader" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="loader:ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration[V,E]=&gt;(org.apache.spark.sql.DataFrame=&gt;org.apache.spark.graphx.Graph[V,E])"></a>
+      <a id="loader:(LoaderConfiguration[V,E])⇒(DataFrame)⇒Graph[V,E]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loader</span><span class="result">: (<a href="" class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration">LoaderConfiguration</a>[<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.V">V</span>, <span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.E">E</span>]) ⇒ (<span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span>) ⇒ <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.V">V</span>, <span class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration.E">E</span>]</span>
+      </span>
+      </h4>
+      
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -297,6 +373,19 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderConfiguration#partitions" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="partitions:Integer"></a>
+      <a id="partitions:Integer"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">partitions</span><span class="result">: <span class="extype" name="java.lang.Integer">Integer</span></span>
+      </span>
+      </h4>
+      
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -310,21 +399,6 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderParameters.EdgeColumn#value" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="value:Integer"></a>
-      <a id="value:Integer"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">value</span><span class="result">: <span class="extype" name="java.lang.Integer">Integer</span></span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">
-</p><div class="fullcomment"><div class="comment cmt"><p>
-</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderParameters.EdgeColumn">EdgeColumn</a> → <a href="../../api/loaders/GraphLoading$$WithValueParameter.html" class="extype" name="ml.sparkling.graph.api.loaders.GraphLoading.WithValueParameter">WithValueParameter</a></dd></dl></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>
@@ -399,10 +473,6 @@
               <h3>Inherited from <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Product" class="extype" target="_top">Product</a></h3>
             </div><div class="parent" name="scala.Equals">
               <h3>Inherited from <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Equals" class="extype" target="_top">Equals</a></h3>
-            </div><div class="parent" name="ml.sparkling.graph.api.loaders.GraphLoading.WithValueParameter">
-              <h3>Inherited from <a href="../../api/loaders/GraphLoading$$WithValueParameter.html" class="extype" name="ml.sparkling.graph.api.loaders.GraphLoading.WithValueParameter">WithValueParameter</a>[<span class="extype" name="java.lang.Integer">Integer</span>]</h3>
-            </div><div class="parent" name="ml.sparkling.graph.api.loaders.GraphLoading.Parameter">
-              <h3>Inherited from <a href="../../api/loaders/GraphLoading$$Parameter.html" class="extype" name="ml.sparkling.graph.api.loaders.GraphLoading.Parameter">Parameter</a></h3>
             </div><div class="parent" name="scala.AnyRef">
               <h3>Inherited from <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></h3>
             </div><div class="parent" name="scala.Any">
