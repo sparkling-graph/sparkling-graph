@@ -8,7 +8,7 @@ import org.scalatest.{BeforeAndAfter, FlatSpec, GivenWhenThen, Matchers}
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-class CSVLoader$Test(implicit sc:SparkContext)  extends MeasureTest{
+class CSVLoader$Test(implicit sc:SparkContext)  extends LoaderTest{
 
 
   "Simple csv file " should "be loaded and edges should have default attribute 1" in {
