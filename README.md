@@ -54,7 +54,7 @@ libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.4
   
 # How to
 
-Please check API and examples, in depth docs will be created soon.
+Please check [API](http://sparkling-graph.github.io/sparkling-graph/latest/api/), [examples](https://github.com/sparkling-graph/sparkling-graph/tree/master/examples/src/main/scala/ml/sparkling/graph/examples) or [docs](http://sparkling-graph.readthedocs.org/en/latest/)
 
 
 
