@@ -21,6 +21,15 @@ after_success:
 - bash <(curl -s https://codecov.io/bash)
 - sbt ghpages-push-site
 - sbt publish
+
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/0a7f41d0591e65e9122c
+    on_success: always  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
+    on_start: always     # options: [always|never|change] default: always
+
 env:
   global:
   - SBT_GHPAGES_COMMIT_MESSAGE='[ci skip] page update'
