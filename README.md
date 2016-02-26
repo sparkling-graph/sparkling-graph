@@ -1,6 +1,6 @@
 # sparkling-graph
 
-[![Build Status](https://travis-ci.org/sparkling-graph/sparkling-graph.svg?branch=master)](https://travis-ci.org/sparkling-graph/sparkling-graph) [![Documentation Status](https://readthedocs.org/projects/sparkling-graph/badge/?version=latest&cache=1234)](http://sparkling-graph.readthedocs.org/en/latest/?badge=latest) [![codecov.io](https://codecov.io/github/sparkling-graph/sparkling-graph/coverage.svg?branch=master)](https://codecov.io/github/sparkling-graph/sparkling-graph?branch=master) [![Codacy Badge](https://api.codacy.com/project/badge/grade/9ddff907e39a431485fecaf0f612a528)](https://www.codacy.com/app/riomus/sparkling-graph) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/ml.sparkling/sparkling-graph-examples_2.10/badge.svg)](https://maven-badges.herokuapp.com/maven-central/ml.sparkling/sparkling-graph-examples_2.10) [API](http://sparkling-graph.github.io/sparkling-graph/latest/api/) |  [Spark packages](http://spark-packages.org/package/sparkling-graph/sparkling-graph)
+[![Build Status](https://travis-ci.org/sparkling-graph/sparkling-graph.svg?branch=master)](https://travis-ci.org/sparkling-graph/sparkling-graph) [![Documentation Status](https://readthedocs.org/projects/sparkling-graph/badge/?version=latest&cache=1234)](http://sparkling-graph.readthedocs.org/en/latest/?badge=latest) [![codecov.io](https://codecov.io/github/sparkling-graph/sparkling-graph/coverage.svg?branch=master)](https://codecov.io/github/sparkling-graph/sparkling-graph?branch=master) [![Codacy Badge](https://api.codacy.com/project/badge/grade/9ddff907e39a431485fecaf0f612a528)](https://www.codacy.com/app/riomus/sparkling-graph) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/ml.sparkling/sparkling-graph-examples_2.10/badge.svg)](https://maven-badges.herokuapp.com/maven-central/ml.sparkling/sparkling-graph-examples_2.10) [![Gitter](https://badges.gitter.im/sparkling-graph/sparkling-graph.svg)](https://gitter.im/sparkling-graph/sparkling-graph?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [API](http://sparkling-graph.github.io/sparkling-graph/latest/api/) |  [Spark packages](http://spark-packages.org/package/sparkling-graph/sparkling-graph)
 
 SparklingGraph provides easy to use set of features that will give you ability to proces large scala graphs using Spark and GraphX.
 
@@ -54,7 +54,7 @@ libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.4
   
 # How to
 
-Please check API and examples, in depth docs will be created soon.
+Please check [API](http://sparkling-graph.github.io/sparkling-graph/latest/api/), [examples](https://github.com/sparkling-graph/sparkling-graph/tree/master/examples/src/main/scala/ml/sparkling/graph/examples) or [docs](http://sparkling-graph.readthedocs.org/en/latest/)
 
 
 
