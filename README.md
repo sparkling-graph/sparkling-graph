@@ -4,6 +4,10 @@
 
 SparklingGraph provides easy to use set of features that will give you ability to proces large scala graphs using Spark and GraphX.
 
+<p align="center">
+<a href='https://pledgie.com/campaigns/31182'><img alt='Click here to lend your support to: SparklingGraph - Large scale  distributed graph processing made easy and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/31182.png?skin_name=chrome' border='0' ></a>
+</p>
+
 # Dependencies
 ## Snapshot
 ```
