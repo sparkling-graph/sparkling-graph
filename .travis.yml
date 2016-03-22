@@ -4,7 +4,6 @@ sudo: false
 scala:
   - 2.10.6
   - 2.11.7
-ja
 before_script:
 - git config --global user.name "Travis CI"
 - git config --global user.email "riomus@gmail.com"
