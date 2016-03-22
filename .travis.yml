@@ -1,6 +1,6 @@
 language: scala
 jdk: oraclejdk8
-sudo: false
+sudo: true
 before_install: umask 0022
 scala:
   - 2.10.6

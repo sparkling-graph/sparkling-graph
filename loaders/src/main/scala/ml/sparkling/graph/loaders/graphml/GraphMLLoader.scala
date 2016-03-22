@@ -30,41 +30,41 @@ object GraphMLLoader {
    */
   def loadGraphFromML(path: String)(implicit sc: SparkContext): Graph[ValuesMap, ValuesMap] = {
     val sqlContext = new SQLContext(sc)
-    val graphSchema = StructType(Array(
-      StructField("node", ArrayType(StructType(Array(
-        StructField("@id",StringType,nullable = true),
-        StructField("data", ArrayType(StructType(Array(
-          StructField("#VALUE",StringType,nullable = true),
-          StructField("@key",StringType,nullable = true)
-        ))), nullable = true)
-      ))), nullable = true),
-      StructField("edge", ArrayType(StructType(Array(
-        StructField("@id",StringType,nullable = true),
-        StructField("@target",StringType,nullable = true),
-        StructField("@source",StringType,nullable = true),
-        StructField("data", ArrayType(StructType(Array(
-          StructField("#VALUE",StringType,nullable = true),
-          StructField("@key",StringType,nullable = true)
-        ))), nullable = true)
-      ))), nullable = true)
-    ))
+//    val graphSchema = StructType(Array(
+//      StructField("node", ArrayType(StructType(Array(
+//        StructField("@id",StringType,nullable = true),
+//        StructField("data", ArrayType(StructType(Array(
+//          StructField("#VALUE",StringType,nullable = true),
+//          StructField("@key",StringType,nullable = true)
+//        ))), nullable = true)
+//      ))), nullable = true),
+//      StructField("edge", ArrayType(StructType(Array(
+//        StructField("@id",StringType,nullable = true),
+//        StructField("@target",StringType,nullable = true),
+//        StructField("@source",StringType,nullable = true),
+//        StructField("data", ArrayType(StructType(Array(
+//          StructField("#VALUE",StringType,nullable = true),
+//          StructField("@key",StringType,nullable = true)
+//        ))), nullable = true)
+//      ))), nullable = true)
+//    ))
     val graphDataFrame = sqlContext
       .read
       .format("com.databricks.spark.xml")
-      .option("rowTag", "graph").schema(graphSchema).load(path)
+      .option("rowTag", "graph").load(path)
 
-    val graphMLSchema = StructType(Array(
-      StructField("key", ArrayType(StructType(Array(
-        StructField("@attr.name",StringType,nullable = true),
-        StructField("@attr.type",StringType,nullable = true),
-        StructField("@for",StringType,nullable = true),
-          StructField("@id",StringType,nullable = true)
-      ))), nullable = true)))
+//    val graphMLSchema = StructType(Array(
+//      StructField("key", ArrayType(StructType(Array(
+//        StructField("@attr.name",StringType,nullable = true),
+//        StructField("@attr.type",StringType,nullable = true),
+//        StructField("@for",StringType,nullable = true),
+//          StructField("@id",StringType,nullable = true)
+//      ))), nullable = true)))
 
     val nodesKeys = sqlContext
       .read
       .format("com.databricks.spark.xml")
-      .option("rowTag", "graphml").schema(graphMLSchema).load(path)
+      .option("rowTag", "graphml").load(path)
       .flatMap(r=>Try(r.getAs[mutable.WrappedArray[Row]]("key").toArray).getOrElse(Array.empty))
       .filter(r=>r.getAs[String]("@for")=="node")
 
