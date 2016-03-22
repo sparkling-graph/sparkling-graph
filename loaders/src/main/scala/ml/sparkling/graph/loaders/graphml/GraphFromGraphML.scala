@@ -9,6 +9,7 @@ import ml.sparkling.graph.loaders.csv.providers.{EdgeProviders, VertexProviders}
 import ml.sparkling.graph.loaders.csv.types.CSVTypes.GraphBuilder
 import ml.sparkling.graph.loaders.csv.types.Types._
 import ml.sparkling.graph.loaders.csv.utils.DefaultTransformers._
+import ml.sparkling.graph.loaders.graphml.GraphMLLoader.ValuesMap
 import org.apache.log4j.Logger
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.{Edge, Graph}
@@ -23,7 +24,7 @@ import scala.reflect.ClassTag
 object GraphFromGraphML {
   val log = Logger.getLogger(getClass.getName)
   
-  type GraphProperties=Map[String,Any]
+  type GraphProperties=ValuesMap
 
   object GraphML extends FromPathLoader[GraphProperties,GraphProperties]{
     def apply(path:String):GraphLoader[GraphProperties,GraphProperties]=GraphMLGraphLoader(path)

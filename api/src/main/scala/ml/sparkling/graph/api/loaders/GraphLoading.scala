@@ -36,7 +36,6 @@ object GraphLoading {
       loader match{
         case typed:TypedGraphLoader[_,_]=>typed.load[VD,ED](parameters)
         case normal:GraphLoader[VD @unchecked,ED @unchecked] => normal.load(parameters)
-        case _ => ???
       }
     }
 

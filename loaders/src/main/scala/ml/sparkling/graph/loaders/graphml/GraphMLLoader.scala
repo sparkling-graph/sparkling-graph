@@ -41,7 +41,7 @@ object GraphMLLoader {
       .map(r=>(r.getAs[String]("@id"),GraphMLAttribute(r.getAs[String]("@attr.name"),GraphMLTypes(r.getAs[String]("@attr.type"))))).collect().toMap
 
     val verticesWithData = graphDataFrame.flatMap(r => r.getAs[Any]("node") match {
-      case data: mutable.WrappedArray[Row] => data.array
+      case data: mutable.WrappedArray[Row @unchecked] => data.array
       case data: Row => Array(data)
     })
 
@@ -56,7 +56,7 @@ object GraphMLLoader {
         ).getOrElse(Map.empty))
       )
     val edgesRows = graphDataFrame.flatMap(r => r.getAs[Any]("edge") match {
-      case data: mutable.WrappedArray[Row] => data.array
+      case data: mutable.WrappedArray[Row @unchecked] => data.array
       case data: Row => Array(data)
     })
       .map(r => Edge(verticesIndex(r.getString(2)), verticesIndex(r.getString(3)), Map[String,Any]("id"->r.getString(1))))
