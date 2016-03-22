@@ -5,7 +5,7 @@ import ml.sparkling.graph.loaders.graphml.GraphMLTypes.TypeHandler
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.{Edge, Graph, VertexId}
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.types.StringType
+import org.apache.spark.sql.types._
 import org.apache.spark.sql.{Row, SQLContext}
 
 import scala.collection.mutable
@@ -30,9 +30,41 @@ object GraphMLLoader {
    */
   def loadGraphFromML(path: String)(implicit sc: SparkContext): Graph[ValuesMap, ValuesMap] = {
     val sqlContext = new SQLContext(sc)
-    val graphDataFrame = sqlContext.xmlFile(path, "graph")
+    val graphSchema = StructType(Array(
+      StructField("node", ArrayType(StructType(Array(
+        StructField("@id",StringType,nullable = true),
+        StructField("data", ArrayType(StructType(Array(
+          StructField("#VALUE",StringType,nullable = true),
+          StructField("@key",StringType,nullable = true)
+        ))), nullable = true)
+      ))), nullable = true),
+      StructField("edge", ArrayType(StructType(Array(
+        StructField("@id",StringType,nullable = true),
+        StructField("@target",StringType,nullable = true),
+        StructField("@source",StringType,nullable = true),
+        StructField("data", ArrayType(StructType(Array(
+          StructField("#VALUE",StringType,nullable = true),
+          StructField("@key",StringType,nullable = true)
+        ))), nullable = true)
+      ))), nullable = true)
+    ))
+    val graphDataFrame = sqlContext
+      .read
+      .format("com.databricks.spark.xml")
+      .option("rowTag", "graph").schema(graphSchema).load(path)
+
+    val graphMLSchema = StructType(Array(
+      StructField("key", ArrayType(StructType(Array(
+        StructField("@attr.name",StringType,nullable = true),
+        StructField("@attr.type",StringType,nullable = true),
+        StructField("@for",StringType,nullable = true),
+          StructField("@id",StringType,nullable = true)
+      ))), nullable = true)))
+
     val nodesKeys = sqlContext
-      .xmlFile(path, "graphml")
+      .read
+      .format("com.databricks.spark.xml")
+      .option("rowTag", "graphml").schema(graphMLSchema).load(path)
       .flatMap(r=>Try(r.getAs[mutable.WrappedArray[Row]]("key").toArray).getOrElse(Array.empty))
       .filter(r=>r.getAs[String]("@for")=="node")
 
@@ -59,7 +91,7 @@ object GraphMLLoader {
       case data: mutable.WrappedArray[Row @unchecked] => data.array
       case data: Row => Array(data)
     })
-      .map(r => Edge(verticesIndex(r.getString(2)), verticesIndex(r.getString(3)), Map[String,Any]("id"->r.getString(1))))
+      .map(r => Edge(verticesIndex(r.getAs[String]("@source")), verticesIndex(r.getAs[String]("@target")), Map[String,Any]("id"->r.getAs[String]("@id"))))
     Graph(vertices, edgesRows)
   }
 
