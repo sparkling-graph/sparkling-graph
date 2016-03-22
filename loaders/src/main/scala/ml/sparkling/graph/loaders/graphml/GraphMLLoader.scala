@@ -67,8 +67,8 @@ object GraphMLLoader {
       .option("rowTag", "graphml").load(path)
       .flatMap(r=>Try(r.getAs[mutable.WrappedArray[Row]]("key").toArray).getOrElse(Array.empty))
       .filter(r=>r.getAs[String]("@for")=="node")
-
-
+nodesKeys.collect()
+println("!!!!!!!!!!!!!!!!!!!!!!!!!!!! nodeskeys")
     val attrHandler=nodesKeys
       .map(r=>(r.getAs[String]("@id"),GraphMLAttribute(r.getAs[String]("@attr.name"),GraphMLTypes(r.getAs[String]("@attr.type"))))).collect().toMap
 
@@ -87,11 +87,15 @@ object GraphMLLoader {
         }).toMap
         ).getOrElse(Map.empty))
       )
+    vertices.collect()
+    println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 vertices")
     val edgesRows = graphDataFrame.flatMap(r => r.getAs[Any]("edge") match {
       case data: mutable.WrappedArray[Row @unchecked] => data.array
       case data: Row => Array(data)
     })
       .map(r => Edge(verticesIndex(r.getAs[String]("@source")), verticesIndex(r.getAs[String]("@target")), Map[String,Any]("id"->r.getAs[String]("@id"))))
+    edgesRows.collect()
+    println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 edges")
     Graph(vertices, edgesRows)
   }
 
