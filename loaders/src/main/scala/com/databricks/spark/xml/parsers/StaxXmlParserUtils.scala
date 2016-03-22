@@ -59,4 +59,7 @@ private[xml] object StaxXmlParserUtils {
       attrFields.zip(nullSafeValues).toMap
     }
   }
+
+  def toValuesMap(attributes: Array[Attribute],
+                  options: XmlOptions): Map[String, String]=convertAttributesToValuesMap(attributes,options)
 }
