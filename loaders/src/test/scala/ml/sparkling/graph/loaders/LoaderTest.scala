@@ -1,4 +1,4 @@
-package ml.sparkling.graph.loaders.csv
+package ml.sparkling.graph.loaders
 
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.GraphLoader

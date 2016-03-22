@@ -1,6 +1,8 @@
 package ml.sparkling.graph.loaders.csv
 
 import ml.sparkling.graph.api.loaders.GraphLoading.{Parameter, LoadGraph}
+import ml.sparkling.graph.loaders.LoaderTest
+import ml.sparkling.graph.loaders.csv.DummyEdgeValue
 import ml.sparkling.graph.loaders.csv.GraphFromCsv.CSV
 import ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderParameters.{Indexing, EdgeValue, NoHeader}
 import org.apache.spark.SparkContext
@@ -49,11 +51,11 @@ class GraphFromCsv$Test(implicit sc:SparkContext)  extends LoaderTest {
     Given("CSV path and type")
     val filePath = getClass.getResource("/simple.csv").toString
     When("Loads graph")
-    val graph = LoadGraph.from(CSV(filePath)).using(EdgeValue(NoHeader)).load[Nothing,Parameter]()
+    val graph = LoadGraph.from(CSV(filePath)).using(EdgeValue(DummyEdgeValue)).load[Nothing,Any]()
     Then("Graph should be loaded correctly")
     graph.vertices.count() should equal(6)
     graph.edges.count() should equal(5)
-    graph.edges.collect().map(edge => edge.attr) should equal((0 until 5).map(x => NoHeader))
+    graph.edges.collect().map(edge => edge.attr) should equal((0 until 5).map(x => DummyEdgeValue))
   }
 
   "CSV with standard format and no header" should "be loaded" in{
@@ -74,7 +76,8 @@ class GraphFromCsv$Test(implicit sc:SparkContext)  extends LoaderTest {
     Then("Graph should be loaded correctly")
     graph.vertices.count() should equal(6)
     graph.edges.count() should equal(4)
-    graph.vertices.collect().map{case (vId,data)=> vId}.sorted should equal(0 until 6)
+    graph.vertices.collect().map{case (vId,data)=> vId}.distinct.size should equal(6)
   }
+
 
 }

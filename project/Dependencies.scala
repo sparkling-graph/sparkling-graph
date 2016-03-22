@@ -20,6 +20,7 @@ object Dependencies {
   val sparkSQL = l ++= Seq(Provided.sparkSQL.value)
   val sparkMLLib = l ++= Seq(Provided.sparkMLLib.value)
   val sparkCSV = l ++= Seq(Compile.sparkCSV, Provided.sparkSQL.value)
+  val sparkXML = l ++= Seq(Compile.sparkXML, Provided.sparkSQL.value)
   val test = l ++= Seq(Compile.Test.scalatest.value,Compile.Test.mockito.value)
   val fastUtils = l ++= Seq(Compile.fastUtils)
 
@@ -27,6 +28,7 @@ object Dependencies {
     val fastUtils = "it.unimi.dsi" % "fastutil" % "7.0.8"
 
     val sparkCSV = "com.databricks" %% "spark-csv" % "1.2.0"
+    val sparkXML = "com.databricks" %% "spark-xml" % "0.3.2"
 
     object Test {
       val scalatest = Def.setting {

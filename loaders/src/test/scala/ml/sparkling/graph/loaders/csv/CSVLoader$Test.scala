@@ -1,5 +1,6 @@
 package ml.sparkling.graph.loaders.csv
 
+import ml.sparkling.graph.loaders.LoaderTest
 import ml.sparkling.graph.loaders.csv.providers.PropertyProviders
 import org.apache.spark.graphx.Graph
 import org.apache.spark.{SparkConf, SparkContext}
@@ -31,7 +32,7 @@ class CSVLoader$Test(implicit sc:SparkContext)  extends LoaderTest{
     Then("Graph should be loaded correctly")
     graph.vertices.count() should equal(6)
     graph.edges.count() should equal(4)
-    graph.vertices.collect().map{case (vId,data)=> vId}.sorted should equal(0 until 6)
+    graph.vertices.collect().map{case (vId,data)=> vId}.distinct.size should equal(6)
   }
 
   "File that need vertices indexing and has not standard columns arragement" should "be loaded" in {

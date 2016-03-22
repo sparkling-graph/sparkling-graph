@@ -36,9 +36,9 @@ object GraphFromCsv {
                                                          var csvLoaderConfig: CsvLoaderConfig=CsvLoaderConfig()
                                                          )
 
-  object CSV extends FromPathLoader{
-    def apply(path:String):GraphLoader=CSVGraphLoader(path)
-    def apply(path:URL):GraphLoader=this(path.toString)
+  object CSV extends FromPathLoader[String,String]{
+    def apply(path:String):GraphLoader[String,String]=CSVGraphLoader(path)
+    def apply(path:URL):GraphLoader[String,String]=this(path.toString)
   }
 
   def standardGraphBuilderCreator[V:ClassTag,E:ClassTag](configuration:LoaderConfiguration[V,E]):GraphBuilder[V,E]={
@@ -57,7 +57,7 @@ object GraphFromCsv {
   
 
 
-  case class CSVGraphLoader(path:String) extends GraphLoader{
+  case class CSVGraphLoader(path:String) extends TypedGraphLoader[String,String]{
     override def load[VD: ClassTag, ED: ClassTag](parameters: List[Parameter])(implicit sc:SparkContext): Graph[VD, ED] = {
        val configuration:LoaderConfiguration[VD,ED]= parameters.foldLeft(getDefaultConfiguration[VD,ED]())(
           (conf:LoaderConfiguration[VD,ED],parameter:Parameter)=>{
@@ -83,6 +83,8 @@ object GraphFromCsv {
         configuration.csvLoaderConfig,
         configuration.partitions)
     }
+
+    override def load(parameters: List[Parameter])(implicit sc: SparkContext): Graph[String, String] = load[String,String](parameters)
   }
 
   object LoaderParameters {

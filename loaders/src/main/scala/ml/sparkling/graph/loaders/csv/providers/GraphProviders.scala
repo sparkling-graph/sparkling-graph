@@ -43,9 +43,7 @@ object GraphProviders {
                                                       vertexStorageLevel: StorageLevel = defaultStorageLevel)
                                                      (dataFrame: DataFrame): Graph[VD, ED] = {
 
-    val index = dataFrame.flatMap(row => columnsToIndex.map(row(_)))
-      .map(Set(_))
-      .reduce((a, b) => a ++ b).toList.zipWithIndex.toMap
+    val index = dataFrame.flatMap(row => columnsToIndex.map(row(_))).distinct().zipWithUniqueId().collect().toMap
     def extractIdFromIndex(vertex: VD) = index(vertex)
     simpleGraphBuilder(defaultVertex,
       vertexProvider(_: Row, extractIdFromIndex _),

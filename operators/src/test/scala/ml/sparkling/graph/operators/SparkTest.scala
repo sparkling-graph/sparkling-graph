@@ -12,7 +12,7 @@ import org.scalatest._
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-class SparkTest extends Suite with BeforeAndAfterAll {
+class SparkTest extends Spec with BeforeAndAfterAll {
 
   val master = "local[*]"
 

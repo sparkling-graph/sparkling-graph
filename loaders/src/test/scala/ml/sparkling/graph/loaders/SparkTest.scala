@@ -1,13 +1,14 @@
-package ml.sparkling.graph.loaders.csv
+package ml.sparkling.graph.loaders
 
-
+import ml.sparkling.graph.loaders.csv.{CSVLoader$Test, GraphFromCsv$Test}
+import ml.sparkling.graph.loaders.graphml.GraphFromGraphML$Test
 import org.apache.spark.{SparkConf, SparkContext}
 import org.scalatest._
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-class SparkTest extends Suite with BeforeAndAfterAll {
+class SparkTest extends Spec with BeforeAndAfterAll {
 
   val master = "local[*]"
 
@@ -27,7 +28,8 @@ class SparkTest extends Suite with BeforeAndAfterAll {
   override def nestedSuites = {
     Vector(
      new CSVLoader$Test,
-    new GraphFromCsv$Test
+     new GraphFromCsv$Test,
+      new GraphFromGraphML$Test
     )
   }
 
