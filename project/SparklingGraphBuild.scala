@@ -19,11 +19,8 @@ object SparklingGraphBuild extends Build {
     parallelExecution in test := false,
     autoAPIMappings := true,
     releasePublishArtifactsAction := PgpKeys.publishSigned.value,
-    licenses += ("GNU General Public License 3.0", url("http://www.gnu.org/licenses/gpl-3.0.en.html")),
-    parallelExecution in ThisBuild := false
+    licenses += ("GNU General Public License 3.0", url("http://www.gnu.org/licenses/gpl-3.0.en.html"))
   )
-  concurrentRestrictions in Global += Tags.limit(Tags.Test, 1)
-
   lazy val root = Project(id = "sparkling-graph",
     base = file("."), settings = buildSettings)
     .settings(unidocSettings: _*)
