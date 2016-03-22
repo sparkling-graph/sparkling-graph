@@ -1,9 +1,14 @@
 language: scala
-jdk: openjdk8
+jdk: openjdk7
 sudo: false
 scala:
   - 2.10.6
   - 2.11.7
+cache:
+  directories:
+  - "$HOME/.m2"
+  - "$HOME/.ivy2/cache"
+  - "$HOME/.sbt/boot/"
 before_script:
 - git config --global user.name "Travis CI"
 - git config --global user.email "riomus@gmail.com"
