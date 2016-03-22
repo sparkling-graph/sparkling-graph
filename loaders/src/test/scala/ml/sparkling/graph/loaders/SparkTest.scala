@@ -10,7 +10,7 @@ import org.scalatest._
  */
 class SparkTest extends Spec with BeforeAndAfterAll {
 
-  val master = "local[*]"
+  val master = "local[1]"
 
   def appName: String = "operators-tests"
 
