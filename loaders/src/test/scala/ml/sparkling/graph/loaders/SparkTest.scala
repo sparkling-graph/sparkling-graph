@@ -27,8 +27,8 @@ class SparkTest extends Spec with BeforeAndAfterAll {
 
   override def nestedSuites = {
     Vector(
-     new CSVLoader$Test,
-     new GraphFromCsv$Test,
+//     new CSVLoader$Test,
+//     new GraphFromCsv$Test,
       new GraphFromGraphML$Test
     )
   }
