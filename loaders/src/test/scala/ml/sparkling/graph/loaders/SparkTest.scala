@@ -10,9 +10,9 @@ import org.scalatest._
  */
 class SparkTest extends Spec with BeforeAndAfterAll {
 
-  val master = "local[1]"
+  val master = "local[*]"
 
-  def appName: String = "operators-tests"
+  def appName: String = "loaders-tests"
 
   implicit val sc: SparkContext = {
     val conf = new SparkConf()
