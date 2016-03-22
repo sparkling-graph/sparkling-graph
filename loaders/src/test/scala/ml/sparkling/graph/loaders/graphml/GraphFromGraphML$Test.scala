@@ -14,25 +14,25 @@ import org.apache.spark.graphx.Graph
  */
 class GraphFromGraphML$Test(implicit sc:SparkContext)  extends LoaderTest {
 
-  "GraphML with standard format" should "be loaded by default" in{
-    Given("CSV path")
-    val filePath = getClass.getResource("/simpleGraphML.xml").toString
-    When("Loads graph")
-    val graph = LoadGraph.from(GraphML(filePath)).load()
-    Then("Graph should be loaded correctly")
-    graph.vertices.count() should equal(2)
-    graph.edges.count() should equal(1)
-  }
-
-  "GraphML with standard format and multiple edges" should "be loaded by default" in{
-    Given("CSV path")
-    val filePath = getClass.getResource("/simpleGraphML2.xml").toString
-    When("Loads graph")
-    val graph = LoadGraph.from(GraphML(filePath)).load()
-    Then("Graph should be loaded correctly")
-    graph.vertices.count() should equal(3)
-    graph.edges.count() should equal(2)
-  }
+//  "GraphML with standard format" should "be loaded by default" in{
+//    Given("CSV path")
+//    val filePath = getClass.getResource("/simpleGraphML.xml").toString
+//    When("Loads graph")
+//    val graph = LoadGraph.from(GraphML(filePath)).load()
+//    Then("Graph should be loaded correctly")
+//    graph.vertices.count() should equal(2)
+//    graph.edges.count() should equal(1)
+//  }
+//
+//  "GraphML with standard format and multiple edges" should "be loaded by default" in{
+//    Given("CSV path")
+//    val filePath = getClass.getResource("/simpleGraphML2.xml").toString
+//    When("Loads graph")
+//    val graph = LoadGraph.from(GraphML(filePath)).load()
+//    Then("Graph should be loaded correctly")
+//    graph.vertices.count() should equal(3)
+//    graph.edges.count() should equal(2)
+//  }
 
 
   "GraphML with vertices attributes" should "be loaded by default" in{

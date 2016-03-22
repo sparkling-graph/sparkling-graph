@@ -1,8 +1,7 @@
 package ml.sparkling.graph.loaders.csv
 
-import ml.sparkling.graph.api.loaders.GraphLoading.{Parameter, LoadGraph}
+import ml.sparkling.graph.api.loaders.GraphLoading.{ LoadGraph}
 import ml.sparkling.graph.loaders.LoaderTest
-import ml.sparkling.graph.loaders.csv.DummyEdgeValue
 import ml.sparkling.graph.loaders.csv.GraphFromCsv.CSV
 import ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderParameters.{Indexing, EdgeValue, NoHeader}
 import org.apache.spark.SparkContext
