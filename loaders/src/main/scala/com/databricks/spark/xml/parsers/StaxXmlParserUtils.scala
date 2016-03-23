@@ -24,7 +24,7 @@ private[xml] object StaxXmlParserUtils {
   def checkEndElement(parser: XMLEventReader, options: XmlOptions): Boolean = {
     if(parser.peek==null) {
       println("!!!!!!!!!!!!!!!!!!!!!!! ERROR IN SPARK-XML !!!!!!!")
-      false
+      true
     }
     else
     parser.peek match {
