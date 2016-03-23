@@ -15,7 +15,7 @@ import org.apache.spark.graphx.Graph
 class GraphFromGraphML$Test(implicit sc:SparkContext)  extends LoaderTest {
 
   "GraphML with standard format" should "be loaded by default" in{
-    Given("CSV path")
+    Given("XML in GraphML format  path")
     val filePath = getClass.getResource("/simpleGraphML.xml").toString
     When("Loads graph")
     val graph = LoadGraph.from(GraphML(filePath)).load()
@@ -25,7 +25,7 @@ class GraphFromGraphML$Test(implicit sc:SparkContext)  extends LoaderTest {
   }
 
   "GraphML with standard format and multiple edges" should "be loaded by default" in{
-    Given("CSV path")
+    Given("XML in GraphML format path")
     val filePath = getClass.getResource("/simpleGraphML2.xml").toString
     When("Loads graph")
     val graph = LoadGraph.from(GraphML(filePath)).load()
@@ -36,7 +36,7 @@ class GraphFromGraphML$Test(implicit sc:SparkContext)  extends LoaderTest {
 
 
   "GraphML with vertices attributes" should "be loaded by default" in{
-    Given("CSV path")
+    Given("XML in GraphML format  path")
     val filePath = getClass.getResource("/withValuesGraphML.xml").toString
     When("Loads graph")
     val graph: Graph[GraphProperties, GraphProperties] = LoadGraph.from(GraphML(filePath)).load()
