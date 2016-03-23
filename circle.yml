@@ -15,14 +15,15 @@ dependencies:
     - sbt test:compile
 
 test:
-  override:
-    - sbt clean sparkling-graph-loaders/test:test
-
-deployment:
   pre:
     - git config --global user.name "CircleCI"
     - git config --global user.email "riomus@gmail.com"
   override:
+    - sbt clean sparkling-graph-loaders/test:test
+#  post:
     #- bash <(curl -s https://codecov.io/bash)
     #- sbt ghpages-push-site
     #- sbt publish
+
+deployment:
+  override:
