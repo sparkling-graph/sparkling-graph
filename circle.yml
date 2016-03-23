@@ -24,6 +24,3 @@ test:
     #- bash <(curl -s https://codecov.io/bash)
     #- sbt ghpages-push-site
     #- sbt publish
-
-deployment:
-  override:
