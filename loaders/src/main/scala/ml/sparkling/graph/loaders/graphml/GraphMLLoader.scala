@@ -29,6 +29,7 @@ object GraphMLLoader {
    * @return loaded graph
    */
   def loadGraphFromML(path: String)(implicit sc: SparkContext): Graph[ValuesMap, ValuesMap] = {
+    println(sc.textFile(path).collect().toList)
     val sqlContext = new SQLContext(sc)
 //    val graphSchema = StructType(Array(
 //      StructField("node", ArrayType(StructType(Array(
