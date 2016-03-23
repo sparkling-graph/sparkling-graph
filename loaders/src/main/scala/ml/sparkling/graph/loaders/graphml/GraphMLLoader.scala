@@ -31,10 +31,7 @@ object GraphMLLoader {
   def loadGraphFromML(path: String)(implicit sc: SparkContext): Graph[ValuesMap, ValuesMap] = {
     println(sc.textFile(path).collect().toList)
     val sqlContext = new SQLContext(sc)
-    val graphDataFrame = sqlContext
-      .read
-      .format("com.databricks.spark.xml")
-      .option("rowTag", "graph").load(path)
+    val graphDataFrame = sqlContext.xmlFile(path,rowTag = "graph",failFast = true)
     graphDataFrame.collect()
     println("!!!!!!!!!!!!!!!!!!!!!!!!!!!! graphdata")
 
