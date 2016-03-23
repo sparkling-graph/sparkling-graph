@@ -52,7 +52,8 @@ object GraphMLLoader {
       .read
       .format("com.databricks.spark.xml")
       .option("rowTag", "graph").load(path)
-
+    graphDataFrame.collect()
+    println("!!!!!!!!!!!!!!!!!!!!!!!!!!!! graphdata")
 //    val graphMLSchema = StructType(Array(
 //      StructField("key", ArrayType(StructType(Array(
 //        StructField("@attr.name",StringType,nullable = true),
