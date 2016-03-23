@@ -16,7 +16,6 @@ import sbtrelease.ReleasePlugin.autoImport.releasePublishArtifactsAction
 object SparklingGraphBuild extends Build {
   lazy val buildSettings = Dependencies.Versions ++ Seq(
     organization := "ml.sparkling",
-    parallelExecution in test := false,
     autoAPIMappings := true,
     releasePublishArtifactsAction := PgpKeys.publishSigned.value,
     licenses += ("GNU General Public License 3.0", url("http://www.gnu.org/licenses/gpl-3.0.en.html"))
