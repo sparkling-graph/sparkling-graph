@@ -31,10 +31,7 @@ object GraphMLLoader {
   def loadGraphFromML(path: String)(implicit sc: SparkContext): Graph[ValuesMap, ValuesMap] = {
     val sqlContext = new SQLContext(sc)
 
-    val graphDataFrame = sqlContext
-      .read
-      .format("com.databricks.spark.xml")
-      .option("rowTag", "graph").load(path)
+    val graphDataFrame = sqlContext.xmlFile(path,rowTag = "graph",failFast = true)
     graphDataFrame.collect()
     println("!!!!!!!!!!!!!!!!!!!!!!!!!!!! graphdata")
 //    val graphMLSchema = StructType(Array(
@@ -45,10 +42,7 @@ object GraphMLLoader {
 //          StructField("@id",StringType,nullable = true)
 //      ))), nullable = true)))
 
-    val nodesKeys = sqlContext
-      .read
-      .format("com.databricks.spark.xml")
-      .option("rowTag", "graphml").load(path)
+    val nodesKeys = sqlContext.xmlFile(path,rowTag = "graphml",failFast = true)
       .flatMap(r=>Try(r.getAs[mutable.WrappedArray[Row]]("key").toArray).getOrElse(Array.empty))
       .filter(r=>r.getAs[String]("@for")=="node")
 nodesKeys.collect()
