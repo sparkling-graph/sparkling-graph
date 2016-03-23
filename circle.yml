@@ -1,0 +1,28 @@
+machine:
+  timezone: UTC
+  java:
+    version: oraclejdk8
+
+
+dependencies:
+  # Cache the resolution-cache and build streams to speed things up
+  cache_directories:
+    - "$HOME/.m2"
+    - "$HOME/.ivy2/cache"
+    - "$HOME/.sbt/boot/"
+  # Compile all sources
+  override:
+    - sbt test:compile
+
+test:
+  override:
+    - sbt clean sparkling-graph-loaders/test:test
+
+deployment:
+  pre:
+    - git config --global user.name "CircleCI"
+    - git config --global user.email "riomus@gmail.com"
+  override:
+    #- bash <(curl -s https://codecov.io/bash)
+    #- sbt ghpages-push-site
+    #- sbt publish
