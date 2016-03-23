@@ -16,7 +16,6 @@ import scala.util.Try
  */
 object GraphMLLoader {
   type ValuesMap = Map[String, Any]
-  val databricksXmlFormat: String = "com.databricks.spark.xml"
 
   case class GraphMLAttribute(name: String, handler: TypeHandler)
 
@@ -33,11 +32,13 @@ object GraphMLLoader {
     val sqlContext = new SQLContext(sc)
     val graphDataFrame = sqlContext.xmlFile(path, rowTag = graphTag, failFast = true)
 
+    println("!!!!!!!!!!!!!!!!!!!!!!!! GRAPHDATA")
 
     val nodesKeys = sqlContext.xmlFile(path, rowTag = graphMLTag, failFast = true)
       .flatMap(r => Try(r.getAs[mutable.WrappedArray[Row]](keyTag).toArray).getOrElse(Array.empty))
       .filter(r => r.getAs[String](forAttribute) == nodeTag)
 
+    println("!!!!!!!!!!!!!!!!!!!!!!!! nodeskeys")
     val attrHandler = nodesKeys
       .map(r => (r.getAs[String](idAttribute), GraphMLAttribute(r.getAs[String](nameAttribute), GraphMLTypes(r.getAs[String](typeAttribute)))))
       .collect().toMap
