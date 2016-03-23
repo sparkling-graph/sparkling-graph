@@ -4,16 +4,16 @@ sudo: false
 scala:
   - 2.10.6
   - 2.11.7
-cache:
-  directories:
-  - "$HOME/.m2"
-  - "$HOME/.ivy2/cache"
-  - "$HOME/.sbt/boot/"
+#cache:
+#  directories:
+#  - "$HOME/.m2"
+#  - "$HOME/.ivy2/cache"
+#  - "$HOME/.sbt/boot/"
 before_script:
 - git config --global user.name "Travis CI"
 - git config --global user.email "riomus@gmail.com"
 script:
-- sbt clean coverage test && sbt coverageAggregate
+- sbt sparkling-graph-loaders/test:test
 - find $HOME/.sbt -name "*.lock" | xargs rm
 - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
 after_success:
