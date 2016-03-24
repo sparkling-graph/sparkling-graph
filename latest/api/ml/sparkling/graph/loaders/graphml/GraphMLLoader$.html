@@ -223,6 +223,23 @@
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="ml.sparkling.graph.loaders.graphml.GraphMLLoader#createAttrHandlersFor" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="createAttrHandlersFor(keys:org.apache.spark.rdd.RDD[org.apache.spark.sql.Row]):Map[String,ml.sparkling.graph.loaders.graphml.GraphMLLoader.GraphMLAttribute]"></a>
+      <a id="createAttrHandlersFor(RDD[Row]):Map[String,GraphMLAttribute]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">createAttrHandlersFor</span><span class="params">(<span name="keys">keys: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="org.apache.spark.sql.Row">Row</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="GraphMLLoader$$GraphMLAttribute.html" class="extype" name="ml.sparkling.graph.loaders.graphml.GraphMLLoader.GraphMLAttribute">GraphMLAttribute</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#ml.sparkling.graph.loaders.graphml.GraphMLLoader$@createAttrHandlersFor(keys:org.apache.spark.rdd.RDD[org.apache.spark.sql.Row]):Map[String,ml.sparkling.graph.loaders.graphml.GraphMLLoader.GraphMLAttribute]" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -257,6 +274,23 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="ml.sparkling.graph.loaders.graphml.GraphMLLoader#extractAttributesMap" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="extractAttributesMap(attrHandlers:Map[String,ml.sparkling.graph.loaders.graphml.GraphMLLoader.GraphMLAttribute],r:org.apache.spark.sql.Row):Map[String,Any]"></a>
+      <a id="extractAttributesMap(Map[String,GraphMLAttribute],Row):Map[String,Any]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">extractAttributesMap</span><span class="params">(<span name="attrHandlers">attrHandlers: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="GraphMLLoader$$GraphMLAttribute.html" class="extype" name="ml.sparkling.graph.loaders.graphml.GraphMLLoader.GraphMLAttribute">GraphMLAttribute</a>]</span>, <span name="r">r: <span class="extype" name="org.apache.spark.sql.Row">Row</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Any" class="extype" target="_top">Any</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#ml.sparkling.graph.loaders.graphml.GraphMLLoader$@extractAttributesMap(attrHandlers:Map[String,ml.sparkling.graph.loaders.graphml.GraphMLLoader.GraphMLAttribute],r:org.apache.spark.sql.Row):Map[String,Any]" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <a id="finalize():Unit"></a>
@@ -347,8 +381,7 @@
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Method loads single graph from graph
-Currently spark-xml is not suporting self closing tags.</p><div class="fullcomment"><div class="comment cmt"><p>Method loads single graph from graph
+      <p class="shortcomment cmt">Method loads single graph from XML file with GraphML format.</p><div class="fullcomment"><div class="comment cmt"><p>Method loads single graph from XML file with GraphML format.
 Currently spark-xml is not suporting self closing tags. Because of that XML loading can be memmory consuming (on driver node)</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>- path of XML file</p></dd><dt class="param">sc</dt><dd class="cmt"><p>- spark context</p></dd><dt>returns</dt><dd class="cmt"><p>loaded graph</p></dd></dl></div>
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
