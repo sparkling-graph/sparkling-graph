@@ -21,7 +21,7 @@ object GraphMLLoader {
 
 
   /**
-   * Method loads single graph from graph
+   * Method loads single graph from XML file with GraphML format.
    * Currently spark-xml is not suporting self closing tags. Because of that XML loading can be memmory consuming (on driver node)
    * @param path - path of XML file
    * @param sc - spark context
@@ -32,12 +32,16 @@ object GraphMLLoader {
 
     val graphDataFrame = sqlContext.xmlFile(path, rowTag = graphTag, failFast = true)
 
-    val nodesKeys = sqlContext.xmlFile(path, rowTag = graphMLTag, failFast = true)
+    val keys = sqlContext.xmlFile(path, rowTag = graphMLTag, failFast = true)
       .flatMap(r => Try(r.getAs[mutable.WrappedArray[Row]](keyTag).toArray).getOrElse(Array.empty))
+
+    val nodesKeys = keys
       .filter(r => r.getAs[String](forAttribute) == nodeTag)
-    val attrHandler = nodesKeys
-      .map(r => (r.getAs[String](idAttribute), GraphMLAttribute(r.getAs[String](nameAttribute), GraphMLTypes(r.getAs[String](typeAttribute)))))
-      .collect().toMap
+    val edgeKeys = keys
+      .filter(r => r.getAs[String](forAttribute) == edgeTag)
+
+    val nodeAttrHandlers = createAttrHandlersFor(nodesKeys)
+    val edgeAttrHandlers = createAttrHandlersFor(edgeKeys)
 
     val verticesWithData = graphDataFrame.flatMap(r => r.getAs[Any](nodeTag) match {
       case data: mutable.WrappedArray[Row@unchecked] => data.array
@@ -48,12 +52,7 @@ object GraphMLLoader {
 
     val vertices: RDD[(VertexId, Map[String, Any])] = verticesWithData
       .map(
-        r => (verticesIndex(r.getAs[String](idAttribute)), Try(r.getAs[mutable.WrappedArray[Row]](dataTag)).toOption.map(
-          _.map(r => {
-            val attribute = attrHandler(r.getAs[String](keyAttribute))
-            (attribute.name, attribute.handler(r.getAs[String](tagValue)))
-          }).toMap
-        ).getOrElse(Map.empty))
+        r => (verticesIndex(r.getAs[String](idAttribute)), extractAttributesMap(nodeAttrHandlers, r))
       )
 
     val edgesRows = graphDataFrame.flatMap(r => r.getAs[Any](edgeTag) match {
@@ -63,9 +62,23 @@ object GraphMLLoader {
       .map(r => Edge(
         verticesIndex(r.getAs[String](sourceAttribute)),
         verticesIndex(r.getAs[String](targetAttribute)),
-        Map[String,Any]("id"->r.getAs[String](idAttribute))
+        extractAttributesMap(edgeAttrHandlers, r)
       ))
     Graph(vertices, edgesRows)
   }
 
+  def extractAttributesMap(attrHandlers: Map[String, GraphMLAttribute], r: Row): Map[String, Any] = {
+    Try(r.getAs[mutable.WrappedArray[Row]](dataTag)).toOption.map(
+      _.map(r => {
+        val attribute = attrHandlers(r.getAs[String](keyAttribute))
+        (attribute.name, attribute.handler(r.getAs[String](tagValue)))
+      }).toMap
+    ).getOrElse(Map.empty) + ("id" -> r.getAs[String](idAttribute))
+  }
+
+  def createAttrHandlersFor(keys: RDD[Row]): Map[String, GraphMLAttribute] = {
+    keys
+      .map(r => (r.getAs[String](idAttribute), GraphMLAttribute(r.getAs[String](nameAttribute), GraphMLTypes(r.getAs[String](typeAttribute)))))
+      .collect().toMap
+  }
 }
