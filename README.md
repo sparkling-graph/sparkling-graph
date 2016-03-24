@@ -21,7 +21,10 @@ libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.4
 # Current features
 
 * Loading
-  * CSV
+  * Formats: 
+    * CSV
+    * GraphML
+  * DSL
 * Measures - all measures can be configured to treat graphs as directed and undirected
   *  Closeness
   *  Local clustering
@@ -33,9 +36,8 @@ libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.4
   *  Describe graph using all measures to CSV files
 
 # Planned features
-* DSL - easy to use domain specific language that will boost productivity of library
+* Measures DSL - easy to use domain specific language that will boost productivity of library
 * Loading
-  *  GraphML
   *  GML
 * Measures
   * Katz
