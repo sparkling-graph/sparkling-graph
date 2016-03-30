@@ -5,6 +5,7 @@ import ml.sparkling.graph.operators.measures.utils.NeighboursUtils
 import ml.sparkling.graph.operators.measures.utils.NeighboursUtils.NeighbourSet
 import org.apache.spark.graphx.Graph
 
+import scala.reflect.ClassTag
 import scala.util.Try
 
 /**
@@ -16,7 +17,7 @@ object PSCAN {
   case class PSCANData(componentID: ComponentID,isActive:Boolean)
 
 
-  def computeConnectedComponents[VD,ED](graph:Graph[VD,ED],epsilon:Double=0.72):Graph[ComponentID,ED]={
+  def computeConnectedComponents[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],epsilon:Double=0.72):Graph[ComponentID,ED]={
 
     val neighbours: Graph[NeighbourSet, ED] = NeighboursUtils.getWithNeighbours(graph)
     val edgesWithSimilarity=neighbours.mapTriplets(edge=>{
