@@ -38,7 +38,7 @@ class SparkTest extends Spec with BeforeAndAfterAll {
       new EigenvectorCentrality$Test,
       new LocalClustering$Test,
       new Closeness$Test,
-      new ShortestPathsAlgorithm$Test
+      new ShortestPathsAlgorithm$Test,
     new PSCAN$Test
     )
   }
