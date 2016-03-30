@@ -11,14 +11,24 @@ import org.scalatest.FunSuite
  */
 class PSCAN$Test (implicit sc:SparkContext)   extends MeasureTest {
 
-  "Components for super simple graph" should  " be computed" in{
+  "Components for full graph" should  " be computed" in{
     Given("graph")
     val filePath = getClass.getResource("/graphs/4_nodes_full")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes components")
     val components: Graph[ComponentID, Int] = PSCAN.computeConnectedComponents(graph)
     Then("Should compute components correctly")
-    println(components.vertices.collect().toList)
+    components.vertices.map{case (vId,cId)=>cId}.distinct().collect().size  should equal (1)
+  }
+
+  "Components for ring graph" should  " be computed" in{
+    Given("graph")
+    val filePath = getClass.getResource("/graphs/5_nodes_directed")
+    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
+    When("Computes components")
+    val components: Graph[ComponentID, Int] = PSCAN.computeConnectedComponents(graph)
+    Then("Should compute components correctly")
+    components.vertices.map{case (vId,cId)=>cId}.distinct().collect().size  should equal (5)
   }
 
 }
