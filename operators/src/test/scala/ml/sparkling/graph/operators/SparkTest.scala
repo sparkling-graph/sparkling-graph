@@ -1,5 +1,6 @@
 package ml.sparkling.graph.operators
 
+import ml.sparkling.graph.operators.algorithms.pscan.PSCAN$Test
 import ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgorithm$Test
 import ml.sparkling.graph.operators.measures.closenes.Closeness$Test
 import ml.sparkling.graph.operators.measures.clustering.LocalClustering$Test
@@ -38,6 +39,7 @@ class SparkTest extends Spec with BeforeAndAfterAll {
       new LocalClustering$Test,
       new Closeness$Test,
       new ShortestPathsAlgorithm$Test
+    new PSCAN$Test
     )
   }
 

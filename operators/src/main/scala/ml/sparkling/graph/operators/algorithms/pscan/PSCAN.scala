@@ -19,7 +19,7 @@ object PSCAN {
 
   def computeConnectedComponents[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],epsilon:Double=0.72):Graph[ComponentID,ED]={
 
-    val neighbours: Graph[NeighbourSet, ED] = NeighboursUtils.getWithNeighbours(graph)
+    val neighbours: Graph[NeighbourSet, ED] = NeighboursUtils.getWithNeighbours(graph,treatAsUndirected = true)
     val edgesWithSimilarity=neighbours.mapTriplets(edge=>{
       val sizeOfIntersection=intersectSize(edge.srcAttr,edge.dstAttr)
       val denominator = edge.srcAttr.size()+edge.dstAttr.size()-sizeOfIntersection
@@ -37,17 +37,19 @@ object PSCAN {
 
      val graphWithComponents=startGraph.pregel[List[ComponentID]](List.empty[Long])(
       vprog=(vId,data,messages)=>{
-        Try(messages.min).map(newId=>{
+       val out= Try(messages.min).map(newId=>{
         if(newId<data.componentID)
           PSCANData(newId,true)
           else
           PSCANData(data.componentID,false)
         }
-        ).getOrElse(data)
+        ).getOrElse(PSCANData(data.componentID,data.isActive))
+        out
       },
       sendMsg=(edge)=>{
-        if(edge.srcAttr.isActive)
-          Iterator((edge.dstId,List(edge.srcAttr.componentID)))
+        if(edge.srcAttr.isActive){
+          Iterator((edge.dstId,List(edge.srcAttr.componentID)),(edge.srcId,List(edge.srcAttr.componentID)))
+          }
         else
           Iterator()
       },

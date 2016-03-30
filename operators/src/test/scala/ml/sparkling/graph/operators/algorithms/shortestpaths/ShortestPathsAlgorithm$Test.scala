@@ -19,7 +19,7 @@ class ShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extends MeasureTes
     Given("graph")
     val filePath = getClass.getResource("/graphs/5_nodes_directed")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
-    When("Loads graph")
+    When("Computes shortest paths")
     val shortestPaths=ShortestPathsAlgorithm.computeShortestPaths(graph)
     Then("Should calculate shortest paths correctly")
       val verticesSortedById=shortestPaths.vertices.collect().sortBy{case (vId,data)=>vId}
@@ -36,7 +36,7 @@ class ShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extends MeasureTes
     Given("graph")
     val filePath = getClass.getResource("/graphs/5_nodes_directed")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
-    When("Loads graph")
+    When("Computes shortest paths")
     val shortestPaths=ShortestPathsAlgorithm.computeSingleShortestPathsLengths(graph,1)
     Then("Should calculate shortest paths correctly")
     val verticesSortedById=shortestPaths.vertices.collect().sortBy{case (vId,data)=>vId}
@@ -53,7 +53,7 @@ class ShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extends MeasureTes
     Given("graph")
     val filePath = getClass.getResource("/graphs/5_nodes_directed")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
-    When("Loads graph")
+    When("Computes shortest paths")
     val shortestPaths=ShortestPathsAlgorithm.computeSingleShortestPathsLengths(graph,2l)
     Then("Should calculate shortest paths correctly")
     val verticesSortedById=shortestPaths.vertices.collect().sortBy{case (vId,data)=>vId}
