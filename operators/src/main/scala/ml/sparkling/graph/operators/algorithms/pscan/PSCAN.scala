@@ -13,6 +13,13 @@ import scala.util.Try
  */
 object PSCAN {
 
+  implicit class DSL[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED]){
+    def PSCAN(epsilon:Double=0.72):Graph[ComponentID,ED]={
+      computeConnectedComponents(graph,epsilon)
+    }
+  }
+  
+
   type ComponentID=Long
   case class PSCANData(componentID: ComponentID,isActive:Boolean)
 
@@ -22,7 +29,7 @@ object PSCAN {
     val neighbours: Graph[NeighbourSet, ED] = NeighboursUtils.getWithNeighbours(graph,treatAsUndirected = true)
     val edgesWithSimilarity=neighbours.mapTriplets(edge=>{
       val sizeOfIntersection=intersectSize(edge.srcAttr,edge.dstAttr)
-      val denominator = edge.srcAttr.size()+edge.dstAttr.size()-sizeOfIntersection
+      val denominator = edge.srcAttr.size()*edge.dstAttr.size()
       sizeOfIntersection/Math.sqrt(denominator)
     })
     val cutOffGraph=edgesWithSimilarity.filter[NeighbourSet, Double](

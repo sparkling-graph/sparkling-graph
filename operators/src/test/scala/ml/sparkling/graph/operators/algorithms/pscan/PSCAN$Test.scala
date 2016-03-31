@@ -4,8 +4,7 @@ import ml.sparkling.graph.operators.MeasureTest
 import ml.sparkling.graph.operators.algorithms.pscan.PSCAN.ComponentID
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
-import org.scalatest.FunSuite
-
+import PSCAN.DSL
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
@@ -29,6 +28,7 @@ class PSCAN$Test (implicit sc:SparkContext)   extends MeasureTest {
     val components: Graph[ComponentID, Int] = PSCAN.computeConnectedComponents(graph)
     Then("Should compute components correctly")
     components.vertices.map{case (vId,cId)=>cId}.distinct().collect().size  should equal (5)
+    graph.PSCAN(epsilon=0.72)
   }
 
 }
