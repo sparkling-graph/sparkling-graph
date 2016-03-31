@@ -32,6 +32,8 @@ libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.4
   *  Hits
   *  Neighbor connectivity
   *  Vertex embeddedness
+* Comunity detection methods
+  * PSCAN (SCAN)
 * Experiments
   *  Describe graph using all measures to CSV files
 
@@ -44,7 +46,6 @@ libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.4
   * Betweenness
 * Comunity detection methods
   * Modularity maximization
-  * SCAN
   * Infomap 
 * API
   *  Random walk
