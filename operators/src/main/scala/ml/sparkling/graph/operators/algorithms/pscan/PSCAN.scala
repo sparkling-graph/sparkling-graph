@@ -14,7 +14,7 @@ import scala.util.Try
 object PSCAN {
 
   implicit class DSL[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED]){
-    def PSCAN(epsilon:Double=0.72):Graph[ComponentID,ED]={
+    def PSCAN(epsilon:Double=0.1):Graph[ComponentID,ED]={
       computeConnectedComponents(graph,epsilon)
     }
   }
@@ -24,18 +24,18 @@ object PSCAN {
   case class PSCANData(componentID: ComponentID,isActive:Boolean)
 
 
-  def computeConnectedComponents[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],epsilon:Double=0.72):Graph[ComponentID,ED]={
+  def computeConnectedComponents[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],epsilon:Double=0.1):Graph[ComponentID,ED]={
 
     val neighbours: Graph[NeighbourSet, ED] = NeighboursUtils.getWithNeighbours(graph,treatAsUndirected = true)
     val edgesWithSimilarity=neighbours.mapTriplets(edge=>{
       val sizeOfIntersection=intersectSize(edge.srcAttr,edge.dstAttr)
-      val denominator = edge.srcAttr.size()*edge.dstAttr.size()
-      sizeOfIntersection/Math.sqrt(denominator)
+      val denominator = Math.sqrt(edge.srcAttr.size()*edge.dstAttr.size())
+      sizeOfIntersection/denominator
     })
     val cutOffGraph=edgesWithSimilarity.filter[NeighbourSet, Double](
       preprocess=g=>g,
       epred=edge=>{
-      edge.attr>epsilon
+      edge.attr >= epsilon
     })
 
     val startGraph=cutOffGraph.mapVertices{
