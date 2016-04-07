@@ -35,7 +35,7 @@ private object Util{
         if (entries.size > 0 && a == entries.head.getKey) {
           out ++= s"${entries.head.getValue},"
           entries = entries.drop(1)
-        }1
+        }
         else {
           out ++= "0,"
         }
