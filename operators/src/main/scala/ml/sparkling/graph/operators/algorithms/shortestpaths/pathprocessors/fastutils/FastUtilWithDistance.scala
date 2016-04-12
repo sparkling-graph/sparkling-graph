@@ -1,13 +1,11 @@
 package ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils
 
-import java.util.function.{Consumer, BiConsumer}
-
 import it.unimi.dsi.fastutil.longs._
 import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes
+import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes._
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor
+import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.FastUtilWithDistance.DataMap
 import org.apache.spark.graphx.VertexId
-import ShortestPathsTypes._
-import FastUtilWithDistance.DataMap
 
 import scala.collection.JavaConversions._
 /**

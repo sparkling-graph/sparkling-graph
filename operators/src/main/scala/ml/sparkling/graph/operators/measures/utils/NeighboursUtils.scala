@@ -2,9 +2,10 @@ package ml.sparkling.graph.operators.measures.utils
 
 import it.unimi.dsi.fastutil.longs.{Long2ObjectOpenHashMap, LongOpenHashSet}
 import ml.sparkling.graph.api.operators.IterativeComputation
+import ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate
 import ml.sparkling.graph.operators.predicates.AllPathPredicate
 import org.apache.spark.graphx._
-import IterativeComputation.VertexPredicate
+
 import scala.reflect.ClassTag
 
 /**

@@ -2,9 +2,7 @@ package ml.sparkling.graph.loaders.csv
 
 import ml.sparkling.graph.loaders.LoaderTest
 import ml.sparkling.graph.loaders.csv.providers.PropertyProviders
-import org.apache.spark.graphx.Graph
-import org.apache.spark.{SparkConf, SparkContext}
-import org.scalatest.{BeforeAndAfter, FlatSpec, GivenWhenThen, Matchers}
+import org.apache.spark.SparkContext
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).

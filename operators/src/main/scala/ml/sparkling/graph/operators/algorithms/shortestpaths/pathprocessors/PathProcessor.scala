@@ -1,9 +1,6 @@
 package ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors
 
-import it.unimi.dsi.fastutil.longs._
-import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes
-import org.apache.spark.graphx.{EdgeContext, VertexId}
-import ShortestPathsTypes._
+import org.apache.spark.graphx.VertexId
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).

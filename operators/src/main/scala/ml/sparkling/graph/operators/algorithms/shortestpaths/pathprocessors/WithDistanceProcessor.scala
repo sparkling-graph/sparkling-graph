@@ -1,6 +1,6 @@
 package ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors
 
-import org.apache.spark.graphx.{VertexId}
+import org.apache.spark.graphx.VertexId
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).

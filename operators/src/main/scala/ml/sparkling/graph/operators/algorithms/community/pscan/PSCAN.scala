@@ -1,17 +1,17 @@
-package ml.sparkling.graph.operators.algorithms.pscan
+package ml.sparkling.graph.operators.algorithms.community.pscan
 
+import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.{CommunityDetectionAlgorithm, ComponentID}
 import ml.sparkling.graph.operators.measures.utils.CollectionsUtils._
 import ml.sparkling.graph.operators.measures.utils.NeighboursUtils
 import ml.sparkling.graph.operators.measures.utils.NeighboursUtils.NeighbourSet
 import org.apache.spark.graphx.Graph
 
 import scala.reflect.ClassTag
-import scala.util.Try
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-object PSCAN {
+object PSCAN extends CommunityDetectionAlgorithm{
 
   implicit class DSL[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED]){
     def PSCAN(epsilon:Double=0.1):Graph[ComponentID,ED]={
@@ -20,7 +20,6 @@ object PSCAN {
   }
   
 
-  type ComponentID=Long
 
 
   def computeConnectedComponents[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],epsilon:Double=0.1):Graph[ComponentID,ED]={
@@ -42,6 +41,10 @@ object PSCAN {
     val componentsGraph=cutOffGraph.connectedComponents()
 
     graph.outerJoinVertices(componentsGraph.vertices)((vId,oldData,newData)=>newData.get)
+  }
+
+  override def detectCommunities[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED]): Graph[ComponentID, ED] = {
+    computeConnectedComponents(graph)
   }
 
 }

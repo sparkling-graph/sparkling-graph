@@ -1,6 +1,6 @@
 package ml.sparkling.graph.api.operators
 
-import org.apache.spark.graphx._
+import org.apache.spark.graphx.{Graph, VertexId}
 
 import scala.reflect.ClassTag
 

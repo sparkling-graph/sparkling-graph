@@ -2,13 +2,13 @@ package ml.sparkling.graph.operators.algorithms.shortestpaths
 
 
 import ml.sparkling.graph.api.operators.IterativeComputation
-import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes
+import ml.sparkling.graph.api.operators.IterativeComputation._
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.{FastUtilWithDistance, FastUtilWithPath}
-import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.{SingleVertexProcessor, PathProcessor}
-import ml.sparkling.graph.operators.predicates.{ByIdsPredicate, ByIdPredicate, AllPathPredicate}
+import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.{PathProcessor, SingleVertexProcessor}
+import ml.sparkling.graph.operators.predicates.{AllPathPredicate, ByIdPredicate, ByIdsPredicate}
 import org.apache.spark.graphx._
+
 import scala.reflect.ClassTag
-import IterativeComputation._
 
 /**
  * Main object of shortest paths algorithm

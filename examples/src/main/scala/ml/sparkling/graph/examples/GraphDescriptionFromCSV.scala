@@ -1,8 +1,8 @@
 package ml.sparkling.graph.examples
 
 import ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration
-import org.apache.spark.graphx.Graph
 import ml.sparkling.graph.experiments.describe.GraphDescriptor._
+import org.apache.spark.graphx.Graph
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).

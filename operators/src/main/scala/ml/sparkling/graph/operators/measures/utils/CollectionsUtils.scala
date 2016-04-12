@@ -1,7 +1,8 @@
 package ml.sparkling.graph.operators.measures.utils
 
 import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes
-import ShortestPathsTypes._
+import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes._
+
 import scala.collection.JavaConversions._
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).

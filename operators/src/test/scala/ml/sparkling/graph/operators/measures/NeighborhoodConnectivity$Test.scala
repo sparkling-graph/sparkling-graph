@@ -1,11 +1,9 @@
 package ml.sparkling.graph.operators.measures
 
 import ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration
-import ml.sparkling.graph.operators.{MeasureTest, SparkTest}
-import ml.sparkling.graph.operators.measures.hits.Hits
+import ml.sparkling.graph.operators.MeasureTest
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
-import org.scalatest.FunSuite
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).

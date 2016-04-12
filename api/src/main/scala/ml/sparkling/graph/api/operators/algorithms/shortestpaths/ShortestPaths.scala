@@ -1,9 +1,9 @@
 package ml.sparkling.graph.api.operators.algorithms.shortestpaths
 
 import ml.sparkling.graph.api.operators.IterativeComputation
+import ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate
+import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes._
 import org.apache.spark.graphx.Graph
-import IterativeComputation.VertexPredicate
-import ShortestPathsTypes._
 
 import scala.reflect.ClassTag
 

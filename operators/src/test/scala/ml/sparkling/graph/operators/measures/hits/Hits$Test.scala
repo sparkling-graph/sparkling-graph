@@ -1,9 +1,8 @@
 package ml.sparkling.graph.operators.measures.hits
 
-import ml.sparkling.graph.operators.{MeasureTest, SparkTest}
-import ml.sparkling.graph.operators.measures.eigenvector.EigenvectorCentrality
+import ml.sparkling.graph.operators.MeasureTest
 import org.apache.spark.SparkContext
-import org.apache.spark.graphx.{PartitionStrategy, GraphLoader, Graph}
+import org.apache.spark.graphx.Graph
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).

@@ -1,9 +1,6 @@
 package ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors
 
-import it.unimi.dsi.fastutil.longs.Long2DoubleOpenHashMap
-import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes
 import org.apache.spark.graphx.VertexId
-import ShortestPathsTypes._
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).

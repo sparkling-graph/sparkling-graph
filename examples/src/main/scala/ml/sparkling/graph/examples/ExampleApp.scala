@@ -1,10 +1,10 @@
 package ml.sparkling.graph.examples
 
-import ml.sparkling.graph.loaders.csv.{CSVLoader, CsvLoaderConfig}
 import ml.sparkling.graph.loaders.csv.providers.PropertyProviders
 import ml.sparkling.graph.loaders.csv.utils.DefaultTransformers
-import org.apache.spark.{SparkContext, SparkConf}
+import ml.sparkling.graph.loaders.csv.{CSVLoader, CsvLoaderConfig}
 import org.apache.spark.graphx.{Graph, PartitionStrategy}
+import org.apache.spark.{SparkConf, SparkContext}
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
@@ -61,7 +61,6 @@ def main(args:Array[String])={
   }
 
   val options = nextOption(optionsMap, args.toList)
-
    file = options('inputFile).asInstanceOf[String]
    out = options('outputFile).asInstanceOf[String]
    delimiter = options('delimiter).asInstanceOf[String]
@@ -75,7 +74,7 @@ def main(args:Array[String])={
 
   val sparkConf = new SparkConf().setAppName(name).set("spark.app.id", "sparkling-graph-example")
   ctx = new SparkContext(sparkConf)
-
+ctx.broadcast()
 
   val graph = if (partitionNumber != -1)
     CSVLoader.loadGraphFromCSVWitVertexIndexing[String,Double](file,

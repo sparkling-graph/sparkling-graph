@@ -10,8 +10,8 @@ import com.typesafe.sbt.pgp.PgpKeys
 import sbt.Keys._
 import sbt.Scoped.RichTaskable3
 import sbt._
-import sbtunidoc.Plugin.{ScalaUnidoc, unidocSettings}
 import sbtrelease.ReleasePlugin.autoImport.releasePublishArtifactsAction
+import sbtunidoc.Plugin.{ScalaUnidoc, unidocSettings}
 
 object SparklingGraphBuild extends Build {
   lazy val buildSettings = Dependencies.Versions ++ Seq(

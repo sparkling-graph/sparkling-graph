@@ -1,7 +1,7 @@
 package ml.sparkling.graph.operators
 
-import org.apache.spark.graphx.{GraphLoader, PartitionStrategy}
-import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.SparkContext
+import org.apache.spark.graphx.GraphLoader
 import org.scalatest._
 
 /**

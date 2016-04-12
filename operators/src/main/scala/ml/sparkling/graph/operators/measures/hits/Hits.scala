@@ -2,8 +2,7 @@ package ml.sparkling.graph.operators.measures.hits
 
 import ml.sparkling.graph.api.operators.measures.{VertexMeasure, VertexMeasureConfiguration}
 import ml.sparkling.graph.operators.measures.hits.HitsUtils._
-import org.apache.spark.graphx.{VertexId, Graph}
-import org.apache.spark.rdd.RDD
+import org.apache.spark.graphx.{Graph, VertexId}
 
 import scala.reflect.ClassTag
 

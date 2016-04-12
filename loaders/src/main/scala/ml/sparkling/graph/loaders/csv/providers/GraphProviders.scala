@@ -1,11 +1,11 @@
 package ml.sparkling.graph.loaders.csv.providers
 
 import ml.sparkling.graph.loaders.csv.types.Types
-import org.apache.spark.graphx._
+import ml.sparkling.graph.loaders.csv.types.Types.ToVertexId
+import org.apache.spark.graphx.{Edge, Graph, VertexId}
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{DataFrame, Row}
 import org.apache.spark.storage.StorageLevel
-import Types.ToVertexId
 
 import scala.reflect.ClassTag
 

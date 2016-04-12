@@ -1,17 +1,17 @@
 package ml.sparkling.graph.loaders.csv
 
 
-import ml.sparkling.graph.loaders.csv.providers.{VertexProviders, EdgeProviders, GraphProviders}
+import ml.sparkling.graph.loaders.csv.DataFrameReaderConfigurator.addAbilityToConfigureDataFrameReader
+import ml.sparkling.graph.loaders.csv.providers.GraphProviders.{indexedGraphBuilder, simpleGraphBuilder}
+import ml.sparkling.graph.loaders.csv.providers.{EdgeProviders, GraphProviders, VertexProviders}
+import ml.sparkling.graph.loaders.csv.types.CSVTypes.{EdgeAttributeExtractor, GraphBuilder}
+import ml.sparkling.graph.loaders.csv.types.Types.ToVertexId
 import ml.sparkling.graph.loaders.csv.types.{CSVTypes, Types}
 import ml.sparkling.graph.loaders.csv.utils.DefaultTransformers
+import ml.sparkling.graph.loaders.csv.utils.DefaultTransformers._
 import org.apache.spark.SparkContext
-import org.apache.spark.graphx._
+import org.apache.spark.graphx.Graph
 import org.apache.spark.sql.{Row, SQLContext}
-import CSVTypes.{EdgeAttributeExtractor, GraphBuilder}
-import Types.ToVertexId
-import DataFrameReaderConfigurator.addAbilityToConfigureDataFrameReader
-import GraphProviders.{indexedGraphBuilder, simpleGraphBuilder}
-import DefaultTransformers._
 
 import scala.reflect.ClassTag
 

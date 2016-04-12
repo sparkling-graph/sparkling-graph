@@ -1,7 +1,7 @@
 package ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils
 
 import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes
-import ShortestPathsTypes.{JLong, JMap, JDouble, JList}
+import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.{JDouble, JList, JLong, JMap}
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).

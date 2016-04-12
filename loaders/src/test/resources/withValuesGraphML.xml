@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+        >
     <key id="v_name" for="node" attr.name="name" attr.type="string"/>
     <key id="v_type" for="node" attr.name="type" attr.type="string"/>
     <graph id="G" edgedefault="undirected">

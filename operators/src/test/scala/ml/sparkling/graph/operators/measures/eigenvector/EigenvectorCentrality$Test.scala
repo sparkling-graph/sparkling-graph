@@ -1,9 +1,9 @@
 package ml.sparkling.graph.operators.measures.eigenvector
 
 import ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration
-import ml.sparkling.graph.operators.{MeasureTest, SparkTest}
+import ml.sparkling.graph.operators.MeasureTest
 import org.apache.spark.SparkContext
-import org.apache.spark.graphx.{PartitionStrategy, GraphLoader, Graph}
+import org.apache.spark.graphx.Graph
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).

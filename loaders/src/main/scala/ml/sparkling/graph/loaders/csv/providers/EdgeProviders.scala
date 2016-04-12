@@ -1,12 +1,12 @@
 package ml.sparkling.graph.loaders.csv.providers
 
+import ml.sparkling.graph.loaders.csv.types.CSVTypes.EdgeAttributeExtractor
+import ml.sparkling.graph.loaders.csv.types.Types.ToVertexId
 import ml.sparkling.graph.loaders.csv.types.{CSVTypes, Types}
 import ml.sparkling.graph.loaders.csv.utils.DefaultTransformers
-import org.apache.spark.graphx._
+import ml.sparkling.graph.loaders.csv.utils.DefaultTransformers.{defaultEdgeAttribute, numberToVertexId}
+import org.apache.spark.graphx.Edge
 import org.apache.spark.sql.Row
-import CSVTypes.EdgeAttributeExtractor
-import Types.ToVertexId
-import DefaultTransformers.{defaultEdgeAttribute, numberToVertexId}
 
 import scala.reflect.ClassTag
 

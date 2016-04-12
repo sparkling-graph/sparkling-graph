@@ -2,7 +2,7 @@ package ml.sparkling.graph.api.operators.measures
 
 import ml.sparkling.graph.api.operators.IterativeComputation.BucketSizeProvider
 import org.apache.spark.graphx.Graph
-import org.scalatest.{GivenWhenThen, FlatSpec}
+import org.scalatest.{FlatSpec, GivenWhenThen}
 
 
 /**

@@ -1,13 +1,13 @@
 package ml.sparkling.graph.operators.measures
 
-import it.unimi.dsi.fastutil.longs.{ LongOpenHashSet}
-import ml.sparkling.graph.api.operators.measures.{VertexMeasureConfiguration, VertexMeasure}
-import ml.sparkling.graph.operators.measures.utils.{NeighboursUtils, CollectionsUtils}
+import it.unimi.dsi.fastutil.longs.LongOpenHashSet
+import ml.sparkling.graph.api.operators.measures.{VertexMeasure, VertexMeasureConfiguration}
+import ml.sparkling.graph.operators.measures.utils.CollectionsUtils._
+import ml.sparkling.graph.operators.measures.utils.{CollectionsUtils, NeighboursUtils}
 import ml.sparkling.graph.operators.predicates.AllPathPredicate
-import org.apache.spark.graphx.{Graph}
+import org.apache.spark.graphx.Graph
 
 import scala.reflect.ClassTag
-import CollectionsUtils._
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */

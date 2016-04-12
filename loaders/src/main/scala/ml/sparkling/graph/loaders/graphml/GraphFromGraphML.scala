@@ -3,20 +3,10 @@ package ml.sparkling.graph.loaders.graphml
 import java.net.URL
 
 import ml.sparkling.graph.api.loaders.GraphLoading._
-import ml.sparkling.graph.loaders.csv.GraphFromCsv.LoaderParameters._
-import ml.sparkling.graph.loaders.csv.providers.GraphProviders._
-import ml.sparkling.graph.loaders.csv.providers.{EdgeProviders, VertexProviders}
-import ml.sparkling.graph.loaders.csv.types.CSVTypes.GraphBuilder
-import ml.sparkling.graph.loaders.csv.types.Types._
-import ml.sparkling.graph.loaders.csv.utils.DefaultTransformers._
 import ml.sparkling.graph.loaders.graphml.GraphMLLoader.ValuesMap
 import org.apache.log4j.Logger
 import org.apache.spark.SparkContext
-import org.apache.spark.graphx.{Edge, Graph}
-import org.apache.spark.sql.Row
-import org.apache.spark.sql.types.StructType
-
-import scala.reflect.ClassTag
+import org.apache.spark.graphx.Graph
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).

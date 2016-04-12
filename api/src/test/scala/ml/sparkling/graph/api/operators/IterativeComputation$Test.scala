@@ -1,10 +1,8 @@
 package ml.sparkling.graph.api.operators
 
+import org.apache.spark.graphx.GraphLoader
 import org.apache.spark.{SparkConf, SparkContext}
-import org.apache.spark.graphx._
-import org.scalatest.mock.MockitoSugar
-import org.scalatest.{BeforeAndAfter, GivenWhenThen, FlatSpec}
-import org.mockito.Mockito._
+import org.scalatest.{BeforeAndAfter, FlatSpec}
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).

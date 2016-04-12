@@ -1,7 +1,8 @@
 package ml.sparkling.graph.operators.measures
 
-import ml.sparkling.graph.api.operators.measures.{VertexMeasureConfiguration, VertexMeasure}
+import ml.sparkling.graph.api.operators.measures.{VertexMeasure, VertexMeasureConfiguration}
 import org.apache.spark.graphx.Graph
+
 import scala.reflect.ClassTag
 
 /**

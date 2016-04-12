@@ -1,6 +1,6 @@
 package ml.sparkling.graph.operators.predicates
 
-import org.scalatest.{GivenWhenThen, FlatSpec, FunSuite}
+import org.scalatest.{FlatSpec, GivenWhenThen}
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).

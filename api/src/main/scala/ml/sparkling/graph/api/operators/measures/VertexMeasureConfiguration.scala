@@ -1,7 +1,7 @@
 package ml.sparkling.graph.api.operators.measures
 
 import ml.sparkling.graph.api.operators.IterativeComputation
-import IterativeComputation._
+import ml.sparkling.graph.api.operators.IterativeComputation._
 
 import scala.reflect.ClassTag
 

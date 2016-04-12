@@ -1,12 +1,13 @@
 package ml.sparkling.graph.examples
 
 import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes
+import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes._
 import ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgorithm
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.FastUtilWithDistance.DataMap
 import ml.sparkling.graph.operators.predicates.AllPathPredicate
 import org.apache.spark.broadcast.Broadcast
-import org.apache.spark.graphx.{VertexId, Graph}
-import ShortestPathsTypes._
+import org.apache.spark.graphx.{Graph, VertexId}
+
 import scala.collection.JavaConversions._
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).

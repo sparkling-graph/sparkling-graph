@@ -1,9 +1,9 @@
 package ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors
 
-import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes
-import ShortestPathsTypes.{JDouble, JList}
-
 import java.util.Comparator
+
+import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes
+import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.{JDouble, JList}
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */

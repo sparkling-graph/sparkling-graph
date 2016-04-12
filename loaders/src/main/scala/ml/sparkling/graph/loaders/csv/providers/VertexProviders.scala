@@ -1,10 +1,10 @@
 package ml.sparkling.graph.loaders.csv.providers
 
 import ml.sparkling.graph.loaders.csv.types.Types
+import ml.sparkling.graph.loaders.csv.types.Types.ToVertexId
 import ml.sparkling.graph.loaders.csv.utils.DefaultTransformers
 import org.apache.spark.graphx.VertexId
 import org.apache.spark.sql.Row
-import Types.ToVertexId
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).

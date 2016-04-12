@@ -1,11 +1,9 @@
 package ml.sparkling.graph.operators.algorithms.shortestpaths
 
-import it.unimi.dsi.fastutil.longs.{Long2DoubleMap, Long2DoubleMaps}
-import ml.sparkling.graph.operators.{MeasureTest, SparkTest}
-import org.apache.log4j.{Level, Logger}
-import org.apache.spark.graphx.{VertexId, Graph, GraphLoader}
-import org.apache.spark.{SparkConf, SparkContext}
-import org.scalatest._
+import ml.sparkling.graph.operators.MeasureTest
+import org.apache.spark.SparkContext
+import org.apache.spark.graphx.Graph
+
 import scala.collection.JavaConversions._
 
 /**

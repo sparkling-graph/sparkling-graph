@@ -1,8 +1,8 @@
 package ml.sparkling.graph.loaders.graphml
 
-import ml.sparkling.graph.api.loaders.GraphLoading.{LoadGraph, Parameter}
+import ml.sparkling.graph.api.loaders.GraphLoading.LoadGraph
 import ml.sparkling.graph.loaders.LoaderTest
-import ml.sparkling.graph.loaders.graphml.GraphFromGraphML.{GraphProperties, GraphML}
+import ml.sparkling.graph.loaders.graphml.GraphFromGraphML.{GraphML, GraphProperties}
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
 

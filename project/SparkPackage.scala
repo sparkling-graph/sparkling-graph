@@ -1,5 +1,5 @@
 import sbt._
-import sbtsparkpackage.SparkPackagePlugin.autoImport.{spIncludeMaven,spName}
+import sbtsparkpackage.SparkPackagePlugin.autoImport.{spIncludeMaven, spName}
 
 object SparkPackage extends AutoPlugin {
 

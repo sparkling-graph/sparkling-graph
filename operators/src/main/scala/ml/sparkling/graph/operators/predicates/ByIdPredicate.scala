@@ -1,8 +1,8 @@
 package ml.sparkling.graph.operators.predicates
 
 import ml.sparkling.graph.api.operators.IterativeComputation
+import ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate
 import org.apache.spark.graphx.VertexId
-import IterativeComputation.VertexPredicate
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).

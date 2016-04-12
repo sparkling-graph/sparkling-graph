@@ -3,6 +3,7 @@ package ml.sparkling.graph.examples
 import ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgorithm
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.FastUtilWithDistance
 import ml.sparkling.graph.operators.predicates.ByIdsPredicate
+
 import scala.collection.JavaConversions._
 
 /**
