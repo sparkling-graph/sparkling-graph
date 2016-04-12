@@ -13,14 +13,9 @@ import scala.reflect.ClassTag
  */
 object PSCAN extends CommunityDetectionAlgorithm{
 
-  implicit class DSL[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED]){
-    def PSCAN(epsilon:Double=0.1):Graph[ComponentID,ED]={
-      computeConnectedComponents(graph,epsilon)
-    }
-  }
-  
 
 
+  val defaultComponentId: ComponentID = -1
 
   def computeConnectedComponents[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],epsilon:Double=0.1):Graph[ComponentID,ED]={
 
@@ -40,7 +35,9 @@ object PSCAN extends CommunityDetectionAlgorithm{
 
     val componentsGraph=cutOffGraph.connectedComponents()
 
-    graph.outerJoinVertices(componentsGraph.vertices)((vId,oldData,newData)=>newData.get)
+    graph.outerJoinVertices(componentsGraph.vertices)((vId,oldData,newData)=>{
+      newData.getOrElse(defaultComponentId)
+    })
   }
 
   override def detectCommunities[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED]): Graph[ComponentID, ED] = {

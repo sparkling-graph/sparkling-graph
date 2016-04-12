@@ -13,10 +13,6 @@ import scala.reflect.ClassTag
  */
 object CommunityBasedPartitioning {
 
-  implicit class DSL[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED]){
-    def partitionBy(communityDetectionMethod:CommunityDetectionMethod[VD,ED])(implicit sc:SparkContext)=partitionGraphBy(graph,communityDetectionMethod)
-    def partitionBy(communityDetectionMethod:CommunityDetectionAlgorithm)(implicit sc:SparkContext)=partitionGraphBy(graph,communityDetectionMethod)
-  }
 
   def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],communityDetectionMethod:CommunityDetectionMethod[VD,ED])(implicit sc:SparkContext): Graph[VD, ED] ={
     val communities: Graph[ComponentID, ED] = communityDetectionMethod(graph)
