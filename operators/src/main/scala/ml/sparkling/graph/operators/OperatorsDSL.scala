@@ -16,6 +16,7 @@ import scala.reflect.ClassTag
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
 object OperatorsDSL {
+
   implicit class DSL[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED]){
     def PSCAN(epsilon:Double=0.1):Graph[ComponentID,ED]={
       computeConnectedComponents(graph,epsilon)
