@@ -3,6 +3,7 @@ package ml.sparkling.graph.operators
 import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection._
 import ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration
 import ml.sparkling.graph.operators.algorithms.community.pscan.PSCAN._
+import ml.sparkling.graph.operators.measures.clustering.LocalClustering
 import ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning._
 import ml.sparkling.graph.operators.measures.{VertexEmbeddedness, NeighborhoodConnectivity, Degree}
 import ml.sparkling.graph.operators.measures.closenes.Closeness
@@ -21,23 +22,26 @@ object OperatorsDSL {
     def PSCAN(epsilon:Double=0.1):Graph[ComponentID,ED]=
       computeConnectedComponents(graph,epsilon)
 
-    def closeness(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED])(implicit num:Numeric[ED])=
+    def closenessCentrality(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED]=VertexMeasureConfiguration())(implicit num:Numeric[ED])=
       Closeness.compute(graph,vertexMeasureConfiguration)
 
-    def eigenvectorCentrality(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED])(implicit num:Numeric[ED])=
+    def eigenvectorCentrality(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED]=VertexMeasureConfiguration())(implicit num:Numeric[ED])=
       EigenvectorCentrality.compute(graph,vertexMeasureConfiguration)
 
-    def hits(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED])(implicit num:Numeric[ED])=
+    def hits(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED]=VertexMeasureConfiguration())(implicit num:Numeric[ED])=
       Hits.compute(graph,vertexMeasureConfiguration)
 
-    def degree(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED])(implicit num:Numeric[ED])=
+    def degreeCentrality(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED]=VertexMeasureConfiguration())(implicit num:Numeric[ED])=
       Degree.compute(graph,vertexMeasureConfiguration)
 
-    def neighborhoodConnectivity(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED])(implicit num:Numeric[ED])=
+    def neighborhoodConnectivity(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED]=VertexMeasureConfiguration())(implicit num:Numeric[ED])=
       NeighborhoodConnectivity.compute(graph,vertexMeasureConfiguration)
 
-    def vertexEmbeddedness(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED])(implicit num:Numeric[ED])=
+    def vertexEmbeddedness(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED]=VertexMeasureConfiguration())(implicit num:Numeric[ED])=
       VertexEmbeddedness.compute(graph,vertexMeasureConfiguration)
+
+    def localClustering(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED]=VertexMeasureConfiguration())(implicit num:Numeric[ED])=
+      LocalClustering.compute(graph,vertexMeasureConfiguration)
 
     def partitionBy(communityDetectionMethod:CommunityDetectionMethod[VD,ED])(implicit sc:SparkContext)=
       partitionGraphBy(graph,communityDetectionMethod)
