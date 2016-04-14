@@ -4,7 +4,7 @@ import ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration
 import ml.sparkling.graph.operators.MeasureTest
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
-
+import ml.sparkling.graph.operators.OperatorsDSL._
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
@@ -19,6 +19,18 @@ class EigenvectorCentrality$Test(implicit sc:SparkContext)   extends MeasureTest
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes eigenvector")
     val result=EigenvectorCentrality.compute(graph)
+    Then("Should calculate eigenvector correctly")
+    result.vertices.collect().sortBy{case (vId,data)=>vId}.map{case (vId,data)=>data}.zip(Array(
+      0d, 0d, 0d, 0d, 0d
+    )).foreach{case (a,b)=>{a should be (b +- 1e-5 )}}
+  }
+
+  "Eigenvector  for line graph" should "be correctly calculated using DSL" in{
+    Given("graph")
+    val filePath = getClass.getResource("/graphs/5_nodes_directed")
+    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
+    When("Computes eigenvector")
+    val result=graph.eigenvectorCentrality()
     Then("Should calculate eigenvector correctly")
     result.vertices.collect().sortBy{case (vId,data)=>vId}.map{case (vId,data)=>data}.zip(Array(
       0d, 0d, 0d, 0d, 0d

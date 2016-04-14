@@ -4,7 +4,7 @@ import ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration
 import ml.sparkling.graph.operators.MeasureTest
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
-
+import ml.sparkling.graph.operators.OperatorsDSL._
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
@@ -18,6 +18,20 @@ class VertexEmbeddedness$Test (implicit sc:SparkContext) extends MeasureTest {
     val graph: Graph[Int, Int] = loadGraph(filePath.toString)
     When("Computes Vertex embeddedness ")
     val result = VertexEmbeddedness.compute(graph)
+    Then("Should calculate Vertex embeddedness  correctly")
+    val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}
+    verticesSortedById.map{case (vId,data)=>data}  should equal (Array(
+      0d,0d,0d,0d,0d
+    ))
+  }
+
+
+  "Vertex embeddedness for directed line graph" should "be correctly calculated when using DSL" in {
+    Given("graph")
+    val filePath = getClass.getResource("/graphs/5_nodes_directed")
+    val graph: Graph[Int, Int] = loadGraph(filePath.toString)
+    When("Computes Vertex embeddedness ")
+    val result = graph.vertexEmbeddedness()
     Then("Should calculate Vertex embeddedness  correctly")
     val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById.map{case (vId,data)=>data}  should equal (Array(
