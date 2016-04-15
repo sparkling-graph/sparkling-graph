@@ -6,6 +6,7 @@ import ml.sparkling.graph.api.operators.IterativeComputation._
 import scala.reflect.ClassTag
 
 /**
+ * Configuration of vertex measure alghoritms
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
 case class VertexMeasureConfiguration[VD: ClassTag, ED: ClassTag](val bucketSizeProvider: BucketSizeProvider[VD, ED],

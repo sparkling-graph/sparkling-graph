@@ -5,6 +5,7 @@ import org.apache.spark.graphx.Graph
 import scala.reflect.ClassTag
 
 /**
+ * Measure computed for each vertex of graph
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
 trait VertexMeasure[OV] {
