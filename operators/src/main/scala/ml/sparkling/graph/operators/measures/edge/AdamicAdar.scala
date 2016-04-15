@@ -13,7 +13,7 @@ import scala.reflect.ClassTag
  */
 object AdamicAdar  extends EdgeMeasure[Double,NeighboursMap]{
 
-  def computeValue[E:ClassTag](srcAttr:NeighboursMap,dstAttr:NeighboursMap,treatAsUndirected:Boolean=false):Double={
+  def computeValue(srcAttr:NeighboursMap,dstAttr:NeighboursMap,treatAsUndirected:Boolean=false):Double={
     val commonNeighbours=intersect(srcAttr.keySet(),dstAttr.keySet())
     commonNeighbours.toList.map(id=>srcAttr.get(id).size()).map(1.0 /Math.log(_)).sum
   }

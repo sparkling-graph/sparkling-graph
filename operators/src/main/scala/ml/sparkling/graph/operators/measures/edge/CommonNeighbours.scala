@@ -13,7 +13,7 @@ import scala.reflect.ClassTag
  */
 object CommonNeighbours extends EdgeMeasure[Int,NeighbourSet]{
 
-  def computeValue[E:ClassTag](srcAttr:NeighbourSet,dstAttr:NeighbourSet,treatAsUndirected:Boolean=false):Int={
+  def computeValue(srcAttr:NeighbourSet,dstAttr:NeighbourSet,treatAsUndirected:Boolean=false):Int={
     intersectSize(srcAttr,dstAttr)
   }
 
