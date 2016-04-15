@@ -4,8 +4,9 @@ import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.
 import ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration
 import ml.sparkling.graph.operators.algorithms.community.pscan.PSCAN._
 import ml.sparkling.graph.operators.measures.clustering.LocalClustering
+import ml.sparkling.graph.operators.measures.graph.{Modularity, FreemanCentrality}
 import ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning._
-import ml.sparkling.graph.operators.measures.{FreemanCentrality, VertexEmbeddedness, NeighborhoodConnectivity, Degree}
+import ml.sparkling.graph.operators.measures.{VertexEmbeddedness, NeighborhoodConnectivity, Degree}
 import ml.sparkling.graph.operators.measures.closenes.Closeness
 import ml.sparkling.graph.operators.measures.eigenvector.EigenvectorCentrality
 import ml.sparkling.graph.operators.measures.hits.Hits
@@ -18,8 +19,12 @@ import scala.reflect.ClassTag
  */
 object OperatorsDSL {
 
-  implicit class DSL[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED]){
-    def PSCAN(epsilon:Double=0.1):Graph[ComponentID,ED]=
+  implicit class ModularityDSL[E:ClassTag](graph:Graph[ComponentID,E]){
+    def modularity()=Modularity.compute(graph)
+  }
+
+  implicit class DSL[VD:ClassTag ,ED:ClassTag](graph:Graph[VD,ED]){
+    def PSCAN(epsilon:Double=0.1)=
       computeConnectedComponents(graph,epsilon)
 
     def closenessCentrality(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED]=VertexMeasureConfiguration())(implicit num:Numeric[ED])=
@@ -43,8 +48,7 @@ object OperatorsDSL {
     def localClustering(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED]=VertexMeasureConfiguration())(implicit num:Numeric[ED])=
       LocalClustering.compute(graph,vertexMeasureConfiguration)
 
-    def freemanCentrality()(implicit num:Numeric[ED])=
-      FreemanCentrality.compute(graph)
+    def freemanCentrality()=FreemanCentrality.compute(graph)
 
     def partitionBy(communityDetectionMethod:CommunityDetectionMethod[VD,ED])(implicit sc:SparkContext)=
       partitionGraphBy(graph,communityDetectionMethod)

@@ -5,8 +5,9 @@ import ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgori
 import ml.sparkling.graph.operators.measures.closenes.Closeness$Test
 import ml.sparkling.graph.operators.measures.clustering.LocalClustering$Test
 import ml.sparkling.graph.operators.measures.eigenvector.EigenvectorCentrality$Test
+import ml.sparkling.graph.operators.measures.graph.{Modularity$Test, FreemanCentrality$Test}
 import ml.sparkling.graph.operators.measures.hits.Hits$Test
-import ml.sparkling.graph.operators.measures.{FreemanCentrality$Test, NeighborhoodConnectivity$Test, VertexEmbeddedness$Test}
+import ml.sparkling.graph.operators.measures.{NeighborhoodConnectivity$Test, VertexEmbeddedness$Test}
 import ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$Test
 import org.apache.spark.{SparkConf, SparkContext}
 import org.scalatest._
@@ -33,16 +34,17 @@ class SparkTest extends Spec with BeforeAndAfterAll {
 
   override def nestedSuites = {
     Vector(
-      new VertexEmbeddedness$Test,
-      new NeighborhoodConnectivity$Test,
-      new Hits$Test,
-      new EigenvectorCentrality$Test,
-      new LocalClustering$Test,
-      new Closeness$Test,
-      new ShortestPathsAlgorithm$Test,
-      new PSCAN$Test,
-      new CommunityBasedPartitioning$Test,
-      new FreemanCentrality$Test
+//      new VertexEmbeddedness$Test,
+//      new NeighborhoodConnectivity$Test,
+//      new Hits$Test,
+//      new EigenvectorCentrality$Test,
+//      new LocalClustering$Test,
+//      new Closeness$Test,
+//      new ShortestPathsAlgorithm$Test,
+//      new PSCAN$Test,
+//      new CommunityBasedPartitioning$Test,
+//      new FreemanCentrality$Test
+    new Modularity$Test
     )
   }
 

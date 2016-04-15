@@ -1,16 +1,17 @@
-package ml.sparkling.graph.operators.measures
+package ml.sparkling.graph.operators.measures.graph
 
-import ml.sparkling.graph.api.operators.measures.{GraphMeasure, VertexMeasure, VertexMeasureConfiguration}
-import org.apache.spark.graphx.{VertexRDD, Graph}
+import ml.sparkling.graph.api.operators.measures.{GraphIndependentMeasure}
+import org.apache.spark.graphx.{Graph, VertexRDD}
 
 import scala.reflect.ClassTag
+
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-object FreemanCentrality extends GraphMeasure[Double] {
+object FreemanCentrality extends GraphIndependentMeasure[Double]{
 
-  override def compute[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED])(implicit num: Numeric[ED]): Double = {
+  def compute[K:ClassTag,E:ClassTag](graph: Graph[K,E]): Double = {
     val degrees: VertexRDD[Int] = graph.degrees
 
     val maxDegree=degrees.values.max()
@@ -20,5 +21,5 @@ object FreemanCentrality extends GraphMeasure[Double] {
 
     numerator/denominator.toDouble
   }
-  
+
 }
