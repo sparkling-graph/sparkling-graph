@@ -25,20 +25,27 @@ libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.4
     * CSV
     * GraphML
   * DSL
-* Measures - all measures can be configured to treat graphs as directed and undirected
-  *  Closeness
-  *  Local clustering
-  *  Eigenvector
-  *  Hits
-  *  Neighbor connectivity
-  *  Vertex embeddedness
+* Measures -  measures can be configured to treat graphs as directed and undirected
+  * Measures DSL - easy to use domain specific language that boost productivity of library
+  * Graph
+    * Modularity
+    * Freeman's network centrality
+  * Vertex
+    *  Closeness
+    *  Local clustering
+    *  Eigenvector
+    *  Hits
+    *  Neighbor connectivity
+    *  Vertex embeddedness
+  * Edges
+    * Adamic/Adar
+    * Common neighbours
 * Comunity detection methods
   * PSCAN (SCAN)
 * Experiments
   *  Describe graph using all measures to CSV files
 
 # Planned features
-* Measures DSL - easy to use domain specific language that will boost productivity of library
 * Loading
   *  GML
 * Measures
