@@ -9,13 +9,13 @@ SparklingGraph provides easy to use set of features that will give you ability t
 resolvers +=  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 ```
 ```
-libraryDependencies += ml.sparkling % sparkling-graph-loaders % 0.0.5-SNAPSHOT
-libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.5-SNAPSHOT
+libraryDependencies += ml.sparkling % sparkling-graph-loaders % 0.0.6-SNAPSHOT
+libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.6-SNAPSHOT
 ```
 ## Release
 ```
-libraryDependencies += ml.sparkling % sparkling-graph-loaders % 0.0.4
-libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.4
+libraryDependencies += ml.sparkling % sparkling-graph-loaders % 0.0.5
+libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.5
 ```
 
 # Current features
