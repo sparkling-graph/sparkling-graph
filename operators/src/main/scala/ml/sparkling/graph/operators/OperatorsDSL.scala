@@ -3,6 +3,7 @@ package ml.sparkling.graph.operators
 import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection._
 import ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration
 import ml.sparkling.graph.operators.algorithms.community.pscan.PSCAN._
+import ml.sparkling.graph.operators.measures.edge.{CommonNeighbours, AdamicAdar}
 import ml.sparkling.graph.operators.measures.vertex.{Degree, NeighborhoodConnectivity, VertexEmbeddedness}
 import ml.sparkling.graph.operators.measures.vertex.clustering.LocalClustering
 import ml.sparkling.graph.operators.measures.graph.{Modularity, FreemanCentrality}
@@ -55,6 +56,14 @@ object OperatorsDSL {
 
     def partitionBy(communityDetectionMethod:CommunityDetectionAlgorithm)(implicit sc:SparkContext)=
       partitionGraphBy(graph,communityDetectionMethod)
+
+    def adamicAdar(treatAsUndirected:Boolean=false)={
+      AdamicAdar.computeWithPreprocessing(graph)
+    }
+
+    def commonNeighbours(treatAsUndirected:Boolean=false)={
+      CommonNeighbours.computeWithPreprocessing(graph)
+    }
 
   }
 }

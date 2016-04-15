@@ -23,10 +23,10 @@ object Modularity extends VertexDependentGraphMeasure[Double,ComponentID]{
      })
      edgesCounts.groupByKey().map[Double]{
       case (communityId,data)=>
-        val reduced=data.reduce[(Int,Int)]{
+        val (edgesFull,edgesSome)=data.reduce[(Int,Int)]{
         case ((e1,a1),(e2,a2))=>(e1+e2,a1+a2)
       }
-        (reduced._1/edgesNum)-Math.pow(reduced._2/edgesNum,2)
+        (edgesFull/edgesNum)-Math.pow(edgesSome/edgesNum,2)
     }.sum()
 
   }
