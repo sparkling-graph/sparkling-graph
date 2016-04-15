@@ -1,4 +1,4 @@
-package ml.sparkling.graph.operators.measures
+package ml.sparkling.graph.operators.measures.vertex
 
 import ml.sparkling.graph.api.operators.measures.{VertexMeasure, VertexMeasureConfiguration}
 import org.apache.spark.graphx.Graph

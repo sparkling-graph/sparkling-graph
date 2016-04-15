@@ -9,6 +9,10 @@ import scala.collection.JavaConversions._
  */
 object CollectionsUtils {
    def intersectSize(neighbours1:JSet[JLong],neighbours2:JSet[JLong])={
-    neighbours1.intersect(neighbours2).size
+    intersect(neighbours1,neighbours2).size
+  }
+
+  def intersect(neighbours1:JSet[JLong],neighbours2:JSet[JLong])={
+    neighbours1.intersect(neighbours2)
   }
 }

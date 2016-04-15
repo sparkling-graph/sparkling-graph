@@ -1,8 +1,8 @@
-package ml.sparkling.graph.operators.measures.closenes
+package ml.sparkling.graph.operators.measures.vertex.closenes
 
 import ml.sparkling.graph.api.operators.measures.{VertexMeasure, VertexMeasureConfiguration}
 import ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgorithm
-import ml.sparkling.graph.operators.measures.closenes.ClosenessUtils._
+import ml.sparkling.graph.operators.measures.vertex.closenes.ClosenessUtils._
 import org.apache.spark.graphx.Graph
 
 import scala.reflect.ClassTag

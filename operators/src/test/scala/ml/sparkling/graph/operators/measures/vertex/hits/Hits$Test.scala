@@ -1,4 +1,4 @@
-package ml.sparkling.graph.operators.measures.hits
+package ml.sparkling.graph.operators.measures.vertex.hits
 
 import ml.sparkling.graph.operators.MeasureTest
 import org.apache.spark.SparkContext

@@ -1,4 +1,4 @@
-package ml.sparkling.graph.operators.measures.closenes
+package ml.sparkling.graph.operators.measures.vertex.closenes
 
 import ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration
 import ml.sparkling.graph.operators.MeasureTest

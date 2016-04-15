@@ -1,4 +1,4 @@
-package ml.sparkling.graph.operators.measures.eigenvector
+package ml.sparkling.graph.operators.measures.vertex.eigenvector
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).

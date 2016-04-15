@@ -1,7 +1,7 @@
-package ml.sparkling.graph.operators.measures.hits
+package ml.sparkling.graph.operators.measures.vertex.hits
 
 import ml.sparkling.graph.api.operators.measures.{VertexMeasure, VertexMeasureConfiguration}
-import ml.sparkling.graph.operators.measures.hits.HitsUtils._
+import ml.sparkling.graph.operators.measures.vertex.hits.HitsUtils._
 import org.apache.spark.graphx.{Graph, VertexId}
 
 import scala.reflect.ClassTag

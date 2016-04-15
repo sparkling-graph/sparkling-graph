@@ -1,4 +1,4 @@
-package ml.sparkling.graph.operators.measures.hits
+package ml.sparkling.graph.operators.measures.vertex.hits
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).

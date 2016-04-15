@@ -1,7 +1,7 @@
-package ml.sparkling.graph.operators.measures.eigenvector
+package ml.sparkling.graph.operators.measures.vertex.eigenvector
 
 import ml.sparkling.graph.api.operators.measures.{VertexMeasure, VertexMeasureConfiguration}
-import ml.sparkling.graph.operators.measures.eigenvector.EigenvectorUtils._
+import ml.sparkling.graph.operators.measures.vertex.eigenvector.EigenvectorUtils._
 import org.apache.spark.graphx._
 
 import scala.reflect.ClassTag

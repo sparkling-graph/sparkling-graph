@@ -3,13 +3,13 @@ package ml.sparkling.graph.operators
 import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection._
 import ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration
 import ml.sparkling.graph.operators.algorithms.community.pscan.PSCAN._
-import ml.sparkling.graph.operators.measures.clustering.LocalClustering
+import ml.sparkling.graph.operators.measures.vertex.{Degree, NeighborhoodConnectivity, VertexEmbeddedness}
+import ml.sparkling.graph.operators.measures.vertex.clustering.LocalClustering
 import ml.sparkling.graph.operators.measures.graph.{Modularity, FreemanCentrality}
 import ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning._
-import ml.sparkling.graph.operators.measures.{VertexEmbeddedness, NeighborhoodConnectivity, Degree}
-import ml.sparkling.graph.operators.measures.closenes.Closeness
-import ml.sparkling.graph.operators.measures.eigenvector.EigenvectorCentrality
-import ml.sparkling.graph.operators.measures.hits.Hits
+import ml.sparkling.graph.operators.measures.vertex.closenes.Closeness
+import ml.sparkling.graph.operators.measures.vertex.eigenvector.EigenvectorCentrality
+import ml.sparkling.graph.operators.measures.vertex.hits.Hits
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
 import scala.reflect.ClassTag

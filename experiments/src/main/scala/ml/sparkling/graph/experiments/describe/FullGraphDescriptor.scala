@@ -1,11 +1,11 @@
 package ml.sparkling.graph.experiments.describe
 
 import ml.sparkling.graph.api.operators.measures.{VertexMeasure, VertexMeasureConfiguration}
-import ml.sparkling.graph.operators.measures.closenes.Closeness
-import ml.sparkling.graph.operators.measures.clustering.LocalClustering
-import ml.sparkling.graph.operators.measures.eigenvector.EigenvectorCentrality
-import ml.sparkling.graph.operators.measures.hits.Hits
-import ml.sparkling.graph.operators.measures.{Degree, NeighborhoodConnectivity, VertexEmbeddedness}
+import ml.sparkling.graph.operators.measures.vertex.{NeighborhoodConnectivity, VertexEmbeddedness, Degree}
+import ml.sparkling.graph.operators.measures.vertex.closenes.Closeness
+import ml.sparkling.graph.operators.measures.vertex.clustering.LocalClustering
+import ml.sparkling.graph.operators.measures.vertex.eigenvector.EigenvectorCentrality
+import ml.sparkling.graph.operators.measures.vertex.hits.Hits
 import org.apache.spark.graphx.{Graph, VertexId}
 
 import scala.reflect.ClassTag

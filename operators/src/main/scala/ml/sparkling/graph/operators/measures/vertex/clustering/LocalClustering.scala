@@ -1,4 +1,4 @@
-package ml.sparkling.graph.operators.measures.clustering
+package ml.sparkling.graph.operators.measures.vertex.clustering
 
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet
 import ml.sparkling.graph.api.operators.measures.{VertexMeasure, VertexMeasureConfiguration}

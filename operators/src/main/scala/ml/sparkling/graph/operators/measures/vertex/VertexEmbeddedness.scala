@@ -1,4 +1,4 @@
-package ml.sparkling.graph.operators.measures
+package ml.sparkling.graph.operators.measures.vertex
 
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet
 import ml.sparkling.graph.api.operators.measures.{VertexMeasure, VertexMeasureConfiguration}
