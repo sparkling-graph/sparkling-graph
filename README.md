@@ -14,8 +14,6 @@ libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.6-SNAPSHOT
 ```
 ## Release
 
-Releases are currently only for Scala 2.11
-
 ```
 libraryDependencies += ml.sparkling % sparkling-graph-loaders % 0.0.5
 libraryDependencies += ml.sparkling % sparkling-graph-operators % 0.0.5
