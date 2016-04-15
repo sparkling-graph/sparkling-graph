@@ -58,11 +58,11 @@ object OperatorsDSL {
       partitionGraphBy(graph,communityDetectionMethod)
 
     def adamicAdar(treatAsUndirected:Boolean=false)={
-      AdamicAdar.computeWithPreprocessing(graph)
+      AdamicAdar.computeWithPreprocessing(graph,treatAsUndirected)
     }
 
     def commonNeighbours(treatAsUndirected:Boolean=false)={
-      CommonNeighbours.computeWithPreprocessing(graph)
+      CommonNeighbours.computeWithPreprocessing(graph,treatAsUndirected)
     }
 
   }
