@@ -1,9 +1,9 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <title>CollectionsUtils - ml.sparkling.graph.operators.measures.utils.CollectionsUtils</title>
-          <meta name="description" content="CollectionsUtils - ml.sparkling.graph.operators.measures.utils.CollectionsUtils" />
-          <meta name="keywords" content="CollectionsUtils ml.sparkling.graph.operators.measures.utils.CollectionsUtils" />
+          <title>EdgeMeasure - ml.sparkling.graph.api.operators.measures.EdgeMeasure</title>
+          <meta name="description" content="EdgeMeasure - ml.sparkling.graph.api.operators.measures.EdgeMeasure" />
+          <meta name="keywords" content="EdgeMeasure ml.sparkling.graph.api.operators.measures.EdgeMeasure" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -16,7 +16,7 @@
       <script type="text/javascript">
          if(top === self) {
             var url = '../../../../../../index.html';
-            var hash = 'ml.sparkling.graph.operators.measures.utils.CollectionsUtils$';
+            var hash = 'ml.sparkling.graph.api.operators.measures.EdgeMeasure';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -26,14 +26,14 @@
    	  </script>
     
         </head>
-        <body class="value">
+        <body class="type">
       <div id="definition">
-        <img alt="Object" src="../../../../../../lib/object_big.png" />
-        <p id="owner"><a href="../../../../../package.html" class="extype" name="ml">ml</a>.<a href="../../../../package.html" class="extype" name="ml.sparkling">sparkling</a>.<a href="../../../package.html" class="extype" name="ml.sparkling.graph">graph</a>.<a href="../../package.html" class="extype" name="ml.sparkling.graph.operators">operators</a>.<a href="../package.html" class="extype" name="ml.sparkling.graph.operators.measures">measures</a>.<a href="package.html" class="extype" name="ml.sparkling.graph.operators.measures.utils">utils</a></p>
-        <h1>CollectionsUtils</h1><h3><span class="morelinks"><div>Related Doc:
-            <a href="package.html" class="extype" name="ml.sparkling.graph.operators.measures.utils">package utils</a>
+        <img alt="Trait" src="../../../../../../lib/trait_big.png" />
+        <p id="owner"><a href="../../../../../package.html" class="extype" name="ml">ml</a>.<a href="../../../../package.html" class="extype" name="ml.sparkling">sparkling</a>.<a href="../../../package.html" class="extype" name="ml.sparkling.graph">graph</a>.<a href="../../package.html" class="extype" name="ml.sparkling.graph.api">api</a>.<a href="../package.html" class="extype" name="ml.sparkling.graph.api.operators">operators</a>.<a href="package.html" class="extype" name="ml.sparkling.graph.api.operators.measures">measures</a></p>
+        <h1>EdgeMeasure</h1><h3><span class="morelinks"><div>Related Doc:
+            <a href="package.html" class="extype" name="ml.sparkling.graph.api.operators.measures">package measures</a>
           </div></span></h3><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -42,18 +42,21 @@
       <h4 id="signature" class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
-        <span class="kind">object</span>
+        <span class="kind">trait</span>
       </span>
       <span class="symbol">
-        <span class="name">CollectionsUtils</span>
+        <span class="name">EdgeMeasure</span><span class="tparams">[<span name="O">O</span>, <span name="V">V</span>]</span><span class="result"> extends <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
       </span>
       </h4>
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
 </p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a>, <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Any" class="extype" target="_top">Any</a></div>
-        </div></div>
+          <div class="superTypes hiddenContent"><a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Serializable" class="extype" target="_top">Serializable</a>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a>, <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Any" class="extype" target="_top">Any</a></div>
+        </div><div class="toggleContainer block">
+            <span class="toggle">Known Subclasses</span>
+            <div class="subClasses hiddenContent"><a href="../../../operators/measures/edge/AdamicAdar$.html" class="extype" name="ml.sparkling.graph.operators.measures.edge.AdamicAdar">AdamicAdar</a>, <a href="../../../operators/measures/edge/CommonNeighbours$.html" class="extype" name="ml.sparkling.graph.operators.measures.edge.CommonNeighbours">CommonNeighbours</a></div>
+          </div></div>
         
 
       <div id="mbrsel">
@@ -70,7 +73,7 @@
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="ml.sparkling.graph.operators.measures.utils.CollectionsUtils"><span>CollectionsUtils</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure"><span>EdgeMeasure</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -91,10 +94,47 @@
 
         
 
-        
+        <div id="values" class="values members">
+              <h3>Abstract Value Members</h3>
+              <ol><li name="ml.sparkling.graph.api.operators.measures.EdgeMeasure#computeValue" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="computeValue[E](srcAttr:V,dstAttr:V,treatAsUndirected:Boolean)(implicitevidence$1:scala.reflect.ClassTag[E]):O"></a>
+      <a id="computeValue[E](V,V,Boolean)(ClassTag[E]):O"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">computeValue</span><span class="tparams">[<span name="E">E</span>]</span><span class="params">(<span name="srcAttr">srcAttr: <span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.V">V</span></span>, <span name="dstAttr">dstAttr: <span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.V">V</span></span>, <span name="treatAsUndirected">treatAsUndirected: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Boolean" class="extype" target="_top">Boolean</a> = <span class="symbol">false</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.computeValue.E">E</span>]</span>)</span><span class="result">: <span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.O">O</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@computeValue[E](srcAttr:V,dstAttr:V,treatAsUndirected:Boolean)(implicitevidence$1:scala.reflect.ClassTag[E]):O" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="ml.sparkling.graph.api.operators.measures.EdgeMeasure#preprocess" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="preprocess[VD,E](graph:org.apache.spark.graphx.Graph[VD,E],treatAsUndirected:Boolean)(implicitevidence$3:scala.reflect.ClassTag[VD],implicitevidence$4:scala.reflect.ClassTag[E]):org.apache.spark.graphx.Graph[V,E]"></a>
+      <a id="preprocess[VD,E](Graph[VD,E],Boolean)(ClassTag[VD],ClassTag[E]):Graph[V,E]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">preprocess</span><span class="tparams">[<span name="VD">VD</span>, <span name="E">E</span>]</span><span class="params">(<span name="graph">graph: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.preprocess.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.preprocess.E">E</span>]</span>, <span name="treatAsUndirected">treatAsUndirected: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Boolean" class="extype" target="_top">Boolean</a> = <span class="symbol">false</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.preprocess.VD">VD</span>]</span>, <span name="arg1">arg1: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.preprocess.E">E</span>]</span>)</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.V">V</span>, <span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.preprocess.E">E</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@preprocess[VD,E](graph:org.apache.spark.graphx.Graph[VD,E],treatAsUndirected:Boolean)(implicitevidence$3:scala.reflect.ClassTag[VD],implicitevidence$4:scala.reflect.ClassTag[E]):org.apache.spark.graphx.Graph[V,E]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
 
         <div id="values" class="values members">
-              <h3>Value Members</h3>
+              <h3>Concrete Value Members</h3>
               <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="!=(x$1:Any):Boolean"></a>
       <a id="!=(Any):Boolean"></a>
@@ -107,7 +147,7 @@
         <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Any" class="extype" target="_top">Any</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@!=(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -124,7 +164,7 @@
         <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Int" class="extype" target="_top">Int</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@##():Int" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@##():Int" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -141,7 +181,7 @@
         <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Any" class="extype" target="_top">Any</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@==(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@==(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -158,7 +198,7 @@
         <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@asInstanceOf[T0]:T0" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -175,7 +215,7 @@
         <span class="name">clone</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@clone():Object" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@clone():Object" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -186,6 +226,40 @@
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="ml.sparkling.graph.api.operators.measures.EdgeMeasure#compute" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="compute[E](graph:org.apache.spark.graphx.Graph[V,E],treatAsUndirected:Boolean)(implicitevidence$2:scala.reflect.ClassTag[E],implicitot:scala.reflect.ClassTag[O]):org.apache.spark.graphx.Graph[V,O]"></a>
+      <a id="compute[E](Graph[V,E],Boolean)(ClassTag[E],ClassTag[O]):Graph[V,O]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">compute</span><span class="tparams">[<span name="E">E</span>]</span><span class="params">(<span name="graph">graph: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.V">V</span>, <span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.compute.E">E</span>]</span>, <span name="treatAsUndirected">treatAsUndirected: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Boolean" class="extype" target="_top">Boolean</a> = <span class="symbol">false</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.compute.E">E</span>]</span>, <span name="ot">ot: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.O">O</span>]</span>)</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.V">V</span>, <span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.O">O</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@compute[E](graph:org.apache.spark.graphx.Graph[V,E],treatAsUndirected:Boolean)(implicitevidence$2:scala.reflect.ClassTag[E],implicitot:scala.reflect.ClassTag[O]):org.apache.spark.graphx.Graph[V,O]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="ml.sparkling.graph.api.operators.measures.EdgeMeasure#computeWithPreprocessing" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="computeWithPreprocessing[VD,E](graph:org.apache.spark.graphx.Graph[VD,E],treatAsUndirected:Boolean)(implicitevidence$5:scala.reflect.ClassTag[VD],implicitevidence$6:scala.reflect.ClassTag[E],implicitot:scala.reflect.ClassTag[O]):org.apache.spark.graphx.Graph[V,O]"></a>
+      <a id="computeWithPreprocessing[VD,E](Graph[VD,E],Boolean)(ClassTag[VD],ClassTag[E],ClassTag[O]):Graph[V,O]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">computeWithPreprocessing</span><span class="tparams">[<span name="VD">VD</span>, <span name="E">E</span>]</span><span class="params">(<span name="graph">graph: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.computeWithPreprocessing.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.computeWithPreprocessing.E">E</span>]</span>, <span name="treatAsUndirected">treatAsUndirected: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Boolean" class="extype" target="_top">Boolean</a> = <span class="symbol">false</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.computeWithPreprocessing.VD">VD</span>]</span>, <span name="arg1">arg1: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.computeWithPreprocessing.E">E</span>]</span>, <span name="ot">ot: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.reflect.ClassTag" class="extype" target="_top">ClassTag</a>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.O">O</span>]</span>)</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.V">V</span>, <span class="extype" name="ml.sparkling.graph.api.operators.measures.EdgeMeasure.O">O</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@computeWithPreprocessing[VD,E](graph:org.apache.spark.graphx.Graph[VD,E],treatAsUndirected:Boolean)(implicitevidence$5:scala.reflect.ClassTag[VD],implicitevidence$6:scala.reflect.ClassTag[E],implicitot:scala.reflect.ClassTag[O]):org.apache.spark.graphx.Graph[V,O]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -198,7 +272,7 @@
         <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -215,7 +289,7 @@
         <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Any" class="extype" target="_top">Any</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@equals(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -232,7 +306,7 @@
         <span class="name">finalize</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@finalize():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@finalize():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -255,7 +329,7 @@
         <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@getClass():Class[_]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@getClass():Class[_]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -272,45 +346,11 @@
         <span class="name">hashCode</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Int" class="extype" target="_top">Int</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@hashCode():Int" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@hashCode():Int" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="ml.sparkling.graph.operators.measures.utils.CollectionsUtils#intersect" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="intersect(neighbours1:ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JSet[ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JLong],neighbours2:ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JSet[ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JLong]):scala.collection.mutable.Set[ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JLong]"></a>
-      <a id="intersect(JSet[JLong],JSet[JLong]):Set[JLong]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">intersect</span><span class="params">(<span name="neighbours1">neighbours1: <a href="../../../api/operators/algorithms/shortestpaths/ShortestPathsTypes$.html#JSet[T]=java.util.Set[T]" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JSet">JSet</a>[<a href="../../../api/operators/algorithms/shortestpaths/ShortestPathsTypes$.html#JLong=Long" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JLong">JLong</a>]</span>, <span name="neighbours2">neighbours2: <a href="../../../api/operators/algorithms/shortestpaths/ShortestPathsTypes$.html#JSet[T]=java.util.Set[T]" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JSet">JSet</a>[<a href="../../../api/operators/algorithms/shortestpaths/ShortestPathsTypes$.html#JLong=Long" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JLong">JLong</a>]</span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.collection.mutable.Set" class="extype" target="_top">Set</a>[<a href="../../../api/operators/algorithms/shortestpaths/ShortestPathsTypes$.html#JLong=Long" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JLong">JLong</a>]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@intersect(neighbours1:ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JSet[ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JLong],neighbours2:ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JSet[ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JLong]):scala.collection.mutable.Set[ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JLong]" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="ml.sparkling.graph.operators.measures.utils.CollectionsUtils#intersectSize" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="intersectSize(neighbours1:ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JSet[ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JLong],neighbours2:ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JSet[ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JLong]):Int"></a>
-      <a id="intersectSize(JSet[JLong],JSet[JLong]):Int"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">intersectSize</span><span class="params">(<span name="neighbours1">neighbours1: <a href="../../../api/operators/algorithms/shortestpaths/ShortestPathsTypes$.html#JSet[T]=java.util.Set[T]" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JSet">JSet</a>[<a href="../../../api/operators/algorithms/shortestpaths/ShortestPathsTypes$.html#JLong=Long" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JLong">JLong</a>]</span>, <span name="neighbours2">neighbours2: <a href="../../../api/operators/algorithms/shortestpaths/ShortestPathsTypes$.html#JSet[T]=java.util.Set[T]" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JSet">JSet</a>[<a href="../../../api/operators/algorithms/shortestpaths/ShortestPathsTypes$.html#JLong=Long" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JLong">JLong</a>]</span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Int" class="extype" target="_top">Int</a></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@intersectSize(neighbours1:ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JSet[ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JLong],neighbours2:ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JSet[ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JLong]):Int" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <a id="isInstanceOf[T0]:Boolean"></a>
@@ -323,7 +363,7 @@
         <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -340,7 +380,7 @@
         <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Boolean" class="extype" target="_top">Boolean</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -357,7 +397,7 @@
         <span class="name">notify</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@notify():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@notify():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -374,7 +414,7 @@
         <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@notifyAll():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@notifyAll():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -391,7 +431,7 @@
         <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -408,7 +448,7 @@
         <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@toString():String" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@toString():String" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -425,7 +465,7 @@
         <span class="name">wait</span><span class="params">()</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@wait():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@wait():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -448,7 +488,7 @@
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Long" class="extype" target="_top">Long</a></span>, <span name="arg1">arg1: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Int" class="extype" target="_top">Int</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -471,7 +511,7 @@
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Long" class="extype" target="_top">Long</a></span>)</span><span class="result">: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Unit" class="extype" target="_top">Unit</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#ml.sparkling.graph.operators.measures.utils.CollectionsUtils$@wait(x$1:Long):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#ml.sparkling.graph.api.operators.measures.EdgeMeasure@wait(x$1:Long):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -491,7 +531,11 @@
         </div>
 
         <div id="inheritedMembers">
-        <div class="parent" name="scala.AnyRef">
+        <div class="parent" name="scala.Serializable">
+              <h3>Inherited from <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></h3>
+            </div><div class="parent" name="java.io.Serializable">
+              <h3>Inherited from <span class="extype" name="java.io.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="scala.AnyRef">
               <h3>Inherited from <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.AnyRef" class="extype" target="_top">AnyRef</a></h3>
             </div><div class="parent" name="scala.Any">
               <h3>Inherited from <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Any" class="extype" target="_top">Any</a></h3>
