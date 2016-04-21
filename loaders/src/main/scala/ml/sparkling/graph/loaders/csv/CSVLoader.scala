@@ -61,9 +61,10 @@ object CSVLoader {
    */
   def loadGraphFromCSV(file: String,
                        csvLoaderConfig: CsvLoaderConfig = CsvLoaderConfig(),
+                       defaultVertex: Option[String]=Option(""),
                        column1: Int = 0,
                        column2: Int = 1,
-                        defaultVertex:Option[String]=Option(""),
+                       edgeAttributeProvider: EdgeAttributeExtractor[Double] = defaultEdgeAttribute _,
                        partitions:Int=0)
                       (implicit sc: SparkContext): Graph[String, Double] = {
     loadGraphFromCSV(file, simpleGraphBuilder(defaultVertex = defaultVertex,

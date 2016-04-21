@@ -16,15 +16,15 @@ object ShortestPathsToDirectory extends ExampleApp {
     val broadcastVertexCount = ctx.broadcast(vertexCount)
     (1l until vertexCount + 1 by bucketSize).foreach(startVid => {
       val broadcastStartVid = ctx.broadcast(startVid)
-      val shortestPaths = ShortestPathsAlgorithm.computeShortestPathsLengths(partitionedGraph, new ByIdsPredicate((startVid until startVid + bucketSize).toList))
+      val shortestPaths = ShortestPathsAlgorithm.computeShortestPathsLengths(partitionedGraph, new ByIdsPredicate((startVid until startVid + bucketSize).toList),treatAsUndirected )
       val joinedGraph = partitionedGraph
-        .outerJoinVertices(shortestPaths.vertices)((vId, data, newData) => (vId, data, newData.getOrElse(new FastUtilWithDistance.DataMap)))
+        .outerJoinVertices(shortestPaths.vertices)((vId, data, newData) => ( data, newData.getOrElse(new FastUtilWithDistance.DataMap)))
       joinedGraph.vertices.values.map(data => {
-        var entries = data._3
+        var entries = data._2
           .entrySet().toList.sortBy(_.getKey)
-        var a = 0l
+        var a = 1l
         val stringBuilder = new StringBuilder
-        while (a < broadcastBucketSize.value && (a+broadcastStartVid.value)<broadcastVertexCount.value) {
+        while (a < broadcastBucketSize.value && (a+broadcastStartVid.value)<(broadcastVertexCount.value+2)) {
           if (entries.size > 0 && a == entries.head.getKey) {
             stringBuilder ++= s"${entries.head.getValue.toInt},"
             entries = entries.drop(1)
