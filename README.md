@@ -49,6 +49,8 @@ libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.5"
   * PSCAN (SCAN)
 * Link prediction
   * Similarity measure based
+* Generators
+  * Ring
 * Experiments
   *  Describe graph using all measures to CSV files
 
@@ -60,7 +62,8 @@ libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.5"
   * Betweenness
 * Comunity detection methods
   * Modularity maximization
-  * Infomap 
+  * Infomap
+* More Generators
 * API
   *  Random walk
   *  BFS
