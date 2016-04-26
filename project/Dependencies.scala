@@ -8,9 +8,9 @@ object Dependencies {
   lazy val sparkVersion = settingKey[String]("The version of Spark to use.")
 
   val Versions = Seq(
-    crossScalaVersions := Seq("2.11.8"),
+    crossScalaVersions := Seq("2.10.6","2.11.7"),
     scalaVersion := Option(System.getenv().get("TRAVIS_SCALA_VERSION")).getOrElse(crossScalaVersions.value.head),
-    sparkVersion := "1.5.2"
+    sparkVersion := "1.6.1"
   )
   val l = libraryDependencies
 

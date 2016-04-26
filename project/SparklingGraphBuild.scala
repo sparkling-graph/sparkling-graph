@@ -32,6 +32,8 @@ object SparklingGraphBuild extends Build {
     .aggregate(api, loaders, operators, examples,experiments)
   lazy val loaders = Project(id = "sparkling-graph-loaders",
     base = file("loaders")).aggregate(api).dependsOn(api)
+  lazy val generators = Project(id = "sparkling-graph-generators",
+    base = file("generators")).aggregate(api).dependsOn(api)
   lazy val operators = Project(id = "sparkling-graph-operators",
     base = file("operators")).aggregate(api).dependsOn(api)
   lazy val experiments = Project(id = "sparkling-graph-experiments",

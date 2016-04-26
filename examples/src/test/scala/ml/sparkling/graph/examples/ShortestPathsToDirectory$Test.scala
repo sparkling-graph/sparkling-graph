@@ -22,11 +22,11 @@ val file: Path =Files.createTempDirectory("tempDir")
     Then("Should correctly compute")
     val result: List[String] = Source.fromFile(s"${file.toString}/from_1/part-00000").getLines().toList.sortBy(_.split(",")(0))
     result should equal(
-      List( "1,0,1,2,3,4",
-            "2,0,0,1,2,3",
-            "3,0,0,0,1,2",
-            "4,0,0,0,0,1",
-            "5,0,0,0,0,0"))
+      List( "1;2:1;3:2;4:3;5:4",
+            "2;3:1;4:2;5:3",
+            "3;4:1;5:2",
+            "4;5:1",
+            "5"))
   }
 
 }
