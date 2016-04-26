@@ -14,7 +14,6 @@ object RingGenerator  extends GraphGenerator[RingGeneratorConfiguration,Int,Int]
       .parallelize((0l to configuration.numberOfNodes-1))
       .flatMap(vId=>{
         val nextId=(vId+1) % configuration.numberOfNodes
-        println(nextId)
         val previousId=if(vId-1 < 0) {configuration.numberOfNodes-1} else {vId-1}
         (vId,nextId) :: {if(configuration.undirected) List((vId,previousId)) else Nil}
       }
