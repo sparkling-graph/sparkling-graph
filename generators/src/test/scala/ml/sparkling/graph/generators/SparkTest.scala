@@ -27,6 +27,7 @@ class SparkTest extends Spec with BeforeAndAfterAll {
 
   override def nestedSuites = {
     Vector(
+      new RingGenerator$Test,
       new WatssAndStrogatzGenerator$Test
     )
   }
