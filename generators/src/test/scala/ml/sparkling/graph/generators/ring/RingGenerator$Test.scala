@@ -6,7 +6,7 @@ import org.apache.spark.SparkContext
 /**
   * Created by Roman Bartusiak riomus@gmail.com roman.bartusiak@pwr.edu.pl on 26.04.16.
   */
-class RingGeneratorTest(implicit val ctx:SparkContext) extends GeneratorTest {
+class RingGenerator$Test(implicit val ctx:SparkContext) extends GeneratorTest {
 
 
   "Correct directed ring" should "be generated" in {
@@ -15,7 +15,7 @@ class RingGeneratorTest(implicit val ctx:SparkContext) extends GeneratorTest {
     val config = RingGeneratorConfiguration(numberOfNodes, false)
     When("Generates ring")
     val graph = RingGenerator.generate(config)
-    Then("Graph should be generatedCorrectly")
+    Then("Graph should be generated correctly")
     graph.vertices.count() should equal(numberOfNodes)
     graph.edges.count() should equal(numberOfNodes)
     graph.edges.sortBy(_.srcId).map(e=>(e.srcId,e.dstId)).collect() should equal(Array((0,1),(1,2),(2,3),(3,0)))

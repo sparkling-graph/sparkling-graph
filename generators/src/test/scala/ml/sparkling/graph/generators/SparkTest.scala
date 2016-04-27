@@ -1,6 +1,7 @@
 package ml.sparkling.graph.generators
 
-import ml.sparkling.graph.generators.ring.RingGeneratorTest
+import ml.sparkling.graph.generators.ring.RingGenerator$Test
+import ml.sparkling.graph.generators.wattsandstrogatz.WatssAndStrogatzGenerator$Test
 import org.apache.spark.{SparkConf, SparkContext}
 import org.scalatest._
 
@@ -26,7 +27,7 @@ class SparkTest extends Spec with BeforeAndAfterAll {
 
   override def nestedSuites = {
     Vector(
-      new RingGeneratorTest
+      new WatssAndStrogatzGenerator$Test
     )
   }
 
