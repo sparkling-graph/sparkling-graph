@@ -51,6 +51,7 @@ libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.5"
   * Similarity measure based
 * Generators
   * Ring
+  * Watts And Strogatz
 * Experiments
   *  Describe graph using all measures to CSV files
 
