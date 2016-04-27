@@ -8,7 +8,7 @@ import org.scalatest.FunSuite
 /**
   * Created by Roman Bartusiak riomus@gmail.com roman.bartusiak@pwr.edu.pl on 27.04.16.
   */
-class WatssAndStrogatzGenerator$Test (implicit val ctx:SparkContext) extends GeneratorTest {
+class WattsAndStrogatzGenerator$Test(implicit val ctx:SparkContext) extends GeneratorTest {
 
 
   "Correct directed ring with appropriate mean degree" should "be generated when probability of rewiring is 0" in {
@@ -16,9 +16,9 @@ class WatssAndStrogatzGenerator$Test (implicit val ctx:SparkContext) extends Gen
     val numberOfNodes: Long = 10
     val meanDegree: Long = 2
     val rewiringProbability=0
-    val config = WatssAndStrogatzGeneratorConfiguration(numberOfNodes, meanDegree,rewiringProbability)
+    val config = WattsAndStrogatzGeneratorConfiguration(numberOfNodes, meanDegree,rewiringProbability)
     When("Generates graph")
-    val graph = WatssAndStrogatzGenerator.generate(config)
+    val graph = WattsAndStrogatzGenerator.generate(config)
     Then("Graph should be generated correctly")
     graph.vertices.count() should equal(numberOfNodes)
     graph.edges.count() should equal(numberOfNodes*meanDegree)
@@ -32,9 +32,9 @@ class WatssAndStrogatzGenerator$Test (implicit val ctx:SparkContext) extends Gen
     val numberOfNodes = 10
     val meanDegree = 2
     val rewiringProbability=0.9
-    val config = WatssAndStrogatzGeneratorConfiguration(numberOfNodes, meanDegree,rewiringProbability)
+    val config = WattsAndStrogatzGeneratorConfiguration(numberOfNodes, meanDegree,rewiringProbability)
     When("Generates graph")
-    val graph = WatssAndStrogatzGenerator.generate(config)
+    val graph = WattsAndStrogatzGenerator.generate(config)
     Then("Graph should be generated correctly")
     graph.vertices.count() should equal(numberOfNodes)
     graph.edges.count() should equal(numberOfNodes*meanDegree)

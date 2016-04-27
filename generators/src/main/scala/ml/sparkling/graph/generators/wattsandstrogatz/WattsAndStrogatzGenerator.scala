@@ -9,8 +9,8 @@ import org.apache.spark.graphx.Graph
 /**
   * Created by Roman Bartusiak riomus@gmail.com roman.bartusiak@pwr.edu.pl on 26.04.16.
   */
-object WatssAndStrogatzGenerator extends GraphGenerator[WatssAndStrogatzGeneratorConfiguration, Int, Int] {
-  override def generate(configuration: WatssAndStrogatzGeneratorConfiguration)(implicit ctx: SparkContext): Graph[Int, Int] = {
+object WattsAndStrogatzGenerator extends GraphGenerator[WattsAndStrogatzGeneratorConfiguration, Int, Int] {
+  override def generate(configuration: WattsAndStrogatzGeneratorConfiguration)(implicit ctx: SparkContext): Graph[Int, Int] = {
     val vertexTuples = ctx
       .parallelize((0l to configuration.numberOfNodes - 1))
       .flatMap(vId => {
@@ -42,7 +42,7 @@ object WatssAndStrogatzGenerator extends GraphGenerator[WatssAndStrogatzGenerato
   }
 }
 
-case class WatssAndStrogatzGeneratorConfiguration(val numberOfNodes: Long,
+case class WattsAndStrogatzGeneratorConfiguration(val numberOfNodes: Long,
                                                   val meanDegree: Long,
                                                   val rewiringProbability: Double,
                                                   val randomNumberGeneratorProvider: RandomNumberGeneratorProvider=RandomNumbers.ScalaRandomNumberGeneratorProvider) extends GraphGeneratorConfiguration
