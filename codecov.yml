@@ -1,0 +1,14 @@
+comment:
+  layout: header, changes, diff, sunburst
+coverage:
+  ignore:
+  - home/travis/**/*.*
+  notify:
+    gitter:
+      default:
+        branches:
+        - master
+        threshold: '0'
+        url: https://webhooks.gitter.im/e/6522a9c02cc6ff7838c5
+  status:
+    patch: false
