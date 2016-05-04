@@ -1,5 +1,6 @@
 package ml.sparkling.graph.examples
 
+import breeze.linalg.VectorBuilder
 import ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgorithm
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.FastUtilWithDistance
 import ml.sparkling.graph.operators.predicates.ByIdsPredicate
@@ -13,14 +14,16 @@ object ShortestPathsToDirectory extends ExampleApp {
   def body() = {
     val verticesGroups = partitionedGraph.vertices.map(_._1).sortBy(k=>k).collect().grouped(bucketSize.toInt)
     (verticesGroups).foreach(group => {
+      val dataSpread=Math.min(partitionedGraph.numVertices.toInt,Math.max(bucketSize.toInt,group.last.toInt-group.head.toInt))
       val shortestPaths = ShortestPathsAlgorithm.computeShortestPathsLengths(partitionedGraph, new ByIdsPredicate(group.toList),treatAsUndirected )
       val joinedGraph = partitionedGraph
         .outerJoinVertices(shortestPaths.vertices)((vId, data, newData) => ( data, newData.getOrElse(new FastUtilWithDistance.DataMap)))
       joinedGraph.vertices.values.map{
         case (vertex,data) => {
-          val entries = data.entrySet().toList.sortBy(_.getKey)
-          val distancesInString=entries.map(e=>s"${e.getKey}:${e.getValue.toInt}")
-          (vertex :: distancesInString ).mkString(";")
+          val dataStr=data.entrySet()
+            .foldLeft(new VectorBuilder[Int](dataSpread))((b, e)=>{b.add(e.getKey.toInt-group.head.toInt,e.getValue.toInt);b})
+            .toDenseVector.toArray.mkString(";")
+         s"$vertex;$dataStr"
         }
       }.saveAsTextFile(s"${out}/from_${group.head}")
     })
