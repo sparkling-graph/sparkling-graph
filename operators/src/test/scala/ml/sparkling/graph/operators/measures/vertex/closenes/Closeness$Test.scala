@@ -22,7 +22,7 @@ class Closeness$Test(implicit sc:SparkContext)   extends MeasureTest  {
     Then("Should calculate closeness correctly")
     val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById .map{case (vId,data)=>data} .zip(Array(
-      0.4, 0.375, 1d/3, 0.25, 0d
+      0.1, 1/6d, 1d/3, 1, 0d
     )).foreach{case (a,b)=>{a should be (b +- 1e-5 )}}
   }
 
@@ -36,7 +36,7 @@ class Closeness$Test(implicit sc:SparkContext)   extends MeasureTest  {
     Then("Should calculate closeness correctly")
     val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById .map{case (vId,data)=>data} .zip(Array(
-      0.4, 0.375, 1d/3, 0.25, 0d
+      0.1, 1/6d, 1d/3, 1, 0d
     )).foreach{case (a,b)=>{a should be (b +- 1e-5 )}}
   }
 
@@ -52,7 +52,7 @@ class Closeness$Test(implicit sc:SparkContext)   extends MeasureTest  {
     Then("Should calculate Closeness correctly")
     val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById .map{case (vId,data)=>data} .zip(Array(
-      0.75, 0.5, 0.6, 0.75
+      0.25,1/6d,0.2,0.25
     )).foreach{case (a,b)=>{a should be (b +- 1e-5 )}}
   }
 
@@ -65,7 +65,21 @@ class Closeness$Test(implicit sc:SparkContext)   extends MeasureTest  {
     Then("Should calculate Closeness correctly")
     val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById .map{case (vId,data)=>data} .zip(Array(
-      1d,1d,1d,1d
+      1/3d,1/3d,1/3d,1/3d
+    )).foreach{case (a,b)=>{a should be (b +- 1e-5 )}}
+  }
+
+
+  "Closeness for graph with uncontinous vertex ids space " should "be correctly calculated" in{
+    Given("graph")
+    val filePath = getClass.getResource("/graphs/long_id_graph.csv")
+    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
+    When("Computes Closeness")
+    val result=Closeness.compute(graph,VertexMeasureConfiguration[Int,Int](true))
+    Then("Should calculate Closeness correctly")
+    val verticesSortedById=result.vertices.collect().sortBy{case (vId,data)=>vId}
+    verticesSortedById .map{case (vId,data)=>data} .zip(Array(
+      1/6d,0.25,1/6d,0.25
     )).foreach{case (a,b)=>{a should be (b +- 1e-5 )}}
   }
 

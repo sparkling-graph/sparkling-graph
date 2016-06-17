@@ -24,15 +24,17 @@ object Closeness extends VertexMeasure[Double] {
    */
   def computeUsing[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED],
                                                closenessFunction: ClosenessFunction,
-                                               vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED])(implicit num: Numeric[ED]): Graph[Double, ED] = {
-    val graphSize = graph.numVertices
+                                               pathMappingFunction: PathMappingFunction,
+                                               vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED],
+                                               normalize:Boolean=false)(implicit num: Numeric[ED]): Graph[Double, ED] = {
+    val verticesIds=graph.vertices.map(_._1).collect()
     val distanceSumGraph = graph.mapVertices((vId, data) => (0l, 0d))
-    (1l until graphSize + 1).foldLeft(distanceSumGraph)((distanceSumGraph,startVid) => {
+    verticesIds.foldLeft(distanceSumGraph)((distanceSumGraph,startVid) => {
       val shortestPaths = ShortestPathsAlgorithm.computeSingleShortestPathsLengths(graph, startVid, treatAsUndirected = vertexMeasureConfiguration.treatAsUndirected)
       val out=distanceSumGraph.outerJoinVertices(shortestPaths.vertices)((vId, oldValue, newValue) => {
         val newValueMapped = newValue.map {
           case 0d => (0l, 0d)
-          case other => (1l, other)
+          case other => (1l, pathMappingFunction(other))
         }
         (oldValue, newValueMapped) match {
           case ((oldPathsCount, oldPathsSum), Some((newPathsCount, newPathsSum))) => {
@@ -45,7 +47,9 @@ object Closeness extends VertexMeasure[Double] {
       })
       shortestPaths.unpersist()
       out
-    }).mapVertices((vId, sum) => closenessFunction.tupled(sum))
+    }).mapVertices{
+      case (vId, (count,sum)) => closenessFunction(count,sum,normalize)}
+
   }
 
   /**
@@ -58,7 +62,10 @@ object Closeness extends VertexMeasure[Double] {
    * @return graph where each vertex is associated with its harmonic closeness centrality
    */
   def computeHarmonic[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED])(implicit num: Numeric[ED]) = {
-    computeUsing(graph, harmonicCloseness(graph.numVertices) _, vertexMeasureConfiguration)
+    computeUsing(graph,
+      harmonicCloseness(graph.numVertices) _,
+      harmonicClosenessValueMapper,
+      vertexMeasureConfiguration)
   }
 
   /**
@@ -70,5 +77,9 @@ object Closeness extends VertexMeasure[Double] {
    * @tparam ED - edge data type
    * @return graph where each vertex is associated with its standard closeness centrality
    */
-  override def compute[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED])(implicit num: Numeric[ED]): Graph[Double, ED] = computeUsing(graph, standardCloseness(graph.numVertices) _, vertexMeasureConfiguration)
+  override def compute[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED])(implicit num: Numeric[ED]): Graph[Double, ED] =
+    computeUsing(graph,
+      standardCloseness(graph.numVertices) _,
+      standardClosenessValueMapper,
+      vertexMeasureConfiguration)
 }
