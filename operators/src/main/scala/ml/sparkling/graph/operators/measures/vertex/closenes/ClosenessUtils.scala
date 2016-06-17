@@ -9,7 +9,7 @@ object ClosenessUtils {
   type PathMappingFunction=(Double)=>Double
 
   def standardCloseness(graphSize:Long)(pathsCount:Long,distanceSum:Double,normalize:Boolean):Double={
-    if(distanceSum==0) 0 else if(!normalize)  1/(distanceSum) else (pathsCount-1) /distanceSum
+    if(distanceSum==0) 0d else if(!normalize)  1d/(distanceSum) else (pathsCount-1) /distanceSum
   }
 
   def standardClosenessValueMapper(pathSize:Double):Double={
@@ -17,7 +17,7 @@ object ClosenessUtils {
   }
 
   def harmonicClosenessValueMapper(pathSize:Double):Double={
-   if(pathSize==0) 0 else  1. / pathSize
+   if(pathSize==0d) 0d else  1d / pathSize
   }
 
   def harmonicCloseness(graphSize:Long)(pathsCount:Long,distanceSum:Double,normalize:Boolean):Double={
