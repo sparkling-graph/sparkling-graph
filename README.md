@@ -70,7 +70,11 @@ libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.5"
   *  BFS
 * ML
   *  Vertex classification
-  
+ 
+# Used by
+
+<a href="http://www.miniclip.com"><img src="http://vignette2.wikia.nocookie.net/logopedia/images/d/d3/Miniclip.svg/revision/latest?cb=20140406121232" width=100px/></a> <a href="http://datasciencegroup.pl/"><img src="http://datasciencegroup.pl/assets/images/logo-dsg.png" width=100px/></a> <a href="pwr.edu.pl"><img src="http://www.logotyp.pwr.edu.pl/img/Graph/ZnakPWr/WersjaPozioma/poziom-en.gif" width=100px /></a>
+ 
 # How to
 
 Please check [API](http://sparkling-graph.github.io/sparkling-graph/latest/api/), [examples](https://github.com/sparkling-graph/sparkling-graph/tree/master/examples/src/main/scala/ml/sparkling/graph/examples) or [docs](http://sparkling-graph.readthedocs.org/en/latest/)
