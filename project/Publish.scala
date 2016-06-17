@@ -2,11 +2,12 @@ package ml.sparkling.graph
 
 import sbt.Keys._
 import sbt._
-
+import sbtrelease.ReleasePlugin.autoImport._
 object Publish extends AutoPlugin {
 
 
   override lazy val projectSettings = Seq(
+    releaseCrossBuild:= true,
     publishMavenStyle := true,
     pomIncludeRepository := { _ => false },
     publishTo := {
