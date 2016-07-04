@@ -1,4 +1,5 @@
-<!DOCTYPE html >
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
           <title>wattsandstrogatz - ml.sparkling.graph.generators.wattsandstrogatz</title>
@@ -8,11 +9,6 @@
           
       <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
       <link href="../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
-      <script type="text/javascript" src="../../../../../lib/jquery.js" id="jquery-js"></script>
-      <script type="text/javascript" src="../../../../../lib/jquery-ui.js"></script>
-      <script type="text/javascript" src="../../../../../lib/template.js"></script>
-      <script type="text/javascript" src="../../../../../lib/tools.tooltip.js"></script>
-      
       <script type="text/javascript">
          if(top === self) {
             var url = '../../../../../index.html';
@@ -28,13 +24,9 @@
         </head>
         <body class="value">
       <div id="definition">
-        <img alt="Package" src="../../../../../lib/package_big.png" />
+        <img src="../../../../../lib/package_big.png" />
         <p id="owner"><a href="../../../../package.html" class="extype" name="ml">ml</a>.<a href="../../../package.html" class="extype" name="ml.sparkling">sparkling</a>.<a href="../../package.html" class="extype" name="ml.sparkling.graph">graph</a>.<a href="../package.html" class="extype" name="ml.sparkling.graph.generators">generators</a></p>
-        <h1>wattsandstrogatz</h1><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.generators.wattsandstrogatz.package" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
+        <h1>wattsandstrogatz</h1>
       </div>
 
       <h4 id="signature" class="signature">
@@ -75,13 +67,9 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a href="WattsAndStrogatzGeneratorConfiguration.html"><span class="name">WattsAndStrogatzGeneratorConfiguration</span></a><span class="params">(<span name="numberOfNodes">numberOfNodes: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Long" class="extype" target="_top">Long</a></span>, <span name="meanDegree">meanDegree: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Long" class="extype" target="_top">Long</a></span>, <span name="rewiringProbability">rewiringProbability: <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Double" class="extype" target="_top">Double</a></span>, <span name="randomNumberGeneratorProvider">randomNumberGeneratorProvider: <a href="../../api/generators/RandomNumbers$.html#RandomNumberGeneratorProvider=Long=&gt;ml.sparkling.graph.api.generators.RandomNumbers.RandomNumberGenerator" class="extmbr" name="ml.sparkling.graph.api.generators.RandomNumbers.RandomNumberGeneratorProvider">RandomNumberGeneratorProvider</a> = <span class="defval" name='<span class="name"><a href="../../../../package.html">RandomNumbers.ScalaRandomNumberGeneratorProvider</a></span>'>...</span></span>)</span><span class="result"> extends <a href="../../api/generators/GraphGeneratorConfiguration.html" class="extype" name="ml.sparkling.graph.api.generators.GraphGeneratorConfiguration">GraphGeneratorConfiguration</a> with <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Product" class="extype" target="_top">Product</a> with <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
+        <a href="WattsAndStrogatzGeneratorConfiguration.html"><span class="name">WattsAndStrogatzGeneratorConfiguration</span></a><span class="params">(<span name="numberOfNodes">numberOfNodes: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Long" class="extype" target="_top">Long</a></span>, <span name="meanDegree">meanDegree: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Long" class="extype" target="_top">Long</a></span>, <span name="rewiringProbability">rewiringProbability: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Double" class="extype" target="_top">Double</a></span>, <span name="randomNumberGeneratorProvider">randomNumberGeneratorProvider: (<a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Long" class="extype" target="_top">Long</a>) ⇒ <a href="../../api/generators/RandomNumbers$$RandomNumberGenerator.html" class="extype" name="ml.sparkling.graph.api.generators.RandomNumbers.RandomNumberGenerator">RandomNumberGenerator</a> = <span class="defval" name="ml.sparkling.graph.api.generators.RandomNumbers.ScalaRandomNumberGeneratorProvider">...</span></span>)</span><span class="result"> extends <a href="../../api/generators/GraphGeneratorConfiguration.html" class="extype" name="ml.sparkling.graph.api.generators.GraphGeneratorConfiguration">GraphGeneratorConfiguration</a> with <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Product" class="extype" target="_top">Product</a> with <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
       </span>
-      </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.generators.wattsandstrogatz.package@WattsAndStrogatzGeneratorConfigurationextendsGraphGeneratorConfigurationwithProductwithSerializable" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
+      </h4>
       
     </li></ol>
             </div>
@@ -99,14 +87,10 @@
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <a href="WattsAndStrogatzGenerator$.html"><span class="name">WattsAndStrogatzGenerator</span></a><span class="result"> extends <a href="../../api/generators/GraphGenerator.html" class="extype" name="ml.sparkling.graph.api.generators.GraphGenerator">GraphGenerator</a>[<a href="WattsAndStrogatzGeneratorConfiguration.html" class="extype" name="ml.sparkling.graph.generators.wattsandstrogatz.WattsAndStrogatzGeneratorConfiguration">WattsAndStrogatzGeneratorConfiguration</a>, <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Int" class="extype" target="_top">Int</a>, <a href="http://www.scala-lang.org/api/2.11.7/index.html#scala.Int" class="extype" target="_top">Int</a>]</span>
+        <a href="WattsAndStrogatzGenerator$.html"><span class="name">WattsAndStrogatzGenerator</span></a><span class="result"> extends <a href="../../api/generators/GraphGenerator.html" class="extype" name="ml.sparkling.graph.api.generators.GraphGenerator">GraphGenerator</a>[<a href="WattsAndStrogatzGeneratorConfiguration.html" class="extype" name="ml.sparkling.graph.generators.wattsandstrogatz.WattsAndStrogatzGeneratorConfiguration">WattsAndStrogatzGeneratorConfiguration</a>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Int" class="extype" target="_top">Int</a>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Int" class="extype" target="_top">Int</a>]</span>
       </span>
-      </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.generators.wattsandstrogatz.package@WattsAndStrogatzGenerator" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Created by Roman Bartusiak riomus@gmail.com roman.bartusiak@pwr.edu.pl on 26.04.16.</p>
+      </h4>
+      <p class="comment cmt">Created by Roman Bartusiak riomus@gmail.</p>
     </li></ol>
             </div>
 
@@ -132,7 +116,6 @@
       <div id="tooltip"></div>
 
       <div id="footer">  </div>
-
-
+      <script defer="defer" type="text/javascript" id="jquery-js" src="../../../../../lib/jquery.js"></script><script defer="defer" type="text/javascript" id="jquery-ui-js" src="../../../../../lib/jquery-ui.js"></script><script defer="defer" type="text/javascript" id="tools-tooltip-js" src="../../../../../lib/tools.tooltip.js"></script><script defer="defer" type="text/javascript" id="template-js" src="../../../../../lib/template.js"></script>
     </body>
       </html>
