@@ -10,17 +10,17 @@ resolvers +=  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repo
 ```
 ```
 // one or all from:
-libraryDependencies += "ml.sparkling" %% "sparkling-graph-examples" % "0.0.6-SNAPSHOT"
-libraryDependencies += "ml.sparkling" %% "sparkling-graph-loaders" % "0.0.6-SNAPSHOT"
-libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.6-SNAPSHOT"
+libraryDependencies += "ml.sparkling" %% "sparkling-graph-examples" % "0.0.7-SNAPSHOT"
+libraryDependencies += "ml.sparkling" %% "sparkling-graph-loaders" % "0.0.7-SNAPSHOT"
+libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.7-SNAPSHOT"
 ```
 ## Release
 
 ```
 // one or all from:
-libraryDependencies += "ml.sparkling" %% "sparkling-graph-examples" % "0.0.5"
-libraryDependencies += "ml.sparkling" %% "sparkling-graph-loaders" % "0.0.5"
-libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.5"
+libraryDependencies += "ml.sparkling" %% "sparkling-graph-examples" % "0.0.6"
+libraryDependencies += "ml.sparkling" %% "sparkling-graph-loaders" % "0.0.6"
+libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.6"
 ```
 
 # Current features
