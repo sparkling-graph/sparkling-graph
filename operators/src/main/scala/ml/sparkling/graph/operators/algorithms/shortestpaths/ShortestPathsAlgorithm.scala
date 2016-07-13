@@ -103,7 +103,7 @@ object ShortestPathsAlgorithm  {
   def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[VD,ED], treatAsUndirected: Boolean = false)(implicit num: Numeric[ED]) = {
     val bucketSize=bucketSizeProvider(graph)
     val graphSize=graph.numVertices
-    val vertexIds=graph.vertices.map(_._1).collect()
+    val vertexIds=graph.vertices.map{case (vId,data)=>vId}.collect()
     val outGraph:Graph[FastUtilWithDistance.DataMap ,ED] = graph.mapVertices((vId,data)=>new FastUtilWithDistance.DataMap)
     (vertexIds.grouped(bucketSize.toInt)).foldLeft(outGraph)((acc,vertexIds)=>{
       val vertexPredicate=ByIdsPredicate(vertexIds.toList)
