@@ -43,10 +43,10 @@ class ShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extends MeasureTes
       case (vId,data)=>(vId,data.toMap)
     }
     verticesSortedById  should equal (Array(
-      (1,Map(2 -> 1., 3 -> 2., 4 -> 3., 5 -> 4.)),
-      (2,Map(3 -> 1., 4 -> 2., 5 -> 3. )),
-      (3,Map(4 -> 1., 5 -> 2.)),
-      (4,Map(5 -> 1.)),
+      (1,Map(2 -> 1.0, 3 -> 2.0, 4 -> 3.0, 5 -> 4.0)),
+      (2,Map(3 -> 1.0, 4 -> 2.0, 5 -> 3.0 )),
+      (3,Map(4 -> 1.0, 5 -> 2.0)),
+      (4,Map(5 -> 1.0)),
       (5,Map())
     ))
   }
