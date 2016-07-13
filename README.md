@@ -1,5 +1,5 @@
 # sparkling-graph
-[![Build Status](https://travis-ci.org/sparkling-graph/sparkling-graph.svg?branch=master)](https://travis-ci.org/sparkling-graph/sparkling-graph) [![Documentation Status](https://readthedocs.org/projects/sparkling-graph/badge/?version=latest&cache=1234)](http://sparkling-graph.readthedocs.org/en/latest/?badge=latest) [![codecov.io](https://codecov.io/github/sparkling-graph/sparkling-graph/coverage.svg?branch=master)](https://codecov.io/github/sparkling-graph/sparkling-graph?branch=master) [![Codacy Badge](https://api.codacy.com/project/badge/grade/9ddff907e39a431485fecaf0f612a528)](https://www.codacy.com/app/riomus/sparkling-graph) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/ml.sparkling/sparkling-graph-examples_2.10/badge.svg)](https://maven-badges.herokuapp.com/maven-central/ml.sparkling/sparkling-graph-examples_2.11) [![MLOSS](https://img.shields.io/badge/MLOSS-0.0.5-brightgreen.svg)](https://mloss.org/software/view/650/) [![Spark Packages](https://img.shields.io/badge/Spark%20Packages-0.0.5-brightgreen.svg)](http://spark-packages.org/package/sparkling-graph/sparkling-graph) [![API](https://img.shields.io/badge/API-latest-brightgreen.svg)](http://sparkling-graph.github.io/sparkling-graph/latest/api/) [![Gratipay Team](https://img.shields.io/gratipay/team/sparklinggraph.svg)](https://gratipay.com/sparklinggraph/) [![Gitter](https://badges.gitter.im/sparkling-graph/sparkling-graph.svg)](https://gitter.im/sparkling-graph/sparkling-graph?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Build Status](https://travis-ci.org/sparkling-graph/sparkling-graph.svg?branch=master)](https://travis-ci.org/sparkling-graph/sparkling-graph) [![Documentation Status](https://readthedocs.org/projects/sparkling-graph/badge/?version=latest&cache=1234)](http://sparkling-graph.readthedocs.org/en/latest/?badge=latest) [![codecov.io](https://codecov.io/github/sparkling-graph/sparkling-graph/coverage.svg?branch=master)](https://codecov.io/github/sparkling-graph/sparkling-graph?branch=master) [![Codacy Badge](https://api.codacy.com/project/badge/grade/9ddff907e39a431485fecaf0f612a528)](https://www.codacy.com/app/riomus/sparkling-graph) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/ml.sparkling/sparkling-graph-examples_2.10/badge.svg)](https://maven-badges.herokuapp.com/maven-central/ml.sparkling/sparkling-graph-examples_2.11) [![MLOSS](https://img.shields.io/badge/MLOSS-0.0.6-brightgreen.svg)](https://mloss.org/software/view/650/) [![Spark Packages](https://img.shields.io/badge/Spark%20Packages-0.0.6-brightgreen.svg)](http://spark-packages.org/package/sparkling-graph/sparkling-graph) [![API](https://img.shields.io/badge/API-latest-brightgreen.svg)](http://sparkling-graph.github.io/sparkling-graph/latest/api/) [![Gratipay Team](https://img.shields.io/gratipay/team/sparklinggraph.svg)](https://gratipay.com/sparklinggraph/) [![Gitter](https://badges.gitter.im/sparkling-graph/sparkling-graph.svg)](https://gitter.im/sparkling-graph/sparkling-graph?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 SparklingGraph provides easy to use set of features that will give you ability to proces large scala graphs using Spark and GraphX.
 
@@ -10,17 +10,17 @@ resolvers +=  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repo
 ```
 ```
 // one or all from:
-libraryDependencies += "ml.sparkling" %% "sparkling-graph-examples" % "0.0.6-SNAPSHOT"
-libraryDependencies += "ml.sparkling" %% "sparkling-graph-loaders" % "0.0.6-SNAPSHOT"
-libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.6-SNAPSHOT"
+libraryDependencies += "ml.sparkling" %% "sparkling-graph-examples" % "0.0.7-SNAPSHOT"
+libraryDependencies += "ml.sparkling" %% "sparkling-graph-loaders" % "0.0.7-SNAPSHOT"
+libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.7-SNAPSHOT"
 ```
 ## Release
 
 ```
 // one or all from:
-libraryDependencies += "ml.sparkling" %% "sparkling-graph-examples" % "0.0.5"
-libraryDependencies += "ml.sparkling" %% "sparkling-graph-loaders" % "0.0.5"
-libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.5"
+libraryDependencies += "ml.sparkling" %% "sparkling-graph-examples" % "0.0.6"
+libraryDependencies += "ml.sparkling" %% "sparkling-graph-loaders" % "0.0.6"
+libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.6"
 ```
 
 # Current features
@@ -70,7 +70,11 @@ libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.5"
   *  BFS
 * ML
   *  Vertex classification
-  
+ 
+# Used by
+
+<a href="http://www.miniclip.com"><img src="http://vignette2.wikia.nocookie.net/logopedia/images/d/d3/Miniclip.svg/revision/latest?cb=20140406121232" width=250px/></a> <a href="http://datasciencegroup.pl/"><img src="http://datasciencegroup.pl/assets/images/logo-dsg.png" width=250px/></a> <a href="pwr.edu.pl"><img src="http://www.logotyp.pwr.edu.pl/img/Graph/ZnakPWr/WersjaPozioma/poziom-en.gif" width=250px /></a>
+ 
 # How to
 
 Please check [API](http://sparkling-graph.github.io/sparkling-graph/latest/api/), [examples](https://github.com/sparkling-graph/sparkling-graph/tree/master/examples/src/main/scala/ml/sparkling/graph/examples) or [docs](http://sparkling-graph.readthedocs.org/en/latest/)
