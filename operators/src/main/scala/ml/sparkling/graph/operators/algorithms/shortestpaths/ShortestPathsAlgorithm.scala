@@ -1,13 +1,11 @@
 package ml.sparkling.graph.operators.algorithms.shortestpaths
 
 
-import ml.sparkling.graph.api.operators.IterativeComputation
 import ml.sparkling.graph.api.operators.IterativeComputation._
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.{FastUtilWithDistance, FastUtilWithPath}
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.{PathProcessor, SingleVertexProcessor}
 import ml.sparkling.graph.operators.predicates.{AllPathPredicate, ByIdPredicate, ByIdsPredicate}
 import org.apache.spark.graphx._
-
 import scala.reflect.ClassTag
 
 /**
@@ -105,15 +103,16 @@ object ShortestPathsAlgorithm  {
   def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[VD,ED], treatAsUndirected: Boolean = false)(implicit num: Numeric[ED]) = {
     val bucketSize=bucketSizeProvider(graph)
     val graphSize=graph.numVertices
+    val vertexIds=graph.vertices.map(_._1).collect()
     val outGraph:Graph[FastUtilWithDistance.DataMap ,ED] = graph.mapVertices((vId,data)=>new FastUtilWithDistance.DataMap)
-    (1l until graphSize+1 by bucketSize).foldLeft(outGraph)((acc,startVId)=>{
-      val vertexPredicate=ByIdsPredicate((startVId until startVId+bucketSize).toList)
+    (vertexIds.grouped(bucketSize.toInt)).foldLeft(outGraph)((acc,vertexIds)=>{
+      val vertexPredicate=ByIdsPredicate(vertexIds.toList)
       val computed=computeShortestPathsLengths(graph,vertexPredicate,treatAsUndirected)
       acc.outerJoinVertices(computed.vertices)((vId,outMap,computedMap)=>{
         computedMap.flatMap(m=>{outMap.putAll(m.asInstanceOf[FastUtilWithDistance.DataMap]);Option(outMap)}).getOrElse(outMap)
       })
     })
-    outGraph
+
   }
 
   private def sendMessage[VD, ED, PT](treatAsUndirected: Boolean, pathProcessor: PathProcessor[VD, ED, PT])(edge: EdgeTriplet[PT, ED])(implicit num: Numeric[ED]): Iterator[(VertexId, PT)] = {

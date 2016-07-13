@@ -1,6 +1,7 @@
 package ml.sparkling.graph.operators.algorithms.shortestpaths
 
 import ml.sparkling.graph.operators.MeasureTest
+import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.FastUtilWithDistance.DataMap
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
 
@@ -26,6 +27,26 @@ class ShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extends MeasureTes
       (2,Map(3 -> Set(List(1d)), 4 -> Set(List(2d,3d)), 5 -> Set(List(3d,4d,3d)) )),
       (3,Map(4 -> Set(List(1d)), 5 -> Set(List(2d,4d)))),
       (4,Map(5 -> Set(List(1d)))),
+      (5,Map())
+    ))
+  }
+
+
+  "Shortest paths for simple graph" should "be correctly calculated using iterative approach" in{
+    Given("graph")
+    val filePath = getClass.getResource("/graphs/5_nodes_directed")
+    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
+    When("Computes shortest paths")
+    val shortestPaths =ShortestPathsAlgorithm.computeShortestPathsLengthsIterative(graph, (g:Graph[_,_])=>1)
+    Then("Should calculate shortest paths correctly")
+    val verticesSortedById=shortestPaths.vertices.collect().sortBy{case (vId,data)=>vId}.map{
+      case (vId,data)=>(vId,data.toMap)
+    }
+    verticesSortedById  should equal (Array(
+      (1,Map(2 -> 1., 3 -> 2., 4 -> 3., 5 -> 4.)),
+      (2,Map(3 -> 1., 4 -> 2., 5 -> 3. )),
+      (3,Map(4 -> 1., 5 -> 2.)),
+      (4,Map(5 -> 1.)),
       (5,Map())
     ))
   }
