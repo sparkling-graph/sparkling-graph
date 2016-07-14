@@ -36,7 +36,7 @@ abstract class ExampleApp extends Serializable {
     }
     val optionsMap = Map(('indexing->true),('master -> None), ('appName -> this.getClass.getName),
       ('edgeField -> 2), ('delimiter -> ";"), ('loadPartitions -> 24), ('graphPartitions -> 24),
-      ('bucketSize -> -1l), ('treatAsUndirected -> false),('checkpointDir->System.getenv("java.io.tmpdir")))
+      ('bucketSize -> -1l), ('treatAsUndirected -> false),('checkpointDir->System.getProperty("java.io.tmpdir")))
 
     type OptionMap = Map[Symbol, Any]
 
