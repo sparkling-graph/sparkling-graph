@@ -27,14 +27,16 @@ abstract class ExampleApp extends Serializable {
             [--load-partitions int(24)] [--graph-partitions int(24)]
             [--bucket-size int(-1)] [--treat-as-undirected boolean(false)] [--edge-field int(2)]
             [--master string(None)] [--withIndexing Boolean(true)]
-
+            [--checkpoint-dir string(TMPDIR)]
             inputFile outputFile
     """
     if (args.length == 0) {
       println(usage)
       System.exit(1)
     }
-    val optionsMap = Map(('indexing->true),('master -> None), ('appName -> this.getClass.getName), ('edgeField -> 2), ('delimiter -> ";"), ('loadPartitions -> 24), ('graphPartitions -> 24), ('bucketSize -> -1l), ('treatAsUndirected -> false))
+    val optionsMap = Map(('indexing->true),('master -> None), ('appName -> this.getClass.getName),
+      ('edgeField -> 2), ('delimiter -> ";"), ('loadPartitions -> 24), ('graphPartitions -> 24),
+      ('bucketSize -> -1l), ('treatAsUndirected -> false),('checkpointDir->System.getenv("java.io.tmpdir")))
 
     type OptionMap = Map[Symbol, Any]
 
@@ -60,6 +62,8 @@ abstract class ExampleApp extends Serializable {
           nextOption(map ++ Map('master -> Option(value)), tail)
         case "--withIndexing" :: value :: tail =>
           nextOption(map ++ Map('indexing -> value.toBoolean), tail)
+        case "--checkpoint-dir" :: value :: tail =>
+          nextOption(map ++ Map('checkpointDir -> value.toString), tail)
         case inFile :: outFile :: Nil => map ++ Map('inputFile -> inFile) ++ Map('outputFile -> outFile)
         case option :: tail => println("Unknown option " + option)
           System.exit(1);
@@ -68,6 +72,7 @@ abstract class ExampleApp extends Serializable {
     }
 
     val options = nextOption(optionsMap, args.toList)
+    val checkpointDir=options('checkpointDir).asInstanceOf[String]
     file = options('inputFile).asInstanceOf[String]
     out = options('outputFile).asInstanceOf[String]
     delimiter = options('delimiter).asInstanceOf[String]
@@ -84,6 +89,7 @@ abstract class ExampleApp extends Serializable {
     val sparkConf = new SparkConf().setAppName(name).set("spark.app.id", "sparkling-graph-example")
     ctx = new SparkContext(master.map(m => sparkConf.setMaster(m)).getOrElse(sparkConf))
     ctx.broadcast()
+    ctx.setCheckpointDir(checkpointDir)
 
     val graph =
       if(withIndexing) {
