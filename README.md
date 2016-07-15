@@ -73,7 +73,7 @@ libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.6"
  
 # Used by
 
-<a href="http://www.miniclip.com"><img src="http://vignette2.wikia.nocookie.net/logopedia/images/d/d3/Miniclip.svg/revision/latest?cb=20140406121232" width=250px/></a> <a href="http://datasciencegroup.pl/"><img src="http://datasciencegroup.pl/assets/images/logo-dsg.png" width=250px/></a> <a href="pwr.edu.pl"><img src="http://www.portal.pwr.wroc.pl/files/prv/id24//logotypy/LogotypPWr/wersja-pozioma/poziom-en.gif" width=250px /></a>
+<a href="http://www.miniclip.com"><img src="http://vignette2.wikia.nocookie.net/logopedia/images/d/d3/Miniclip.svg/revision/latest?cb=20140406121232" width=250px/></a> <a href="http://datasciencegroup.pl/"><img src="http://datasciencegroup.pl/assets/images/logo-dsg.png" width=250px/></a> <a href="pwr.edu.pl"><img src="http://www.portal.pwr.wroc.pl/files/prv/id24//logotypy/LogotypPWr/wersja-pozioma/znak-pwr_poziom-en_nadruk-male-przedmioty.png?cache=1234" width=250px /></a>
  
 # How to
 
