@@ -73,7 +73,7 @@ libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.6"
  
 # Used by
 
-<a href="http://www.miniclip.com"><img src="http://vignette2.wikia.nocookie.net/logopedia/images/d/d3/Miniclip.svg/revision/latest?cb=20140406121232" width=250px/></a> <a href="http://datasciencegroup.pl/"><img src="http://datasciencegroup.pl/assets/images/logo-dsg.png" width=250px/></a> <a href="pwr.edu.pl"><img src="http://www.logotyp.pwr.edu.pl/img/Graph/ZnakPWr/WersjaPozioma/poziom-en.gif" width=250px /></a>
+<a href="http://www.miniclip.com"><img src="http://vignette2.wikia.nocookie.net/logopedia/images/d/d3/Miniclip.svg/revision/latest?cb=20140406121232" width=250px/></a> <a href="http://datasciencegroup.pl/"><img src="http://datasciencegroup.pl/assets/images/logo-dsg.png" width=250px/></a> <a href="pwr.edu.pl"><img src="http://www.etcwroclaw.eu/img/PWr_en.png" width=250px /></a>
  
 # How to
 
