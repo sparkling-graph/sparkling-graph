@@ -22,9 +22,16 @@ object Coalesce {
     val toNewIdMapRandomised=toNewIdMap.mapPartitionsWithIndex{case (index,valueIterator)=>{
       val generator=new Random(index+seed)
       valueIterator.map(v=>(generator.nextDouble(),v))
-    }}.sortByKey().map(_._2).reduceByKey((l1,l2)=>l1).collect().foldLeft(Map[Long,Long]()){   // Fixme: EXECUTION HAPPENS ON DRIVER! HOW TO FIX THAT?
+    }}.sortByKey()
+      .map{case (randomId,value)=>value}
+      .reduceByKey((l1,l2)=>l1)
+      .collect()  // Fixme: EXECUTION HAPPENS ON DRIVER! HOW TO FIX THAT?
+      .foldLeft(Map[Long,Long]()){
       case (agg,(key,value))=>
-        if((agg.contains(value) && agg(value)!=value) || agg.values.exists(_==key)) agg else agg + (key -> value)
+        if((agg.contains(value) && agg(value)!=value) || agg.values.exists(_==key))
+          agg
+        else
+          agg + (key -> value)
     }
     val toNewIdMapParalelised=sc.parallelize(toNewIdMapRandomised.toList)
     val newEdges=graph.edges.map(e=>(e.srcId,e)).leftOuterJoin(toNewIdMapParalelised).map{
@@ -36,6 +43,6 @@ object Coalesce {
     }
     val newEdgesFiltered=newEdges.filter(e=>e.srcId!=e.dstId)
     val vertices=toNewIdMapParalelised.map{case (from,to)=>to}.distinct().map(n=>(n,None))
-    return Graph(VertexRDD(vertices),newEdgesFiltered,None)
+    Graph(VertexRDD(vertices),newEdgesFiltered,None)
   }
 }
