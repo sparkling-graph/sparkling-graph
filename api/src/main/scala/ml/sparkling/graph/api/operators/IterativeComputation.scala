@@ -15,4 +15,11 @@ object IterativeComputation {
   def wholeGraphBucket[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED]) = {
     graph.numVertices
   }
+
+  def inArrayVertexPredicate(ids:Array[Long])={
+    val vertexMap=ids.map((_,true)).toMap;
+     (id:VertexId)=>{
+       vertexMap.getOrElse(id,false);
+    }
+  }
 }

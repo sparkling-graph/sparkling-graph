@@ -1,9 +1,11 @@
 package ml.sparkling.graph.operators.measures.vertex.closenes
 
+import ml.sparkling.graph.api.operators.IterativeComputation
 import ml.sparkling.graph.api.operators.measures.{VertexMeasure, VertexMeasureConfiguration}
 import ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgorithm
 import ml.sparkling.graph.operators.measures.vertex.closenes.ClosenessUtils._
 import org.apache.spark.graphx.Graph
+import scala.collection.JavaConverters._
 
 import scala.reflect.ClassTag
 
@@ -29,15 +31,21 @@ object Closeness extends VertexMeasure[Double] {
                                                vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED],
                                                normalize: Boolean = false,
                                                checkpointingFrequency: Int = 50)(implicit num: Numeric[ED]): Graph[Double, ED] = {
-    val verticesIds = graph.vertices.map(_._1).collect()
+    val groupedVerticesIds = graph.vertices.map(_._1).collect().grouped(vertexMeasureConfiguration.bucketSizeProvider(graph).toInt)
     val distanceSumGraph = graph.mapVertices((vId, data) => (0l, 0d))
-    verticesIds.zipWithIndex.foldLeft(distanceSumGraph) { case (distanceSumGraph, (startVid, index)) => {
-      val shortestPaths = ShortestPathsAlgorithm.computeSingleShortestPathsLengths(graph, startVid, treatAsUndirected = vertexMeasureConfiguration.treatAsUndirected)
+    groupedVerticesIds.zipWithIndex.foldLeft(distanceSumGraph) { case (distanceSumGraph, (vertexIds, index)) => {
+      val shortestPaths = ShortestPathsAlgorithm.computeShortestPathsLengths(graph, IterativeComputation.inArrayVertexPredicate(vertexIds), treatAsUndirected = vertexMeasureConfiguration.treatAsUndirected)
       val out = distanceSumGraph.outerJoinVertices(shortestPaths.vertices)((vId, oldValue, newValue) => {
-        val newValueMapped = newValue.map {
-          case 0d => (0l, 0d)
-          case other => (1l, pathMappingFunction(other))
-        }
+        val newValueMapped = newValue.map(
+          _.values().asScala.map(_.toDouble).map {
+            case 0d => (0l, 0d)
+            case other => (1l, pathMappingFunction(other))
+          }
+        ).map(
+          _.foldLeft((0l,0d)){
+            case ((c1,v1),(c2,v2))=>(c1+c2,v1+v2)
+          }
+        )
         (oldValue, newValueMapped) match {
           case ((oldPathsCount, oldPathsSum), Some((newPathsCount, newPathsSum))) => {
             val pathCountOut = oldPathsCount + newPathsCount
@@ -48,11 +56,6 @@ object Closeness extends VertexMeasure[Double] {
         }
       })
       shortestPaths.unpersist()
-      if (index % checkpointingFrequency == 0) {
-        out.checkpoint()
-        out.numEdges
-        out.numVertices
-      }
       out
     }
     }.mapVertices {

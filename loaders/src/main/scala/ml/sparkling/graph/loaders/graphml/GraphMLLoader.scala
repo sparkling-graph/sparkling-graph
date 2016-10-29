@@ -6,7 +6,7 @@ import ml.sparkling.graph.loaders.graphml.GraphMLTypes.TypeHandler
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.{Edge, Graph, VertexId}
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.{Row, SQLContext}
+import org.apache.spark.sql.{Row, SQLContext, SparkSession}
 
 import scala.collection.mutable
 import scala.util.Try
@@ -28,11 +28,19 @@ object GraphMLLoader {
    * @return loaded graph
    */
   def loadGraphFromML(path: String)(implicit sc: SparkContext): Graph[ValuesMap, ValuesMap] = {
-    val sqlContext = new SQLContext(sc)
+    val sparkSession=SparkSession.builder().getOrCreate();
 
-    val graphDataFrame = sqlContext.xmlFile(path, rowTag = graphTag, failFast = true)
+    val graphDataFrame = sparkSession.sqlContext.read
+      .format("com.databricks.spark.xml")
+      .option("attributePrefix","@")
+      .option("valueTag","#VALUE")
+      .option("rowTag",graphTag).load(path).rdd
 
-    val keys = sqlContext.xmlFile(path, rowTag = graphMLTag, failFast = true)
+    val keys =sparkSession.sqlContext.read
+      .format("com.databricks.spark.xml")
+      .option("attributePrefix","@")
+      .option("valueTag","#VALUE")
+      .option("rowTag",graphMLTag).load(path).rdd
       .flatMap(r => Try(r.getAs[mutable.WrappedArray[Row]](keyTag).toArray).getOrElse(Array.empty))
 
     val nodesKeys = keys

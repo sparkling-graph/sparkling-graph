@@ -8,9 +8,9 @@ object Dependencies {
   lazy val sparkVersion = settingKey[String]("The version of Spark to use.")
 
   val Versions = Seq(
-    crossScalaVersions := Seq("2.10.6","2.11.7"),
+    crossScalaVersions := Seq("2.11.7","2.10.6"),
     scalaVersion := Option(System.getenv().get("TRAVIS_SCALA_VERSION")).getOrElse(crossScalaVersions.value.head),
-    sparkVersion := "1.6.1"
+    sparkVersion := "2.0.0"
   )
   val l = libraryDependencies
 
@@ -28,7 +28,7 @@ object Dependencies {
     val fastUtils = "it.unimi.dsi" % "fastutil" % "7.0.8"
 
     val sparkCSV = "com.databricks" %% "spark-csv" % "1.2.0"
-    val sparkXML = "com.databricks" %% "spark-xml" % "0.3.2"
+    val sparkXML = "com.databricks" %% "spark-xml" % "0.4.0"
 
     object Test {
       val scalatest = Def.setting {

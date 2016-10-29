@@ -6,7 +6,7 @@ import org.apache.spark.graphx.{Edge, Graph, VertexId}
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{DataFrame, Row}
 import org.apache.spark.storage.StorageLevel
-
+import org.apache.spark.sql.SparkSession;
 import scala.reflect.ClassTag
 
 /**
@@ -20,6 +20,7 @@ object GraphProviders {
                                                      edgeStorageLevel: StorageLevel = defaultStorageLevel,
                                                      vertexStorageLevel: StorageLevel =defaultStorageLevel)
                                                     (dataFrame: DataFrame): Graph[VD, ED] = {
+
     def mapRows[MT: ClassTag](mappingFunction: (Row) => Seq[MT]): RDD[MT] = {
       dataFrame.rdd.mapPartitionsWithIndex((id, rowIterator) => {
         rowIterator.flatMap { case row => mappingFunction(row) }
@@ -42,8 +43,7 @@ object GraphProviders {
                                                       edgeStorageLevel: StorageLevel = defaultStorageLevel,
                                                       vertexStorageLevel: StorageLevel = defaultStorageLevel)
                                                      (dataFrame: DataFrame): Graph[VD, ED] = {
-
-    val index = dataFrame.flatMap(row => columnsToIndex.map(row(_))).distinct().zipWithUniqueId().collect().toMap
+    val index = dataFrame.rdd.flatMap(row => columnsToIndex.map(row(_))).distinct().zipWithUniqueId().collect().toMap
     def extractIdFromIndex(vertex: VD) = index(vertex)
     simpleGraphBuilder(defaultVertex,
       vertexProvider(_: Row, extractIdFromIndex _),

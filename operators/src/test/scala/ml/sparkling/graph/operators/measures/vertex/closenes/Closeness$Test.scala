@@ -110,5 +110,20 @@ class Closeness$Test(implicit sc: SparkContext) extends MeasureTest {
     }
   }
 
+  "Closeness  using iterative approach" should "be correctly calculated" in {
+    Given("graph")
+    val filePath = getClass.getResource("/graphs/long_id_graph.csv")
+    val graph: Graph[Int, Int] = loadGraph(filePath.toString)
+    When("Computes Closeness")
+    val result = Closeness.compute(graph, new VertexMeasureConfiguration[Int, Int]((g:Graph[_,_])=>1,true))
+    Then("Should calculate Closeness correctly")
+    val verticesSortedById = result.vertices.collect().sortBy { case (vId, data) => vId }
+    verticesSortedById.map { case (vId, data) => data }.zip(Array(
+      1 / 6d, 0.25, 1 / 6d, 0.25
+    )).foreach { case (a, b) => {
+      a should be(b +- 1e-5)
+    }
+    }
+  }
 
 }
