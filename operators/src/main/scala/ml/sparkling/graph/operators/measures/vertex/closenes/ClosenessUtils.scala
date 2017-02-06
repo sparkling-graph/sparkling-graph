@@ -9,7 +9,7 @@ object ClosenessUtils {
   type PathMappingFunction=(Double)=>Double
 
   def standardCloseness(graphSize:Long)(pathsCount:Long,distanceSum:Double,normalize:Boolean):Double={
-    if(distanceSum==0) 0d else if(!normalize)  1d/(distanceSum) else (pathsCount-1) /distanceSum
+    if(distanceSum==0) 0d else if(!normalize)  1d/(distanceSum) else (graphSize-1) /distanceSum
   }
 
   def standardClosenessValueMapper(pathSize:Double):Double={

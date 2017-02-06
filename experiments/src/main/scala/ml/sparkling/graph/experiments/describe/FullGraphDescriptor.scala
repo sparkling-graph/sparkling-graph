@@ -19,10 +19,10 @@ object FullGraphDescriptor {
     ("Eigenvector", EigenvectorCentrality),
     ("Hits", Hits),
     ("NeighborConnectivity", NeighborhoodConnectivity),
-    ("Closeness", Closeness),
     ("Degree", Degree),
     ("VertexEmbeddedness", VertexEmbeddedness),
-    ("LocalClustering", LocalClustering)
+    ("LocalClustering", LocalClustering),
+    ("Closeness", Closeness)
   )
 
   def describeGraph[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED])(implicit num: Numeric[ED]) = {

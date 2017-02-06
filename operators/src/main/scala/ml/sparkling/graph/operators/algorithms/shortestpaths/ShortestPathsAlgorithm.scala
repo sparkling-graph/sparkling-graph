@@ -27,17 +27,17 @@ object ShortestPathsAlgorithm  {
   def computeAllPathsUsing[VD, ED: ClassTag, PT: ClassTag](graph: Graph[VD, ED], vertexPredicate: VertexPredicate, treatAsUndirected: Boolean, pathProcessor: PathProcessor[VD, ED, PT])(implicit num: Numeric[ED]) = {
     val initDistances = graph.aggregateMessages[PT](edgeContext => {
     if(vertexPredicate(edgeContext.dstId)){
-      val edgeOut=pathProcessor.putNewPath(pathProcessor.getNewContainerForPaths(),edgeContext.dstId,edgeContext.attr)
-      edgeContext.sendToSrc(edgeOut)
+        val edgeOut=pathProcessor.putNewPath(pathProcessor.getNewContainerForPaths(),edgeContext.dstId,edgeContext.attr)
+        edgeContext.sendToSrc(edgeOut)
       }
       if(treatAsUndirected && vertexPredicate(edgeContext.srcId)){
-      val edgeIn= pathProcessor.putNewPath(pathProcessor.getNewContainerForPaths(),edgeContext.srcId,edgeContext.attr)
-      edgeContext.sendToDst(edgeIn)
+        val edgeIn= pathProcessor.putNewPath(pathProcessor.getNewContainerForPaths(),edgeContext.srcId,edgeContext.attr)
+        edgeContext.sendToDst(edgeIn)
       }
     },
       pathProcessor.mergePathContainers
     )
-    val initMap: Graph[PT, ED] = graph.outerJoinVertices(initDistances)((vId, old, newValue) => newValue.getOrElse(pathProcessor.EMPTY_CONTAINER))
+    val initMap: Graph[PT, ED] = graph.outerJoinVertices(initDistances)((vId, old, newValue) => newValue.getOrElse(pathProcessor.getNewContainerForPaths()))
     initMap.pregel[PT](pathProcessor.EMPTY_CONTAINER)(
       vprog = vertexProgram(pathProcessor),
       sendMsg = sendMessage(treatAsUndirected,pathProcessor),

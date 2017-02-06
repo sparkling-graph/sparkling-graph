@@ -33,8 +33,9 @@ class FastUtilWithPath[VD,ED]() extends  PathProcessor[VD,ED,WithPathContainer]{
     val newPath=new SinglePath()
     newPath.add(num.toDouble(weight))
     existingPaths.add(newPath)
-    map.put(to,existingPaths)
-    map
+    val out=map.asInstanceOf[PathsMap].clone().asInstanceOf[WithPathContainer];
+    out.put(to,existingPaths)
+    out
   }
 
   def mergePathContainers(map1:WithPathContainer,map2:WithPathContainer)(implicit num:Numeric[ED]):WithPathContainer={

@@ -19,8 +19,9 @@ class FastUtilWithDistance[VD, ED]() extends PathProcessor[VD, ED, JMap[JLong, J
   }
 
   def putNewPath(map: JMap[JLong, JDouble], to: VertexId, weight: ED)(implicit num: Numeric[ED]): JMap[JLong, JDouble] = {
-    map.put(to, num.toDouble(weight))
-    map
+    val out=map.asInstanceOf[DataMap].clone()
+    out.put(to, num.toDouble(weight))
+    out
   }
 
   def mergePathContainers(map1: JMap[JLong, JDouble], map2: JMap[JLong, JDouble])(implicit num: Numeric[ED]) = {
