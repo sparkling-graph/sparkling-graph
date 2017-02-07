@@ -47,6 +47,8 @@ libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.6"
     * Common neighbours
 * Comunity detection methods
   * PSCAN (SCAN)
+* Graph coarsening
+  * Label Propagation based
 * Link prediction
   * Similarity measure based
 * Generators
