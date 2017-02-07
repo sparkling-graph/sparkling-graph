@@ -10,7 +10,7 @@ import scala.reflect.ClassTag
   */
 object LPCoarsening extends CoarseningAlgorithm{
   override def coarse[VD:ClassTag,ED:ClassTag](graph: Graph[VD, ED],treatGraphAsUndirected:Boolean=false): Graph[Component, ED] = {
-    val components=graph.mapVertices((vId,_)=>vId).pregel[List[VertexId]](List(),maxIterations = 3)(
+    val components=graph.mapVertices((vId,_)=>vId).pregel[List[VertexId]](List(),maxIterations = 2)(
       vprog = (vid,data,msg)=> {
         (data::msg).groupBy(vId => vId).mapValues(l => l.length).toList.sortBy(t=>(t._2,t._1)).lastOption.map {
           case (mostCommonId, _) => mostCommonId
