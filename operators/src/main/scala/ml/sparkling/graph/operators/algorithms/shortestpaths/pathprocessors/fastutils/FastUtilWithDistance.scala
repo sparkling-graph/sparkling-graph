@@ -24,7 +24,7 @@ class FastUtilWithDistance[VD, ED]() extends PathProcessor[VD, ED, DataMap] {
     out
   }
 
-  def mergePathContainers(map1: DataMap, map2: DataMap)(implicit num: Numeric[ED]) = {
+  def mergePathContainers(map1: DataMap, map2: DataMap)(implicit num: Numeric[ED]):DataMap = {
     val out=map1.clone()
     map2.foreach{case (key,inValue)=>{
       val map1Value: JDouble =Option(map1.get(key)).getOrElse(inValue)

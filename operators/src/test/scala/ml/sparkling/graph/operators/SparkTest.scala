@@ -51,8 +51,8 @@ class SparkTest extends Spec with BeforeAndAfterAll {
       new Modularity$Test,
       new AdamicAdar$Test,
       new BasicLinkPredictor$Test,
-      new LPCoarsening$Test
-//      new ApproximatedShortestPathsAlgorithm$Test
+      new LPCoarsening$Test,
+      new ApproximatedShortestPathsAlgorithm$Test
     )
   }
 

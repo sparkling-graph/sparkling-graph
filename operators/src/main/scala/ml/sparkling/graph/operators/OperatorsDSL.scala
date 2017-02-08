@@ -31,7 +31,7 @@ object OperatorsDSL {
     def PSCAN(epsilon:Double=0.1)=
       computeConnectedComponents(graph,epsilon)
 
-    def LPCoarse()=LPCoarsening.coarse(graph)
+    def LPCoarse(treatAsUndirected:Boolean=false)=LPCoarsening.coarse(graph,treatAsUndirected = treatAsUndirected)
 
     def closenessCentrality(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED]=VertexMeasureConfiguration())(implicit num:Numeric[ED])=
       Closeness.compute(graph,vertexMeasureConfiguration)
