@@ -91,7 +91,7 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
 
   "Approximation" should "not take long thant exact computing" in{
     Given("graph")
-    val graph=GraphGenerators.logNormalGraph(sc,200,50)
+    val graph=GraphGenerators.logNormalGraph(sc,200,50)  // Need to make it more deterministic
     graph.cache();
     graph.vertices.collect()
     graph.edges.collect()
