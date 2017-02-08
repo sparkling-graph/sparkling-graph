@@ -1,22 +1,22 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <title>ByIdPredicate - ml.sparkling.graph.operators.predicates.ByIdPredicate</title>
-          <meta name="description" content="ByIdPredicate - ml.sparkling.graph.operators.predicates.ByIdPredicate" />
-          <meta name="keywords" content="ByIdPredicate ml.sparkling.graph.operators.predicates.ByIdPredicate" />
+          <title>AnyMatchingComponentPredicate - ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate</title>
+          <meta name="description" content="AnyMatchingComponentPredicate - ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate" />
+          <meta name="keywords" content="AnyMatchingComponentPredicate ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
-      <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
-      <link href="../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
-      <script type="text/javascript" src="../../../../../lib/jquery.js" id="jquery-js"></script>
-      <script type="text/javascript" src="../../../../../lib/jquery-ui.js"></script>
-      <script type="text/javascript" src="../../../../../lib/template.js"></script>
-      <script type="text/javascript" src="../../../../../lib/tools.tooltip.js"></script>
+      <link href="../../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../../../lib/tools.tooltip.js"></script>
       
       <script type="text/javascript">
          if(top === self) {
-            var url = '../../../../../index.html';
-            var hash = 'ml.sparkling.graph.operators.predicates.ByIdPredicate';
+            var url = '../../../../../../index.html';
+            var hash = 'ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -28,13 +28,13 @@
         </head>
         <body class="type">
       <div id="definition">
-        <img alt="Class" src="../../../../../lib/class_big.png" />
-        <p id="owner"><a href="../../../../package.html" class="extype" name="ml">ml</a>.<a href="../../../package.html" class="extype" name="ml.sparkling">sparkling</a>.<a href="../../package.html" class="extype" name="ml.sparkling.graph">graph</a>.<a href="../package.html" class="extype" name="ml.sparkling.graph.operators">operators</a>.<a href="package.html" class="extype" name="ml.sparkling.graph.operators.predicates">predicates</a></p>
-        <h1>ByIdPredicate</h1><h3><span class="morelinks"><div>Related Doc:
-            <a href="package.html" class="extype" name="ml.sparkling.graph.operators.predicates">package predicates</a>
+        <img alt="Class" src="../../../../../../lib/class_big.png" />
+        <p id="owner"><a href="../../../../../package.html" class="extype" name="ml">ml</a>.<a href="../../../../package.html" class="extype" name="ml.sparkling">sparkling</a>.<a href="../../../package.html" class="extype" name="ml.sparkling.graph">graph</a>.<a href="../../package.html" class="extype" name="ml.sparkling.graph.operators">operators</a>.<a href="../package.html" class="extype" name="ml.sparkling.graph.operators.algorithms">algorithms</a>.<a href="package.html" class="extype" name="ml.sparkling.graph.operators.algorithms.aproximation">aproximation</a></p>
+        <h1>AnyMatchingComponentPredicate</h1><h3><span class="morelinks"><div>Related Doc:
+            <a href="package.html" class="extype" name="ml.sparkling.graph.operators.algorithms.aproximation">package aproximation</a>
           </div></span></h3><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       </div>
@@ -45,15 +45,14 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">ByIdPredicate</span><span class="params">(<span name="vertex">vertex: <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span></span>)</span><span class="result"> extends <a href="../../api/operators/IterativeComputation$$VertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate">VertexPredicate</a>[<span class="extype" name="scala.Any">Any</span>] with <span class="extype" name="scala.Serializable">Serializable</span> with <a href="../../api/operators/IterativeComputation$$SimpleVertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.SimpleVertexPredicate">SimpleVertexPredicate</a> with <span class="extype" name="scala.Product">Product</span></span>
+        <span class="name">AnyMatchingComponentPredicate</span><span class="params">(<span name="predicate">predicate: <a href="../../../api/operators/IterativeComputation$$SimpleVertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.SimpleVertexPredicate">SimpleVertexPredicate</a></span>)</span><span class="result"> extends <a href="../../../api/operators/IterativeComputation$$VertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate">VertexPredicate</a>[<a href="../../../api/operators/algorithms/coarsening/CoarseningAlgorithm$.html#Component=List[org.apache.spark.graphx.VertexId]" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.coarsening.CoarseningAlgorithm.Component">Component</a>] with <span class="extype" name="scala.Serializable">Serializable</span> with <span class="extype" name="scala.Product">Product</span></span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
-Predicate for single vertexId
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Created by  Roman Bartusiak &lt;riomus@gmail.com&gt; on 07.02.17.
 </p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <a href="../../api/operators/IterativeComputation$$SimpleVertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.SimpleVertexPredicate">SimpleVertexPredicate</a>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="../../api/operators/IterativeComputation$$VertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate">VertexPredicate</a>[<span class="extype" name="scala.Any">Any</span>], <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="../../../api/operators/IterativeComputation$$VertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate">VertexPredicate</a>[<a href="../../../api/operators/algorithms/coarsening/CoarseningAlgorithm$.html#Component=List[org.apache.spark.graphx.VertexId]" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.coarsening.CoarseningAlgorithm.Component">Component</a>], <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -71,7 +70,7 @@ Predicate for single vertexId
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="ml.sparkling.graph.operators.predicates.ByIdPredicate"><span>ByIdPredicate</span></li><li class="in" name="scala.Product"><span>Product</span></li><li class="in" name="scala.Equals"><span>Equals</span></li><li class="in" name="ml.sparkling.graph.api.operators.IterativeComputation.SimpleVertexPredicate"><span>SimpleVertexPredicate</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate"><span>VertexPredicate</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate"><span>AnyMatchingComponentPredicate</span></li><li class="in" name="scala.Product"><span>Product</span></li><li class="in" name="scala.Equals"><span>Equals</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate"><span>VertexPredicate</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -90,20 +89,20 @@ Predicate for single vertexId
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="ml.sparkling.graph.operators.predicates.ByIdPredicate#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(vertex:org.apache.spark.graphx.VertexId):ml.sparkling.graph.operators.predicates.ByIdPredicate"></a>
-      <a id="&lt;init&gt;:ByIdPredicate"></a>
+              <ol><li name="ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(predicate:ml.sparkling.graph.api.operators.IterativeComputation.SimpleVertexPredicate):ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate"></a>
+      <a id="&lt;init&gt;:AnyMatchingComponentPredicate"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">ByIdPredicate</span><span class="params">(<span name="vertex">vertex: <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span></span>)</span>
+        <span class="name">AnyMatchingComponentPredicate</span><span class="params">(<span name="predicate">predicate: <a href="../../../api/operators/IterativeComputation$$SimpleVertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.SimpleVertexPredicate">SimpleVertexPredicate</a></span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@&lt;init&gt;(vertex:org.apache.spark.graphx.VertexId):ml.sparkling.graph.operators.predicates.ByIdPredicate" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate@&lt;init&gt;(predicate:ml.sparkling.graph.api.operators.IterativeComputation.SimpleVertexPredicate):ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       
@@ -128,8 +127,8 @@ Predicate for single vertexId
         <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@!=(x$1:Any):Boolean" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -145,8 +144,8 @@ Predicate for single vertexId
         <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@##():Int" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate@##():Int" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -162,45 +161,28 @@ Predicate for single vertexId
         <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@==(x$1:Any):Boolean" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate@==(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="ml.sparkling.graph.operators.predicates.ByIdPredicate#apply" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="apply(v1:org.apache.spark.graphx.VertexId):Boolean"></a>
-      <a id="apply(VertexId):Boolean"></a>
+    </li><li name="ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate#apply" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="apply[B&lt;:ml.sparkling.graph.api.operators.algorithms.coarsening.CoarseningAlgorithm.Component](id:org.apache.spark.graphx.VertexId,data:B):Boolean"></a>
+      <a id="apply[B&lt;:Component](VertexId,B):Boolean"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">apply</span><span class="params">(<span name="v1">v1: <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+        <span class="name">apply</span><span class="tparams">[<span name="B">B &lt;: <a href="../../../api/operators/algorithms/coarsening/CoarseningAlgorithm$.html#Component=List[org.apache.spark.graphx.VertexId]" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.coarsening.CoarseningAlgorithm.Component">Component</a></span>]</span><span class="params">(<span name="id">id: <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span></span>, <span name="data">data: <span class="extype" name="ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate.apply.B">B</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@apply(v1:org.apache.spark.graphx.VertexId):Boolean" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate@apply[B&lt;:ml.sparkling.graph.api.operators.algorithms.coarsening.CoarseningAlgorithm.Component](id:org.apache.spark.graphx.VertexId,data:B):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="ml.sparkling.graph.operators.predicates.ByIdPredicate">ByIdPredicate</a> → <a href="../../api/operators/IterativeComputation$$SimpleVertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.SimpleVertexPredicate">SimpleVertexPredicate</a></dd></dl></div>
-    </li><li name="ml.sparkling.graph.operators.predicates.ByIdPredicate#apply" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="apply[B](id:org.apache.spark.graphx.VertexId,data:B):Boolean"></a>
-      <a id="apply[B](VertexId,B):Boolean"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">apply</span><span class="tparams">[<span name="B">B</span>]</span><span class="params">(<span name="id">id: <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span></span>, <span name="data">data: <span class="extype" name="ml.sparkling.graph.operators.predicates.ByIdPredicate.apply.B">B</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@apply[B](id:org.apache.spark.graphx.VertexId,data:B):Boolean" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="ml.sparkling.graph.operators.predicates.ByIdPredicate">ByIdPredicate</a> → <a href="../../api/operators/IterativeComputation$$VertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate">VertexPredicate</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate">AnyMatchingComponentPredicate</a> → <a href="../../../api/operators/IterativeComputation$$VertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate">VertexPredicate</a></dd></dl></div>
     </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <a id="asInstanceOf[T0]:T0"></a>
@@ -213,8 +195,8 @@ Predicate for single vertexId
         <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@asInstanceOf[T0]:T0" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
@@ -230,11 +212,11 @@ Predicate for single vertexId
         <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@clone():Object" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate@clone():Object" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
@@ -253,8 +235,8 @@ Predicate for single vertexId
         <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -270,11 +252,11 @@ Predicate for single vertexId
         <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@finalize():Unit" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate@finalize():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">(<span>
       
       <span class="symbol">classOf[java.lang.Throwable]</span>
@@ -293,8 +275,8 @@ Predicate for single vertexId
         <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@getClass():Class[_]" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate@getClass():Class[_]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
@@ -310,8 +292,8 @@ Predicate for single vertexId
         <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
@@ -327,8 +309,8 @@ Predicate for single vertexId
         <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -344,8 +326,8 @@ Predicate for single vertexId
         <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@notify():Unit" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate@notify():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
@@ -361,11 +343,28 @@ Predicate for single vertexId
         <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@notifyAll():Unit" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate@notifyAll():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate#predicate" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="predicate:ml.sparkling.graph.api.operators.IterativeComputation.SimpleVertexPredicate"></a>
+      <a id="predicate:SimpleVertexPredicate"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">predicate</span><span class="result">: <a href="../../../api/operators/IterativeComputation$$SimpleVertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.SimpleVertexPredicate">SimpleVertexPredicate</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate@predicate:ml.sparkling.graph.api.operators.IterativeComputation.SimpleVertexPredicate" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -378,28 +377,11 @@ Predicate for single vertexId
         <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="ml.sparkling.graph.operators.predicates.ByIdPredicate#vertex" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="vertex:org.apache.spark.graphx.VertexId"></a>
-      <a id="vertex:VertexId"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">vertex</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@vertex:org.apache.spark.graphx.VertexId" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>
@@ -412,8 +394,8 @@ Predicate for single vertexId
         <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@wait():Unit" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate@wait():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -435,8 +417,8 @@ Predicate for single vertexId
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -458,8 +440,8 @@ Predicate for single vertexId
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdPredicate@wait(x$1:Long):Unit" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      <a href="../../../../../../index.html#ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate@wait(x$1:Long):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -482,14 +464,12 @@ Predicate for single vertexId
               <h3>Inherited from <span class="extype" name="scala.Product">Product</span></h3>
             </div><div class="parent" name="scala.Equals">
               <h3>Inherited from <span class="extype" name="scala.Equals">Equals</span></h3>
-            </div><div class="parent" name="ml.sparkling.graph.api.operators.IterativeComputation.SimpleVertexPredicate">
-              <h3>Inherited from <a href="../../api/operators/IterativeComputation$$SimpleVertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.SimpleVertexPredicate">SimpleVertexPredicate</a></h3>
             </div><div class="parent" name="scala.Serializable">
               <h3>Inherited from <span class="extype" name="scala.Serializable">Serializable</span></h3>
             </div><div class="parent" name="java.io.Serializable">
               <h3>Inherited from <span class="extype" name="java.io.Serializable">Serializable</span></h3>
             </div><div class="parent" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate">
-              <h3>Inherited from <a href="../../api/operators/IterativeComputation$$VertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate">VertexPredicate</a>[<span class="extype" name="scala.Any">Any</span>]</h3>
+              <h3>Inherited from <a href="../../../api/operators/IterativeComputation$$VertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate">VertexPredicate</a>[<a href="../../../api/operators/algorithms/coarsening/CoarseningAlgorithm$.html#Component=List[org.apache.spark.graphx.VertexId]" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.coarsening.CoarseningAlgorithm.Component">Component</a>]</h3>
             </div><div class="parent" name="scala.AnyRef">
               <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
             </div><div class="parent" name="scala.Any">

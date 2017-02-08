@@ -45,7 +45,7 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">ByIdsPredicate</span><span class="params">(<span name="vertex">vertex: <span class="extype" name="scala.List">List</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>]</span>)</span><span class="result"> extends <a href="../../api/operators/IterativeComputation$.html#VertexPredicate=org.apache.spark.graphx.VertexId=&gt;Boolean" class="extmbr" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate">VertexPredicate</a> with <span class="extype" name="scala.Serializable">Serializable</span> with <span class="extype" name="scala.Product">Product</span></span>
+        <span class="name">ByIdsPredicate</span><span class="params">(<span name="vertex">vertex: <span class="extype" name="scala.List">List</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>]</span>)</span><span class="result"> extends <a href="../../api/operators/IterativeComputation$$VertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate">VertexPredicate</a>[<span class="extype" name="scala.Any">Any</span>] with <span class="extype" name="scala.Serializable">Serializable</span> with <a href="../../api/operators/IterativeComputation$$SimpleVertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.SimpleVertexPredicate">SimpleVertexPredicate</a> with <span class="extype" name="scala.Product">Product</span></span>
       </span>
       </h4>
       
@@ -53,7 +53,7 @@
 Predicate for list of vertexIds
 </p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, (<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>) ⇒ <span class="extype" name="scala.Boolean">Boolean</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <a href="../../api/operators/IterativeComputation$$SimpleVertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.SimpleVertexPredicate">SimpleVertexPredicate</a>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="../../api/operators/IterativeComputation$$VertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate">VertexPredicate</a>[<span class="extype" name="scala.Any">Any</span>], <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -71,7 +71,7 @@ Predicate for list of vertexIds
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="ml.sparkling.graph.operators.predicates.ByIdsPredicate"><span>ByIdsPredicate</span></li><li class="in" name="scala.Product"><span>Product</span></li><li class="in" name="scala.Equals"><span>Equals</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.Function1"><span>Function1</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="ml.sparkling.graph.operators.predicates.ByIdsPredicate"><span>ByIdsPredicate</span></li><li class="in" name="scala.Product"><span>Product</span></li><li class="in" name="scala.Equals"><span>Equals</span></li><li class="in" name="ml.sparkling.graph.api.operators.IterativeComputation.SimpleVertexPredicate"><span>SimpleVertexPredicate</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate"><span>VertexPredicate</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -167,26 +167,6 @@ Predicate for list of vertexIds
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="scala.Function1#andThen" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="andThen[A&lt;:&lt;?&gt;](g:&lt;?&gt;):T1=&gt;A"></a>
-      <a id="andThen[A]((Boolean)⇒A):(VertexId)⇒A"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">andThen</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="g">g: (<span class="extype" name="scala.Boolean">Boolean</span>) ⇒ <span class="extype" name="scala.Function1.andThen.A">A</span></span>)</span><span class="result">: (<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>) ⇒ <span class="extype" name="scala.Function1.andThen.A">A</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdsPredicate@andThen[A](g:R=&gt;A):T1=&gt;A" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Function1</dd><dt>Annotations</dt><dd>
-                <span class="name">@unspecialized</span><span class="args">()</span>
-              
-        </dd></dl></div>
     </li><li name="ml.sparkling.graph.operators.predicates.ByIdsPredicate#apply" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="apply(v1:org.apache.spark.graphx.VertexId):Boolean"></a>
       <a id="apply(VertexId):Boolean"></a>
@@ -203,7 +183,24 @@ Predicate for list of vertexIds
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="ml.sparkling.graph.operators.predicates.ByIdsPredicate">ByIdsPredicate</a> → Function1</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="ml.sparkling.graph.operators.predicates.ByIdsPredicate">ByIdsPredicate</a> → <a href="../../api/operators/IterativeComputation$$SimpleVertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.SimpleVertexPredicate">SimpleVertexPredicate</a></dd></dl></div>
+    </li><li name="ml.sparkling.graph.operators.predicates.ByIdsPredicate#apply" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="apply[B](id:org.apache.spark.graphx.VertexId,data:B):Boolean"></a>
+      <a id="apply[B](VertexId,B):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">apply</span><span class="tparams">[<span name="B">B</span>]</span><span class="params">(<span name="id">id: <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span></span>, <span name="data">data: <span class="extype" name="ml.sparkling.graph.operators.predicates.ByIdsPredicate.apply.B">B</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdsPredicate@apply[B](id:org.apache.spark.graphx.VertexId,data:B):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="ml.sparkling.graph.operators.predicates.ByIdsPredicate">ByIdsPredicate</a> → <a href="../../api/operators/IterativeComputation$$VertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate">VertexPredicate</a></dd></dl></div>
     </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <a id="asInstanceOf[T0]:T0"></a>
@@ -242,26 +239,6 @@ Predicate for list of vertexIds
       
       <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
     </span>)</span>
-              
-        </dd></dl></div>
-    </li><li name="scala.Function1#compose" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="compose[A&lt;:&lt;?&gt;](g:&lt;?&gt;):A=&gt;R"></a>
-      <a id="compose[A]((A)⇒VertexId):(A)⇒Boolean"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">compose</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="g">g: (<span class="extype" name="scala.Function1.compose.A">A</span>) ⇒ <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span></span>)</span><span class="result">: (<span class="extype" name="scala.Function1.compose.A">A</span>) ⇒ <span class="extype" name="scala.Boolean">Boolean</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdsPredicate@compose[A](g:A=&gt;T1):A=&gt;R" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Function1</dd><dt>Annotations</dt><dd>
-                <span class="name">@unspecialized</span><span class="args">()</span>
               
         </dd></dl></div>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -406,23 +383,6 @@ Predicate for list of vertexIds
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="scala.Function1#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="toString():String"></a>
-      <a id="toString():String"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.predicates.ByIdsPredicate@toString():String" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Function1 → AnyRef → Any</dd></dl></div>
     </li><li name="ml.sparkling.graph.operators.predicates.ByIdsPredicate#vertex" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="vertex:List[org.apache.spark.graphx.VertexId]"></a>
       <a id="vertex:List[VertexId]"></a>
@@ -522,12 +482,14 @@ Predicate for list of vertexIds
               <h3>Inherited from <span class="extype" name="scala.Product">Product</span></h3>
             </div><div class="parent" name="scala.Equals">
               <h3>Inherited from <span class="extype" name="scala.Equals">Equals</span></h3>
+            </div><div class="parent" name="ml.sparkling.graph.api.operators.IterativeComputation.SimpleVertexPredicate">
+              <h3>Inherited from <a href="../../api/operators/IterativeComputation$$SimpleVertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.SimpleVertexPredicate">SimpleVertexPredicate</a></h3>
             </div><div class="parent" name="scala.Serializable">
               <h3>Inherited from <span class="extype" name="scala.Serializable">Serializable</span></h3>
             </div><div class="parent" name="java.io.Serializable">
               <h3>Inherited from <span class="extype" name="java.io.Serializable">Serializable</span></h3>
-            </div><div class="parent" name="scala.Function1">
-              <h3>Inherited from (<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>) ⇒ <span class="extype" name="scala.Boolean">Boolean</span></h3>
+            </div><div class="parent" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate">
+              <h3>Inherited from <a href="../../api/operators/IterativeComputation$$VertexPredicate.html" class="extype" name="ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate">VertexPredicate</a>[<span class="extype" name="scala.Any">Any</span>]</h3>
             </div><div class="parent" name="scala.AnyRef">
               <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
             </div><div class="parent" name="scala.Any">
