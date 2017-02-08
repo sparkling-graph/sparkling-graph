@@ -2,7 +2,7 @@ package ml.sparkling.graph.operators.measures.utils
 
 import it.unimi.dsi.fastutil.longs.{Long2ObjectOpenHashMap, LongOpenHashSet}
 import ml.sparkling.graph.api.operators.IterativeComputation
-import ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate
+import ml.sparkling.graph.api.operators.IterativeComputation.{SimpleVertexPredicate, VertexPredicate}
 import ml.sparkling.graph.operators.predicates.AllPathPredicate
 import org.apache.spark.graphx._
 
@@ -39,7 +39,7 @@ object NeighboursUtils {
    */
   def getWithNeighbours[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED],
                                                     treatAsUndirected: Boolean = false,
-                                                    vertexPredicate: VertexPredicate = AllPathPredicate) = {
+                                                    vertexPredicate: SimpleVertexPredicate = AllPathPredicate) = {
 
     val withNeighboursVertices = graph.mapVertices((vId,data)=>new NeighbourSet())
      .aggregateMessages[NeighbourSet](
@@ -72,7 +72,7 @@ object NeighboursUtils {
    */
   def getWithSecondLevelNeighbours[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED],
                                                                treatAsUndirected: Boolean = false,
-                                                               vertexPredicate: VertexPredicate = AllPathPredicate) = {
+                                                               vertexPredicate: SimpleVertexPredicate = AllPathPredicate) = {
 
     val withNeighboursVertices = getWithNeighbours(graph, treatAsUndirected, AllPathPredicate)
     val withSecondLevelNeighboursVertices = withNeighboursVertices

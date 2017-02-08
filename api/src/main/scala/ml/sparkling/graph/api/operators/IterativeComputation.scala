@@ -8,18 +8,18 @@ import scala.reflect.ClassTag
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
 object IterativeComputation {
+  trait VertexPredicate[-VD]{
+    def apply[B<:VD](id:VertexId,data:B):Boolean
+  }
 
-  type VertexPredicate = VertexId => Boolean
+  trait SimpleVertexPredicate{
+    def apply(id:VertexId):Boolean
+  }
+
   type BucketSizeProvider[VD, ED] = Graph[VD, ED] => Long
 
   def wholeGraphBucket[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED]) = {
     graph.numVertices
   }
 
-  def inArrayVertexPredicate(ids:Array[Long])={
-    val vertexMap=ids.map((_,true)).toMap;
-     (id:VertexId)=>{
-       vertexMap.getOrElse(id,false);
-    }
-  }
 }

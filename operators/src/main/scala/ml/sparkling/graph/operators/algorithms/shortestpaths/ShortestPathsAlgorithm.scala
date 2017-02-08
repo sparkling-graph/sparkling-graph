@@ -6,6 +6,7 @@ import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fast
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.{PathProcessor, SingleVertexProcessor}
 import ml.sparkling.graph.operators.predicates.{AllPathPredicate, ByIdPredicate, ByIdsPredicate}
 import org.apache.spark.graphx._
+
 import scala.reflect.ClassTag
 
 /**
@@ -24,13 +25,13 @@ object ShortestPathsAlgorithm  {
    * @tparam PT - path type
    * @return - Graph where each vertex contains all its shortest paths, type depends on path processor (double, list etc.)
    */
-  def computeAllPathsUsing[VD, ED: ClassTag, PT: ClassTag](graph: Graph[VD, ED], vertexPredicate: VertexPredicate, treatAsUndirected: Boolean, pathProcessor: PathProcessor[VD, ED, PT])(implicit num: Numeric[ED]) = {
+  def computeAllPathsUsing[VD, ED: ClassTag, PT: ClassTag](graph: Graph[VD, ED], vertexPredicate: VertexPredicate[VD], treatAsUndirected: Boolean, pathProcessor: PathProcessor[VD, ED, PT])(implicit num: Numeric[ED]) = {
     val initDistances = graph.aggregateMessages[PT](edgeContext => {
-    if(vertexPredicate(edgeContext.dstId)){
+    if(vertexPredicate(edgeContext.dstId,edgeContext.dstAttr)){
         val edgeOut=pathProcessor.putNewPath(pathProcessor.getNewContainerForPaths(),edgeContext.dstId,edgeContext.attr)
         edgeContext.sendToSrc(edgeOut)
       }
-      if(treatAsUndirected && vertexPredicate(edgeContext.srcId)){
+      if(treatAsUndirected && vertexPredicate(edgeContext.srcId,edgeContext.srcAttr)){
         val edgeIn= pathProcessor.putNewPath(pathProcessor.getNewContainerForPaths(),edgeContext.srcId,edgeContext.attr)
         edgeContext.sendToDst(edgeIn)
       }
@@ -55,7 +56,7 @@ object ShortestPathsAlgorithm  {
    * @tparam ED - edge data type (must be numeric)
    * @return graph where each vertex has map of its shortest paths lengths
    */
-  def computeShortestPathsLengths[VD, ED: ClassTag](graph: Graph[VD, ED], vertexPredicate: VertexPredicate = AllPathPredicate, treatAsUndirected: Boolean = false)(implicit num: Numeric[ED]) = {
+  def computeShortestPathsLengths[VD, ED: ClassTag](graph: Graph[VD, ED], vertexPredicate: VertexPredicate[VD] = AllPathPredicate, treatAsUndirected: Boolean = false)(implicit num: Numeric[ED]) = {
     computeAllPathsUsing(graph, vertexPredicate, treatAsUndirected, new FastUtilWithDistance[VD, ED]())
   }
 
@@ -85,7 +86,7 @@ object ShortestPathsAlgorithm  {
    * @return graph where each vertex has map of its shortest paths
    */
 
-  def computeShortestPaths[VD, ED: ClassTag](graph: Graph[VD, ED], vertexPredicate: VertexPredicate = AllPathPredicate, treatAsUndirected: Boolean = false)(implicit num: Numeric[ED]) = {
+  def computeShortestPaths[VD, ED: ClassTag](graph: Graph[VD, ED], vertexPredicate: VertexPredicate[VD] = AllPathPredicate, treatAsUndirected: Boolean = false)(implicit num: Numeric[ED]) = {
     computeAllPathsUsing(graph, vertexPredicate, treatAsUndirected, new FastUtilWithPath[VD, ED]())
   }
 
@@ -109,7 +110,7 @@ object ShortestPathsAlgorithm  {
       val vertexPredicate=ByIdsPredicate(vertexIds.toList)
       val computed=computeShortestPathsLengths(graph,vertexPredicate,treatAsUndirected)
       acc.outerJoinVertices(computed.vertices)((vId,outMap,computedMap)=>{
-        computedMap.flatMap(m=>{outMap.putAll(m.asInstanceOf[FastUtilWithDistance.DataMap]);Option(outMap)}).getOrElse(outMap)
+        computedMap.flatMap(m=>{outMap.putAll(m);Option(outMap)}).getOrElse(outMap)
       })
     })
 

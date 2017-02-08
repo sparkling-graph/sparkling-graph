@@ -16,7 +16,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
     val filePath = getClass.getResource("/graphs/4_nodes_full")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes coarsed graph")
-    val components: Graph[Component, Int] = LPCoarsening.coarse(graph,true)
+    val components: Graph[Component, Int] = LPCoarsening.coarse(graph)
     Then("Should compute components correctly")
     components.vertices.count()  should equal (1)
     components.vertices.collect().map{
@@ -30,7 +30,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
     val filePath = getClass.getResource("/graphs/3_nodes_directed")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes coarsed graph")
-    val components: Graph[Component, Int] = graph.LPCoarse(true)
+    val components: Graph[Component, Int] = graph.LPCoarse()
     Then("Should compute components correctly")
     components.vertices.count()  should equal (1)
     components.vertices.collect().map{
@@ -46,7 +46,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
     val directedGraph:Graph[Int,Int]=loadGraph(directed.toString)
     val undirectedGraph:Graph[Int,Int]=loadGraph(undirected.toString)
     When("Computes coarsed graph")
-    val directedComponents: Graph[Component, Int] = directedGraph.LPCoarse(true)
+    val directedComponents: Graph[Component, Int] = directedGraph.LPCoarse()
     val undirectedComponents: Graph[Component, Int] = undirectedGraph.LPCoarse()
     Then("Should compute components correctly")
     directedComponents.vertices.count()  should equal (undirectedComponents.vertices.count())
@@ -63,7 +63,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
     val filePath = getClass.getResource("/graphs/coarsening_to_3")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes coarsed graph")
-    val components: Graph[Component, Int] = graph.LPCoarse(true);
+    val components: Graph[Component, Int] = graph.LPCoarse();
     Then("Should compute components correctly")
     components.vertices.count()  should equal (3)
     components.vertices.collect().map{

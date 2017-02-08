@@ -9,19 +9,17 @@ import scala.reflect.ClassTag
   * Created by  Roman Bartusiak <riomus@gmail.com> on 06.02.17.
   */
 object LPCoarsening extends CoarseningAlgorithm{
-  override def coarse[VD:ClassTag,ED:ClassTag](graph: Graph[VD, ED],treatGraphAsUndirected:Boolean=false): Graph[Component, ED] = {
-    val components=graph.mapVertices((vId,_)=>vId).pregel[List[VertexId]](List(),maxIterations = 2)(
+  override def coarse[VD:ClassTag,ED:ClassTag](graph: Graph[VD, ED]): Graph[Component, ED] = {
+    val uniqueEdges=graph.edges.map(edge=>Edge(Math.min(edge.srcId,edge.dstId),Math.max(edge.srcId,edge.dstId),edge.attr)).distinct();
+    val filteredGraph=Graph(graph.vertices,uniqueEdges)
+    val components=filteredGraph.mapVertices((vId,_)=>vId).pregel[List[VertexId]](List(),maxIterations = 2)(
       vprog = (vid,data,msg)=> {
-        (data::msg).groupBy(vId => vId).mapValues(l => l.length).toList.sortBy(t=>(t._2,t._1)).lastOption.map {
+        val commonList=(data::msg).groupBy(vId => vId).mapValues(l => l.length).toList.sortBy(t=>(t._2,t._1))
+        commonList.lastOption.map {
           case (mostCommonId, _) => mostCommonId
         }.getOrElse(vid)
       },
-      sendMsg = (e)=>
-        if(treatGraphAsUndirected){
-          Iterator((e.srcId,e.dstAttr::Nil),(e.dstId,e.srcAttr::Nil))
-        }else{
-          Iterator((e.dstId,e.srcAttr::Nil))
-        },
+      sendMsg = (e)=> Iterator((e.srcId,e.dstAttr::Nil),(e.dstId,e.srcAttr::Nil)),
       mergeMsg = (l1,l2)=> l1++l2
 
     );

@@ -1,23 +1,23 @@
 package ml.sparkling.graph.operators.algorithms.aproximation
 
 import ml.sparkling.graph.operators.MeasureTest
-import ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgorithm
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
-
+import ml.sparkling.graph.operators.algorithms.aproximation.ApproximatedShortestPathsAlgorithm.DefaultNewPath;
+import scala.collection.JavaConversions._
 /**
   * Created by  Roman Bartusiak <riomus@gmail.com> on 07.02.17.
   */
-class AproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extends MeasureTest  {
+class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extends MeasureTest  {
 
 
 
-  "Aproximated shortest paths for simple graph" should "be correctly calculated using iterative approach" in{
+  "Approximated shortest paths for simple graph" should "be correctly calculated using iterative approach" in{
     Given("graph")
     val filePath = getClass.getResource("/graphs/5_nodes_directed")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes shortest paths")
-    val shortestPaths =AproximatedShortestPathsAlgorithm.computeShortestPathsLengthsIterative(graph, (g:Graph[_,_])=>1)
+    val shortestPaths =ApproximatedShortestPathsAlgorithm.computeShortestPathsLengthsIterative(graph, (g:Graph[_,_])=>1)
     Then("Should calculate shortest paths correctly")
     val verticesSortedById=shortestPaths.vertices.collect().sortBy{case (vId,data)=>vId}.map{
       case (vId,data)=>(vId,data.toMap)
@@ -36,16 +36,10 @@ class AproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extends
     val filePath = getClass.getResource("/graphs/5_nodes_directed")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes shortest paths")
-    val shortestPaths=ShortestPathsAlgorithm.computeSingleShortestPathsLengths(graph,1)
+    val shortestPaths=ApproximatedShortestPathsAlgorithm.computeSingleShortestPathsLengths(graph,1)
     Then("Should calculate shortest paths correctly")
     val verticesSortedById=shortestPaths.vertices.collect().sortBy{case (vId,data)=>vId}
-    verticesSortedById should equal (Array(
-      (1,0),
-      (2,0),
-      (3,0),
-      (4,0),
-      (5,0)
-    ))
+    verticesSortedById should equal (Array((1,Map(2 -> 5.0)), (2,Map()), (3,Map()), (4,Map()), (5,Map())))
   }
 
   "Single shortest paths 2 for simple graph" should "be correctly calculated" in{
@@ -53,7 +47,7 @@ class AproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extends
     val filePath = getClass.getResource("/graphs/5_nodes_directed")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes shortest paths")
-    val shortestPaths=ShortestPathsAlgorithm.computeSingleShortestPathsLengths(graph,2l)
+    val shortestPaths=ApproximatedShortestPathsAlgorithm.computeSingleShortestPathsLengths(graph,2l)
     Then("Should calculate shortest paths correctly")
     val verticesSortedById=shortestPaths.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById should equal (Array(
@@ -74,8 +68,8 @@ class AproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extends
     val grapDirected=loadGraph(filePathDirected.toString)
     val graphUndirected=loadGraph(filePathUndirected.toString)
     When("Loads graph")
-    val shortestPathsAsUndirected=ShortestPathsAlgorithm.computeShortestPaths(grapDirected,treatAsUndirected = true)
-    val shortestPathsUndirected=ShortestPathsAlgorithm.computeShortestPaths(graphUndirected)
+    val shortestPathsAsUndirected=ApproximatedShortestPathsAlgorithm.computeShortestPaths(grapDirected,treatAsUndirected = true)
+    val shortestPathsUndirected=ApproximatedShortestPathsAlgorithm.computeShortestPaths(graphUndirected)
     Then("Should calculate shortest paths correctly")
     val verticesSortedById=shortestPathsAsUndirected.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById should equal (shortestPathsUndirected.vertices.collect().sortBy{case (vId,data)=>vId})

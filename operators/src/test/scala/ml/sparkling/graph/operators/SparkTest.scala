@@ -1,5 +1,6 @@
 package ml.sparkling.graph.operators
 
+import ml.sparkling.graph.operators.algorithms.aproximation.ApproximatedShortestPathsAlgorithm$Test
 import ml.sparkling.graph.operators.algorithms.coarsening.labelpropagation.LPCoarsening$Test
 import ml.sparkling.graph.operators.algorithms.community.pscan.PSCAN$Test
 import ml.sparkling.graph.operators.algorithms.link.BasicLinkPredictor$Test
@@ -37,20 +38,21 @@ class SparkTest extends Spec with BeforeAndAfterAll {
 
   override def nestedSuites = {
     Vector(
-//      new VertexEmbeddedness$Test,
-//      new NeighborhoodConnectivity$Test,
-//      new Hits$Test,
-//      new EigenvectorCentrality$Test,
-//      new LocalClustering$Test,
-//      new Closeness$Test,
-//      new ShortestPathsAlgorithm$Test,
-//      new PSCAN$Test,
-//      new CommunityBasedPartitioning$Test,
-//      new FreemanCentrality$Test,
-//      new Modularity$Test,
-//      new AdamicAdar$Test,
-//      new BasicLinkPredictor$Test,
+      new VertexEmbeddedness$Test,
+      new NeighborhoodConnectivity$Test,
+      new Hits$Test,
+      new EigenvectorCentrality$Test,
+      new LocalClustering$Test,
+      new Closeness$Test,
+      new ShortestPathsAlgorithm$Test,
+      new PSCAN$Test,
+      new CommunityBasedPartitioning$Test,
+      new FreemanCentrality$Test,
+      new Modularity$Test,
+      new AdamicAdar$Test,
+      new BasicLinkPredictor$Test,
       new LPCoarsening$Test
+//      new ApproximatedShortestPathsAlgorithm$Test
     )
   }
 

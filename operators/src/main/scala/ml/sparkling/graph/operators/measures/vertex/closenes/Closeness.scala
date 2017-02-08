@@ -4,9 +4,10 @@ import ml.sparkling.graph.api.operators.IterativeComputation
 import ml.sparkling.graph.api.operators.measures.{VertexMeasure, VertexMeasureConfiguration}
 import ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgorithm
 import ml.sparkling.graph.operators.measures.vertex.closenes.ClosenessUtils._
+import ml.sparkling.graph.operators.predicates.InArrayPredicate
 import org.apache.spark.graphx.Graph
-import scala.collection.JavaConverters._
 
+import scala.collection.JavaConverters._
 import scala.reflect.ClassTag
 
 /**
@@ -34,7 +35,7 @@ object Closeness extends VertexMeasure[Double] {
     val groupedVerticesIds = graph.vertices.map(_._1).collect().grouped(vertexMeasureConfiguration.bucketSizeProvider(graph).toInt)
     val distanceSumGraph = graph.mapVertices((vId, data) => (0l, 0d))
     groupedVerticesIds.zipWithIndex.foldLeft(distanceSumGraph) { case (distanceSumGraph, (vertexIds, index)) => {
-      val shortestPaths = ShortestPathsAlgorithm.computeShortestPathsLengths(graph, IterativeComputation.inArrayVertexPredicate(vertexIds), treatAsUndirected = vertexMeasureConfiguration.treatAsUndirected)
+      val shortestPaths = ShortestPathsAlgorithm.computeShortestPathsLengths(graph, InArrayPredicate(vertexIds), treatAsUndirected = vertexMeasureConfiguration.treatAsUndirected)
       val out = distanceSumGraph.outerJoinVertices(shortestPaths.vertices)((vId, oldValue, newValue) => {
         val newValueMapped = newValue.map(
           _.values().asScala.map(_.toDouble).map {

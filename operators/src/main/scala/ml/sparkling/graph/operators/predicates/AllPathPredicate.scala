@@ -1,13 +1,14 @@
 package ml.sparkling.graph.operators.predicates
 
-import ml.sparkling.graph.api.operators.IterativeComputation
-import ml.sparkling.graph.api.operators.IterativeComputation.VertexPredicate
+import ml.sparkling.graph.api.operators.IterativeComputation.{SimpleVertexPredicate, VertexPredicate}
 import org.apache.spark.graphx.VertexId
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  * Always true predicate
  */
-object AllPathPredicate extends VertexPredicate with Serializable {
-  override def apply(v1: VertexId): Boolean = true
+object AllPathPredicate extends VertexPredicate[Any] with Serializable with SimpleVertexPredicate {
+  override def apply[B<:Any](v1: VertexId, v2: B): Boolean = true
+
+  override def apply(id: VertexId): Boolean = true
 }
