@@ -23,7 +23,7 @@ object EigenvectorCentrality extends VertexMeasure[Double]{
    */
   def computeEigenvector[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],
                                                  vertexMeasureConfiguration: VertexMeasureConfiguration[VD,ED],
-                      continuePredicate:ContinuePredicate=convergencePredicate(1e-6))(implicit num:Numeric[ED])={
+                      continuePredicate:ContinuePredicate=convergenceAndIterationPredicate(1e-6))(implicit num:Numeric[ED])={
     val numberOfNodes=graph.numVertices
     val startingValue=1.0/numberOfNodes
     var computationGraph=graph.mapVertices((vId,data)=>startingValue)

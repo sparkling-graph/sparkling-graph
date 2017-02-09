@@ -6,9 +6,9 @@ package ml.sparkling.graph.operators.measures.vertex.hits
 object HitsUtils {
 type ContinuePredicate=(Long,(Double,Double),(Double,Double))=>Boolean
 
-  def convergencePredicate(delta:Double)(iteration:Long,oldValues:(Double,Double),newValues:(Double,Double))={
+  def convergenceAndIterationPredicate(delta:Double,maxIteration:Long=1000)(iteration:Long, oldValues:(Double,Double), newValues:(Double,Double))={
     (oldValues,newValues) match{
-      case ((hub1,_),(hub2,_)) =>Math.abs(hub1-hub2)>delta
+      case ((hub1,_),(hub2,_)) =>Math.abs(hub1-hub2)>delta && iteration<maxIteration
     }
 
   }

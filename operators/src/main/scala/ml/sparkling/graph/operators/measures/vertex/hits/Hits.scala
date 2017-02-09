@@ -19,7 +19,7 @@ object Hits extends VertexMeasure[(Double, Double)] {
    * @tparam ED - edge data type
    * @return graph where each vertex is associated with its hits (hub,auth) values
    */
-  def computeBasic[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], continuePredicate: ContinuePredicate = convergencePredicate(1e-8), normalize: Boolean = true) = {
+  def computeBasic[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], continuePredicate: ContinuePredicate = convergenceAndIterationPredicate(1e-8), normalize: Boolean = true) = {
     var iteration = 0
     var oldValues = (0d, 0d) // (hub,auth)
     var newValues = (0d, 0d)
