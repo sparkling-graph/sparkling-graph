@@ -13,7 +13,7 @@ import scala.reflect.ClassTag
  * Main object of shortest paths algorithm
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-object ShortestPathsAlgorithm  {
+case object ShortestPathsAlgorithm  {
   /**
    * Path computing main method, should be used for further development and extension, object contains methods for main computations please use them instead of configuring this one
    * @param graph - graph for computation

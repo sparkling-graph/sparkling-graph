@@ -11,7 +11,7 @@ import scala.reflect.ClassTag
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-object PSCAN extends CommunityDetectionAlgorithm{
+case object PSCAN extends CommunityDetectionAlgorithm{
 
 
 

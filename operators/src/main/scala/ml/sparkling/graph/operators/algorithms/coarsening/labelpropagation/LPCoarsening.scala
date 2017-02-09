@@ -8,7 +8,7 @@ import scala.reflect.ClassTag
 /**
   * Created by  Roman Bartusiak <riomus@gmail.com> on 06.02.17.
   */
-object LPCoarsening extends CoarseningAlgorithm{
+case object LPCoarsening extends CoarseningAlgorithm{
   override def coarse[VD:ClassTag,ED:ClassTag](graph: Graph[VD, ED],treatAsUndirected:Boolean=false): Graph[Component, ED] = {
     val components=graph.mapVertices((vId,_)=>vId).pregel[List[VertexId]](List(),maxIterations = 2)(
       vprog = (vid,data,msg)=> {

@@ -19,7 +19,7 @@ import scala.reflect.ClassTag
 /**
   * Created by  Roman Bartusiak <riomus@gmail.com> on 07.02.17.
   */
-object ApproximatedShortestPathsAlgorithm  {
+case object ApproximatedShortestPathsAlgorithm  {
 
   type PathModifier=(VertexId,VertexId,JDouble)=>JDouble
 
