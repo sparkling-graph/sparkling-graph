@@ -11,7 +11,7 @@ import org.apache.spark.graphx.Graph
 object GraphDescriptionFromCSV extends ExampleApp {
   def body()={
   val configuration = if (bucketSize == -1l) {
-    val graphSize=1000
+    val graphSize=1000l
     println(s"BUCKET SIZE WILL BE EQUAL TO 1000!!")
     VertexMeasureConfiguration[String,Double](treatAsUndirected,(g:Graph[String,Double])=>graphSize)
   }
