@@ -6,7 +6,7 @@ package ml.sparkling.graph.operators.measures.vertex.eigenvector
 object EigenvectorUtils {
   type ContinuePredicate=(Long,Double,Double)=>Boolean
 
-  def convergenceAndIterationPredicate(delta:Double, maxIter:Long=1000)(iteration:Long, oldValue:Double, newValue:Double)={
+  def convergenceAndIterationPredicate(delta:Double, maxIter:Long=100)(iteration:Long, oldValue:Double, newValue:Double)={
     Math.abs(newValue-oldValue)>delta && iteration<maxIter
   }
 }
