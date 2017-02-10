@@ -24,7 +24,7 @@ abstract class ExampleApp extends Serializable {
     val usage =
       s"""
     Usage:  [--app-name string(${this.getClass.getName})] [--delimiter string(;)]
-            [--load-partitions int(24)] [--graph-partitions int(24)]
+            [--load-partitions int(auto)] [--graph-partitions int(auto)]
             [--bucket-size int(-1)] [--treat-as-undirected boolean(false)] [--edge-field int(2)]
             [--master string(None)] [--withIndexing Boolean(true)]
             [--checkpoint-dir string(TMPDIR)]
@@ -35,7 +35,7 @@ abstract class ExampleApp extends Serializable {
       System.exit(1)
     }
     val optionsMap = Map(('indexing->true),('master -> None), ('appName -> this.getClass.getName),
-      ('edgeField -> 2), ('delimiter -> ";"), ('loadPartitions -> 24), ('graphPartitions -> 24),
+      ('edgeField -> 2), ('delimiter -> ";"), ('loadPartitions -> -1), ('graphPartitions -> -1),
       ('bucketSize -> -1l), ('treatAsUndirected -> false),('checkpointDir->System.getProperty("java.io.tmpdir")))
 
     type OptionMap = Map[Symbol, Any]

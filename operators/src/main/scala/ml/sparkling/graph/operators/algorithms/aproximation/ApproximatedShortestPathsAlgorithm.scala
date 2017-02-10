@@ -1,6 +1,5 @@
 package ml.sparkling.graph.operators.algorithms.aproximation
 
-import it.unimi.dsi.fastutil.longs.Long2DoubleOpenHashMap
 import ml.sparkling.graph.api.operators.IterativeComputation._
 import ml.sparkling.graph.api.operators.algorithms.coarsening.CoarseningAlgorithm.Component
 import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.{JDouble, JLong, JMap}
@@ -26,8 +25,12 @@ case object ApproximatedShortestPathsAlgorithm  {
   val defaultNewPath:(JDouble=>JDouble)= (path:JDouble)=>3*path+2;
   val defaultPathModifier:PathModifier= (fromVertex:VertexId, toVertex:VertexId, path:JDouble)=>defaultNewPath(path)
 
-  def computeShortestPathsLengthsUsing[VD:ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexPredicate: SimpleVertexPredicate= AllPathPredicate, treatAsUndirected: Boolean = false,modifier:PathModifier=defaultPathModifier)(implicit num: Numeric[ED]) = {
+  def computeShortestPathsLengthsUsing[VD:ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexPredicate: SimpleVertexPredicate= AllPathPredicate, treatAsUndirected: Boolean = false,modifier:PathModifier=defaultPathModifier)(implicit num: Numeric[ED]):Graph[DataMap,ED] = {
     val coarsedGraph=LPCoarsening.coarse(graph,treatAsUndirected)
+    computeShortestPathsLengthsWithoutCoarsingUsing(graph,coarsedGraph,vertexPredicate,treatAsUndirected,modifier)
+  }
+
+  def computeShortestPathsLengthsWithoutCoarsingUsing[VD:ClassTag, ED: ClassTag](graph: Graph[VD, ED], coarsedGraph: Graph[Component, ED], vertexPredicate: SimpleVertexPredicate= AllPathPredicate, treatAsUndirected: Boolean = false,modifier:PathModifier=defaultPathModifier)(implicit num: Numeric[ED]):Graph[DataMap,ED] = {
     val newVertexPredicate:VertexPredicate[Component]=AnyMatchingComponentPredicate(vertexPredicate);
     val coarsedShortestPaths: Graph[DataMap, ED] =ShortestPathsAlgorithm.computeShortestPathsLengths(coarsedGraph,newVertexPredicate,treatAsUndirected)
     aproximatePaths(graph, coarsedGraph, coarsedShortestPaths,modifier,vertexPredicate,treatAsUndirected)
@@ -89,7 +92,7 @@ case object ApproximatedShortestPathsAlgorithm  {
     Graph(allVertexWithPaths,graph.edges,pathProcessors.getNewContainerForPaths())
   }
 
-  def computeSingleShortestPathsLengths[VD:ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexId: VertexId, treatAsUndirected: Boolean = false, modifier:PathModifier=defaultPathModifier)(implicit num: Numeric[ED]) = {
+  def computeSingleShortestPathsLengths[VD:ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexId: VertexId, treatAsUndirected: Boolean = false, modifier:PathModifier=defaultPathModifier)(implicit num: Numeric[ED]):Graph[DataMap,ED] = {
     computeShortestPathsLengthsUsing(graph,ByIdPredicate(vertexId),treatAsUndirected,modifier=defaultPathModifier)
   }
 
@@ -97,10 +100,14 @@ case object ApproximatedShortestPathsAlgorithm  {
     computeShortestPathsLengthsUsing(graph,vertexPredicate,treatAsUndirected,modifier=defaultPathModifier)
   }
 
-  def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[Component,ED], treatAsUndirected: Boolean = false,modifier:PathModifier=defaultPathModifier)(implicit num: Numeric[ED]) = {
-    val coarsedGraph=LPCoarsening.coarse(graph,treatAsUndirected)
+  def computeShortestPathsLengthsIterativeUsing[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], coarsedGraph: Graph[Component, ED], bucketSizeProvider: BucketSizeProvider[Component,ED], treatAsUndirected: Boolean = false,modifier:PathModifier=defaultPathModifier)(implicit num: Numeric[ED]):Graph[DataMap,ED] = {
     val coarsedShortestPaths: Graph[DataMap, ED] =ShortestPathsAlgorithm.computeShortestPathsLengthsIterative[Component,ED](coarsedGraph,bucketSizeProvider,treatAsUndirected)
     aproximatePaths(graph, coarsedGraph, coarsedShortestPaths,modifier,treatAsUndirected=treatAsUndirected)
+  }
+
+  def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[Component,ED], treatAsUndirected: Boolean = false,modifier:PathModifier=defaultPathModifier)(implicit num: Numeric[ED]):Graph[DataMap,ED] = {
+    val coarsedGraph=LPCoarsening.coarse(graph,treatAsUndirected)
+    computeShortestPathsLengthsIterativeUsing(graph,coarsedGraph,bucketSizeProvider,treatAsUndirected)
   }
 
 }

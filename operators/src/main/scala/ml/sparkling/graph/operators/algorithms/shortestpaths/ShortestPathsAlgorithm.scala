@@ -107,7 +107,7 @@ case object ShortestPathsAlgorithm  {
     val vertexIds=graph.vertices.map{case (vId,data)=>vId}.collect()
     val outGraph:Graph[FastUtilWithDistance.DataMap ,ED] = graph.mapVertices((vId,data)=>new FastUtilWithDistance.DataMap)
     (vertexIds.grouped(bucketSize.toInt)).foldLeft(outGraph)((acc,vertexIds)=>{
-      val vertexPredicate=ByIdsPredicate(vertexIds.toList)
+      val vertexPredicate=ByIdsPredicate(vertexIds.toSet)
       val computed=computeShortestPathsLengths(graph,vertexPredicate,treatAsUndirected)
       acc.outerJoinVertices(computed.vertices)((vId,outMap,computedMap)=>{
         computedMap.flatMap(m=>{outMap.putAll(m);Option(outMap)}).getOrElse(outMap)

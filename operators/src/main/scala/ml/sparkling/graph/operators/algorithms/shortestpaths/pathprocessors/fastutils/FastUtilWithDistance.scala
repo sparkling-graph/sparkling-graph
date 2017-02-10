@@ -29,12 +29,19 @@ class FastUtilWithDistance[VD, ED]() extends PathProcessor[VD, ED, DataMap] {
     map2.foreach{case (key,inValue)=>{
       val map1Value: JDouble =Option(map1.get(key)).getOrElse(inValue)
       val map2Value: JDouble =  inValue
-      val value: JDouble = java.lang.Double.min(map1Value, map2Value);
+      val value: JDouble = min(map1Value, map2Value);
       out.put(key, value)
     }}
     out
   }
 
+  def min(d1:JDouble,d2:JDouble):JDouble={
+    if(d1<d2){
+      d1
+    }else{
+      d2
+    }
+  }
 
   def extendPaths(targetVertexId:VertexId,map: DataMap, vertexId: VertexId, distance: ED)(implicit num: Numeric[ED]):DataMap = {
     val out=map.clone()

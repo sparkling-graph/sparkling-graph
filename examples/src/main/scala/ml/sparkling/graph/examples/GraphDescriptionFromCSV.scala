@@ -2,6 +2,7 @@ package ml.sparkling.graph.examples
 
 import ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration
 import ml.sparkling.graph.experiments.describe.GraphDescriptor._
+import org.apache.log4j.Logger
 import org.apache.spark.graphx.Graph
 
 /**
@@ -9,10 +10,11 @@ import org.apache.spark.graphx.Graph
  */
 
 object GraphDescriptionFromCSV extends ExampleApp {
+  val logger=Logger.getLogger(GraphDescriptionFromCSV.getClass())
   def body()={
   val configuration = if (bucketSize == -1l) {
     val graphSize=1000l
-    println(s"BUCKET SIZE WILL BE EQUAL TO 1000!!")
+    logger.info(s"BUCKET SIZE WILL BE EQUAL TO 1000!!")
     VertexMeasureConfiguration[String,Double](treatAsUndirected,(g:Graph[String,Double])=>graphSize)
   }
   else
