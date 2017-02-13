@@ -101,18 +101,25 @@ case object ShortestPathsAlgorithm  {
    * @tparam ED - edge data type (must be numeric)
    * @return graph where each vertex has map of its shortest paths
    */
-  def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[VD,ED], treatAsUndirected: Boolean = false)(implicit num: Numeric[ED]) = {
+  def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[VD,ED], treatAsUndirected: Boolean = false,checkpointingFrequency:Int=50)(implicit num: Numeric[ED]) = {
     val bucketSize=bucketSizeProvider(graph)
     val graphSize=graph.numVertices
     val vertexIds=graph.vertices.map{case (vId,data)=>vId}.collect()
     val outGraph:Graph[FastUtilWithDistance.DataMap ,ED] = graph.mapVertices((vId,data)=>new FastUtilWithDistance.DataMap)
-    (vertexIds.grouped(bucketSize.toInt)).foldLeft(outGraph)((acc,vertexIds)=>{
+    val (out,iteration)=(vertexIds.grouped(bucketSize.toInt)).foldLeft((outGraph,0)){
+      case ((acc,iteration),vertexIds)=>{
       val vertexPredicate=ByIdsPredicate(vertexIds.toSet)
       val computed=computeShortestPathsLengths(graph,vertexPredicate,treatAsUndirected)
-      acc.outerJoinVertices(computed.vertices)((vId,outMap,computedMap)=>{
+      val outGraph=acc.outerJoinVertices(computed.vertices)((vId,outMap,computedMap)=>{
         computedMap.flatMap(m=>{outMap.putAll(m);Option(outMap)}).getOrElse(outMap)
       })
-    })
+        if(iteration%checkpointingFrequency==0){
+          outGraph.checkpoint();
+        }
+        (outGraph,iteration+1)
+    }
+    }
+    out
 
   }
 

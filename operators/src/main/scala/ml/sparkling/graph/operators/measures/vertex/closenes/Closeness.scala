@@ -33,9 +33,10 @@ object Closeness extends VertexMeasure[Double] {
                                                normalize: Boolean = false,
                                                checkpointingFrequency: Int = 50)(implicit num: Numeric[ED]): Graph[Double, ED] = {
     val groupedVerticesIds = graph.vertices.map(_._1).collect().grouped(vertexMeasureConfiguration.bucketSizeProvider(graph).toInt)
+    var iteration=0;
     val distanceSumGraph = graph.mapVertices((vId, data) => (0l, 0d))
     groupedVerticesIds.zipWithIndex.foldLeft(distanceSumGraph) { case (distanceSumGraph, (vertexIds, index)) => {
-      val shortestPaths = ShortestPathsAlgorithm.computeShortestPathsLengths(graph, InArrayPredicate(vertexIds), treatAsUndirected = vertexMeasureConfiguration.treatAsUndirected)
+      val shortestPaths = ShortestPathsAlgorithm.computeShortestPathsLengths(graph, InArrayPredicate(vertexIds), treatAsUndirected = vertexMeasureConfiguration.treatAsUndirected).cache()
       val out = distanceSumGraph.outerJoinVertices(shortestPaths.vertices)((vId, oldValue, newValue) => {
         val newValueMapped = newValue.map(
           _.values().asScala.map(_.toDouble).map {
@@ -56,8 +57,12 @@ object Closeness extends VertexMeasure[Double] {
           case (_, None) => oldValue
         }
       })
-      shortestPaths.unpersist()
-      out
+      shortestPaths.unpersist(blocking = false)
+      if(iteration % checkpointingFrequency==0){
+        out.checkpoint();
+      }
+      iteration+=1;
+      out.cache()
     }
     }.mapVertices {
       case (vId, (count, sum)) => closenessFunction(count, sum, normalize)

@@ -40,7 +40,7 @@ object Hits extends VertexMeasure[(Double, Double)] {
         case (vId, (hub,auth), Some(newValue)) => (hub, newValue / normAuths)
         case (vId, (hub,auth), None) => (hub, 0d)
       }
-      withNewAuths.unpersist()
+      withNewAuths.unpersist(blocking=false)
       val withNewHubs = computationGraph.aggregateMessages[Double](
         sendMsg = context=>{
           val destinationAuth: Double = context.dstAttr match{
@@ -54,8 +54,8 @@ object Hits extends VertexMeasure[(Double, Double)] {
       computationGraph = computationGraph.outerJoinVertices(withNewHubs){
         case (vId, (hub,auth), Some(newValue)) => (newValue/normHubs, auth)
         case (vId, (hub,auth), None) => (0d, auth)
-      }
-      withNewHubs.unpersist()
+      }.cache()
+      withNewHubs.unpersist(blocking=false)
       oldValues = newValues
       newValues = computationGraph.vertices.map{case (vId,(hub,auth)) => (hub,auth)}.fold((0d, 0d))(sumHubAuthTuples)
       newValues = newValues match{

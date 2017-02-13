@@ -30,6 +30,10 @@ object EigenvectorCentrality extends VertexMeasure[Double]{
     var iteration=0
     var oldValue=0d
     var newValue=0d
+
+    Stream.from(0).map((iteration)=>{
+
+    })
     while(continuePredicate(iteration,oldValue,newValue)||iteration==0){
       val iterationRDD=computationGraph.aggregateMessages[Double](
       sendMsg = context=>{
@@ -42,7 +46,7 @@ object EigenvectorCentrality extends VertexMeasure[Double]{
       },
       mergeMsg = (a,b)=>a+b)
       val normalizationValue=Math.sqrt(iterationRDD.map{case (vId,e)=>Math.pow(e,2)}.sum())
-      computationGraph=computationGraph.outerJoinVertices(iterationRDD)((vId,oldValue,newValue)=>if(normalizationValue==0) 0 else newValue.getOrElse(0d)/normalizationValue)
+      computationGraph=computationGraph.outerJoinVertices(iterationRDD)((vId,oldValue,newValue)=>if(normalizationValue==0) 0 else newValue.getOrElse(0d)/normalizationValue).cache()
       oldValue=newValue
       newValue=computationGraph.vertices.map{case (vId,e)=>e}.sum()/numberOfNodes
       iterationRDD.unpersist()
