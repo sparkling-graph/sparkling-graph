@@ -10,6 +10,7 @@ import ml.sparkling.graph.operators.predicates.{AllPathPredicate, ByIdPredicate,
 import org.apache.spark.graphx.{EdgeTriplet, Graph, _}
 import ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgorithm
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.FastUtilWithDistance.DataMap
+import org.apache.log4j.Logger
 import org.apache.spark.rdd.RDD
 
 import scala.collection.JavaConversions._
@@ -19,6 +20,7 @@ import scala.reflect.ClassTag
   * Created by  Roman Bartusiak <riomus@gmail.com> on 07.02.17.
   */
 case object ApproximatedShortestPathsAlgorithm  {
+  val logger=Logger.getLogger(ApproximatedShortestPathsAlgorithm.getClass())
 
   type PathModifier=(VertexId,VertexId,JDouble)=>JDouble
 
@@ -51,6 +53,7 @@ case object ApproximatedShortestPathsAlgorithm  {
     }
 
     val toJoined=fromMapped.join(coarsedGraph.vertices)
+
     val toMapped=  toJoined.flatMap{
       case (to,((componentFrom,len),componentTo))=>{
         componentFrom.flatMap(

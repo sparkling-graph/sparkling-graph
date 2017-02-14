@@ -5,6 +5,7 @@ import ml.sparkling.graph.api.operators.IterativeComputation._
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.{FastUtilWithDistance, FastUtilWithPath}
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.{PathProcessor, SingleVertexProcessor}
 import ml.sparkling.graph.operators.predicates.{AllPathPredicate, ByIdPredicate, ByIdsPredicate}
+import org.apache.log4j.Logger
 import org.apache.spark.graphx._
 
 import scala.reflect.ClassTag
@@ -14,6 +15,7 @@ import scala.reflect.ClassTag
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
 case object ShortestPathsAlgorithm  {
+  val logger=Logger.getLogger(ShortestPathsAlgorithm.getClass);
   /**
    * Path computing main method, should be used for further development and extension, object contains methods for main computations please use them instead of configuring this one
    * @param graph - graph for computation
@@ -103,21 +105,23 @@ case object ShortestPathsAlgorithm  {
    */
   def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[VD,ED], treatAsUndirected: Boolean = false,checkpointingFrequency:Int=50)(implicit num: Numeric[ED]) = {
     val bucketSize=bucketSizeProvider(graph)
-    val graphSize=graph.numVertices
     val vertexIds=graph.vertices.map{case (vId,data)=>vId}.collect()
     val outGraph:Graph[FastUtilWithDistance.DataMap ,ED] = graph.mapVertices((vId,data)=>new FastUtilWithDistance.DataMap)
-    val (out,iteration)=(vertexIds.grouped(bucketSize.toInt)).foldLeft((outGraph,0)){
+    val vertices =vertexIds.grouped(bucketSize.toInt).toList
+    val numberOfIterations=vertices.size
+    val (out,_)=vertices.foldLeft((outGraph,1)){
       case ((acc,iteration),vertexIds)=>{
-      val vertexPredicate=ByIdsPredicate(vertexIds.toSet)
-      val computed=computeShortestPathsLengths(graph,vertexPredicate,treatAsUndirected)
-      val outGraph=acc.outerJoinVertices(computed.vertices)((vId,outMap,computedMap)=>{
-        computedMap.flatMap(m=>{outMap.putAll(m);Option(outMap)}).getOrElse(outMap)
-      })
+        logger.info(s"Shortest Paths iteration ${iteration} from  ${numberOfIterations}")
+        val vertexPredicate=ByIdsPredicate(vertexIds.toSet)
+        val computed=computeShortestPathsLengths(graph,vertexPredicate,treatAsUndirected)
+        val outGraph=acc.outerJoinVertices(computed.vertices)((vId,outMap,computedMap)=>{
+          computedMap.flatMap(m=>{outMap.putAll(m);Option(outMap)}).getOrElse(outMap)
+        })
         if(iteration%checkpointingFrequency==0){
           outGraph.checkpoint();
         }
         (outGraph,iteration+1)
-    }
+     }
     }
     out
 
