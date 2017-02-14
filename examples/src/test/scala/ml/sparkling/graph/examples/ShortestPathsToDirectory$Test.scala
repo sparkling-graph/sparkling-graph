@@ -2,6 +2,7 @@ package ml.sparkling.graph.examples
 
 import java.nio.file.{Files, Path}
 
+import org.apache.commons.io.FileUtils
 import org.scalatest._
 
 import scala.io.Source
@@ -14,7 +15,7 @@ class ShortestPathsToDirectory$Test extends FlatSpec with BeforeAndAfterAll with
   val file: Path = Files.createTempDirectory("tempDir")
 
   override def afterAll() ={
-    file.toFile.delete();
+    FileUtils.deleteDirectory(file.toFile)
   }
 
 

@@ -9,7 +9,7 @@ import org.scalatest._
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
 class SparkTest extends Spec with BeforeAndAfterAll {
-
+  override val invokeBeforeAllAndAfterAllEvenIfNoTestsAreExpected = true
   val master = "local[*]"
 
   def appName: String = "generators-tests"

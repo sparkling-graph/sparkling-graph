@@ -107,27 +107,32 @@ case object ShortestPathsAlgorithm  {
    * @tparam ED - edge data type (must be numeric)
    * @return graph where each vertex has map of its shortest paths
    */
-  def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[VD,ED], treatAsUndirected: Boolean = false,checkpointingFrequency:Int=100)(implicit num: Numeric[ED]) = {
+  def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[VD,ED], treatAsUndirected: Boolean = false,checkpointingFrequency:Double=0.05)(implicit num: Numeric[ED]) = {
     val bucketSize=bucketSizeProvider(graph)
+    graph.cache()
     val vertexIds=graph.vertices.map{case (vId,data)=>vId}.collect()
     val outGraph:Graph[FastUtilWithDistance.DataMap ,ED] = graph.mapVertices((vId,data)=>new FastUtilWithDistance.DataMap)
+    outGraph.cache()
     val vertices =vertexIds.grouped(bucketSize.toInt).toList
     val numberOfIterations=vertices.size
+    val checkpointMod=(numberOfIterations*checkpointingFrequency).ceil;
     val (out,_)=vertices.foldLeft((outGraph,1)){
       case ((acc,iteration),vertexIds)=>{
         logger.info(s"Shortest Paths iteration ${iteration} from  ${numberOfIterations}")
+        if(iteration%checkpointMod==0){
+          logger.info(s"Chceckpointing graph")
+          acc.checkpoint()
+          acc.vertices.foreachPartition(_=>{})
+          acc.edges.foreachPartition(_=>{})
+        }
+        acc.cache()
         val vertexPredicate=ByIdsPredicate(vertexIds.toSet)
         val computed=computeShortestPathsLengths(graph,vertexPredicate,treatAsUndirected)
-        val outGraph=acc.outerJoinVertices(computed.vertices)((vId,outMap,computedMap)=>{
+        val outGraphInner=acc.outerJoinVertices(computed.vertices)((vId,outMap,computedMap)=>{
           computedMap.flatMap(m=>{outMap.putAll(m);Option(outMap)}).getOrElse(outMap)
         })
-        if(iteration%checkpointingFrequency==0){
-          logger.info(s"Chceckpointing graph")
-          outGraph.checkpoint();
-          outGraph.vertices.count();
-          outGraph.edges.count();
-        }
-        (outGraph,iteration+1)
+        outGraphInner.cache()
+        (outGraphInner,iteration+1)
      }
     }
     out

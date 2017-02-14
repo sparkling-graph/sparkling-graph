@@ -2,6 +2,7 @@ package ml.sparkling.graph.operators
 
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.GraphLoader
+import org.apache.spark.storage.StorageLevel
 import org.scalatest._
 
 /**
@@ -9,7 +10,7 @@ import org.scalatest._
  */
 abstract class MeasureTest(implicit sc:SparkContext)  extends FlatSpec with BeforeAndAfterAll with GivenWhenThen with Matchers{
   def loadGraph(file:String)={
-    GraphLoader.edgeListFile(sc,file.toString).cache()
+    GraphLoader.edgeListFile(sc,file.toString)
   }
 
 }
