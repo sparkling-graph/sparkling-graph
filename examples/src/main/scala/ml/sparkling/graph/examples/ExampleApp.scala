@@ -3,6 +3,7 @@ package ml.sparkling.graph.examples
 import ml.sparkling.graph.loaders.csv.providers.PropertyProviders
 import ml.sparkling.graph.loaders.csv.utils.DefaultTransformers
 import ml.sparkling.graph.loaders.csv.{CSVLoader, CsvLoaderConfig}
+import org.apache.log4j.Logger
 import org.apache.spark.graphx.{Graph, PartitionStrategy}
 import org.apache.spark.{SparkConf, SparkContext}
 
@@ -10,6 +11,7 @@ import org.apache.spark.{SparkConf, SparkContext}
   * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
   */
 abstract class ExampleApp extends Serializable {
+  @transient val logger=Logger.getLogger(this.getClass)
   var file, out, delimiter, name: String = "";
   var partitionNumber, graphPartitions, edgeField: Int = 0;
   var treatAsUndirected: Boolean = false;
@@ -85,7 +87,7 @@ abstract class ExampleApp extends Serializable {
     master = options('master).asInstanceOf[Option[String]]
     withIndexing = options('indexing).asInstanceOf[Boolean]
 
-
+    logger.info("Running app sparkling-graph-example")
     val sparkConf = new SparkConf().setAppName(name).set("spark.app.id", "sparkling-graph-example")
     ctx = new SparkContext(master.map(m => sparkConf.setMaster(m)).getOrElse(sparkConf))
     ctx.broadcast()

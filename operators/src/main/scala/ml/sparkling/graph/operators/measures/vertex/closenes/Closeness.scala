@@ -5,6 +5,7 @@ import ml.sparkling.graph.api.operators.measures.{VertexMeasure, VertexMeasureCo
 import ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgorithm
 import ml.sparkling.graph.operators.measures.vertex.closenes.ClosenessUtils._
 import ml.sparkling.graph.operators.predicates.InArrayPredicate
+import org.apache.log4j.Logger
 import org.apache.spark.graphx.Graph
 
 import scala.collection.JavaConverters._
@@ -15,6 +16,8 @@ import scala.reflect.ClassTag
   * Computes closeness centrality in standard and harmonic versions
   */
 object Closeness extends VertexMeasure[Double] {
+
+  val logger=Logger.getLogger(Closeness.getClass);
   /**
     * Generic closeness computation method, should be used for extensions. Computations are done using super-step approach
     *
@@ -31,11 +34,12 @@ object Closeness extends VertexMeasure[Double] {
                                                pathMappingFunction: PathMappingFunction,
                                                vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED],
                                                normalize: Boolean = false,
-                                               checkpointingFrequency: Int = 50)(implicit num: Numeric[ED]): Graph[Double, ED] = {
-    val groupedVerticesIds = graph.vertices.map(_._1).collect().grouped(vertexMeasureConfiguration.bucketSizeProvider(graph).toInt)
-    var iteration=0;
+                                               checkpointingFrequency: Int = 100)(implicit num: Numeric[ED]): Graph[Double, ED] = {
+    val groupedVerticesIds = graph.vertices.map(_._1).collect().grouped(vertexMeasureConfiguration.bucketSizeProvider(graph).toInt).toList
+    val numberOfIterations=groupedVerticesIds.size
     val distanceSumGraph = graph.mapVertices((vId, data) => (0l, 0d))
-    groupedVerticesIds.zipWithIndex.foldLeft(distanceSumGraph) { case (distanceSumGraph, (vertexIds, index)) => {
+    groupedVerticesIds.zipWithIndex.foldLeft((distanceSumGraph,1)) { case ((distanceSumGraph,iteration), (vertexIds, index)) => {
+      logger.info(s"Closeness iteration ${iteration} from  ${numberOfIterations}")
       val shortestPaths = ShortestPathsAlgorithm.computeShortestPathsLengths(graph, InArrayPredicate(vertexIds), treatAsUndirected = vertexMeasureConfiguration.treatAsUndirected).cache()
       val out = distanceSumGraph.outerJoinVertices(shortestPaths.vertices)((vId, oldValue, newValue) => {
         val newValueMapped = newValue.map(
@@ -59,12 +63,14 @@ object Closeness extends VertexMeasure[Double] {
       })
       shortestPaths.unpersist(blocking = false)
       if(iteration % checkpointingFrequency==0){
+        logger.info(s"Chceckpointing graph")
         out.checkpoint();
+        out.vertices.count();
+        out.edges.count();
       }
-      iteration+=1;
-      out.cache()
+      (out.cache(),iteration+1)
     }
-    }.mapVertices {
+    }._1.mapVertices {
       case (vId, (count, sum)) => closenessFunction(count, sum, normalize)
     }
 

@@ -10,7 +10,6 @@ import org.apache.spark.graphx.Graph
  */
 
 object GraphDescriptionFromCSV extends ExampleApp {
-  val logger=Logger.getLogger(GraphDescriptionFromCSV.getClass())
   def body()={
   val configuration = if (bucketSize == -1l) {
     val graphSize=1000l

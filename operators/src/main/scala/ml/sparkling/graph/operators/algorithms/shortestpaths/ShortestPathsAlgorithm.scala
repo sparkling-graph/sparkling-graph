@@ -1,7 +1,10 @@
 package ml.sparkling.graph.operators.algorithms.shortestpaths
 
 
+import java.util
+
 import ml.sparkling.graph.api.operators.IterativeComputation._
+import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes._
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.{FastUtilWithDistance, FastUtilWithPath}
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.{PathProcessor, SingleVertexProcessor}
 import ml.sparkling.graph.operators.predicates.{AllPathPredicate, ByIdPredicate, ByIdsPredicate}
@@ -9,6 +12,7 @@ import org.apache.log4j.Logger
 import org.apache.spark.graphx._
 
 import scala.reflect.ClassTag
+import scala.collection.JavaConversions._
 
 /**
  * Main object of shortest paths algorithm
@@ -103,7 +107,7 @@ case object ShortestPathsAlgorithm  {
    * @tparam ED - edge data type (must be numeric)
    * @return graph where each vertex has map of its shortest paths
    */
-  def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[VD,ED], treatAsUndirected: Boolean = false,checkpointingFrequency:Int=50)(implicit num: Numeric[ED]) = {
+  def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[VD,ED], treatAsUndirected: Boolean = false,checkpointingFrequency:Int=100)(implicit num: Numeric[ED]) = {
     val bucketSize=bucketSizeProvider(graph)
     val vertexIds=graph.vertices.map{case (vId,data)=>vId}.collect()
     val outGraph:Graph[FastUtilWithDistance.DataMap ,ED] = graph.mapVertices((vId,data)=>new FastUtilWithDistance.DataMap)
@@ -118,7 +122,10 @@ case object ShortestPathsAlgorithm  {
           computedMap.flatMap(m=>{outMap.putAll(m);Option(outMap)}).getOrElse(outMap)
         })
         if(iteration%checkpointingFrequency==0){
+          logger.info(s"Chceckpointing graph")
           outGraph.checkpoint();
+          outGraph.vertices.count();
+          outGraph.edges.count();
         }
         (outGraph,iteration+1)
      }
@@ -148,4 +155,29 @@ case object ShortestPathsAlgorithm  {
     pathProcessor.mergePathContainers(data, message)
   }
 
+  def computeAPSPToDirectory[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], outDirectory: String, treatAsUndirected: Boolean, bucketSize:Long)(implicit num: Numeric[ED]): Unit = {
+    val vertices= graph.vertices.map(_._1).sortBy(k => k).collect();
+    val verticesGroups =vertices.grouped(bucketSize.toInt).zipWithIndex.toList
+    val numberOfIterations=verticesGroups.length;
+    graph.cache()
+    (verticesGroups).foreach{
+      case (group,iteration) => {
+        logger.info(s"Shortest Paths iteration ${iteration+1} from  ${numberOfIterations}")
+        val shortestPaths = ShortestPathsAlgorithm.computeShortestPathsLengths(graph, new ByIdsPredicate(group.toSet), treatAsUndirected)
+        val joinedGraph = graph
+          .outerJoinVertices(shortestPaths.vertices)((vId, data, newData) => (data, newData.getOrElse(new FastUtilWithDistance.DataMap)))
+        joinedGraph.vertices.values.map {
+          case (vertex, data: util.Map[JLong, JDouble]) => {
+            val dataStr = data.entrySet()
+              .map(e=>s"${e.getKey}:${e.getValue}").mkString(";")
+            s"$vertex;$dataStr"
+          }
+        }.saveAsTextFile(s"${outDirectory}/from_${group.head}")
+        shortestPaths.unpersist(blocking = false)
+      }
+    }
+
+
+    graph.vertices.map(t => List(t._1, t._2).mkString(";")).saveAsTextFile(s"${outDirectory}/index")
+  }
 }

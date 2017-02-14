@@ -1,5 +1,7 @@
 package ml.sparkling.graph.operators.algorithms.aproximation
 
+import java.util
+
 import ml.sparkling.graph.api.operators.IterativeComputation._
 import ml.sparkling.graph.api.operators.algorithms.coarsening.CoarseningAlgorithm.Component
 import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.{JDouble, JLong, JMap}
@@ -111,6 +113,33 @@ case object ApproximatedShortestPathsAlgorithm  {
   def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[Component,ED], treatAsUndirected: Boolean = false,modifier:PathModifier=defaultPathModifier)(implicit num: Numeric[ED]):Graph[DataMap,ED] = {
     val coarsedGraph=LPCoarsening.coarse(graph,treatAsUndirected)
     computeShortestPathsLengthsIterativeUsing(graph,coarsedGraph,bucketSizeProvider,treatAsUndirected)
+  }
+
+  def computeAPSPToDirectory[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], outDirectory: String, treatAsUndirected: Boolean, bucketSize:Long)(implicit num: Numeric[ED]): Unit = {
+    val coarsedGraph=LPCoarsening.coarse(graph,treatAsUndirected)
+    logger.info(s"Coarsed graph has size ${coarsedGraph.vertices.count()} in comparision to ${graph.vertices.count()}")
+    val verticesGroups = graph.vertices.map(_._1).sortBy(k => k).collect().grouped(bucketSize.toInt).zipWithIndex.toList
+    val numberOfIterations=verticesGroups.length;
+    graph.cache()
+    coarsedGraph.cache()
+    (verticesGroups).foreach{
+      case (group,iteration) => {
+        logger.info(s"Approximated Shortest Paths iteration ${iteration+1} from  ${numberOfIterations}")
+        val shortestPaths = ApproximatedShortestPathsAlgorithm.computeShortestPathsLengthsWithoutCoarsingUsing(graph,coarsedGraph, new ByIdsPredicate(group.toSet), treatAsUndirected)
+        val joinedGraph = graph
+          .outerJoinVertices(shortestPaths.vertices)((vId, data, newData) => (data, newData.getOrElse(new FastUtilWithDistance.DataMap)))
+        joinedGraph.vertices.values.map {
+          case (vertex, data: util.Map[JLong, JDouble]) => {
+            val dataStr = data.entrySet()
+              .map(e=>s"${e.getKey}:${e.getValue}").mkString(";")
+            s"$vertex;$dataStr"
+          }
+        }.saveAsTextFile(s"${outDirectory}/from_${group.head}")
+        shortestPaths.unpersist(blocking = false)
+      }
+    }
+
+    graph.vertices.map(t => List(t._1, t._2).mkString(";")).saveAsTextFile(s"${outDirectory}/index")
   }
 
 }

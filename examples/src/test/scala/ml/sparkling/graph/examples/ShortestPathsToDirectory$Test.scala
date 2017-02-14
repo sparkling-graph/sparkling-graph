@@ -13,6 +13,10 @@ import scala.io.Source
 class ShortestPathsToDirectory$Test extends FlatSpec with BeforeAndAfterAll with GivenWhenThen with Matchers {
   val file: Path = Files.createTempDirectory("tempDir")
 
+  override def afterAll() ={
+    file.toFile.delete();
+  }
+
 
   "Standard paths" should "be computed correctly" in {
     Given("Using given graph")
