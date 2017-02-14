@@ -90,7 +90,6 @@ abstract class ExampleApp extends Serializable {
     logger.info("Running app sparkling-graph-example")
     val sparkConf = new SparkConf().setAppName(name).set("spark.app.id", "sparkling-graph-example")
     ctx = new SparkContext(master.map(m => sparkConf.setMaster(m)).getOrElse(sparkConf))
-    ctx.broadcast()
     ctx.setCheckpointDir(checkpointDir)
 
     val graph =
