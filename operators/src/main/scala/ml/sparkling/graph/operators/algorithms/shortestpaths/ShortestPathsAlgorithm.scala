@@ -107,7 +107,7 @@ case object ShortestPathsAlgorithm  {
    * @tparam ED - edge data type (must be numeric)
    * @return graph where each vertex has map of its shortest paths
    */
-  def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[VD,ED], treatAsUndirected: Boolean = false,checkpointingFrequency:Double=0.05)(implicit num: Numeric[ED]) = {
+  def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[VD,ED], treatAsUndirected: Boolean = false,checkpointingFrequency:Int=20)(implicit num: Numeric[ED]) = {
     val bucketSize=bucketSizeProvider(graph)
     graph.cache()
     val vertexIds=graph.vertices.map{case (vId,data)=>vId}.collect()
@@ -115,11 +115,10 @@ case object ShortestPathsAlgorithm  {
     outGraph.cache()
     val vertices =vertexIds.grouped(bucketSize.toInt).toList
     val numberOfIterations=vertices.size
-    val checkpointMod=(numberOfIterations*checkpointingFrequency).ceil;
     val (out,_)=vertices.foldLeft((outGraph,1)){
       case ((acc,iteration),vertexIds)=>{
         logger.info(s"Shortest Paths iteration ${iteration} from  ${numberOfIterations}")
-        if(iteration%checkpointMod==0){
+        if(iteration%checkpointingFrequency==0){
           logger.info(s"Chceckpointing graph")
           acc.checkpoint()
           acc.vertices.foreachPartition(_=>{})

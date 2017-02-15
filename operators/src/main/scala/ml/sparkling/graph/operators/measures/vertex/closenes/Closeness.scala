@@ -34,15 +34,14 @@ object Closeness extends VertexMeasure[Double] {
                                                pathMappingFunction: PathMappingFunction,
                                                vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED],
                                                normalize: Boolean = false,
-                                               checkpointingFrequency: Double = 0.05)(implicit num: Numeric[ED]): Graph[Double, ED] = {
+                                               checkpointingFrequency: Int = 20)(implicit num: Numeric[ED]): Graph[Double, ED] = {
     val groupedVerticesIds = graph.vertices.map(_._1).collect().grouped(vertexMeasureConfiguration.bucketSizeProvider(graph).toInt).toList
     val numberOfIterations=groupedVerticesIds.size
-    val checkpointMod=(numberOfIterations*checkpointingFrequency).ceil;
     val distanceSumGraph = graph.mapVertices((vId, data) => (0l, 0d))
     graph.cache()
     groupedVerticesIds.zipWithIndex.foldLeft((distanceSumGraph,1)) { case ((distanceSumGraph,iteration), (vertexIds, index)) => {
       logger.info(s"Closeness iteration ${iteration} from  ${numberOfIterations}")
-      if(iteration % checkpointMod==0){
+      if(iteration % checkpointingFrequency==0){
         logger.info(s"Chceckpointing graph")
         distanceSumGraph.checkpoint()
         distanceSumGraph.vertices.foreachPartition((_)=>{})
