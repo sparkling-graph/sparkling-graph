@@ -21,6 +21,5 @@ object GraphDescriptionFromCSV extends ExampleApp {
     val groupedGraph=partitionedGraph.groupEdges((a,b)=>a)
     groupedGraph.describeGraphToDirectory(out, configuration)
   ctx.stop()
-
   }
 }

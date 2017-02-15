@@ -7,6 +7,7 @@ import ml.sparkling.graph.operators.measures.vertex.closenes.ClosenessUtils._
 import ml.sparkling.graph.operators.predicates.InArrayPredicate
 import org.apache.log4j.Logger
 import org.apache.spark.graphx.Graph
+import org.apache.spark.rdd.RDD
 
 import scala.collection.JavaConverters._
 import scala.reflect.ClassTag
@@ -49,22 +50,20 @@ object Closeness extends VertexMeasure[Double] {
       }
       distanceSumGraph.cache()
       val shortestPaths = ShortestPathsAlgorithm.computeShortestPathsLengths(graph, InArrayPredicate(vertexIds), treatAsUndirected = vertexMeasureConfiguration.treatAsUndirected).cache()
-      val out = distanceSumGraph.outerJoinVertices(shortestPaths.vertices)((vId, oldValue, newValue) => {
-        val newValueMapped = newValue.map(
-          _.values().asScala.map(_.toDouble).map {
-            case 0d => (0l, 0d)
-            case other => (1l, pathMappingFunction(other))
-          }
-        ).map(
-          _.foldLeft((0l,0d)){
-            case ((c1,v1),(c2,v2))=>(c1+c2,v1+v2)
-          }
-        )
-        (oldValue, newValueMapped) match {
+      val newValues=shortestPaths.vertices.map{
+        case (vId,paths)=>(vId,paths.values().asScala.map(_.toDouble).map{
+          case 0d => (0l, 0d)
+          case other => (1l, pathMappingFunction(other))
+        }.foldLeft((0l, 0d)) {
+          case ((c1, v1), (c2, v2)) => (c1 + c2, v1 + v2)
+        })
+      }.cache()
+      newValues.localCheckpoint()
+      newValues.foreachPartition((_)=>{})
+      val out = distanceSumGraph.outerJoinVertices(newValues)((vId, oldValue, newValue) => {
+        (oldValue, newValue) match {
           case ((oldPathsCount, oldPathsSum), Some((newPathsCount, newPathsSum))) => {
-            val pathCountOut = oldPathsCount + newPathsCount
-            val pathLengthSumOut = oldPathsSum + newPathsSum
-            (pathCountOut, pathLengthSumOut)
+            (oldPathsCount + newPathsCount, oldPathsSum + newPathsSum)
           }
           case (_, None) => oldValue
         }
