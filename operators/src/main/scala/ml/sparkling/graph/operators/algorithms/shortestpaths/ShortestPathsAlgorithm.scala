@@ -126,7 +126,7 @@ case object ShortestPathsAlgorithm  {
         }
         acc.cache()
         val vertexPredicate=ByIdsPredicate(vertexIds.toSet)
-        val computed=computeShortestPathsLengths(graph,vertexPredicate,treatAsUndirected)
+        val computed=computeShortestPathsLengths(graph,vertexPredicate,treatAsUndirected).cache()
         val outGraphInner=acc.outerJoinVertices(computed.vertices)((vId,outMap,computedMap)=>{
           computedMap.flatMap(m=>{outMap.putAll(m);Option(outMap)}).getOrElse(outMap)
         })

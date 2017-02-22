@@ -47,14 +47,14 @@ case object ApproximatedShortestPathsAlgorithm  {
           case (to,len)=>(vertexId,(to.toLong,modifier(vertexId,to,len)))
         }
       }
-    }
+    }.cache()
     val fromMapped=modifiedPaths.join(coarsedGraph.vertices).map{
       case (from,((to,len),componentFrom) )=>{
         (to,(componentFrom,len))
       }
-    }
+    }.cache()
 
-    val toJoined=fromMapped.join(coarsedGraph.vertices)
+    val toJoined=fromMapped.join(coarsedGraph.vertices).cache()
 
     val toMapped=  toJoined.flatMap{
       case (to,((componentFrom,len),componentTo))=>{
@@ -64,7 +64,7 @@ case object ApproximatedShortestPathsAlgorithm  {
           )
         )
       }
-    }
+    }.cache()
     val interGroupPaths=toMapped.groupByKey()
     val outGraph =Graph(interGroupPaths, graph.edges,Iterable())
     val pathProcessors=new FastUtilWithDistance[VD,ED]();
