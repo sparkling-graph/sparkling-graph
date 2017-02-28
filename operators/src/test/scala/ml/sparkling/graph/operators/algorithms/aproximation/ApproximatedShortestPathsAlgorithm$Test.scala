@@ -33,13 +33,27 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
     val verticesSortedById=shortestPaths.vertices.collect().map{
       case (vId,data)=>(vId,data.toMap)
     }.toSet
+    verticesSortedById  should equal (
+      Set((5,Map()), (2,Map(5 -> 6.0, 4 -> 5.0, 3 -> 1.0)), (1,Map(2 -> 1.0, 5 -> 8.0, 4 -> 5.0, 3 -> 5.0)), (3,Map(5 -> 5.0, 4 -> 1.0)), (4,Map(5 -> 1.0)))
+    )
+  }
+
+  "Approximated shortest paths for undirected ring graph" should "be correctly calculated" in{
+    Given("graph")
+    val filePath = getClass.getResource("/graphs/5_nodes_ring")
+    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
+    When("Computes shortest paths")
+    val shortestPaths =ApproximatedShortestPathsAlgorithm.computeShortestPathsLengthsIterative(graph, (g:Graph[_,_])=>1,treatAsUndirected = true)
+    Then("Should calculate shortest paths correctly")
+    val verticesSortedById=shortestPaths.vertices.collect().map{
+      case (vId,data)=>(vId,data.toMap)
+    }.toSet
     verticesSortedById  should equal (Set(
-      (1,Map(5 -> 12.0, 4 -> 9.0, 3 -> 6.0, 2 -> 1.0)),
-      (2,Map(5 -> 9.0, 3 -> 1.0, 4 -> 6.0)),
-      (3,Map(5 -> 6.0, 4 -> 1.0)),
-      (4,Map(5 -> 1.0)),
-      (5,Map())
-    ))
+      (5,Map(2 -> 6.0, 4 -> 1.0, 1 -> 1.0, 3 -> 5.0)),
+      (3,Map(2 -> 1.0, 5 -> 5.0, 4 -> 1.0, 1 -> 5.0)),
+      (1,Map(2 -> 1.0, 5 -> 1.0, 4 -> 5.0, 3 -> 5.0)),
+      (4,Map(2 -> 5.0, 5 -> 1.0, 1 -> 5.0, 3 -> 1.0)),
+      (2,Map(5 -> 6.0, 4 -> 5.0, 1 -> 1.0, 3 -> 1.0))))
   }
 
   "Single shortest paths 1 for simple graph" should "be correctly calculated" in{
@@ -84,14 +98,14 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
     val shortestPathsAsUndirected=ApproximatedShortestPathsAlgorithm.computeShortestPaths(grapDirected,treatAsUndirected = true)
     val shortestPathsUndirected=ApproximatedShortestPathsAlgorithm.computeShortestPaths(graphUndirected)
     Then("Should calculate shortest paths correctly")
-    val verticesSortedById=shortestPathsAsUndirected.vertices.collect().sortBy{case (vId,data)=>vId}
-    verticesSortedById should equal (shortestPathsUndirected.vertices.collect().sortBy{case (vId,data)=>vId})
+    val verticesSortedById=shortestPathsAsUndirected.vertices.mapValues(_.toMap).collect().sortBy{case (vId,data)=>vId}
+    verticesSortedById should equal (shortestPathsUndirected.vertices.mapValues(_.toMap).collect().sortBy{case (vId,data)=>vId})
   }
 
 
-  "Approximation" should "not take long thant exact computing" in{
+  "Approximation" should "not take longer thant exact computing" in{
     Given("graph")
-    val graph=GraphGenerators.starGraph(sc,1000)
+    val graph=GraphGenerators.starGraph(sc,500)
     graph.cache();
     graph.vertices.collect()
     graph.edges.collect()

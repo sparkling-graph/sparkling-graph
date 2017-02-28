@@ -11,21 +11,21 @@ import org.apache.spark.graphx.{Edge, Graph}
   */
 class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
 
-  "Three node directed full graph " should  " be coarsed to  one node" in{
+  "Three node directed ring graph " should  " be coarsed to  two node" in{
     Given("graph")
     val filePath = getClass.getResource("/graphs/3_nodes_full_directed")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes coarsed graph")
     val components: Graph[Component, Int] = graph.LPCoarse()
     Then("Should compute components correctly")
-    components.vertices.count()  should equal (1)
+    components.vertices.count()  should equal (2)
     components.vertices.collect().map{
       case (vId,component)=>(vId,component.sorted)
-    }.toSet should equal (Set((3,List(1,2,3))))
-    components.edges.collect().toSet should equal(Set())
+    }.toSet should equal (Set((1,List(1,2)), (3,List(3))))
+    components.edges.collect().toSet should equal(Set(Edge(1,3,1), Edge(3,1,1)))
   }
 
-  "Three nodes directed graph with pair loop " should  " be coarsed to  two nodes" in{
+  "Three nodes directed graph with pair loop " should  " be coarsed to  two node" in{
     Given("graph")
     val filePath = getClass.getResource("/graphs/3_nodes_with_pair_loop_directed")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
@@ -35,8 +35,8 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
     components.vertices.count()  should equal (2)
     components.vertices.collect().map{
       case (vId,component)=>(vId,component.sorted)
-    }.toSet should equal (Set((1,List(1)),(3,List(2,3))))
-    components.edges.collect().toSet should equal(Set(Edge(1,3,1)))
+    }.toSet should equal (Set((1,List(1, 2)),(3,List(3))) )
+    components.edges.collect().toSet should equal(Set(Edge(1,3,1), Edge(3,1,1)))
   }
 
 
@@ -45,27 +45,27 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
     val filePath = getClass.getResource("/graphs/3_nodes_full_directed")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes coarsed graph")
-    val components: Graph[Component, Int] = graph.LPCoarse()
+    val components: Graph[Component, Int] = graph.LPCoarse(true)
     Then("Should compute components correctly")
     components.vertices.count()  should equal (1)
     components.vertices.collect().map{
       case (vId,component)=>(vId,component.sorted)
-    }.toSet should equal (Set((3,List(1,2,3))))
+    }.toSet should equal (Set((1,List(1,2,3))))
     components.edges.collect().toSet should equal(Set())
   }
 
 
-  "Four node directed full graph " should  " be coarsed to  one node" in{
+  "Four node directed ring graph " should  " be coarsed to  one node" in{
     Given("graph")
     val filePath = getClass.getResource("/graphs/4_nodes_full")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes coarsed graph")
-    val components: Graph[Component, Int] = LPCoarsening.coarse(graph)
+    val components: Graph[Component, Int] = LPCoarsening.coarse(graph,true)
     Then("Should compute components correctly")
     components.vertices.count()  should equal (1)
     components.vertices.collect().map{
       case (vId,component)=>(vId,component.sorted)
-    }.toSet should equal (Set((4,List(1,2,3,4))))
+    }.toSet should equal (Set((1,List(1,2,3,4))))
     components.edges.collect().toSet should equal(Set())
   }
 
@@ -80,41 +80,70 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
     components.vertices.count()  should equal (1)
     components.vertices.collect().map{
       case (vId,component)=>(vId,component.sorted)
-    }.toSet should equal (Set((4,List(1,2,3,4))))
+    }.toSet should equal (Set((1,List(1,2,3,4))))
     components.edges.collect().toSet should equal(Set())
   }
 
 
 
-  "Three node directed line graph without pair loops " should  " be coarsed to  three node same graph" in{
+  "Three node directed line graph without pair loops " should  " be coarsed to  two node graph" in{
     Given("graph")
     val filePath = getClass.getResource("/graphs/3_nodes_directed")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes coarsed graph")
     val components: Graph[Component, Int] = graph.LPCoarse()
     Then("Should compute components correctly")
-    components.vertices.count()  should equal (graph.vertices.count())
+    components.vertices.count()  should equal (2)
     components.vertices.collect().map{
       case (vId,component)=>(vId,component.sorted)
-    }.toSet should equal (graph.vertices.map{
-      case (vId,data)=>(vId,vId::Nil)
-    }.collect.toSet)
-    components.edges.collect().toSet should equal(graph.edges.collect.toSet)
+    }.toSet should equal (Set((1,List(1, 2)),(3,List(3))))
+    components.edges.collect().toSet should equal(Set(Edge(1,3,1)) )
   }
 
 
-  "Three node line graph treated as undirected " should  " be coarsed to  one node" in{
+  "Three node line graph treated as undirected " should  " be coarsed to  two node" in{
     Given("graph")
     val filePath = getClass.getResource("/graphs/3_nodes_directed")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes coarsed graph")
     val components: Graph[Component, Int] = graph.LPCoarse(true)
     Then("Should compute components correctly")
-    components.vertices.count()  should equal (1)
+    components.vertices.count()  should equal (2)
     components.vertices.collect().map{
       case (vId,component)=>(vId,component.sorted)
-    }.toSet should equal (Set((3,List(1,2,3))))
-    components.edges.collect().toSet should equal(Set())
+    }.toSet should equal (Set((1,List(1,2)),(3,List(3))))
+    components.edges.collect().toSet should equal(Set(Edge(1,3,1)))
+  }
+
+
+  "Three node directed line graph descending  " should  " be coarsed to  three node" in{
+    Given("graph")
+    val filePath = getClass.getResource("/graphs/3_nodes_directed_asc")
+    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
+    When("Computes coarsed graph")
+    val components: Graph[Component, Int] = graph.LPCoarse()
+    Then("Should compute components correctly")
+    components.vertices.count()  should equal (3)
+    components.vertices.collect().map{
+      case (vId,component)=>(vId,component.sorted)
+    }.toSet should equal (Set((3,List(3)), (1,List(1)), (2,List(2))))
+    components.edges.collect().toSet should equal(Set(Edge(2,1,1), Edge(3,2,1)))
+  }
+
+
+
+  "Five node directed ring graph  " should  " be coarsed to  four node" in{
+    Given("graph")
+    val filePath = getClass.getResource("/graphs/5_nodes_ring")
+    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
+    When("Computes coarsed graph")
+    val components: Graph[Component, Int] = graph.LPCoarse()
+    Then("Should compute components correctly")
+    components.vertices.count()  should equal (3)
+    components.vertices.collect().map{
+      case (vId,component)=>(vId,component.sorted)
+    }.toSet should equal (Set((1,List(1, 2)), (3,List(3, 4)), (5,List(5))))
+    components.edges.collect().toSet should equal(Set(Edge(1,3,1), Edge(3,5,1), Edge(5,1,1)) )
   }
 
 
@@ -139,20 +168,18 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
   }
 
 
-  "Three component directed graph without pair loops " should  " be coarsed to same graph " in{
+  "Three component directed graph without pair loops " should  " be coarsed to three nodes graph " in{
     Given("graph")
     val filePath = getClass.getResource("/graphs/coarsening_to_3")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes coarsed graph")
     val components: Graph[Component, Int] = graph.LPCoarse();
     Then("Should compute components correctly")
-    components.vertices.count()  should equal (graph.vertices.count())
+    components.vertices.count()  should equal (3)
     components.vertices.collect().map{
       case (vId,component)=>(vId,component.sorted)
-    }.toSet should equal (graph.vertices.map{
-      case (vId,data)=>(vId,vId::Nil)
-    }.collect.toSet)
-    components.edges.collect().toSet should equal(graph.edges.collect.toSet)
+    }.toSet should equal (Set((1,List(1, 2, 3, 4)), (9,List(9, 10, 11, 12)), (5,List(5, 6, 7, 8))))
+    components.edges.collect().toSet should equal(Set(Edge(1,5,1), Edge(1,9,1), Edge(5,9,1)))
   }
 
   "Three component directed graph treated as undirected " should  " be coarsed to three nodes graph" in{
@@ -165,8 +192,8 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
     components.vertices.count()  should equal (3)
     components.vertices.collect().map{
       case (vId,component)=>(vId,component.sorted)
-    }.toSet should equal (Set((8,List(5, 6, 7, 8)), (12,List(9, 10, 11, 12)), (4,List(1, 2, 3, 4))))
-    components.edges.collect().toSet should equal(Set(Edge(4,8,1), Edge(4,12,1), Edge(8,12,1)))
+    }.toSet should equal (Set((1,List(1, 2, 3, 4)), (9,List(9, 10, 11, 12)), (5,List(5, 6, 7, 8))))
+    components.edges.collect().toSet should equal(Set(Edge(1,5,1), Edge(1,9,1), Edge(5,9,1)))
   }
 
 }

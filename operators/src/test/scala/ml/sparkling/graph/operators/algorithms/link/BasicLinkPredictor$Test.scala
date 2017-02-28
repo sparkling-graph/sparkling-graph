@@ -28,6 +28,6 @@ class BasicLinkPredictor$Test (implicit sc:SparkContext) extends MeasureTest {
     When("Computes new links")
     val links = graph.predictLinks(CommonNeighbours,1,true)
     Then("Should compute links correctly")
-    links.collect() should equal(Array((1,3),(2,4)))
+    links.collect().toSet should equal(Set((1,3),(2,4)))
   }
 }

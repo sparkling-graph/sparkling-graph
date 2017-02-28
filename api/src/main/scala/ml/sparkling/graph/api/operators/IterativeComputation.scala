@@ -12,8 +12,12 @@ object IterativeComputation {
     def apply[B<:VD](id:VertexId,data:B):Boolean
   }
 
-  trait SimpleVertexPredicate{
+  trait SimpleVertexPredicate extends {
     def apply(id:VertexId):Boolean
+  }
+
+  case class SimpleWrapper[-VD](pred:SimpleVertexPredicate) extends VertexPredicate[VD]{
+    def apply[B<:VD](id:VertexId,data:B):Boolean=pred(id)
   }
 
   type BucketSizeProvider[VD, ED] = Graph[VD, ED] => Long
