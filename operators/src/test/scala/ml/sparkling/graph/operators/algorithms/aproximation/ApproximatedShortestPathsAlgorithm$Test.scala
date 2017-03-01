@@ -34,7 +34,7 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
       case (vId,data)=>(vId,data.toMap)
     }.toSet
     verticesSortedById  should equal (
-      Set((5,Map()), (2,Map(5 -> 6.0, 4 -> 5.0, 3 -> 1.0)), (1,Map(2 -> 1.0, 5 -> 8.0, 4 -> 5.0, 3 -> 5.0)), (3,Map(5 -> 5.0, 4 -> 1.0)), (4,Map(5 -> 1.0)))
+      Set((1,Map(2 -> 1.0, 5 -> 8.0, 4 -> 5.0, 3 -> 2.0)), (3,Map(5 -> 2.0, 4 -> 1.0)), (5,Map()), (2,Map(5 -> 8.0, 4 -> 2.0, 3 -> 1.0)), (4,Map(5 -> 1.0)))
     )
   }
 
@@ -49,11 +49,11 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
       case (vId,data)=>(vId,data.toMap)
     }.toSet
     verticesSortedById  should equal (Set(
-      (5,Map(2 -> 6.0, 4 -> 1.0, 1 -> 1.0, 3 -> 5.0)),
-      (3,Map(2 -> 1.0, 5 -> 5.0, 4 -> 1.0, 1 -> 5.0)),
-      (1,Map(2 -> 1.0, 5 -> 1.0, 4 -> 5.0, 3 -> 5.0)),
-      (4,Map(2 -> 5.0, 5 -> 1.0, 1 -> 5.0, 3 -> 1.0)),
-      (2,Map(5 -> 6.0, 4 -> 5.0, 1 -> 1.0, 3 -> 1.0))))
+      (2,Map(5 -> 2.0, 4 -> 2.0, 1 -> 1.0, 3 -> 1.0)),
+      (4,Map(2 -> 2.0, 5 -> 1.0, 1 -> 2.0, 3 -> 1.0)),
+      (3,Map(2 -> 1.0, 5 -> 2.0, 4 -> 1.0, 1 -> 2.0)),
+      (1,Map(2 -> 1.0, 5 -> 1.0, 4 -> 2.0, 3 -> 2.0)),
+      (5,Map(2 -> 2.0, 4 -> 1.0, 1 -> 1.0, 3 -> 2.0))) )
   }
 
   "Single shortest paths 1 for simple graph" should "be correctly calculated" in{
@@ -103,7 +103,7 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
   }
 
 
-  "Approximation" should "not take longer thant exact computing" in{
+  "Approximation for star graph" should "not take longer thant exact computing" in{
     Given("graph")
     val graph=GraphGenerators.starGraph(sc,500)
     graph.cache();
@@ -117,5 +117,20 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
     Then("Approximation should be faster")
     approximationTime should be <=(exactTime)
   }
+  "Approximation for random log normal graph" should "not take longer thant exact computing" in{
+    Given("graph")
+    val graph=GraphGenerators.logNormalGraph(sc,100)
+    graph.cache();
+    graph.vertices.collect()
+    graph.edges.collect()
+    sc.parallelize((1 to 10000)).map(_*1000).treeReduce(_+_)
+    When("Computes shortest paths")
+    val (_,exactTime) =time("Exact shortest paths")(ShortestPathsAlgorithm.computeShortestPaths(graph, treatAsUndirected = true))
+    val (_,approximationTime) =time("Aproximated shortest paths")(ApproximatedShortestPathsAlgorithm.computeShortestPaths(graph, treatAsUndirected = true ))
+
+    Then("Approximation should be faster")
+    approximationTime should be <=(exactTime)
+  }
+
 
 }

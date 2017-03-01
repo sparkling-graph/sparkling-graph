@@ -91,29 +91,42 @@ case object ApproximatedShortestPathsAlgorithm  {
           case (datas,len)=>datas.map((id)=>(id,len))
         })
       }
-    })
+    }).cache()
     val outGraph=Graph(toMappedGroups, graph.edges,ListBuffer[(VertexId, JDouble)]()).cache()
     val one:JDouble=1.0
+    val two:JDouble=2.0
+    val neighboursExchanged: RDD[(VertexId,ListBuffer[VertexId])] =outGraph.edges
+      .mapPartitions((data)=>{
+        data.flatMap((edge)=>{
+          val toSrc= if(vertexPredicate(edge.dstId)) Iterable((edge.srcId,edge.dstId)) else Iterable()
+          val toDst= if(vertexPredicate(edge.srcId) && treatAsUndirected) Iterable((edge.dstId,edge.srcId)) else Iterable()
+          toSrc++toDst
+        })
+    })
+      .aggregateByKey[ListBuffer[VertexId]](ListBuffer[VertexId]())((agg,e)=>{agg+=e;agg},(agg1,agg2)=>{agg1++=agg2;agg1})
+    val graphWithNeighbours=outGraph.outerJoinVertices(neighboursExchanged) {
+      case (id, data, Some(newData)) => newData
+      case (id, data, None) => ListBuffer[VertexId]()
+    }
+    val secondLevelNeighbours: RDD[(VertexId, ListBuffer[VertexId])] =graphWithNeighbours.triplets.mapPartitions(
+      (data)=>{
+        data.flatMap((edge)=>{
+          val toSrc= Iterable((edge.srcId,edge.dstAttr))
+          val toDst= if(treatAsUndirected) Iterable((edge.dstId,edge.srcAttr)) else Iterable()
+          toSrc++toDst
+        })
+      }
+    ).aggregateByKey[ListBuffer[VertexId]](ListBuffer[VertexId]())((agg, e)=>{agg++=e;agg}, (agg1, agg2)=>{agg1++=agg2;agg1})
 
-    val out=outGraph.mapVertices{case (vid,data)=>data}.pregel[Iterable[(VertexId,JDouble)]](Iterable(),maxIterations = 1)(
-    vprog=(vid,data,msg)=>{
-    val out=data++msg.filter(_._1!=vid).groupBy{
-      case (id,len)=>id
-    }.mapValues(_.map(_._2).min)
-      out
-    },
-    sendMsg=(triplet)=> {
-      val extSrc=if(vertexPredicate(triplet.dstId)) Iterable((triplet.dstId,one)) else Iterable()
-      val extDst=if(vertexPredicate(triplet.srcId)) Iterable((triplet.srcId,one)) else Iterable()
-      val toSrc= Iterator((triplet.srcId,(extSrc++triplet.dstAttr.filter(_._1!=triplet.srcId).map{case (id,len)=>(id,(len+one).asInstanceOf[JDouble])})))
-      val toDst=if(treatAsUndirected) Iterator((triplet.dstId,(extDst++triplet.srcAttr.filter(_._1!=triplet.dstId).map{case (id,len)=>(id,(len+one).asInstanceOf[JDouble])}))) else Iterator()
-        toSrc++toDst
-      },
-    mergeMsg=(a,b)=>a++b
-    )
-    out.mapVertices{case (vid,data)=>data.groupBy{
-      case (id,len)=>id
-    }.mapValues(_.map(_._2).min).map(identity)
+
+    val neighbours=neighboursExchanged.fullOuterJoin(secondLevelNeighbours).map{
+      case (vId,(firstOpt,secondOpt))=>(vId,(firstOpt.map(d=>d.map(id=>(id,one)))::(secondOpt.map(_.map(id=>(id,two))))::Nil).flatten.flatten.filter(_._1!=vId))
+    }.cache()
+    val out: Graph[ListBuffer[(VertexId, JDouble)], ED] =outGraph.joinVertices(neighbours){
+      case (id,data,newData)=>data++newData
+    }
+    out.mapVertices{
+      case (id,data)=>data.groupBy(_._1).mapValues(l=>l.map(_._2).min).map(identity)
     }
   }
 

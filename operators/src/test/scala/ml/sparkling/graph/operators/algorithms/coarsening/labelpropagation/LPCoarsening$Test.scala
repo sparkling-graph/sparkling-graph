@@ -12,20 +12,6 @@ import org.apache.spark.graphx.{Edge, Graph}
   */
 class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
 
-  "Three node directed ring graph " should  " be coarsed to  two node" in{
-    Given("graph")
-    val filePath = getClass.getResource("/graphs/3_nodes_full_directed")
-    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
-    When("Computes coarsed graph")
-    val components: Graph[Component, Int] = graph.LPCoarse()
-    Then("Should compute components correctly")
-    components.vertices.count()  should equal (2)
-    components.vertices.collect().map{
-      case (vId,component)=>(vId,component.sorted)
-    }.toSet should equal (Set((1,List(1,2)), (3,List(3))))
-    components.edges.collect().toSet should equal(Set(Edge(1,3,1), Edge(3,1,1)))
-  }
-
   "Three nodes directed graph with pair loop " should  " be coarsed to  two node" in{
     Given("graph")
     val filePath = getClass.getResource("/graphs/3_nodes_with_pair_loop_directed")
@@ -218,14 +204,17 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
     components.vertices.count()  should equal (graph.vertices.count()/2)
   }
 
-  "Random log normal graph " should  " be coarsed at least by half" in{
-    Given("graph")
-    val graph=GraphGenerators.logNormalGraph(sc,50)
-    When("Computes coarsed graph")
-    val components= graph.LPCoarse(true);
-    Then("Should compute components correctly")
-    println(s"Coarsed to ${components.vertices.count()}")
-    components.vertices.count()  should be <= (graph.vertices.count()/2)
+  "Random log normal graph " should  " be coarsed at least by 40%" in{
+    for (x<-0 to 10){
+      Given("graph")
+      val graph=GraphGenerators.logNormalGraph(sc,60)
+      val expectedSize=(graph.vertices.count()*0.6).toLong
+      When("Computes coarsed graph")
+      val components= graph.LPCoarse(true);
+      Then("Should compute components correctly")
+      println(s"Coarsed to ${components.vertices.count()}")
+      components.vertices.count()  should be <=(expectedSize)
+    }
   }
 
 }

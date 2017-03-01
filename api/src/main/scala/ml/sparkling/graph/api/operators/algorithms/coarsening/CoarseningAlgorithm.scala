@@ -12,7 +12,7 @@ object CoarseningAlgorithm {
   type Component=List[VertexId]
 
   trait CoarseningAlgorithm {
-    def coarse[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],treatAsUndirected:Boolean):Graph[Component,ED]
+    def coarse[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],treatAsUndirected:Boolean=false,checkpointingFrequency:Int=50):Graph[Component,ED]
   }
 
   type CoarseningMethod[VD,ED]=(Graph[VD,ED])=>Graph[Component,ED]
