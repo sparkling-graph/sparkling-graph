@@ -4,6 +4,7 @@ import ml.sparkling.graph.api.operators.algorithms.coarsening.CoarseningAlgorith
 import ml.sparkling.graph.operators.MeasureTest
 import ml.sparkling.graph.operators.OperatorsDSL._
 import org.apache.spark.SparkContext
+import org.apache.spark.graphx.util.GraphGenerators
 import org.apache.spark.graphx.{Edge, Graph}
 
 /**
@@ -194,6 +195,37 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
       case (vId,component)=>(vId,component.sorted)
     }.toSet should equal (Set((1,List(1, 2, 3, 4)), (9,List(9, 10, 11, 12)), (5,List(5, 6, 7, 8))))
     components.edges.collect().toSet should equal(Set(Edge(1,5,1), Edge(1,9,1), Edge(5,9,1)))
+  }
+
+
+  "Big star  " should  " be coarsed to one node graph" in{
+    Given("graph")
+    val graph:Graph[Int,Int]=GraphGenerators.starGraph(sc,1000)
+    When("Computes coarsed graph")
+    val components: Graph[Component, Int] = graph.LPCoarse(true);
+    Then("Should compute components correctly")
+    components.vertices.count()  should equal (1)
+  }
+
+
+  "Grid graph " should  " be coarsed at  half" in{
+    Given("graph")
+    val graph=GraphGenerators.gridGraph(sc,20,20)
+    When("Computes coarsed graph")
+    val components= graph.LPCoarse(true);
+    Then("Should compute components correctly")
+    println(s"Coarsed to ${components.vertices.count()}")
+    components.vertices.count()  should equal (graph.vertices.count()/2)
+  }
+
+  "Random log normal graph " should  " be coarsed at least by half" in{
+    Given("graph")
+    val graph=GraphGenerators.logNormalGraph(sc,50)
+    When("Computes coarsed graph")
+    val components= graph.LPCoarse(true);
+    Then("Should compute components correctly")
+    println(s"Coarsed to ${components.vertices.count()}")
+    components.vertices.count()  should be <= (graph.vertices.count()/2)
   }
 
 }
