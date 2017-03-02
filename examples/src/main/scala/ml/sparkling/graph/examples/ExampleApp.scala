@@ -43,7 +43,6 @@ abstract class ExampleApp extends Serializable {
     type OptionMap = Map[Symbol, Any]
 
     def nextOption(map: OptionMap, list: List[String]): OptionMap = {
-      def isNotSwitch(s: String) = (s(0) != '-')
       list match {
         case Nil => map
         case "--delimiter" :: value :: tail =>
