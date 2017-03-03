@@ -26,7 +26,7 @@ import org.scalatest._
 class SparkTest extends Spec with BeforeAndAfterAll {
   val file: Path = Files.createTempDirectory("tmpCheckpoint")
   override val invokeBeforeAllAndAfterAllEvenIfNoTestsAreExpected=true
-  val master = "local[*]"
+  val master = "local[1]"
 
 
   def appName: String = "operators-tests"

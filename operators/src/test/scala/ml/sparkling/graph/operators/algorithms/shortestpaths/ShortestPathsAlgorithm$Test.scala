@@ -13,24 +13,45 @@ import scala.collection.JavaConversions._
 class ShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extends MeasureTest  {
 
 
-
-    "Shortest paths for simple graph" should "be correctly calculated" in{
+  "Shortest paths for simple ring graph" should "be correctly calculated" in{
     Given("graph")
-    val filePath = getClass.getResource("/graphs/5_nodes_directed")
+    val filePath = getClass.getResource("/graphs/5_nodes_ring")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Computes shortest paths")
-    val shortestPaths=ShortestPathsAlgorithm.computeShortestPaths(graph)
+    val shortestPaths=ShortestPathsAlgorithm.computeShortestPaths(graph,treatAsUndirected = true)
     Then("Should calculate shortest paths correctly")
-      val verticesSortedById=shortestPaths.vertices.collect().sortBy{case (vId,data)=>vId}
-      verticesSortedById.map{case (vId,data)=>(vId,data.mapValues(s=>s.map(l=>l.toList)))} should equal (Array(
-      (1,Map(2 -> Set(List(1d)), 3 -> Set(List(2d,2d)), 4 -> Set(List(3d,3d,2d)), 5 -> Set(List(4d,4d,3d,2d)))),
-      (2,Map(3 -> Set(List(1d)), 4 -> Set(List(2d,3d)), 5 -> Set(List(3d,4d,3d)) )),
-      (3,Map(4 -> Set(List(1d)), 5 -> Set(List(2d,4d)))),
-      (4,Map(5 -> Set(List(1d)))),
-      (5,Map())
-    ))
+    val verticesSortedById=shortestPaths.vertices.collect().sortBy{case (vId,data)=>vId}
+    verticesSortedById.map{case (vId,data)=>(vId,data.mapValues(s=>s.map(l=>l.toList)))}.toSet should equal (Set(
+        (3,Map(5 -> Set(List(2.0, 4.0)), 4 -> Set(List(1.0)), 2 -> Set(List(1.0)), 1 -> Set(List(2.0, 2.0)))),
+        (5,Map(4 -> Set(List(1.0)), 2 -> Set(List(2.0, 1.0)), 3 -> Set(List(2.0, 4.0)), 1 -> Set(List(1.0)))),
+        (2,Map(5 -> Set(List(2.0, 1.0)), 4 -> Set(List(2.0, 3.0)), 3 -> Set(List(1.0)), 1 -> Set(List(1.0)))),
+        (4,Map(5 -> Set(List(1.0)), 3 -> Set(List(1.0)), 2 -> Set(List(2.0, 3.0)), 1 -> Set(List(2.0, 5.0)))),
+        (1,Map(5 -> Set(List(1.0)), 4 -> Set(List(2.0, 5.0)), 2 -> Set(List(1.0)), 3 -> Set(List(2.0, 2.0))))
+      )
+    )
   }
 
+  "Shortest paths for simple grid graph" should "be correctly calculated" in {
+    Given("graph")
+    val filePath = getClass.getResource("/graphs/9_nodes_grid")
+    val graph: Graph[Int, Int] = loadGraph(filePath.toString)
+    When("Computes shortest paths")
+    val shortestPaths = ShortestPathsAlgorithm.computeShortestPaths(graph, treatAsUndirected = true)
+    Then("Should calculate shortest paths correctly")
+    val verticesSortedById = shortestPaths.vertices.collect().sortBy { case (vId, data) => vId }
+    verticesSortedById.map { case (vId, data) => (vId, data.mapValues(s => s.map(l => l.toList))) }.toSet should equal(Set(
+      (1,Map(7 -> Set(List(2.0, 4.0)), 8 -> Set(List(3.0, 5.0, 2.0), List(3.0, 7.0, 4.0), List(3.0, 5.0, 4.0)), 3 -> Set(List(2.0, 2.0)), 5 -> Set(List(2.0, 4.0), List(2.0, 2.0)), 4 -> Set(List(1.0)), 9 -> Set(List(4.0, 6.0, 5.0, 2.0), List(4.0, 8.0, 5.0, 4.0), List(4.0, 6.0, 3.0, 2.0), List(4.0, 8.0, 5.0, 2.0), List(4.0, 6.0, 5.0, 4.0), List(4.0, 8.0, 7.0, 4.0)), 6 -> Set(List(3.0, 5.0, 2.0), List(3.0, 5.0, 4.0), List(3.0, 3.0, 2.0)), 2 -> Set(List(1.0)))),
+      (8,Map(7 -> Set(List(1.0)), 3 -> Set(List(3.0, 2.0, 5.0), List(3.0, 6.0, 5.0), List(3.0, 6.0, 9.0)), 5 -> Set(List(1.0)), 4 -> Set(List(2.0, 5.0), List(2.0, 7.0)), 9 -> Set(List(1.0)), 6 -> Set(List(2.0, 5.0), List(2.0, 9.0)), 2 -> Set(List(2.0, 5.0)), 1 -> Set(List(3.0, 4.0, 5.0), List(3.0, 2.0, 5.0), List(3.0, 4.0, 7.0)))),
+      (2,Map(7 -> Set(List(3.0, 4.0, 5.0), List(3.0, 4.0, 1.0), List(3.0, 8.0, 5.0)), 8 -> Set(List(2.0, 5.0)), 3 -> Set(List(1.0)), 5 -> Set(List(1.0)), 9 -> Set(List(3.0, 8.0, 5.0), List(3.0, 6.0, 5.0), List(3.0, 6.0, 3.0)), 4 -> Set(List(2.0, 1.0), List(2.0, 5.0)), 6 -> Set(List(2.0, 5.0), List(2.0, 3.0)), 1 -> Set(List(1.0)))),
+      (5,Map(7 -> Set(List(2.0, 8.0), List(2.0, 4.0)), 8 -> Set(List(1.0)), 3 -> Set(List(2.0, 6.0), List(2.0, 2.0)), 9 -> Set(List(2.0, 8.0), List(2.0, 6.0)), 4 -> Set(List(1.0)), 6 -> Set(List(1.0)), 2 -> Set(List(1.0)), 1 -> Set(List(2.0, 4.0), List(2.0, 2.0)))),
+      (4,Map(7 -> Set(List(1.0)), 8 -> Set(List(2.0, 5.0), List(2.0, 7.0)), 3 -> Set(List(3.0, 2.0, 5.0), List(3.0, 6.0, 5.0), List(3.0, 2.0, 1.0)), 5 -> Set(List(1.0)), 9 -> Set(List(3.0, 8.0, 5.0), List(3.0, 8.0, 7.0), List(3.0, 6.0, 5.0)), 6 -> Set(List(2.0, 5.0)), 2 -> Set(List(2.0, 1.0), List(2.0, 5.0)), 1 -> Set(List(1.0)))),
+      (9,Map(7 -> Set(List(2.0, 8.0)), 8 -> Set(List(1.0)), 3 -> Set(List(2.0, 6.0)), 5 -> Set(List(2.0, 8.0), List(2.0, 6.0)), 4 -> Set(List(3.0, 5.0, 8.0), List(3.0, 7.0, 8.0), List(3.0, 5.0, 6.0)), 6 -> Set(List(1.0)), 2 -> Set(List(3.0, 5.0, 8.0), List(3.0, 5.0, 6.0), List(3.0, 3.0, 6.0)), 1 -> Set(List(4.0, 4.0, 5.0, 8.0), List(4.0, 4.0, 5.0, 6.0), List(4.0, 2.0, 5.0, 6.0), List(4.0, 2.0, 5.0, 8.0), List(4.0, 4.0, 7.0, 8.0), List(4.0, 2.0, 3.0, 6.0)))),
+      (3,Map(7 -> Set(List(4.0, 4.0, 1.0, 2.0), List(4.0, 4.0, 5.0, 6.0), List(4.0, 4.0, 5.0, 2.0), List(4.0, 8.0, 9.0, 6.0), List(4.0, 8.0, 5.0, 6.0), List(4.0, 8.0, 5.0, 2.0)), 8 -> Set(List(3.0, 5.0, 6.0), List(3.0, 5.0, 2.0), List(3.0, 9.0, 6.0)), 5 -> Set(List(2.0, 6.0), List(2.0, 2.0)), 4 -> Set(List(3.0, 1.0, 2.0), List(3.0, 5.0, 6.0), List(3.0, 5.0, 2.0)), 9 -> Set(List(2.0, 6.0)), 6 -> Set(List(1.0)), 2 -> Set(List(1.0)), 1 -> Set(List(2.0, 2.0)))),
+      (6,Map(7 -> Set(List(3.0, 4.0, 5.0), List(3.0, 8.0, 5.0), List(3.0, 8.0, 9.0)), 8 -> Set(List(2.0, 5.0), List(2.0, 9.0)), 3 -> Set(List(1.0)), 5 -> Set(List(1.0)), 4 -> Set(List(2.0, 5.0)), 9 -> Set(List(1.0)), 2 -> Set(List(2.0, 5.0), List(2.0, 3.0)), 1 -> Set(List(3.0, 4.0, 5.0), List(3.0, 2.0, 5.0), List(3.0, 2.0, 3.0)))),
+      (7,Map(8 -> Set(List(1.0)), 3 -> Set(List(4.0, 2.0, 5.0, 8.0), List(4.0, 2.0, 5.0, 4.0), List(4.0, 2.0, 1.0, 4.0), List(4.0, 6.0, 5.0, 4.0), List(4.0, 6.0, 9.0, 8.0), List(4.0, 6.0, 5.0, 8.0)), 5 -> Set(List(2.0, 8.0), List(2.0, 4.0)), 9 -> Set(List(2.0, 8.0)), 4 -> Set(List(1.0)), 6 -> Set(List(3.0, 9.0, 8.0), List(3.0, 5.0, 8.0), List(3.0, 5.0, 4.0)), 2 -> Set(List(3.0, 5.0, 8.0), List(3.0, 1.0, 4.0), List(3.0, 5.0, 4.0)), 1 -> Set(List(2.0, 4.0))))
+    )
+    )
+  }
 
   "Shortest paths for simple graph" should "be correctly calculated using iterative approach" in{
     Given("graph")
@@ -83,6 +104,28 @@ class ShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extends MeasureTes
       (4,0),
       (5,0)
     ))
+  }
+
+  "Single shortest paths for small grid graph" should "be correctly calculated" in{
+    Given("graph")
+    val filePath = getClass.getResource("/graphs/9_nodes_grid")
+    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
+    When("Computes shortest paths")
+    val shortestPaths=ShortestPathsAlgorithm.computeShortestPathsLengths(graph,treatAsUndirected = true)
+    Then("Should calculate shortest paths correctly")
+    val verticesSortedById=shortestPaths.vertices.collect().sortBy{case (vId,data)=>vId}.map{
+      case (vId,data)=>(vId,data.toMap)
+    }
+    verticesSortedById should equal (Array(
+      (1,Map(7->2.0, 8->3.0, 3->2.0, 5->2.0, 4->1.0, 9->4.0, 6->3.0, 2->1.0)),
+      (2,Map(7->3.0, 8->2.0, 3->1.0, 5->1.0, 4->2.0, 9->3.0, 6->2.0, 1->1.0)),
+      (3,Map(7->4.0, 8->3.0, 5->2.0, 4->3.0, 9->2.0, 6->1.0, 2->1.0, 1->2.0)),
+      (4,Map(7->1.0, 8->2.0, 3->3.0, 5->1.0, 9->3.0, 6->2.0, 2->2.0, 1->1.0)),
+      (5,Map(7->2.0, 8->1.0, 3->2.0, 9->2.0, 4->1.0, 6->1.0, 2->1.0, 1->2.0)),
+      (6,Map(7->3.0, 8->2.0, 3->1.0, 5->1.0, 4->2.0, 9->1.0, 2->2.0, 1->3.0)),
+      (7,Map(8->1.0, 3->4.0, 5->2.0, 9->2.0, 4->1.0, 6->3.0, 2->3.0, 1->2.0)),
+      (8,Map(7->1.0, 3->3.0, 5->1.0, 4->2.0, 9->1.0, 6->2.0, 2->2.0, 1->3.0)),
+      (9,Map(7->2.0, 8->1.0, 3->2.0, 5->2.0, 4->3.0, 6->1.0, 2->3.0, 1->4.0))))
   }
 
 

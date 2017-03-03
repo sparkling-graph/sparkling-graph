@@ -8,6 +8,8 @@ import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fast
 import org.apache.spark.graphx.VertexId
 
 import scala.collection.JavaConversions._
+
+
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  * Path processor that utilizes it.unimi.dsi.fastutil as data store, and computes only distances

@@ -56,7 +56,7 @@ object MatrixCreator extends Serializable {
     val sparkConf = new SparkConf().setAppName(name).set("spark.app.id", "sparkling-graph-example")
     val ctx = new SparkContext(sparkConf)
 
-    val parts:List[File]=new File(in).listFiles.filter(f=>f.getName!="index"&&f.getName.startsWith("from")&&f.isFile).toList
+    val parts:List[File]=new File(in).listFiles.filter(f=>f.getName!="index"&&f.getName.startsWith("from")&&f.isDirectory).toList
 
      parts match{
       case  head::tail=>{

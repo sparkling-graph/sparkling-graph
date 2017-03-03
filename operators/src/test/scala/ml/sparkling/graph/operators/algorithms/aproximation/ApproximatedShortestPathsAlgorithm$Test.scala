@@ -1,14 +1,12 @@
 package ml.sparkling.graph.operators.algorithms.aproximation
-
+import org.scalatest.tagobjects.Slow
 import ml.sparkling.graph.operators.MeasureTest
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
-import ml.sparkling.graph.operators.algorithms.aproximation.ApproximatedShortestPathsAlgorithm.defaultNewPath
 import ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgorithm
-import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.FastUtilWithDistance.DataMap
 import org.apache.spark.graphx.util.GraphGenerators
+import org.scalatest.Ignore
 
-import scala.collection.JavaConversions._
 /**
   * Created by  Roman Bartusiak <riomus@gmail.com> on 07.02.17.
   */
@@ -103,29 +101,27 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
   }
 
 
-  "Approximation for star graph" should "not take longer thant exact computing" in{
+   ignore should " Approximation for random grid  graph not take longer thant exact computing"  taggedAs(Slow) in{
     Given("graph")
-    val graph=GraphGenerators.starGraph(sc,500)
-    graph.cache();
+    val graph=GraphGenerators.gridGraph(sc,40,40).cache()
     graph.vertices.collect()
     graph.edges.collect()
-    sc.parallelize((1 to 10000)).map(_*1000).treeReduce(_+_)
     When("Computes shortest paths")
-    val (_,exactTime) =time("Exact shortest paths")(ShortestPathsAlgorithm.computeShortestPaths(graph, treatAsUndirected = true))
+    val (_,exactTime) =time("Exact shortest paths")(ShortestPathsAlgorithm.computeShortestPathsLengths(graph, treatAsUndirected = true))
     val (_,approximationTime) =time("Aproximated shortest paths")(ApproximatedShortestPathsAlgorithm.computeShortestPaths(graph, treatAsUndirected = true ))
 
     Then("Approximation should be faster")
     approximationTime should be <=(exactTime)
   }
-  "Approximation for random log normal graph" should "not take longer thant exact computing" in{
+
+  ignore should " Approximation for random log normal graph not take longer thant exact computing"  taggedAs(Slow) in{
     Given("graph")
-    val graph=GraphGenerators.logNormalGraph(sc,120)
-    graph.cache();
+    val graph=GraphGenerators.logNormalGraph(sc,500).cache()
     graph.vertices.collect()
     graph.edges.collect()
     sc.parallelize((1 to 10000)).map(_*1000).treeReduce(_+_)
     When("Computes shortest paths")
-    val (_,exactTime) =time("Exact shortest paths")(ShortestPathsAlgorithm.computeShortestPaths(graph, treatAsUndirected = true))
+    val (_,exactTime) =time("Exact shortest paths")(ShortestPathsAlgorithm.computeShortestPathsLengths(graph, treatAsUndirected = true))
     val (_,approximationTime) =time("Aproximated shortest paths")(ApproximatedShortestPathsAlgorithm.computeShortestPaths(graph, treatAsUndirected = true ))
 
     Then("Approximation should be faster")

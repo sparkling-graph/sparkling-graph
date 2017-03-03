@@ -6,6 +6,7 @@ import ml.sparkling.graph.operators.OperatorsDSL._
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.util.GraphGenerators
 import org.apache.spark.graphx.{Edge, Graph}
+import org.scalatest.tagobjects.Slow
 
 /**
   * Created by  Roman Bartusiak <riomus@gmail.com> on 06.02.17.
@@ -184,7 +185,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
   }
 
 
-  "Big star  " should  " be coarsed to one node graph" in{
+  "Big star  " should  " be coarsed to one node graph" taggedAs(Slow) in{
     Given("graph")
     val graph:Graph[Int,Int]=GraphGenerators.starGraph(sc,1000)
     When("Computes coarsed graph")
@@ -194,7 +195,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
   }
 
 
-  "Grid graph " should  " be coarsed at  half" in{
+  "Grid graph " should  " be coarsed at  half" taggedAs(Slow) in{
     Given("graph")
     val graph=GraphGenerators.gridGraph(sc,20,20)
     When("Computes coarsed graph")
@@ -204,7 +205,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
     components.vertices.count()  should equal (graph.vertices.count()/2)
   }
 
-  "Random log normal graph " should  " be coarsed at least by 40%" in{
+  "Random log normal graph " should  " be coarsed at least by 40%" taggedAs(Slow) in{
     for (x<-0 to 10){
       Given("graph")
       val graph=GraphGenerators.logNormalGraph(sc,60)
