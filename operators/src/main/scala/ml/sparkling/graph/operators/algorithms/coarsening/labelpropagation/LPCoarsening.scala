@@ -1,6 +1,6 @@
 package ml.sparkling.graph.operators.algorithms.coarsening.labelpropagation
 
-import ml.sparkling.graph.api.operators.algorithms.coarsening.CoarseningAlgorithm.{CoarseningAlgorithm, Component}
+import ml.sparkling.graph.api.operators.algorithms.coarsening.CoarseningAlgorithm.{CoarseningAlgorithm, Component, DefaultEdgeValueSelector, EdgeValueSelector}
 import org.apache.log4j.Logger
 import org.apache.spark.graphx._
 
@@ -27,9 +27,11 @@ case object ChangedStatsAgregator{
   def add(b1:ChangedStats,b2:VertexWrapper)=if(b2.changed) ChangedStats(b1.changed+1,b1.notChanged) else ChangedStats(b1.changed,b1.notChanged+1)
   def add(b1:ChangedStats,b2:ChangedStats)=b1+b2
 }
+
+
 case object LPCoarsening extends CoarseningAlgorithm{
   val logger=Logger.getLogger(LPCoarsening.getClass())
-  override def coarse[VD:ClassTag,ED:ClassTag](graph: Graph[VD, ED],treatAsUndirected:Boolean=false,checkpointingFrequency:Int=10): Graph[Component, ED] = {
+  override def coarse[VD:ClassTag,ED:ClassTag](graph: Graph[VD, ED],treatAsUndirected:Boolean=false,checkpointingFrequency:Int=10,edgeValueSelector:EdgeValueSelector=DefaultEdgeValueSelector): Graph[Component, ED] = {
     logger.info(s"Coarsing graph G using undirected parameter $treatAsUndirected")
     val filteredGraph=graph.filter(preprocess=(g:Graph[VD,ED])=>g,epred=(e:EdgeTriplet[VD, ED])=>e.srcId!=e.dstId).cache()
     var iterationGraph: Graph[VertexWrapper, ED] =filteredGraph.mapVertices((vId, _)=>VertexWrapper(vId,vId,vId,false))
@@ -96,7 +98,7 @@ case object LPCoarsening extends CoarseningAlgorithm{
     }.join(components.vertices).map{
       case (oldDst,((edge,newSrc),newDst))=>Edge(newSrc,newDst,edge.attr)
     }.filter(e=>e.srcId!=e.dstId).cache()
-    Graph(newVertices,newEdges)
+    Graph(newVertices,newEdges).groupEdges(edgeValueSelector.getValue).cache()
   }
 
 }

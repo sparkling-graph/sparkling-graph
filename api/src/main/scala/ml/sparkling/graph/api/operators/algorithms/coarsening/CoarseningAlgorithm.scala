@@ -11,8 +11,14 @@ object CoarseningAlgorithm {
 
   type Component=List[VertexId]
 
+  trait EdgeValueSelector extends Serializable{
+    def getValue[ED](e1:ED,e2:ED):ED=e1
+  }
+
+  object DefaultEdgeValueSelector extends EdgeValueSelector
+
   trait CoarseningAlgorithm {
-    def coarse[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],treatAsUndirected:Boolean=false,checkpointingFrequency:Int=50):Graph[Component,ED]
+    def coarse[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],treatAsUndirected:Boolean=false,checkpointingFrequency:Int=10,edgeValueSelector:EdgeValueSelector=DefaultEdgeValueSelector):Graph[Component,ED]
   }
 
   type CoarseningMethod[VD,ED]=(Graph[VD,ED])=>Graph[Component,ED]
