@@ -30,12 +30,14 @@ object FullGraphDescriptor {
     ("Degree", Degree),
     ("VertexEmbeddedness", VertexEmbeddedness),
     ("LocalClustering", LocalClustering),
-    ("Closeness", Closeness),
     ("Label propagation coarsening", LPCoarsening),
     ("PSCAN", PSCAN),
+    ("Closeness", Closeness),
     ("Shortest paths", ShortestPathsAlgorithm),
     ("Approximated shortest paths", ApproximatedShortestPathsAlgorithm)
   )
+  type MeasureFilter=((String,Object))=>Boolean
+  val anyMeasureFilter:MeasureFilter=(_)=>true;
 
   def time[T](str: String)(thunk: => T): (T, Long) = {
     logger.info(str + "... ")
@@ -48,11 +50,11 @@ object FullGraphDescriptor {
   }
 
 
-  def describeGraph[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED])(implicit num: Numeric[ED]) = {
+  def describeGraph[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED],measureFilter:MeasureFilter=anyMeasureFilter)(implicit num: Numeric[ED]) = {
     val cachedGraph = graph.cache()
     val outGraph: Graph[List[Any], ED] = cachedGraph.mapVertices((vId, data) => List(data))
 
-    measures.foldLeft(outGraph) {
+    measures.filter(measureFilter).foldLeft(outGraph) {
       case (acc, (measureName, measure)) => {
         val graphMeasures = executeOperator(graph, vertexMeasureConfiguration, cachedGraph, measure, measureName)
         graphMeasures.unpersist()
@@ -88,18 +90,18 @@ object FullGraphDescriptor {
     }
   }
 
-  def describeGraphToDirectory[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], directory: String, vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED])(implicit num: Numeric[ED]) = {
+  def describeGraphToDirectory[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], directory: String, vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED],measureFilter:MeasureFilter=anyMeasureFilter)(implicit num: Numeric[ED]):List[(String,Long)] = {
     val cachedGraph = graph.cache()
     val outGraph = cachedGraph.mapVertices((vId, data) => List(data)).cache()
-    measures.foreach { case (measureName, measure) => {
-      time(measureName)({
+    measures.filter(measureFilter).map { case (measureName, measure) => {
+      val (_,timeResult)=time(measureName)({
         val graphMeasuresOpt = executeOperatorToPath(graph, vertexMeasureConfiguration, cachedGraph, measure, measureName, s"${directory}/${measureName}")
         graphMeasuresOpt match {
           case Some(graphMeasures) => {
             val outputCSV = outGraph.outerJoinVertices(graphMeasures.vertices)(extendValueList)
               .vertices.map {
               case (id, data) => s"${id};${data.reverse.mkString(";")}"
-            }
+            }.cache()
             outputCSV.saveAsTextFile(s"${directory}/${measureName}")
             graphMeasures.unpersist()
           }
@@ -109,6 +111,7 @@ object FullGraphDescriptor {
         }
 
       })
+      (measureName,timeResult)
     }
     }
   }

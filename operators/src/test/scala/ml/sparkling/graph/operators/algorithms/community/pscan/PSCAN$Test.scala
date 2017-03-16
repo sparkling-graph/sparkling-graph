@@ -40,5 +40,14 @@ class PSCAN$Test (implicit sc:SparkContext)   extends MeasureTest {
     Then("Should compute components correctly")
     components.vertices.map{case (vId,cId)=>cId}.distinct().collect().size  should equal (5)
   }
+  "Components for 3 component graph" should  " be computed" in{
+    Given("graph")
+    val filePath = getClass.getResource("/graphs/coarsening_to_3")
+    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
+    When("Computes components")
+    val components: Graph[ComponentID, Int] = PSCAN.computeConnectedComponents(graph)
+    Then("Should compute components correctly")
+    components.vertices.map{case (vId,cId)=>cId}.distinct().collect().size  should equal (3)
+  }
 
 }

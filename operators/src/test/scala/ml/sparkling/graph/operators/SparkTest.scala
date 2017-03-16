@@ -14,7 +14,7 @@ import ml.sparkling.graph.operators.measures.vertex.clustering.LocalClustering$T
 import ml.sparkling.graph.operators.measures.vertex.eigenvector.EigenvectorCentrality$Test
 import ml.sparkling.graph.operators.measures.vertex.hits.Hits$Test
 import ml.sparkling.graph.operators.measures.{NeighborhoodConnectivity$Test, VertexEmbeddedness$Test}
-import ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$Test
+import ml.sparkling.graph.operators.partitioning.{CommunityBasedPartitioning$Test, PropagationBasedPartitioning$Test}
 import org.apache.commons.io.FileUtils
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.{SparkConf, SparkContext}
@@ -48,6 +48,8 @@ class SparkTest extends Spec with BeforeAndAfterAll {
 
   override def nestedSuites = {
     Vector(
+      new CommunityBasedPartitioning$Test,
+      new PropagationBasedPartitioning$Test,
       new LPCoarsening$Test,
       new VertexEmbeddedness$Test,
       new NeighborhoodConnectivity$Test,
@@ -55,7 +57,6 @@ class SparkTest extends Spec with BeforeAndAfterAll {
       new EigenvectorCentrality$Test,
       new LocalClustering$Test,
       new PSCAN$Test,
-      new CommunityBasedPartitioning$Test,
       new FreemanCentrality$Test,
       new Modularity$Test,
       new AdamicAdar$Test,

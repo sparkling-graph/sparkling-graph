@@ -58,8 +58,6 @@ object Closeness extends VertexMeasure[Double] {
           case ((c1, v1), (c2, v2)) => (c1 + c2, v1 + v2)
         })
       }.cache()
-      newValues.localCheckpoint()
-      newValues.foreachPartition((_)=>{})
       val out = distanceSumGraph.outerJoinVertices(newValues)((vId, oldValue, newValue) => {
         (oldValue, newValue) match {
           case ((oldPathsCount, oldPathsSum), Some((newPathsCount, newPathsSum))) => {

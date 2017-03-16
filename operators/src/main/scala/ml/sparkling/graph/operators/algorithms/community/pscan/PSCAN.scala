@@ -12,12 +12,9 @@ import scala.reflect.ClassTag
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
 case object PSCAN extends CommunityDetectionAlgorithm{
-
-
-
   val defaultComponentId: ComponentID = -1
 
-  def computeConnectedComponents[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],epsilon:Double=0.1):Graph[ComponentID,ED]={
+  def computeConnectedComponents[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],epsilon:Double=0.05):Graph[ComponentID,ED]={
 
     val neighbours: Graph[NeighbourSet, ED] = NeighboursUtils.getWithNeighbours(graph,treatAsUndirected = true)
 
@@ -25,13 +22,13 @@ case object PSCAN extends CommunityDetectionAlgorithm{
       val sizeOfIntersection=intersectSize(edge.srcAttr,edge.dstAttr)
       val denominator = Math.sqrt(edge.srcAttr.size()*edge.dstAttr.size())
       sizeOfIntersection/denominator
-    })
+    }).cache()
 
     val cutOffGraph=edgesWithSimilarity.filter[NeighbourSet, Double](
       preprocess=g=>g,
       epred=edge=>{
       edge.attr >= epsilon
-    })
+    }).cache()
 
     val componentsGraph=cutOffGraph.connectedComponents()
 

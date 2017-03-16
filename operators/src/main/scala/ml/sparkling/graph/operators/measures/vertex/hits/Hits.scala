@@ -24,7 +24,7 @@ object Hits extends VertexMeasure[(Double, Double)] {
     var oldValues = (0d, 0d) // (hub,auth)
     var newValues = (0d, 0d)
     val numVertices = graph.numVertices
-    var computationGraph = graph.mapVertices((vId, data) => (1d / numVertices, 1d / numVertices))
+    var computationGraph = graph.mapVertices((vId, data) => (1d / numVertices, 1d / numVertices)).cache()
     while (continuePredicate(iteration, oldValues, newValues) || iteration == 0) {
       val withNewAuths = computationGraph.aggregateMessages[Double](
         sendMsg = context=>{
@@ -34,12 +34,12 @@ object Hits extends VertexMeasure[(Double, Double)] {
           context.sendToDst(sourceHub)
           context.sendToSrc(0d)
           },
-        mergeMsg = (a,b)=>a+b)
+        mergeMsg = (a,b)=>a+b).cache()
       val normAuths = withNewAuths.map{case (vId,auth) => auth}.max()
       computationGraph = computationGraph.outerJoinVertices(withNewAuths){
         case (vId, (hub,auth), Some(newValue)) => (hub, newValue / normAuths)
         case (vId, (hub,auth), None) => (hub, 0d)
-      }
+      }.cache()
       withNewAuths.unpersist(blocking=false)
       val withNewHubs = computationGraph.aggregateMessages[Double](
         sendMsg = context=>{
@@ -49,7 +49,7 @@ object Hits extends VertexMeasure[(Double, Double)] {
           context.sendToSrc(destinationAuth)
           context.sendToDst(0d)
           },
-        mergeMsg = (a,b)=>a+b)
+        mergeMsg = (a,b)=>a+b).cache()
       val normHubs = withNewHubs.map{case (vId,hub) => hub}.max()
       computationGraph = computationGraph.outerJoinVertices(withNewHubs){
         case (vId, (hub,auth), Some(newValue)) => (newValue/normHubs, auth)

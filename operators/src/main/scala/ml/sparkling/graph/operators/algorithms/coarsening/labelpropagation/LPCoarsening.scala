@@ -28,8 +28,8 @@ case object ChangedStatsAgregator{
   def add(b1:ChangedStats,b2:ChangedStats)=b1+b2
 }
 case object LPCoarsening extends CoarseningAlgorithm{
-  val logger=Logger.getLogger(VertexWrapper.getClass())
-  override def coarse[VD:ClassTag,ED:ClassTag](graph: Graph[VD, ED],treatAsUndirected:Boolean=false,checkpointingFrequency:Int=20): Graph[Component, ED] = {
+  val logger=Logger.getLogger(LPCoarsening.getClass())
+  override def coarse[VD:ClassTag,ED:ClassTag](graph: Graph[VD, ED],treatAsUndirected:Boolean=false,checkpointingFrequency:Int=10): Graph[Component, ED] = {
     logger.info(s"Coarsing graph G using undirected parameter $treatAsUndirected")
     val filteredGraph=graph.filter(preprocess=(g:Graph[VD,ED])=>g,epred=(e:EdgeTriplet[VD, ED])=>e.srcId!=e.dstId).cache()
     var iterationGraph: Graph[VertexWrapper, ED] =filteredGraph.mapVertices((vId, _)=>VertexWrapper(vId,vId,vId,false))

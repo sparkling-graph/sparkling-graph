@@ -24,7 +24,7 @@ object GraphDescriptor {
       describeGraphToDirectory(directory,VertexMeasureConfiguration())
     }
 
-    def describeGraphToDirectory(directory:String,vertexMeasureConfiguration: VertexMeasureConfiguration[VD,ED])(implicit num:Numeric[ED]):Unit={
+    def describeGraphToDirectory(directory:String,vertexMeasureConfiguration: VertexMeasureConfiguration[VD,ED])(implicit num:Numeric[ED]):List[(String,Long)]={
       FullGraphDescriptor.describeGraphToDirectory(graph,directory,vertexMeasureConfiguration)
     }
   }
