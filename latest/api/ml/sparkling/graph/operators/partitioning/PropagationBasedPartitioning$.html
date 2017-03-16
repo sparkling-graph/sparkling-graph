@@ -1,9 +1,9 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <title>DescribeGraph - ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph</title>
-          <meta name="description" content="DescribeGraph - ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph" />
-          <meta name="keywords" content="DescribeGraph ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph" />
+          <title>PropagationBasedPartitioning - ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning</title>
+          <meta name="description" content="PropagationBasedPartitioning - ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning" />
+          <meta name="keywords" content="PropagationBasedPartitioning ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -16,7 +16,7 @@
       <script type="text/javascript">
          if(top === self) {
             var url = '../../../../../index.html';
-            var hash = 'ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph';
+            var hash = 'ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -26,14 +26,14 @@
    	  </script>
     
         </head>
-        <body class="type">
+        <body class="value">
       <div id="definition">
-        <img alt="Class" src="../../../../../lib/class_big.png" />
-        <p id="owner"><a href="../../../../package.html" class="extype" name="ml">ml</a>.<a href="../../../package.html" class="extype" name="ml.sparkling">sparkling</a>.<a href="../../package.html" class="extype" name="ml.sparkling.graph">graph</a>.<a href="../package.html" class="extype" name="ml.sparkling.graph.experiments">experiments</a>.<a href="package.html" class="extype" name="ml.sparkling.graph.experiments.describe">describe</a>.<a href="GraphDescriptor$.html" class="extype" name="ml.sparkling.graph.experiments.describe.GraphDescriptor">GraphDescriptor</a></p>
-        <h1>DescribeGraph</h1><h3><span class="morelinks"><div>Related Doc:
-            <a href="GraphDescriptor$.html" class="extype" name="ml.sparkling.graph.experiments.describe.GraphDescriptor">package GraphDescriptor</a>
+        <img alt="Object" src="../../../../../lib/object_big.png" />
+        <p id="owner"><a href="../../../../package.html" class="extype" name="ml">ml</a>.<a href="../../../package.html" class="extype" name="ml.sparkling">sparkling</a>.<a href="../../package.html" class="extype" name="ml.sparkling.graph">graph</a>.<a href="../package.html" class="extype" name="ml.sparkling.graph.operators">operators</a>.<a href="package.html" class="extype" name="ml.sparkling.graph.operators.partitioning">partitioning</a></p>
+        <h1>PropagationBasedPartitioning</h1><h3><span class="morelinks"><div>Related Doc:
+            <a href="package.html" class="extype" name="ml.sparkling.graph.operators.partitioning">package partitioning</a>
           </div></span></h3><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -41,15 +41,17 @@
 
       <h4 id="signature" class="signature">
       <span class="modifier_kind">
-        <span class="modifier">implicit </span>
-        <span class="kind">class</span>
+        <span class="modifier"></span>
+        <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <span class="name">DescribeGraph</span><span class="tparams">[<span name="VD">VD</span>, <span name="ED">ED</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+        <span class="name">PropagationBasedPartitioning</span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
+First approach to community based graph partitioning. It is not efficient due to need of gathering vertex to component id on driver node.
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -69,7 +71,7 @@
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph"><span>DescribeGraph</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning"><span>PropagationBasedPartitioning</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -86,27 +88,7 @@
 
       <div id="template">
         <div id="allMembers">
-        <div id="constructors" class="members">
-              <h3>Instance Constructors</h3>
-              <ol><li name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(graph:org.apache.spark.graphx.Graph[VD,ED])(implicitevidence$1:scala.reflect.ClassTag[VD],implicitevidence$2:scala.reflect.ClassTag[ED]):ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph[VD,ED]"></a>
-      <a id="&lt;init&gt;:DescribeGraph[VD,ED]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">new</span>
-      </span>
-      <span class="symbol">
-        <span class="name">DescribeGraph</span><span class="params">(<span name="graph">graph: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph.ED">ED</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph.VD">VD</span>]</span>, <span name="arg1">arg1: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph.ED">ED</span>]</span>)</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@&lt;init&gt;(graph:org.apache.spark.graphx.Graph[VD,ED])(implicitevidence$1:scala.reflect.ClassTag[VD],implicitevidence$2:scala.reflect.ClassTag[ED]):ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph[VD,ED]" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li></ol>
-            </div>
+        
 
         
 
@@ -126,7 +108,7 @@
         <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@!=(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -143,7 +125,7 @@
         <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@##():Int" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@##():Int" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -160,7 +142,7 @@
         <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@==(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@==(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -177,7 +159,7 @@
         <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@asInstanceOf[T0]:T0" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -194,7 +176,7 @@
         <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@clone():Object" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@clone():Object" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -205,74 +187,6 @@
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph#describeGraph" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="describeGraph(vertexMeasureConfiguration:ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration[VD,ED])(implicitnum:Numeric[ED]):org.apache.spark.graphx.Graph[List[Any],ED]"></a>
-      <a id="describeGraph(VertexMeasureConfiguration[VD,ED])(Numeric[ED]):Graph[List[Any],ED]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">describeGraph</span><span class="params">(<span name="vertexMeasureConfiguration">vertexMeasureConfiguration: <a href="../../api/operators/measures/VertexMeasureConfiguration.html" class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration">VertexMeasureConfiguration</a>[<span class="extype" name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph.ED">ED</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="num">num: <span class="extype" name="scala.Numeric">Numeric</span>[<span class="extype" name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph.ED">ED</span>]</span>)</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="scala.List">List</span>[<span class="extype" name="scala.Any">Any</span>], <span class="extype" name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph.ED">ED</span>]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@describeGraph(vertexMeasureConfiguration:ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration[VD,ED])(implicitnum:Numeric[ED]):org.apache.spark.graphx.Graph[List[Any],ED]" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph#describeGraph" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="describeGraph()(implicitnum:Numeric[ED]):org.apache.spark.graphx.Graph[List[Any],ED]"></a>
-      <a id="describeGraph()(Numeric[ED]):Graph[List[Any],ED]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">describeGraph</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="num">num: <span class="extype" name="scala.Numeric">Numeric</span>[<span class="extype" name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph.ED">ED</span>]</span>)</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="scala.List">List</span>[<span class="extype" name="scala.Any">Any</span>], <span class="extype" name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph.ED">ED</span>]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@describeGraph()(implicitnum:Numeric[ED]):org.apache.spark.graphx.Graph[List[Any],ED]" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph#describeGraphToDirectory" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="describeGraphToDirectory(directory:String,vertexMeasureConfiguration:ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration[VD,ED])(implicitnum:Numeric[ED]):List[(String,Long)]"></a>
-      <a id="describeGraphToDirectory(String,VertexMeasureConfiguration[VD,ED])(Numeric[ED]):List[(String,Long)]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">describeGraphToDirectory</span><span class="params">(<span name="directory">directory: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="vertexMeasureConfiguration">vertexMeasureConfiguration: <a href="../../api/operators/measures/VertexMeasureConfiguration.html" class="extype" name="ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration">VertexMeasureConfiguration</a>[<span class="extype" name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph.ED">ED</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="num">num: <span class="extype" name="scala.Numeric">Numeric</span>[<span class="extype" name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph.ED">ED</span>]</span>)</span><span class="result">: <span class="extype" name="scala.List">List</span>[(<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Long">Long</span>)]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@describeGraphToDirectory(directory:String,vertexMeasureConfiguration:ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration[VD,ED])(implicitnum:Numeric[ED]):List[(String,Long)]" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph#describeGraphToDirectory" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="describeGraphToDirectory(directory:String)(implicitnum:Numeric[ED]):Unit"></a>
-      <a id="describeGraphToDirectory(String)(Numeric[ED]):Unit"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">describeGraphToDirectory</span><span class="params">(<span name="directory">directory: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="num">num: <span class="extype" name="scala.Numeric">Numeric</span>[<span class="extype" name="ml.sparkling.graph.experiments.describe.GraphDescriptor.DescribeGraph.ED">ED</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@describeGraphToDirectory(directory:String)(implicitnum:Numeric[ED]):Unit" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -285,7 +199,7 @@
         <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -302,7 +216,7 @@
         <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@equals(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -319,7 +233,7 @@
         <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@finalize():Unit" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@finalize():Unit" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -342,7 +256,7 @@
         <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@getClass():Class[_]" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@getClass():Class[_]" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -359,7 +273,7 @@
         <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@hashCode():Int" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@hashCode():Int" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -376,11 +290,28 @@
         <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning#logger" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="logger:org.apache.log4j.Logger"></a>
+      <a id="logger:Logger"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logger</span><span class="result">: <span class="extype" name="org.apache.log4j.Logger">Logger</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@logger:org.apache.log4j.Logger" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -393,7 +324,7 @@
         <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -410,7 +341,7 @@
         <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@notify():Unit" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@notify():Unit" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -427,11 +358,28 @@
         <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@notifyAll():Unit" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@notifyAll():Unit" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning#partitionGraphBy" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="partitionGraphBy[VD,ED](graph:org.apache.spark.graphx.Graph[VD,ED],numParts:Int,checkpointingFrequency:Int)(implicitevidence$1:scala.reflect.ClassTag[VD],implicitevidence$2:scala.reflect.ClassTag[ED],implicitsc:org.apache.spark.SparkContext):org.apache.spark.graphx.Graph[VD,ED]"></a>
+      <a id="partitionGraphBy[VD,ED](Graph[VD,ED],Int,Int)(ClassTag[VD],ClassTag[ED],SparkContext):Graph[VD,ED]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">partitionGraphBy</span><span class="tparams">[<span name="VD">VD</span>, <span name="ED">ED</span>]</span><span class="params">(<span name="graph">graph: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning.partitionGraphBy.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning.partitionGraphBy.ED">ED</span>]</span>, <span name="numParts">numParts: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>, <span name="checkpointingFrequency">checkpointingFrequency: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">10</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning.partitionGraphBy.VD">VD</span>]</span>, <span name="arg1">arg1: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning.partitionGraphBy.ED">ED</span>]</span>, <span name="sc">sc: <span class="extype" name="org.apache.spark.SparkContext">SparkContext</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning.partitionGraphBy.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning.partitionGraphBy.ED">ED</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@partitionGraphBy[VD,ED](graph:org.apache.spark.graphx.Graph[VD,ED],numParts:Int,checkpointingFrequency:Int)(implicitevidence$1:scala.reflect.ClassTag[VD],implicitevidence$2:scala.reflect.ClassTag[ED],implicitsc:org.apache.spark.SparkContext):org.apache.spark.graphx.Graph[VD,ED]" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -444,7 +392,7 @@
         <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -461,7 +409,7 @@
         <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@toString():String" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@toString():String" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -478,7 +426,7 @@
         <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@wait():Unit" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@wait():Unit" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -501,7 +449,7 @@
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -524,7 +472,7 @@
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.experiments.describe.GraphDescriptor$$DescribeGraph@wait(x$1:Long):Unit" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning$@wait(x$1:Long):Unit" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
