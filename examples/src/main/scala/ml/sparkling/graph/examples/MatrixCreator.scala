@@ -71,23 +71,43 @@ object MatrixCreator extends Serializable {
       case  head::tail=>{
         val startData=loadWithPartitions(ctx, head,partitions).map(s=>s.split(delimiter).toList).map{
           case head::rest=>{
-            //val data =stringToList(tupleDelimiter, rest)
-           (head.toDouble.toInt,rest)
+            val data =rest
+           (head.toDouble.toInt,data)
           }
         }.cache()
+        logger.info(s"Files to process ${tail.length}")
         val outData=tail.zipWithIndex.foldLeft(startData){
           case (data,(file,index))=>{
-          val loadedData=loadWithPartitions(ctx, file,partitions).map(s=>s.split(delimiter).toList).map{
-            case head::tail =>(head.toDouble.toInt,tail)
-          }.cache()
-          data.union(loadedData).repartition(24).cache()
-        }}.cache()
+            logger.info(s"Processing file ${index}")
+            val loadedData=loadWithPartitions(ctx, file,partitions).map(s=>s.split(delimiter).toList).map{
+              case head::tail =>(head.toDouble.toInt,tail)
+            }.cache()
+            val out=data.fullOuterJoin(loadedData).map{
+              case (id,(Some(d1),Some(d2)))=>(id,d1:::d2)
+              case (id,(Some(d1),None))=>(id,d1)
+              case (id,(None,Some(d2)))=>(id,d2)
+            }.cache()
+            if(index%20==0){
+              out.checkpoint()
+              out.foreachPartition((_)=>{})
+            }
+            out
+        }}
 
 
-        outData.groupByKey().map{
+        outData.map{
           case (id,data)=>{
-            val mapped=data.mkString(delimiter)
-            s"$id$delimiter${mapped.mkString(delimiter)}"
+            val dataString=StringBuilder.newBuilder
+            val transformedData=stringToList(tupleDelimiter,data)
+            val sortedData=transformedData.sortBy(_._1)
+            for (i <- 0 to vectorSize){
+              if(sortedData(i)._1==i){
+                dataString.append(s"${sortedData(i)._2}$delimiter")
+              }else{
+                dataString.append("0;")
+              }
+            }
+            s"$id$delimiter${dataString.toString()}"
 
           }
         }.saveAsTextFile(out)
@@ -101,7 +121,7 @@ object MatrixCreator extends Serializable {
   def loadWithPartitions(ctx: SparkContext, file: File,partitions:Option[Int]): RDD[String] = {
     partitions.map((p)=>{
       ctx.textFile(file.getAbsolutePath,minPartitions=p)
-    }).getOrElse(ctx.textFile(file.getAbsolutePath))
+    }).getOrElse(ctx.textFile(file.getAbsolutePath)).persist(StorageLevel.MEMORY_AND_DISK_SER)
 
   }
 
