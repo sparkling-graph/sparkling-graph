@@ -109,6 +109,7 @@ case object ShortestPathsAlgorithm  {
    */
   def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[VD,ED], treatAsUndirected: Boolean = false,checkpointingFrequency:Int=20)(implicit num: Numeric[ED]) = {
     val bucketSize=bucketSizeProvider(graph)
+    logger.info(s"Computing APSP using iterative approach with bucket of size ${bucketSize}")
     graph.cache()
     val vertexIds=graph.vertices.map{case (vId,data)=>vId}.collect()
     val outGraph:Graph[FastUtilWithDistance.DataMap ,ED] = graph.mapVertices((vId,data)=>new FastUtilWithDistance.DataMap)
