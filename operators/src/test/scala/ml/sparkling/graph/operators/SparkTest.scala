@@ -14,9 +14,8 @@ import ml.sparkling.graph.operators.measures.vertex.clustering.LocalClustering$T
 import ml.sparkling.graph.operators.measures.vertex.eigenvector.EigenvectorCentrality$Test
 import ml.sparkling.graph.operators.measures.vertex.hits.Hits$Test
 import ml.sparkling.graph.operators.measures.{NeighborhoodConnectivity$Test, VertexEmbeddedness$Test}
-import ml.sparkling.graph.operators.partitioning.{CommunityBasedPartitioning$Test, PropagationBasedPartitioning$Test}
+import ml.sparkling.graph.operators.partitioning.{CommunityBasedPartitioning$Test, PSCANBasedPartitioning$Test, PropagationBasedPartitioning$Test}
 import org.apache.commons.io.FileUtils
-import org.apache.log4j.{Level, Logger}
 import org.apache.spark.{SparkConf, SparkContext}
 import org.scalatest._
 
@@ -57,6 +56,7 @@ class SparkTest extends Spec with BeforeAndAfterAll {
       new EigenvectorCentrality$Test,
       new LocalClustering$Test,
       new PSCAN$Test,
+      new PSCANBasedPartitioning$Test,
       new FreemanCentrality$Test,
       new Modularity$Test,
       new AdamicAdar$Test,
@@ -64,7 +64,6 @@ class SparkTest extends Spec with BeforeAndAfterAll {
       new Closeness$Test,
       new ShortestPathsAlgorithm$Test,
       new ApproximatedShortestPathsAlgorithm$Test
-
     )
   }
 

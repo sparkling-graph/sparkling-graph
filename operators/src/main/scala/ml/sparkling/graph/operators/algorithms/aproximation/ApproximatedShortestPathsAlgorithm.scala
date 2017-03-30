@@ -62,7 +62,7 @@ case object ApproximatedShortestPathsAlgorithm  {
         (vertexId,paths)
       }
     }) .cache()
-    val fromMapped: RDD[(VertexId, (List[VertexId], JDouble))] =modifiedPaths.join(coarsedGraph.vertices).mapPartitions(
+    val fromMapped: RDD[(VertexId, (List[VertexId], JDouble))] =modifiedPaths.join(coarsedGraph.vertices,100).mapPartitions(
       iter=>iter.flatMap{
         case (from,(data,componentFrom) )=>{
           data.map{

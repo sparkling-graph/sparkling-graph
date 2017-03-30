@@ -5,6 +5,7 @@ import ml.sparkling.graph.operators.MeasureTest
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
 import ml.sparkling.graph.operators.OperatorsDSL._
+import org.apache.spark.graphx.util.GraphGenerators
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
@@ -48,6 +49,26 @@ class PSCAN$Test (implicit sc:SparkContext)   extends MeasureTest {
     val components: Graph[ComponentID, Int] = PSCAN.computeConnectedComponents(graph)
     Then("Should compute components correctly")
     components.vertices.map{case (vId,cId)=>cId}.distinct().collect().size  should equal (3)
+  }
+
+  "Dynamic components detection for 3 component graph" should  " be computed" in{
+    Given("graph")
+    val filePath = getClass.getResource("/graphs/coarsening_to_3")
+    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
+    When("Computes components")
+    val components: Graph[ComponentID, Int] = PSCAN.computeConnectedComponentsUsing(graph,3)
+    Then("Should compute components correctly")
+    components.vertices.map{case (vId,cId)=>cId}.distinct().collect().size  should equal (3)
+  }
+
+  "Dynamic components detection  for random graph" should  " be computed" in{
+    Given("graph")
+    val filePath = getClass.getResource("/graphs/coarsening_to_3")
+    val graph:Graph[Int,Int]=GraphGenerators.rmatGraph(sc,1000,10000)
+    When("Computes components")
+    val components: Graph[ComponentID, Int] = PSCAN.computeConnectedComponentsUsing(graph,24)
+    Then("Should compute components correctly")
+    components.vertices.map{case (vId,cId)=>cId}.distinct().collect().size  should equal (24 +-2)
   }
 
 }
