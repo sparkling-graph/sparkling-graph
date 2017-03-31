@@ -13,7 +13,6 @@ import org.scalatest.tagobjects.Slow
   * Created by  Roman Bartusiak <riomus@gmail.com> on 06.02.17.
   */
 class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
-val logger=Logger.getLogger(this.getClass);
   "Three nodes directed graph with pair loop " should  " be coarsed to  two node" in{
     Given("graph")
     val filePath = getClass.getResource("/graphs/3_nodes_with_pair_loop_directed")
@@ -202,7 +201,7 @@ val logger=Logger.getLogger(this.getClass);
     When("Computes coarsed graph")
     val components= graph.LPCoarse(true);
     Then("Should compute components correctly")
-    println(s"Coarsed to ${components.vertices.count()}")
+    logger.info(s"Coarsed to ${components.vertices.count()}")
     components.vertices.count()  should equal (graph.vertices.count()/2)
   }
 

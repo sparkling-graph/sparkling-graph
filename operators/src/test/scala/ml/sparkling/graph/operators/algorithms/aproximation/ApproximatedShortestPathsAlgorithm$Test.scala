@@ -11,7 +11,6 @@ import org.apache.spark.graphx.util.GraphGenerators
   * Created by  Roman Bartusiak <riomus@gmail.com> on 07.02.17.
   */
 class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extends MeasureTest  {
-  val logger=Logger.getLogger(this.getClass);
   def time[T](str: String)(thunk: => T): (T,Long) = {
     logger.info(s"$str...")
     val t1 = System.currentTimeMillis
@@ -104,7 +103,7 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
 
    " Approximation for random RMAT graph " should "not take longer thant exact computing"  taggedAs(Slow) in{
     Given("graph")
-    val graph=GraphGenerators.rmatGraph(sc,5000,10000)
+    val graph=GraphGenerators.rmatGraph(sc,2000,40000)
     graph.vertices.collect()
     graph.edges.collect()
     When("Computes shortest paths")
@@ -117,7 +116,7 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
 
   " Approximation for random log normal graph " should  "not take longer thant exact computing"  taggedAs(Slow) in{
     Given("graph")
-    val graph=GraphGenerators.logNormalGraph(sc,500).cache()
+    val graph=GraphGenerators.logNormalGraph(sc,700).cache()
     graph.vertices.collect()
     graph.edges.collect()
     sc.parallelize((1 to 10000)).map(_*1000).treeReduce(_+_)

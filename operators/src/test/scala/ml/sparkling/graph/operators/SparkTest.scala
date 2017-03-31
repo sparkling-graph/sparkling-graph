@@ -22,7 +22,7 @@ import org.scalatest._
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-class SparkTest extends Spec with BeforeAndAfterAll {
+class SparkTest extends Spec with BeforeAndAfterAll  {
   val file: Path = Files.createTempDirectory("tmpCheckpoint")
   override val invokeBeforeAllAndAfterAllEvenIfNoTestsAreExpected=true
   val master = "local[1]"
@@ -46,6 +46,7 @@ class SparkTest extends Spec with BeforeAndAfterAll {
     }
     FileUtils.deleteDirectory(file.toFile)
   }
+
 
   override def nestedSuites = {
     Vector(
