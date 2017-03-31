@@ -16,7 +16,7 @@ before_script:
 - git config --global user.name "Travis CI"
 - git config --global user.email "riomus@gmail.com"
 script:
-- travis_wait sbt clean coverage test && sbt coverageAggregate
+- travis_wait 40 sbt clean coverage test && sbt coverageAggregate
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 
