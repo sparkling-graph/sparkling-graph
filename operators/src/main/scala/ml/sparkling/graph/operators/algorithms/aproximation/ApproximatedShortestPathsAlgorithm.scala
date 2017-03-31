@@ -41,7 +41,7 @@ case object ApproximatedShortestPathsAlgorithm  {
     val coarsedShortestPaths: Graph[DataMap, ED] =ShortestPathsAlgorithm.computeShortestPathsLengths(coarsedGraph,newVertexPredicate,treatAsUndirected)
     aproximatePaths(graph, coarsedGraph, coarsedShortestPaths,modifier,vertexPredicate,treatAsUndirected)
   }
-  def computeShortestPathsLengthsWithoutCoarsingUsing2[VD:ClassTag, ED: ClassTag](graph: Graph[VD, ED], coarsedGraph: Graph[Component, ED], vertexPredicate: SimpleVertexPredicate= AllPathPredicate, treatAsUndirected: Boolean = true,modifier:PathModifier=defaultPathModifier)(implicit num: Numeric[ED]):Graph[Iterable[(VertexId,JDouble)],ED] = {
+  def computeShortestPathsForDirectoryComputationUsing[VD:ClassTag, ED: ClassTag](graph: Graph[VD, ED], coarsedGraph: Graph[Component, ED], vertexPredicate: SimpleVertexPredicate= AllPathPredicate, treatAsUndirected: Boolean = true, modifier:PathModifier=defaultPathModifier)(implicit num: Numeric[ED]):Graph[Iterable[(VertexId,JDouble)],ED] = {
     val newVertexPredicate:VertexPredicate[Component]=SimpleWrapper(vertexPredicate)
     val newIds: Set[VertexId] =coarsedGraph.vertices.filter{
       case (vid, component)=>vertexPredicate(vid)
@@ -134,7 +134,7 @@ case object ApproximatedShortestPathsAlgorithm  {
     computeShortestPathsLengthsUsing(graph,ByIdPredicate(vertexId),treatAsUndirected,modifier=defaultPathModifier)
   }
 
-  def computeShortestPaths[VD:ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexPredicate: SimpleVertexPredicate = AllPathPredicate, treatAsUndirected: Boolean = false,modifier:PathModifier=defaultPathModifier)(implicit num: Numeric[ED]) = {
+  def computeShortestPaths[VD:ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexPredicate: SimpleVertexPredicate = AllPathPredicate, treatAsUndirected: Boolean = true,modifier:PathModifier=defaultPathModifier)(implicit num: Numeric[ED]) = {
     computeShortestPathsLengthsUsing(graph,vertexPredicate,treatAsUndirected,modifier=defaultPathModifier)
   }
 
@@ -158,7 +158,7 @@ case object ApproximatedShortestPathsAlgorithm  {
     (verticesGroups).foreach{
       case (group,iteration) => {
         logger.info(s"Approximated Shortest Paths iteration ${iteration+1} from  ${numberOfIterations}")
-        val shortestPaths = ApproximatedShortestPathsAlgorithm.computeShortestPathsLengthsWithoutCoarsingUsing2(graph,coarsedGraph, new ByIdsPredicate(group.toSet), treatAsUndirected)
+        val shortestPaths = ApproximatedShortestPathsAlgorithm.computeShortestPathsForDirectoryComputationUsing(graph,coarsedGraph, new ByIdsPredicate(group.toSet), treatAsUndirected)
         val joinedGraph = graph
           .outerJoinVertices(shortestPaths.vertices)((vId, data, newData) => (data, newData.getOrElse(Iterable())))
         joinedGraph.vertices.values.map {
