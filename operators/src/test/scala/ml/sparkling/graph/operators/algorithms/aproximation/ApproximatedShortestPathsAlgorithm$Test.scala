@@ -4,19 +4,21 @@ import ml.sparkling.graph.operators.MeasureTest
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
 import ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgorithm
+import org.apache.log4j.Logger
 import org.apache.spark.graphx.util.GraphGenerators
 
 /**
   * Created by  Roman Bartusiak <riomus@gmail.com> on 07.02.17.
   */
 class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extends MeasureTest  {
+  val logger=Logger.getLogger(this.getClass);
   def time[T](str: String)(thunk: => T): (T,Long) = {
-    print(str + "... ")
+    logger.info(s"$str...")
     val t1 = System.currentTimeMillis
     val x = thunk
     val t2 = System.currentTimeMillis
     val diff=t2 - t1
-    println(diff + " msecs")
+    logger.info(s"$diff ms")
     (x,diff)
   }
 
@@ -100,14 +102,14 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
   }
 
 
-   " Approximation for random grid  graph " should "not take longer thant exact computing"  taggedAs(Slow) in{
+   " Approximation for random RMAT graph " should "not take longer thant exact computing"  taggedAs(Slow) in{
     Given("graph")
-    val graph=GraphGenerators.gridGraph(sc,100,100).cache()
+    val graph=GraphGenerators.rmatGraph(sc,5000,10000)
     graph.vertices.collect()
     graph.edges.collect()
     When("Computes shortest paths")
-    val (_,exactTime) =time("Exact shortest paths")(ShortestPathsAlgorithm.computeShortestPathsLengths(graph))
-    val (_,approximationTime) =time("Aproximated shortest paths")(ApproximatedShortestPathsAlgorithm.computeShortestPaths(graph ))
+    val (_,exactTime) =time("Exact shortest paths for RMAT graph")(ShortestPathsAlgorithm.computeShortestPathsLengths(graph))
+    val (_,approximationTime) =time("Aproximated shortest paths  for grid graph")(ApproximatedShortestPathsAlgorithm.computeShortestPaths(graph ))
 
     Then("Approximation should be faster")
     approximationTime should be <=(exactTime)
@@ -120,8 +122,8 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
     graph.edges.collect()
     sc.parallelize((1 to 10000)).map(_*1000).treeReduce(_+_)
     When("Computes shortest paths")
-    val (_,exactTime) =time("Exact shortest paths")(ShortestPathsAlgorithm.computeShortestPathsLengths(graph, treatAsUndirected = true))
-    val (_,approximationTime) =time("Aproximated shortest paths")(ApproximatedShortestPathsAlgorithm.computeShortestPaths(graph, treatAsUndirected = true ))
+    val (_,exactTime) =time("Exact shortest paths for log normal graph")(ShortestPathsAlgorithm.computeShortestPathsLengths(graph, treatAsUndirected = true))
+    val (_,approximationTime) =time("Aproximated shortest paths for log normal")(ApproximatedShortestPathsAlgorithm.computeShortestPaths(graph, treatAsUndirected = true ))
 
     Then("Approximation should be faster")
     approximationTime should be <=(exactTime)

@@ -20,7 +20,9 @@ class IterativeComputation$Test extends FlatSpec with BeforeAndAfter{
   }
 
   after {
-    sc.stop()
+    if(!sc.isStopped){
+      sc.stop()
+    }
   }
 
   def loadGraph(file:String)={

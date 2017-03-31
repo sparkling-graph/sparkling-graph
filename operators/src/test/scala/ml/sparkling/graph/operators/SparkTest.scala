@@ -41,7 +41,9 @@ class SparkTest extends Spec with BeforeAndAfterAll {
 
 
   override def afterAll() = {
-    sc.stop()
+    if(!sc.isStopped){
+      sc.stop()
+    }
     FileUtils.deleteDirectory(file.toFile)
   }
 

@@ -117,6 +117,10 @@ abstract class ExampleApp extends Serializable {
     }
 
     body()
+
+    if(!ctx.isStopped){
+      ctx.stop()
+    }
   }
 
 
