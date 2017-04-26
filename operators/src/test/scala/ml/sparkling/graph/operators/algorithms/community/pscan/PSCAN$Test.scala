@@ -61,14 +61,24 @@ class PSCAN$Test (implicit sc:SparkContext)   extends MeasureTest {
     components.vertices.map{case (vId,cId)=>cId}.distinct().collect().size  should equal (3)
   }
 
+  "Dynamic components detection  for RMAT graph" should  " be computed" in{
+    for(x<- 0 to 10){
+      Given("graph")
+      val graph:Graph[Int,Int]=GraphGenerators.rmatGraph(sc,33,132)
+      When("Computes components")
+      val components: Graph[ComponentID, Int] = PSCAN.computeConnectedComponentsUsing(graph,24)
+      Then("Should compute components correctly")
+      components.vertices.map{case (vId,cId)=>cId}.distinct().collect().size  should equal (24 +- 22)
+    }
+  }
+
   "Dynamic components detection  for random graph" should  " be computed" in{
     Given("graph")
-    val filePath = getClass.getResource("/graphs/coarsening_to_3")
     val graph:Graph[Int,Int]=GraphGenerators.rmatGraph(sc,1000,10000)
     When("Computes components")
     val components: Graph[ComponentID, Int] = PSCAN.computeConnectedComponentsUsing(graph,24)
     Then("Should compute components correctly")
-    components.vertices.map{case (vId,cId)=>cId}.distinct().collect().size  should equal (24 +-2)
+    components.vertices.map{case (vId,cId)=>cId}.distinct().collect().size  should equal (24 +- 22)
   }
 
 }

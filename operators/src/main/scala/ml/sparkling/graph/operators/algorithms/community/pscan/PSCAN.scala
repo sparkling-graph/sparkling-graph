@@ -4,6 +4,7 @@ import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.
 import ml.sparkling.graph.operators.measures.utils.CollectionsUtils._
 import ml.sparkling.graph.operators.measures.utils.NeighboursUtils
 import ml.sparkling.graph.operators.measures.utils.NeighboursUtils.NeighbourSet
+import org.apache.log4j.Logger
 import org.apache.spark.graphx.Graph
 
 import scala.reflect.ClassTag
@@ -13,7 +14,7 @@ import scala.reflect.ClassTag
  */
 case object PSCAN extends CommunityDetectionAlgorithm{
   val defaultComponentId: ComponentID = -1
-
+  val logger=Logger.getLogger(getClass)
   def computeConnectedComponents[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],epsilon:Double=0.05):Graph[ComponentID,ED]={
 
     val neighbours: Graph[NeighbourSet, ED] = NeighboursUtils.getWithNeighbours(graph,treatAsUndirected = true)
@@ -49,13 +50,14 @@ case object PSCAN extends CommunityDetectionAlgorithm{
     val edgesWeights=edgesWithSimilarity.edges.map(_.attr).distinct().sortBy(t=>t).collect();
     var min=0
     var max=edgesWeights.length-1
-    var wholeMax=edgesWeights.length-1
+    val wholeMax=edgesWeights.length-1
     var components=edgesWithSimilarity.connectedComponents()
     var numberOfComponents=components.vertices.map(_._2).distinct().count()
     var found=false;
     while(!found){
       val index=Math.floor((min+max)/2.0).toInt
       val cutOffValue= edgesWeights(index);
+      logger.info(s"Evaluating PSCAN for epsilon=$cutOffValue")
       val cutOffGraph=edgesWithSimilarity.filter[NeighbourSet, Double](
         preprocess=g=>g,
         epred=edge=>{
@@ -63,6 +65,7 @@ case object PSCAN extends CommunityDetectionAlgorithm{
         }).cache()
       val componentsGraph=cutOffGraph.connectedComponents()
       val currentNumberOfComponents=componentsGraph.vertices.map(_._2).distinct().count()
+      logger.info(s"PSCAN resulted in $currentNumberOfComponents components ($requiredNumberOfComponents required)")
       if(Math.abs(requiredNumberOfComponents-currentNumberOfComponents)<Math.abs(requiredNumberOfComponents-numberOfComponents)){
         components=componentsGraph;
         numberOfComponents=currentNumberOfComponents;
@@ -71,7 +74,11 @@ case object PSCAN extends CommunityDetectionAlgorithm{
         found=true;
       }else{
         if(currentNumberOfComponents<requiredNumberOfComponents){
-          min=index-1
+          val newMin=index-1;
+          min=index-1;
+          if(newMin==min){
+            found=true
+          }
         }else if(currentNumberOfComponents>requiredNumberOfComponents){
           max=index-1
         }else{
