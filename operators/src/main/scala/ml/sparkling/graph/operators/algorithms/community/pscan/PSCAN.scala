@@ -74,13 +74,17 @@ case object PSCAN extends CommunityDetectionAlgorithm{
         found=true;
       }else{
         if(currentNumberOfComponents<requiredNumberOfComponents){
-          val newMin=index-1;
+          val oldMin=min;
           min=index-1;
-          if(newMin==min){
+          if(oldMin==min){
             found=true
           }
         }else if(currentNumberOfComponents>requiredNumberOfComponents){
+          val oldMax=max;
           max=index-1
+          if(oldMax==max){
+            found=true
+          }
         }else{
           found=true
         }
