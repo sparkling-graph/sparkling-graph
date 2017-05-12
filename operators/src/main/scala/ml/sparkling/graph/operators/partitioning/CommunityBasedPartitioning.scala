@@ -3,6 +3,7 @@ package ml.sparkling.graph.operators.partitioning
 import java.beans.Transient
 
 import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.{CommunityDetectionAlgorithm, CommunityDetectionMethod, ComponentID}
+import ml.sparkling.graph.operators.partitioning.PSCANBasedPartitioning.logger
 import ml.sparkling.graph.operators.utils.LoggerHolder
 import org.apache.log4j.Logger
 import org.apache.spark.SparkContext
@@ -26,7 +27,7 @@ object CommunityBasedPartitioning {
     val vertexToCommunityId: Map[VertexId, ComponentID] = communities.vertices.collect().toMap
     val (coarsedVertexMap,coarsedNumberOfPartitions) = PartitioningUtils.coarsePartitions(numberOfPartitions,numberOfCommunities,vertexToCommunityId)
     val strategy=ByComponentIdPartitionStrategy(coarsedVertexMap)
-    logger.info(s"Partitioning graph using map with ${coarsedVertexMap.size} entries")
+    logger.info(s"Partitioning graph using coarsed map with ${coarsedVertexMap.size} entries (${vertexToCommunityId.size} before coarse)")
     graph.partitionBy(strategy,coarsedNumberOfPartitions)
   }
 

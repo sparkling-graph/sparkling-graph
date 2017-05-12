@@ -2,6 +2,7 @@ package ml.sparkling.graph.operators.partitioning
 
 import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.{CommunityDetectionAlgorithm, CommunityDetectionMethod, ComponentID}
 import ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.ByComponentIdPartitionStrategy
+import ml.sparkling.graph.operators.partitioning.PSCANBasedPartitioning.logger
 import org.apache.log4j.Logger
 import org.apache.spark.SparkContext
 import org.apache.spark.broadcast.Broadcast
@@ -56,7 +57,7 @@ object PropagationBasedPartitioning {
     val vertexToCommunityId: Map[VertexId, ComponentID] = communities.treeAggregate(Map[VertexId,VertexId]())((agg,data)=>{agg+(data._1->data._2)},(agg1,agg2)=>agg1++agg2)
     val (vertexMap,newNumberOfCummunities)=PartitioningUtils.coarsePartitions(numberOfPartitions, numberOfCommunities, vertexToCommunityId)
     val strategy=ByComponentIdPartitionStrategy(vertexMap)
-    logger.info(s"Partitioning graph using map with ${vertexMap.size} entries")
+    logger.info(s"Partitioning graph using coarsed map with ${vertexMap.size} entries (${vertexToCommunityId.size} before coarse)")
     graph.partitionBy(strategy,newNumberOfCummunities.toInt)
   }
 

@@ -24,7 +24,7 @@ object PSCANBasedPartitioning {
     val vertexToCommunityId: Map[VertexId, ComponentID] = communities.vertices.collect().toMap
     val (coarsedVertexMap,coarsedNumberOfPartitions) = PartitioningUtils.coarsePartitions(numberOfPartitions,numberOfCommunities,vertexToCommunityId)
     val strategy=ByComponentIdPartitionStrategy(coarsedVertexMap)
-    logger.info(s"Partitioning graph using map with ${coarsedVertexMap.size} entries")
+    logger.info(s"Partitioning graph using coarsed map with ${coarsedVertexMap.size} entries (${vertexToCommunityId.size} before coarse)")
     graph.partitionBy(strategy,coarsedNumberOfPartitions)
   }
 

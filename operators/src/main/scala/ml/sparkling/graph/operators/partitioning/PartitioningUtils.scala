@@ -3,6 +3,8 @@ package ml.sparkling.graph.operators.partitioning
 import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID
 import org.apache.spark.graphx.{PartitionID, VertexId}
 
+import scala.collection.immutable
+
 
 /**
   * Created by  Roman Bartusiak <riomus@gmail.com> on 12.05.17.
@@ -19,7 +21,7 @@ object PartitioningUtils {
         }
       }
       (communities.flatMap {
-        case (community, data) => data.map {
+        case (community: ComponentID, data: immutable.Seq[(ComponentID, VertexId)]) => data.map {
           case (_, id) => (id, community)
         }
       }.toMap, communities.length)
