@@ -205,11 +205,11 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
     components.vertices.count()  should equal (graph.vertices.count()/2)
   }
 
-  "Random log normal graph " should  " be coarsed at least by 40%" taggedAs(Slow) in{
+  "Random log normal graph " should  " be coarsed at least by 30%" taggedAs(Slow) in{
     for (x<-0 to 10){
       Given("graph")
       val graph=GraphGenerators.logNormalGraph(sc,60)
-      val expectedSize=(graph.vertices.count()*0.6).toLong
+      val expectedSize=(graph.vertices.count()*0.7).toLong
       When("Computes coarsed graph")
       val components= graph.LPCoarse(true);
       Then("Should compute components correctly")
