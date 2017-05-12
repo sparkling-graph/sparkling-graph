@@ -48,6 +48,7 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
     When("Partition using PSCAN")
     val partitionedGraph: Graph[Int, Int] =PSCANBasedPartitioning.partitionGraphBy(graph,24)
     Then("Should compute partitions correctly")
-    partitionedGraph.edges.partitions.size  should equal (24 +- 10)
+    partitionedGraph.edges.partitions.size  should equal (24)
   }
+
 }

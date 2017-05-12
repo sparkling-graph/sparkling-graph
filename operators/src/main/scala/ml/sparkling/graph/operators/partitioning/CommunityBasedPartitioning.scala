@@ -14,18 +14,20 @@ import scala.reflect.ClassTag
 object CommunityBasedPartitioning {
 
 
-  def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],communityDetectionMethod:CommunityDetectionMethod[VD,ED])(implicit sc:SparkContext): Graph[VD, ED] ={
+  def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],communityDetectionMethod:CommunityDetectionMethod[VD,ED],numParts:Int= -1)(implicit sc:SparkContext): Graph[VD, ED] ={
+    val numberOfPartitions=if (numParts== -1) sc.defaultParallelism else numParts
     val communities: Graph[ComponentID, ED] = communityDetectionMethod(graph)
     val numberOfCommunities=communities.vertices.values.distinct().collect().size
     val vertexToCommunityId: Map[VertexId, ComponentID] = communities.vertices.collect().toMap
-    val broadcastedMap =sc.broadcast(vertexToCommunityId)
+    val (coarsedVertexMap,coarsedNumberOfPartitions) = PartitioningUtils.coarsePartitions(numberOfPartitions,numberOfCommunities,vertexToCommunityId)
+    val broadcastedMap =sc.broadcast(coarsedVertexMap)
     val strategy=ByComponentIdPartitionStrategy(broadcastedMap)
-    graph.partitionBy(strategy,numberOfCommunities)
+    graph.partitionBy(strategy,coarsedNumberOfPartitions)
   }
 
 
-  def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],communityDetectionMethod:CommunityDetectionAlgorithm)(implicit sc:SparkContext): Graph[VD, ED] ={
-    partitionGraphBy(graph,communityDetectionMethod.detectCommunities[VD,ED](_))
+  def partitionGraphUsing[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],communityDetectionMethod:CommunityDetectionAlgorithm,numParts:Int= -1)(implicit sc:SparkContext): Graph[VD, ED] ={
+    partitionGraphBy(graph,communityDetectionMethod.detectCommunities[VD,ED](_),numParts)
   }
 
 

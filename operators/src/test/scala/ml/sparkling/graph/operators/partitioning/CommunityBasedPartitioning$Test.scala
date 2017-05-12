@@ -17,7 +17,7 @@ class CommunityBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureT
     val filePath = getClass.getResource("/graphs/4_nodes_full")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Partition using PSCAN")
-    val partitionedGraph: Graph[Int, Int] = CommunityBasedPartitioning.partitionGraphBy(graph,PSCAN)
+    val partitionedGraph: Graph[Int, Int] = CommunityBasedPartitioning.partitionGraphUsing(graph,PSCAN)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (1)
   }
@@ -27,7 +27,7 @@ class CommunityBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureT
     val filePath = getClass.getResource("/graphs/4_nodes_full")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Partition using PSCAN")
-    val partitionedGraph: Graph[Int, Int] =graph.partitionBy(PSCAN)
+    val partitionedGraph: Graph[Int, Int] =graph.partitionBy(PSCAN,1)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (1)
   }
@@ -37,7 +37,7 @@ class CommunityBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureT
     val filePath = getClass.getResource("/graphs/5_nodes_directed")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Partition using PSCAN")
-    val partitionedGraph: Graph[Int, Int] = CommunityBasedPartitioning.partitionGraphBy(graph,PSCAN)
+    val partitionedGraph: Graph[Int, Int] = CommunityBasedPartitioning.partitionGraphUsing(graph,PSCAN,5)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (5)
   }
@@ -47,7 +47,7 @@ class CommunityBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureT
     val filePath = getClass.getResource("/graphs/coarsening_to_3")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Partition using PSCAN")
-    val partitionedGraph: Graph[Int, Int] = CommunityBasedPartitioning.partitionGraphBy(graph,PSCAN)
+    val partitionedGraph: Graph[Int, Int] = CommunityBasedPartitioning.partitionGraphUsing(graph,PSCAN,3)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (3)
   }
@@ -57,7 +57,7 @@ class CommunityBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureT
     val filePath = getClass.getResource("/graphs/5_nodes_directed")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
     When("Partition using PSCAN")
-    val partitionedGraph: Graph[Int, Int] = CommunityBasedPartitioning.partitionGraphBy(graph,PSCAN.computeConnectedComponents(_,epsilon = 0))
+    val partitionedGraph: Graph[Int, Int] = CommunityBasedPartitioning.partitionGraphBy(graph,PSCAN.computeConnectedComponents(_,epsilon = 0),1)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (1)
   }

@@ -1,10 +1,9 @@
 package ml.sparkling.graph.operators.partitioning
 
 import ml.sparkling.graph.operators.MeasureTest
-import ml.sparkling.graph.operators.OperatorsDSL._
-import ml.sparkling.graph.operators.algorithms.community.pscan.PSCAN
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
+import org.apache.spark.graphx.util.GraphGenerators
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
@@ -29,7 +28,7 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
     When("Partition using PSCAN")
     val partitionedGraph: Graph[Int, Int] = PropagationBasedPartitioning.partitionGraphBy(graph,1)
     Then("Should compute partitions correctly")
-    partitionedGraph.edges.partitions.size  should equal (4)
+    partitionedGraph.edges.partitions.size  should equal (1)
   }
 
 
@@ -40,6 +39,16 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
     When("Partition using PSCAN")
     val partitionedGraph: Graph[Int, Int] = PropagationBasedPartitioning.partitionGraphBy(graph,3)
     Then("Should compute partitions correctly")
-    partitionedGraph.edges.partitions.size  should equal (6)
+    partitionedGraph.edges.partitions.size  should equal (3)
+  }
+
+  "Dynamic partitioning for random graph" should  " be computed" in{
+    Given("graph")
+    val filePath = getClass.getResource("/graphs/coarsening_to_3")
+    val graph:Graph[Int,Int]=GraphGenerators.rmatGraph(sc,1000,10000)
+    When("Partition using Propagation method")
+    val partitionedGraph: Graph[Int, Int] =PropagationBasedPartitioning.partitionGraphBy(graph,24)
+    Then("Should compute partitions correctly")
+    partitionedGraph.edges.partitions.size  should equal (24)
   }
 }

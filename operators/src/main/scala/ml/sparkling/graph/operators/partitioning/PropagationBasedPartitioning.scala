@@ -52,12 +52,12 @@ object PropagationBasedPartitioning {
         oldComponents.foreachPartition((_)=>{})
       }
     }
-
     val (communities,numberOfCommunities)=(oldComponents,oldNumberOfComponents)
     val vertexToCommunityId: Map[VertexId, ComponentID] = communities.treeAggregate(Map[VertexId,VertexId]())((agg,data)=>{agg+(data._1->data._2)},(agg1,agg2)=>agg1++agg2)
-    val broadcastedMap =sc.broadcast(vertexToCommunityId)
+    val (vertexMap,newNumberOfCummunities)=PartitioningUtils.coarsePartitions(numberOfPartitions, numberOfCommunities, vertexToCommunityId)
+    val broadcastedMap =sc.broadcast(vertexMap)
     val strategy=ByComponentIdPartitionStrategy(broadcastedMap)
-    graph.partitionBy(strategy,numberOfCommunities.toInt)
+    graph.partitionBy(strategy,newNumberOfCummunities.toInt)
   }
 
 }

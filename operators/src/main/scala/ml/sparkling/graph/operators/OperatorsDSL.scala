@@ -59,8 +59,8 @@ object OperatorsDSL {
     def partitionBy(communityDetectionMethod:CommunityDetectionMethod[VD,ED])(implicit sc:SparkContext)=
       partitionGraphBy(graph,communityDetectionMethod)
 
-    def partitionBy(communityDetectionMethod:CommunityDetectionAlgorithm)(implicit sc:SparkContext)=
-      partitionGraphBy(graph,communityDetectionMethod)
+    def partitionBy(communityDetectionMethod:CommunityDetectionAlgorithm,numParts:Int= -1)(implicit sc:SparkContext)=
+      partitionGraphUsing(graph,communityDetectionMethod,numParts)
 
     def adamicAdar(treatAsUndirected:Boolean=false)={
       AdamicAdar.computeWithPreprocessing(graph,treatAsUndirected)

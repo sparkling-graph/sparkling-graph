@@ -66,7 +66,7 @@ case object PSCAN extends CommunityDetectionAlgorithm{
       val componentsGraph=cutOffGraph.connectedComponents()
       val currentNumberOfComponents=componentsGraph.vertices.map(_._2).distinct().count()
       logger.info(s"PSCAN resulted in $currentNumberOfComponents components ($requiredNumberOfComponents required)")
-      if(Math.abs(requiredNumberOfComponents-currentNumberOfComponents)<Math.abs(requiredNumberOfComponents-numberOfComponents)){
+      if(currentNumberOfComponents>=requiredNumberOfComponents&&Math.abs(requiredNumberOfComponents-currentNumberOfComponents)<Math.abs(requiredNumberOfComponents-numberOfComponents)){
         components=componentsGraph;
         numberOfComponents=currentNumberOfComponents;
       }
