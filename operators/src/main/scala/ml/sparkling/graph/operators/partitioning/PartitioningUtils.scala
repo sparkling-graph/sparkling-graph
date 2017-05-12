@@ -10,9 +10,11 @@ import org.apache.spark.graphx.{PartitionID, VertexId}
 object PartitioningUtils {
   def coarsePartitions(numberOfPartitions: PartitionID, numberOfCommunities: VertexId, vertexToCommunityId: Map[VertexId, ComponentID]) = {
     if (numberOfCommunities > numberOfPartitions) {
-      var communities = vertexToCommunityId.map(t => (t._2, t._1)).toList.groupBy(t => t._1).toList.sortBy(_._2.length);
+      var communities= vertexToCommunityId.map(t => (t._2, t._1)).toList.groupBy(t => t._1).toList.sortBy(_._2.length);
       while (communities.length > numberOfPartitions && communities.length >= 2) {
-        communities = ((communities.head._1, communities.head._2 ::: communities.tail.head._2) :: communities.tail.tail).sortBy(_._2.length);
+        communities= communities match{
+          case (firstCommunityId,firstData)::(secondCommunityId,secondData)::tail=>((Math.min(firstCommunityId,secondCommunityId),firstData:::secondData)::tail).sortBy(_._2.length)
+        }
       }
       (communities.flatMap {
         case (community, data) => data.map {

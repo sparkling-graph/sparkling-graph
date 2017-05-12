@@ -1,6 +1,10 @@
 package ml.sparkling.graph.operators.partitioning
 
+import java.beans.Transient
+
 import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.{CommunityDetectionAlgorithm, CommunityDetectionMethod, ComponentID}
+import ml.sparkling.graph.operators.utils.LoggerHolder
+import org.apache.log4j.Logger
 import org.apache.spark.SparkContext
 import org.apache.spark.broadcast.Broadcast
 import org.apache.spark.graphx.{Graph, PartitionID, PartitionStrategy, VertexId}
@@ -12,7 +16,8 @@ import scala.reflect.ClassTag
  * First approach to community based graph partitioning. It is not efficient due to need of gathering vertex to component id on driver node.
  */
 object CommunityBasedPartitioning {
-
+  @transient
+  val logger=Logger.getLogger(CommunityBasedPartitioning.getClass())
 
   def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],communityDetectionMethod:CommunityDetectionMethod[VD,ED],numParts:Int= -1)(implicit sc:SparkContext): Graph[VD, ED] ={
     val numberOfPartitions=if (numParts== -1) sc.defaultParallelism else numParts
@@ -21,6 +26,7 @@ object CommunityBasedPartitioning {
     val vertexToCommunityId: Map[VertexId, ComponentID] = communities.vertices.collect().toMap
     val (coarsedVertexMap,coarsedNumberOfPartitions) = PartitioningUtils.coarsePartitions(numberOfPartitions,numberOfCommunities,vertexToCommunityId)
     val strategy=ByComponentIdPartitionStrategy(coarsedVertexMap)
+    logger.info(s"Partitioning graph using map with ${coarsedVertexMap.size} entries")
     graph.partitionBy(strategy,coarsedNumberOfPartitions)
   }
 

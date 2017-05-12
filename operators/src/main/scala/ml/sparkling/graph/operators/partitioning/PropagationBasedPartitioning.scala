@@ -56,6 +56,7 @@ object PropagationBasedPartitioning {
     val vertexToCommunityId: Map[VertexId, ComponentID] = communities.treeAggregate(Map[VertexId,VertexId]())((agg,data)=>{agg+(data._1->data._2)},(agg1,agg2)=>agg1++agg2)
     val (vertexMap,newNumberOfCummunities)=PartitioningUtils.coarsePartitions(numberOfPartitions, numberOfCommunities, vertexToCommunityId)
     val strategy=ByComponentIdPartitionStrategy(vertexMap)
+    logger.info(s"Partitioning graph using map with ${vertexMap.size} entries")
     graph.partitionBy(strategy,newNumberOfCummunities.toInt)
   }
 
