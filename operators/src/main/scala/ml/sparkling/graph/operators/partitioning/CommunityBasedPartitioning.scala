@@ -20,8 +20,7 @@ object CommunityBasedPartitioning {
     val numberOfCommunities=communities.vertices.values.distinct().collect().size
     val vertexToCommunityId: Map[VertexId, ComponentID] = communities.vertices.collect().toMap
     val (coarsedVertexMap,coarsedNumberOfPartitions) = PartitioningUtils.coarsePartitions(numberOfPartitions,numberOfCommunities,vertexToCommunityId)
-    val broadcastedMap =sc.broadcast(coarsedVertexMap)
-    val strategy=ByComponentIdPartitionStrategy(broadcastedMap)
+    val strategy=ByComponentIdPartitionStrategy(coarsedVertexMap)
     graph.partitionBy(strategy,coarsedNumberOfPartitions)
   }
 
@@ -31,10 +30,10 @@ object CommunityBasedPartitioning {
   }
 
 
-   case class ByComponentIdPartitionStrategy(idMap:Broadcast[Map[VertexId, ComponentID]]) extends PartitionStrategy{
+   case class ByComponentIdPartitionStrategy(idMap:Map[VertexId, ComponentID]) extends PartitionStrategy{
     override def getPartition(src: VertexId, dst: VertexId, numParts: PartitionID): PartitionID = {
-      val vertex1Component: ComponentID = idMap.value(src)
-      val vertex2Component: ComponentID = idMap.value(dst)
+      val vertex1Component: ComponentID = idMap(src)
+      val vertex2Component: ComponentID = idMap(dst)
       Math.min(vertex1Component,vertex2Component).toInt
     }
   }

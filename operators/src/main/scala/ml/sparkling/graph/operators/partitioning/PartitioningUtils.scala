@@ -3,7 +3,6 @@ package ml.sparkling.graph.operators.partitioning
 import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID
 import org.apache.spark.graphx.{PartitionID, VertexId}
 
-import scala.reflect.ClassTag
 
 /**
   * Created by  Roman Bartusiak <riomus@gmail.com> on 12.05.17.

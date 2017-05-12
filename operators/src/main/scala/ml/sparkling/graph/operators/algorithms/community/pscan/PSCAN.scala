@@ -39,9 +39,7 @@ case object PSCAN extends CommunityDetectionAlgorithm{
   }
 
   def computeConnectedComponentsUsing[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],requiredNumberOfComponents:Int=32):Graph[ComponentID,ED]={
-
     val neighbours: Graph[NeighbourSet, ED] = NeighboursUtils.getWithNeighbours(graph,treatAsUndirected = true)
-
     val edgesWithSimilarity=neighbours.mapTriplets(edge=>{
       val sizeOfIntersection=intersectSize(edge.srcAttr,edge.dstAttr)
       val denominator = Math.sqrt(edge.srcAttr.size()*edge.dstAttr.size())
