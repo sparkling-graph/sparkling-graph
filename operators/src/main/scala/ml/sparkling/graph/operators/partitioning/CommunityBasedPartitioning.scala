@@ -38,8 +38,8 @@ object CommunityBasedPartitioning {
 
    case class ByComponentIdPartitionStrategy(idMap:Map[VertexId, ComponentID]) extends PartitionStrategy{
     override def getPartition(src: VertexId, dst: VertexId, numParts: PartitionID): PartitionID = {
-      val vertex1Component: ComponentID = idMap(src)
-      val vertex2Component: ComponentID = idMap(dst)
+      val vertex1Component: ComponentID = idMap.getOrElse(src,Int.MaxValue)
+      val vertex2Component: ComponentID = idMap.getOrElse(dst,Int.MaxValue)
       Math.min(vertex1Component,vertex2Component).toInt
     }
   }

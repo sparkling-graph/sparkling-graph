@@ -14,6 +14,8 @@ object PartitioningUtils {
       while (communities.length > numberOfPartitions && communities.length >= 2) {
         communities= communities match{
           case (firstCommunityId,firstData)::(secondCommunityId,secondData)::tail=>((Math.min(firstCommunityId,secondCommunityId),firstData:::secondData)::tail).sortBy(_._2.length)
+          case t::Nil=>t::Nil
+          case _ => Nil
         }
       }
       (communities.flatMap {
