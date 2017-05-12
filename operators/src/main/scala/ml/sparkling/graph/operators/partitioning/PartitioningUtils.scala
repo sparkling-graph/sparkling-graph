@@ -12,7 +12,7 @@ import scala.collection.immutable
 object PartitioningUtils {
   def coarsePartitions(numberOfPartitions: PartitionID, numberOfCommunities: VertexId, vertexToCommunityId: Map[VertexId, ComponentID]) = {
     if (numberOfCommunities > numberOfPartitions) {
-      var communities= vertexToCommunityId.map(t => (t._2, t._1)).toList.groupBy(t => t._1).toList.sortBy(_._2.length);
+      var communities= vertexToCommunityId.toList.map(t => (t._2, t._1)).groupBy(t => t._1).toSeq.sortBy(_._2.length);
       while (communities.length > numberOfPartitions && communities.length >= 2) {
         communities= communities match{
           case (firstCommunityId,firstData)::(secondCommunityId,secondData)::tail=>((Math.min(firstCommunityId,secondCommunityId),firstData:::secondData)::tail).sortBy(_._2.length)
