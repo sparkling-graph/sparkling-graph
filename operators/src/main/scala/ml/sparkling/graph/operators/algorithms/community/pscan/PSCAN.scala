@@ -49,9 +49,10 @@ case object PSCAN extends CommunityDetectionAlgorithm{
     var min=0
     var max=edgesWeights.length-1
     val wholeMax=edgesWeights.length-1
-    var components=edgesWithSimilarity.connectedComponents()
-    var numberOfComponents=components.vertices.map(_._2).distinct().count()
+    var components=edgesWithSimilarity.mapVertices((vId,_)=>vId)
+    var numberOfComponents=graph.numVertices
     var found=false;
+    logger.info(s"Will try to find optimal epsilon value from ${edgesWeights.length} edges weights")
     while(!found){
       val index=Math.floor((min+max)/2.0).toInt
       val cutOffValue= edgesWeights(index);
@@ -64,7 +65,7 @@ case object PSCAN extends CommunityDetectionAlgorithm{
       val componentsGraph=cutOffGraph.connectedComponents()
       val currentNumberOfComponents=componentsGraph.vertices.map(_._2).distinct().count()
       logger.info(s"PSCAN resulted in $currentNumberOfComponents components ($requiredNumberOfComponents required)")
-      if(currentNumberOfComponents>=requiredNumberOfComponents&&Math.abs(requiredNumberOfComponents-currentNumberOfComponents)<Math.abs(requiredNumberOfComponents-numberOfComponents)){
+      if(currentNumberOfComponents>=requiredNumberOfComponents&&(Math.abs(requiredNumberOfComponents-currentNumberOfComponents)<Math.abs(requiredNumberOfComponents-numberOfComponents)||numberOfComponents<requiredNumberOfComponents)){
         components=componentsGraph;
         numberOfComponents=currentNumberOfComponents;
       }
@@ -88,8 +89,7 @@ case object PSCAN extends CommunityDetectionAlgorithm{
         }
       }
     }
-
-
+    logger.info(s"Using PSCAN with  $numberOfComponents components ($requiredNumberOfComponents required)")
     graph.outerJoinVertices(components.vertices)((vId,oldData,newData)=>{
       newData.getOrElse(defaultComponentId)
     })
