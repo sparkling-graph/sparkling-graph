@@ -45,7 +45,7 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">ByComponentIdPartitionStrategy</span><span class="params">(<span name="idMap">idMap: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>, <a href="../../api/operators/algorithms/community/CommunityDetection$.html#ComponentID=Long" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID">ComponentID</a>]</span>)</span><span class="result"> extends <span class="extype" name="org.apache.spark.graphx.PartitionStrategy">PartitionStrategy</span> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">ByComponentIdPartitionStrategy</span><span class="params">(<span name="idMap">idMap: <span class="extype" name="org.apache.spark.broadcast.Broadcast">Broadcast</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>, <a href="../../api/operators/algorithms/community/CommunityDetection$.html#ComponentID=Long" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID">ComponentID</a>]]</span>)</span><span class="result"> extends <span class="extype" name="org.apache.spark.graphx.PartitionStrategy">PartitionStrategy</span> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
       
@@ -89,7 +89,7 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.ByComponentIdPartitionStrategy#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(idMap:Map[org.apache.spark.graphx.VertexId,ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID]):ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.ByComponentIdPartitionStrategy"></a>
+      <a id="&lt;init&gt;(idMap:org.apache.spark.broadcast.Broadcast[Map[org.apache.spark.graphx.VertexId,ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID]]):ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.ByComponentIdPartitionStrategy"></a>
       <a id="&lt;init&gt;:ByComponentIdPartitionStrategy"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -97,10 +97,10 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">ByComponentIdPartitionStrategy</span><span class="params">(<span name="idMap">idMap: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>, <a href="../../api/operators/algorithms/community/CommunityDetection$.html#ComponentID=Long" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID">ComponentID</a>]</span>)</span>
+        <span class="name">ByComponentIdPartitionStrategy</span><span class="params">(<span name="idMap">idMap: <span class="extype" name="org.apache.spark.broadcast.Broadcast">Broadcast</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>, <a href="../../api/operators/algorithms/community/CommunityDetection$.html#ComponentID=Long" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID">ComponentID</a>]]</span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@&lt;init&gt;(idMap:Map[org.apache.spark.graphx.VertexId,ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID]):ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.ByComponentIdPartitionStrategy" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@&lt;init&gt;(idMap:org.apache.spark.broadcast.Broadcast[Map[org.apache.spark.graphx.VertexId,ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID]]):ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.ByComponentIdPartitionStrategy" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -280,18 +280,18 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.ByComponentIdPartitionStrategy">ByComponentIdPartitionStrategy</a> → PartitionStrategy</dd></dl></div>
     </li><li name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.ByComponentIdPartitionStrategy#idMap" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="idMap:Map[org.apache.spark.graphx.VertexId,ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID]"></a>
-      <a id="idMap:Map[VertexId,ComponentID]"></a>
+      <a id="idMap:org.apache.spark.broadcast.Broadcast[Map[org.apache.spark.graphx.VertexId,ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID]]"></a>
+      <a id="idMap:Broadcast[Map[VertexId,ComponentID]]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">idMap</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>, <a href="../../api/operators/algorithms/community/CommunityDetection$.html#ComponentID=Long" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID">ComponentID</a>]</span>
+        <span class="name">idMap</span><span class="result">: <span class="extype" name="org.apache.spark.broadcast.Broadcast">Broadcast</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>, <a href="../../api/operators/algorithms/community/CommunityDetection$.html#ComponentID=Long" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID">ComponentID</a>]]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@idMap:Map[org.apache.spark.graphx.VertexId,ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID]" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@idMap:org.apache.spark.broadcast.Broadcast[Map[org.apache.spark.graphx.VertexId,ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID]]" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
