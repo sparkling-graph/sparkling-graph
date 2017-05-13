@@ -24,10 +24,10 @@ object CommunityBasedPartitioning {
     val numberOfPartitions=if (numParts== -1) sc.defaultParallelism else numParts
     val communities: Graph[ComponentID, ED] = communityDetectionMethod(graph)
     val numberOfCommunities=communities.vertices.values.distinct().collect().size
-    val vertexToCommunityId: Map[VertexId, ComponentID] = communities.vertices.collect().toMap
+    val vertexToCommunityId: Map[VertexId, ComponentID] = communities.vertices.treeAggregate(Map[VertexId,VertexId]())((agg,data)=>{agg+(data._1->data._2)},(agg1,agg2)=>agg1++agg2)
     val (coarsedVertexMap,coarsedNumberOfPartitions) = PartitioningUtils.coarsePartitions(numberOfPartitions,numberOfCommunities,vertexToCommunityId)
-    val strategy=ByComponentIdPartitionStrategy(coarsedVertexMap)
-    logger.info(s"Partitioning graph using coarsed map with ${coarsedVertexMap.size} entries (${vertexToCommunityId.size} before coarse)")
+    val strategy=ByComponentIdPartitionStrategy(sc.broadcast(coarsedVertexMap))
+    logger.info(s"Partitioning graph using coarsed map with ${coarsedVertexMap.size} entries (${vertexToCommunityId.size} before coarse) and ${coarsedNumberOfPartitions} partitions")
     graph.partitionBy(strategy,coarsedNumberOfPartitions)
   }
 
@@ -37,10 +37,10 @@ object CommunityBasedPartitioning {
   }
 
 
-   case class ByComponentIdPartitionStrategy(idMap:Map[VertexId, ComponentID]) extends PartitionStrategy{
+   case class ByComponentIdPartitionStrategy(idMap:Broadcast[Map[VertexId, ComponentID]]) extends PartitionStrategy{
     override def getPartition(src: VertexId, dst: VertexId, numParts: PartitionID): PartitionID = {
-      val vertex1Component: ComponentID = idMap.getOrElse(src,Int.MaxValue)
-      val vertex2Component: ComponentID = idMap.getOrElse(dst,Int.MaxValue)
+      val vertex1Component: ComponentID = idMap.value.getOrElse(src,Int.MaxValue)
+      val vertex2Component: ComponentID = idMap.value.getOrElse(dst,Int.MaxValue)
       Math.min(vertex1Component,vertex2Component).toInt
     }
   }

@@ -20,11 +20,11 @@ object PSCANBasedPartitioning {
 
   def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],numberOfPartitions:Int)(implicit sc:SparkContext): Graph[VD, ED] ={
     val communities: Graph[ComponentID, ED] = PSCAN.computeConnectedComponentsUsing(graph,numberOfPartitions)
-    val numberOfCommunities=communities.vertices.values.distinct().collect().size
-    val vertexToCommunityId: Map[VertexId, ComponentID] = communities.vertices.collect().toMap
+    val numberOfCommunities=communities.vertices.values.distinct().count()
+    val vertexToCommunityId: Map[VertexId, ComponentID] = communities.vertices.treeAggregate(Map[VertexId,VertexId]())((agg,data)=>{agg+(data._1->data._2)},(agg1,agg2)=>agg1++agg2)
     val (coarsedVertexMap,coarsedNumberOfPartitions) = PartitioningUtils.coarsePartitions(numberOfPartitions,numberOfCommunities,vertexToCommunityId)
-    val strategy=ByComponentIdPartitionStrategy(coarsedVertexMap)
-    logger.info(s"Partitioning graph using coarsed map with ${coarsedVertexMap.size} entries (${vertexToCommunityId.size} before coarse)")
+    val strategy=ByComponentIdPartitionStrategy(sc.broadcast(coarsedVertexMap))
+    logger.info(s"Partitioning graph using coarsed map with ${coarsedVertexMap.size} entries (${vertexToCommunityId.size} before coarse) and ${coarsedNumberOfPartitions} partitions (before ${numberOfCommunities}")
     graph.partitionBy(strategy,coarsedNumberOfPartitions)
   }
 
