@@ -79,7 +79,7 @@ libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.6"
 
 # Supported by:
 
-* <a href="https://www.jetbrains.com/buy/opensource/"><img src="https://sos-software.com/wp-content/uploads/Jetbrains_logo.png" width=100px /></a> provides us awesome IDE
+<a href="https://www.jetbrains.com/buy/opensource/"><img src="https://sos-software.com/wp-content/uploads/Jetbrains_logo.png" width=100px /></a> provides us awesome IDE
  
 # How to
 
