@@ -10,7 +10,7 @@ object GraphMLTypes {
     def apply(value:String):Any
   }
  def apply(typeName:String):TypeHandler={
-   val typeHandlerProvider = Map[String,TypeHandler]("string" -> StringHanlder,"boolean" -> BooleanHandler, "int" -> IntHandler )
+   val typeHandlerProvider = Map[String,TypeHandler]("string" -> StringHanlder,"boolean" -> BooleanHandler, "int" -> IntHandler, "long" -> LongHandler, "float" -> FloatHandler, "double" -> DoubleHandler )
    typeHandlerProvider(typeName.toLowerCase)
  }
   object StringHanlder extends TypeHandler{
