@@ -92,7 +92,6 @@ case object ShortestPathsAlgorithm  {
    * @tparam ED - edge data type (must be numeric)
    * @return graph where each vertex has map of its shortest paths
    */
-  //TODO: NEED TO INVESTIGATE SOME INFINITE LOOPS PROBLEM!
   def computeShortestPaths[VD, ED: ClassTag](graph: Graph[VD, ED], vertexPredicate: VertexPredicate[VD] = AllPathPredicate, treatAsUndirected: Boolean = false)(implicit num: Numeric[ED]) = {
     computeAllPathsUsing(graph, vertexPredicate, treatAsUndirected, new FastUtilWithPath[VD, ED]())
   }
