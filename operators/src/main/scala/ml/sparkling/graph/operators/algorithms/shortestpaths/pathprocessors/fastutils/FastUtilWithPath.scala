@@ -25,7 +25,7 @@ class FastUtilWithPath[VD,ED]() extends  PathProcessor[VD,ED,WithPathContainer]{
   }
 
   def getNewContainerForPaths(size:Int) ={
-    new PathsMap(size,1).asInstanceOf[WithPathContainer]
+    new PathsMap(size,0.5f).asInstanceOf[WithPathContainer]
   }
 
   def putNewPath(map:WithPathContainer,to:VertexId,weight:ED)(implicit num:Numeric[ED]): WithPathContainer={
@@ -39,11 +39,11 @@ class FastUtilWithPath[VD,ED]() extends  PathProcessor[VD,ED,WithPathContainer]{
   }
 
   def mergePathContainers(map1:WithPathContainer,map2:WithPathContainer)(implicit num:Numeric[ED]):WithPathContainer={
-    val out=map1.asInstanceOf[PathsMap].clone().asInstanceOf[WithPathContainer]
-    map2.forEach(new BiConsumer[JLong,JPathCollection](){
+    val out=map2.asInstanceOf[PathsMap].clone().asInstanceOf[WithPathContainer]
+    map1.forEach(new BiConsumer[JLong,JPathCollection](){
       def accept(key: JLong, u: JPathCollection) = {
-        val map1Value: JPathCollection =Option(map1.get(key)).getOrElse(ObjectSets.EMPTY_SET.asInstanceOf[JPathCollection])
-        val map2Value: JPathCollection =u
+        val map2Value: JPathCollection =Option(map2.get(key)).getOrElse(ObjectSets.EMPTY_SET.asInstanceOf[JPathCollection])
+        val map1Value: JPathCollection =u
         val value=mergePathSets(map1Value,map2Value)
         out.put(key,value)
       }
@@ -75,7 +75,7 @@ class FastUtilWithPath[VD,ED]() extends  PathProcessor[VD,ED,WithPathContainer]{
     val javaTarget:JDouble=targetVertexId.toDouble;
     set.forEach(new Consumer[JPath](){
       def accept( l: JPath) = {
-        if(l.indexOf(targetVertexId.toDouble)<1){
+        if(l.indexOf(javaTarget)<1){
           val lClone=l.asInstanceOf[SinglePath].clone()
           lClone.add(vertexId.toDouble)
           lClone.set(0,lClone.get(0)+num.toDouble(distance))
