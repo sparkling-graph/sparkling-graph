@@ -19,6 +19,7 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
     val partitionedGraph: Graph[Int, Int] = PropagationBasedPartitioning.partitionGraphBy(graph,4)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (4)
+    graph.unpersist(true)
   }
 
   "4 vertex Graph partitioned to 1 partion" should  " be partitooned to 4 partition" in{
@@ -29,6 +30,7 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
     val partitionedGraph: Graph[Int, Int] = PropagationBasedPartitioning.partitionGraphBy(graph,1)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (1)
+    graph.unpersist(true)
   }
 
 
@@ -40,6 +42,7 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
     val partitionedGraph: Graph[Int, Int] = PropagationBasedPartitioning.partitionGraphBy(graph,3)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (3)
+    graph.unpersist(true)
   }
 
   "Dynamic partitioning for random graph" should  " be computed" in{
@@ -50,5 +53,6 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
     val partitionedGraph: Graph[Int, Int] =PropagationBasedPartitioning.partitionGraphBy(graph,24)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (24)
+    graph.unpersist(true)
   }
 }

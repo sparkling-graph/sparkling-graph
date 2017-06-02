@@ -42,7 +42,10 @@ class SparkTest extends Spec with BeforeAndAfterAll  {
 
   override def afterAll() = {
     if(!sc.isStopped){
-      sc.stop()
+//      sc.stop()
+      while(true){
+      Thread.sleep(1000)
+      }
     }
     FileUtils.deleteDirectory(file.toFile)
   }
@@ -52,7 +55,6 @@ class SparkTest extends Spec with BeforeAndAfterAll  {
     Vector(
       new CommunityBasedPartitioning$Test,
       new PropagationBasedPartitioning$Test,
-      new LPCoarsening$Test,
       new VertexEmbeddedness$Test,
       new NeighborhoodConnectivity$Test,
       new Hits$Test,

@@ -20,6 +20,7 @@ class CommunityBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureT
     val partitionedGraph: Graph[Int, Int] = CommunityBasedPartitioning.partitionGraphUsing(graph,PSCAN)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (1)
+    graph.unpersist(false)
   }
 
   "One component graph " should  " have one partition when calculated using DSL" in{
@@ -30,6 +31,7 @@ class CommunityBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureT
     val partitionedGraph: Graph[Int, Int] =graph.partitionBy(PSCAN,1)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (1)
+    graph.unpersist(false)
   }
 
   "Five component graph " should  " have five partitions" in{
@@ -40,6 +42,7 @@ class CommunityBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureT
     val partitionedGraph: Graph[Int, Int] = CommunityBasedPartitioning.partitionGraphUsing(graph,PSCAN,5)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (5)
+    graph.unpersist(false)
   }
 
   "Three component graph " should  " have five partitions" in{
@@ -50,6 +53,7 @@ class CommunityBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureT
     val partitionedGraph: Graph[Int, Int] = CommunityBasedPartitioning.partitionGraphUsing(graph,PSCAN,3)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (3)
+    graph.unpersist(false)
   }
 
   "Change of community method parammeters" should  " be possible" in{
@@ -60,5 +64,6 @@ class CommunityBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureT
     val partitionedGraph: Graph[Int, Int] = CommunityBasedPartitioning.partitionGraphBy(graph,PSCAN.computeConnectedComponents(_,epsilon = 0),1)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (1)
+    graph.unpersist(false)
   }
 }

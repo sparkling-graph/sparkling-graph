@@ -34,6 +34,7 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
     verticesSortedById  should equal (
       Set((1,Map(2 -> 1.0, 5 -> 8.0, 4 -> 5.0, 3 -> 2.0)), (3,Map(5 -> 2.0, 4 -> 1.0)), (5,Map()), (2,Map(5 -> 8.0, 4 -> 2.0, 3 -> 1.0)), (4,Map(5 -> 1.0)))
     )
+    graph.unpersist(true)
   }
 
   "Approximated shortest paths for undirected ring graph" should "be correctly calculated" in{
@@ -52,6 +53,7 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
       (3,Map(2 -> 1.0, 5 -> 2.0, 4 -> 1.0, 1 -> 2.0)),
       (1,Map(2 -> 1.0, 5 -> 1.0, 4 -> 2.0, 3 -> 2.0)),
       (5,Map(2 -> 2.0, 4 -> 1.0, 1 -> 1.0, 3 -> 2.0))) )
+    graph.unpersist(true)
   }
 
   "Single shortest paths 1 for simple graph" should "be correctly calculated" in{
@@ -65,6 +67,7 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
       case (vId,data)=>(vId,data.toMap)
     }.collect().toSet
     verticesSortedById should equal (Set((1,Map()), (2,Map()), (3,Map()), (4,Map()), (5,Map())))
+    graph.unpersist(true)
   }
 
   "Single shortest paths 2 for simple graph" should "be correctly calculated" in{
@@ -84,6 +87,7 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
       (4,Map()),
       (5,Map())
     ))
+    graph.unpersist(true)
   }
 
   "Undirected graphs" should "be handled correctly" in{
@@ -98,6 +102,8 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
     Then("Should calculate shortest paths correctly")
     val verticesSortedById=shortestPathsAsUndirected.vertices.mapValues(_.toMap).collect().sortBy{case (vId,data)=>vId}
     verticesSortedById should equal (shortestPathsUndirected.vertices.mapValues(_.toMap).collect().sortBy{case (vId,data)=>vId})
+    grapDirected.unpersist(true)
+    graphUndirected.unpersist(true)
   }
 
 
@@ -112,6 +118,7 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
 
     Then("Approximation should be faster")
     approximationTime should be <=(exactTime)
+     graph.unpersist(true)
   }
 
   " Approximation for random log normal graph " should  "not take longer thant exact computing"  taggedAs(Slow) in{
@@ -126,6 +133,7 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
 
     Then("Approximation should be faster")
     approximationTime should be <=(exactTime)
+    graph.unpersist(true)
   }
 
 

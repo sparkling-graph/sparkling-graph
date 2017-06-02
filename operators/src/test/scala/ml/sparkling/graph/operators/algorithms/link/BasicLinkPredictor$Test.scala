@@ -19,6 +19,7 @@ class BasicLinkPredictor$Test (implicit sc:SparkContext) extends MeasureTest {
     val links = BasicLinkPredictor.predictLinks(graph,CommonNeighbours,0,true)
     Then("Should compute links correctly")
    links.collect() should equal(Array((1,3)))
+    graph.unpersist(true)
   }
 
   "In open 4 nodes graph" should  " propose to close it fully" in{
@@ -29,5 +30,6 @@ class BasicLinkPredictor$Test (implicit sc:SparkContext) extends MeasureTest {
     val links = graph.predictLinks(CommonNeighbours,1,true)
     Then("Should compute links correctly")
     links.collect().toSet should equal(Set((1,3),(2,4)))
+    graph.unpersist(true)
   }
 }

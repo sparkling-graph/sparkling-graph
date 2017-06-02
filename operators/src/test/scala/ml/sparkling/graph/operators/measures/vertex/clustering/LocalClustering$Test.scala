@@ -22,6 +22,7 @@ class LocalClustering$Test(implicit sc:SparkContext)    extends MeasureTest  {
     verticesSortedById should equal (Array(
       (1,0.0), (2,0.0), (3,0.0), (4,0.0), (5,0.0)
     ))
+    graph.unpersist(true)
   }
 
   "Local clustering for line graph" should "be correctly calculated using DSL" in{
@@ -35,6 +36,7 @@ class LocalClustering$Test(implicit sc:SparkContext)    extends MeasureTest  {
     verticesSortedById should equal (Array(
       (1,0.0), (2,0.0), (3,0.0), (4,0.0), (5,0.0)
     ))
+    graph.unpersist(true)
   }
 
   "Local clustering for full directed graph " should "be correctly calculated" in{
@@ -48,6 +50,7 @@ class LocalClustering$Test(implicit sc:SparkContext)    extends MeasureTest  {
     verticesSortedById should equal (Array(
       (1,0.5), (2,0d), (3,0d), (4,0.5)
     ))
+    graph.unpersist(true)
   }
 
   "Local clustering for full undirected graph " should "be correctly calculated" in{
@@ -61,6 +64,7 @@ class LocalClustering$Test(implicit sc:SparkContext)    extends MeasureTest  {
     verticesSortedById  should equal (Array(
       (1,1), (2,1), (3,1), (4,1)
     ))
+    graph.unpersist(true)
   }
 
 
@@ -74,6 +78,7 @@ class LocalClustering$Test(implicit sc:SparkContext)    extends MeasureTest  {
     Then("Should calculate local clustering correctly")
     val verticesSortedById=localClustering.vertices.collect().sortBy{case (vId,data)=>vId}
     verticesSortedById should equal (localClusteringIterative.vertices.collect().sortBy{case (vId,data)=>vId})
+    graph.unpersist(true)
   }
 
 }

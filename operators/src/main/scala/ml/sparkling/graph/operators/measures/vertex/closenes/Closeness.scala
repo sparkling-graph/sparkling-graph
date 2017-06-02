@@ -40,7 +40,7 @@ object Closeness extends VertexMeasure[Double] {
     val numberOfIterations=groupedVerticesIds.size
     val distanceSumGraph = graph.mapVertices((vId, data) => (0l, 0d))
     graph.cache()
-    groupedVerticesIds.zipWithIndex.foldLeft((distanceSumGraph,1)) { case ((distanceSumGraph,iteration), (vertexIds, index)) => {
+    val out=groupedVerticesIds.zipWithIndex.foldLeft((distanceSumGraph,1)) { case ((distanceSumGraph,iteration), (vertexIds, index)) => {
       logger.info(s"Closeness iteration ${iteration} from  ${numberOfIterations}")
       if(iteration % checkpointingFrequency==0){
         logger.info(s"Chceckpointing graph")
@@ -48,8 +48,7 @@ object Closeness extends VertexMeasure[Double] {
         distanceSumGraph.vertices.foreachPartition((_)=>{})
         distanceSumGraph.edges.foreachPartition((_)=>{})
       }
-      distanceSumGraph.cache()
-      val shortestPaths = ShortestPathsAlgorithm.computeShortestPathsLengths(graph, InArrayPredicate(vertexIds), treatAsUndirected = vertexMeasureConfiguration.treatAsUndirected).cache()
+      val shortestPaths = ShortestPathsAlgorithm.computeShortestPathsLengths(graph, InArrayPredicate(vertexIds), treatAsUndirected = vertexMeasureConfiguration.treatAsUndirected)
       val newValues=shortestPaths.vertices.map{
         case (vId,paths)=>(vId,paths.values().asScala.map(_.toDouble).map{
           case 0d => (0l, 0d)
@@ -57,7 +56,7 @@ object Closeness extends VertexMeasure[Double] {
         }.foldLeft((0l, 0d)) {
           case ((c1, v1), (c2, v2)) => (c1 + c2, v1 + v2)
         })
-      }.cache()
+      }
       val out = distanceSumGraph.outerJoinVertices(newValues)((vId, oldValue, newValue) => {
         (oldValue, newValue) match {
           case ((oldPathsCount, oldPathsSum), Some((newPathsCount, newPathsSum))) => {
@@ -66,13 +65,13 @@ object Closeness extends VertexMeasure[Double] {
           case (_, None) => oldValue
         }
       })
-      shortestPaths.unpersist(blocking = false)
-
       (out,iteration+1)
     }
     }._1.mapVertices {
       case (vId, (count, sum)) => closenessFunction(count, sum, normalize)
     }
+    graph.unpersist(false)
+    out
 
   }
 

@@ -23,13 +23,13 @@ case object PSCAN extends CommunityDetectionAlgorithm{
       val sizeOfIntersection=intersectSize(edge.srcAttr,edge.dstAttr)
       val denominator = Math.sqrt(edge.srcAttr.size()*edge.dstAttr.size())
       sizeOfIntersection/denominator
-    }).cache()
+    })
 
     val cutOffGraph=edgesWithSimilarity.filter[NeighbourSet, Double](
       preprocess=g=>g,
       epred=edge=>{
         edge.attr >= epsilon
-      }).cache()
+      })
 
     val componentsGraph=cutOffGraph.connectedComponents()
 
@@ -44,7 +44,7 @@ case object PSCAN extends CommunityDetectionAlgorithm{
       val sizeOfIntersection=intersectSize(edge.srcAttr,edge.dstAttr)
       val denominator = Math.sqrt(edge.srcAttr.size()*edge.dstAttr.size())
       sizeOfIntersection/denominator
-    }).cache()
+    })
     val edgesWeights=edgesWithSimilarity.edges.map(_.attr).distinct().sortBy(t=>t).collect();
     var min=0
     var max=edgesWeights.length-1
@@ -61,7 +61,7 @@ case object PSCAN extends CommunityDetectionAlgorithm{
         preprocess=g=>g,
         epred=edge=>{
           edge.attr >cutOffValue
-        }).cache()
+        })
       val componentsGraph=cutOffGraph.connectedComponents()
       val currentNumberOfComponents=componentsGraph.vertices.map(_._2).distinct().count()
       logger.info(s"PSCAN resulted in $currentNumberOfComponents components ($requiredNumberOfComponents required)")

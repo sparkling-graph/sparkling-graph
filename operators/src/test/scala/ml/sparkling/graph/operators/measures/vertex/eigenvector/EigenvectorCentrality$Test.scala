@@ -23,6 +23,7 @@ class EigenvectorCentrality$Test(implicit sc:SparkContext)   extends MeasureTest
     result.vertices.collect().sortBy{case (vId,data)=>vId}.map{case (vId,data)=>data}.zip(Array(
       0d, 0d, 0d, 0d, 0d
     )).foreach{case (a,b)=>{a should be (b +- 1e-5 )}}
+    graph.unpersist(true)
   }
 
   "Eigenvector  for line graph" should "be correctly calculated using DSL" in{
@@ -35,6 +36,7 @@ class EigenvectorCentrality$Test(implicit sc:SparkContext)   extends MeasureTest
     result.vertices.collect().sortBy{case (vId,data)=>vId}.map{case (vId,data)=>data}.zip(Array(
       0d, 0d, 0d, 0d, 0d
     )).foreach{case (a,b)=>{a should be (b +- 1e-5 )}}
+    graph.unpersist(true)
   }
 
   "Eigenvector  for full 4 node directed graph" should "be correctly calculated" in{
@@ -47,6 +49,7 @@ class EigenvectorCentrality$Test(implicit sc:SparkContext)   extends MeasureTest
     result.vertices.collect().sortBy{case (vId,data)=>vId}.map{case (vId,data)=>data}.zip(Array(
       0.32128186442503776, 0.5515795539542094, 0.6256715148839718, 0.44841176915201825
     )).foreach{case (a,b)=>{a should be (b +- 1e-5 )}}
+    graph.unpersist(true)
   }
 
   "Eigenvector  for full 4 node undirected graph" should "be correctly calculated" in{
@@ -59,6 +62,7 @@ class EigenvectorCentrality$Test(implicit sc:SparkContext)   extends MeasureTest
     result.vertices.collect().sortBy{case (vId,data)=>vId} should equal (Array(
       (1,0.5), (2,0.5), (3,0.5), (4,0.5)
     ))
+    graph.unpersist(true)
   }
 
 

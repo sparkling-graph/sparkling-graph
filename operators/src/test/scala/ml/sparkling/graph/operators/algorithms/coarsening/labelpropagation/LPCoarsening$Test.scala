@@ -25,6 +25,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
       case (vId,component)=>(vId,component.sorted)
     }.toSet should equal (Set((1,List(1, 2)),(3,List(3))) )
     components.edges.collect().toSet should equal(Set(Edge(1,3,1), Edge(3,1,1)))
+    graph.unpersist(true)
   }
 
 
@@ -40,6 +41,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
       case (vId,component)=>(vId,component.sorted)
     }.toSet should equal (Set((1,List(1,2,3))))
     components.edges.collect().toSet should equal(Set())
+    graph.unpersist(true)
   }
 
 
@@ -55,6 +57,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
       case (vId,component)=>(vId,component.sorted)
     }.toSet should equal (Set((1,List(1,2,3,4))))
     components.edges.collect().toSet should equal(Set())
+    graph.unpersist(true)
   }
 
 
@@ -70,6 +73,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
       case (vId,component)=>(vId,component.sorted)
     }.toSet should equal (Set((1,List(1,2,3,4))))
     components.edges.collect().toSet should equal(Set())
+    graph.unpersist(true)
   }
 
 
@@ -86,6 +90,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
       case (vId,component)=>(vId,component.sorted)
     }.toSet should equal (Set((1,List(1, 2)),(3,List(3))))
     components.edges.collect().toSet should equal(Set(Edge(1,3,1)) )
+    graph.unpersist(true)
   }
 
 
@@ -101,6 +106,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
       case (vId,component)=>(vId,component.sorted)
     }.toSet should equal (Set((1,List(1,2)),(3,List(3))))
     components.edges.collect().toSet should equal(Set(Edge(1,3,1)))
+    graph.unpersist(true)
   }
 
 
@@ -116,6 +122,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
       case (vId,component)=>(vId,component.sorted)
     }.toSet should equal (Set((3,List(3)), (1,List(1)), (2,List(2))))
     components.edges.collect().toSet should equal(Set(Edge(2,1,1), Edge(3,2,1)))
+    graph.unpersist(true)
   }
 
 
@@ -132,6 +139,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
       case (vId,component)=>(vId,component.sorted)
     }.toSet should equal (Set((1,List(1, 2)), (3,List(3, 4)), (5,List(5))))
     components.edges.collect().toSet should equal(Set(Edge(1,3,1), Edge(3,5,1), Edge(5,1,1)) )
+    graph.unpersist(true)
   }
 
 
@@ -153,6 +161,8 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
       case (vId,component)=>(vId,component.sorted)
     }.toSet)
     undirectedComponents.edges.collect().toSet should equal(undirectedComponents.edges.collect().toSet)
+    directedGraph.unpersist(true)
+    undirectedGraph.unpersist(true)
   }
 
 
@@ -168,6 +178,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
       case (vId,component)=>(vId,component.sorted)
     }.toSet should equal (Set((1,List(1, 2, 3, 4)), (9,List(9, 10, 11, 12)), (5,List(5, 6, 7, 8))))
     components.edges.collect().toSet should equal(Set(Edge(1,5,1), Edge(1,9,1), Edge(5,9,1)))
+    graph.unpersist(true)
   }
 
   "Three component directed graph treated as undirected " should  " be coarsed to three nodes graph" in{
@@ -182,6 +193,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
       case (vId,component)=>(vId,component.sorted)
     }.toSet should equal (Set((1,List(1, 2, 3, 4)), (9,List(9, 10, 11, 12)), (5,List(5, 6, 7, 8))))
     components.edges.collect().toSet should equal(Set(Edge(1,5,1), Edge(1,9,1), Edge(5,9,1)))
+    graph.unpersist(true)
   }
 
 
@@ -192,6 +204,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
     val components: Graph[Component, Int] = graph.LPCoarse(true);
     Then("Should compute components correctly")
     components.vertices.count()  should equal (1)
+    graph.unpersist(true)
   }
 
 
@@ -203,6 +216,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
     Then("Should compute components correctly")
     logger.info(s"Coarsed to ${components.vertices.count()}")
     components.vertices.count()  should equal (graph.vertices.count()/2)
+    graph.unpersist(true)
   }
 
   "Random log normal graph " should  " be coarsed at least by 30%" taggedAs(Slow) in{
@@ -215,6 +229,7 @@ class LPCoarsening$Test  (implicit sc:SparkContext)   extends MeasureTest {
       Then("Should compute components correctly")
       logger.info(s"Coarsed to ${components.vertices.count()} in repetition $x")
       components.vertices.count()  should be <=(expectedSize)
+      graph.unpersist(true)
     }
   }
 

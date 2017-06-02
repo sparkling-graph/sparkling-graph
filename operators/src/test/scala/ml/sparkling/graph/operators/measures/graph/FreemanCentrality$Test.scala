@@ -17,6 +17,7 @@ class FreemanCentrality$Test (implicit sc:SparkContext)   extends MeasureTest  {
     val result=FreemanCentrality.compute(graph)
     Then("Should calculate Freemans Centrality")
     result should be (1)
+    graph.unpersist(true)
   }
 
   "Freeman Centrality  for star graph" should "be 1 when calculated using DSL" in{
@@ -27,6 +28,7 @@ class FreemanCentrality$Test (implicit sc:SparkContext)   extends MeasureTest  {
     val result=graph.freemanCentrality()
     Then("Should calculate Freemans Centrality")
     result should be (1)
+    graph.unpersist(true)
   }
 
 
@@ -38,6 +40,7 @@ class FreemanCentrality$Test (implicit sc:SparkContext)   extends MeasureTest  {
     val result=FreemanCentrality.compute(graph)
     Then("Should calculate Freemans Centrality")
     result should be (0.16666666 +- 1e-5)
+    graph.unpersist(true)
   }
 
 

@@ -31,9 +31,6 @@ object EigenvectorCentrality extends VertexMeasure[Double]{
     var oldValue=0d
     var newValue=0d
 
-    Stream.from(0).map((iteration)=>{
-
-    })
     while(continuePredicate(iteration,oldValue,newValue)||iteration==0){
       val iterationRDD=computationGraph.aggregateMessages[Double](
       sendMsg = context=>{
@@ -46,13 +43,15 @@ object EigenvectorCentrality extends VertexMeasure[Double]{
       },
       mergeMsg = (a,b)=>a+b)
       val normalizationValue=Math.sqrt(iterationRDD.map{case (vId,e)=>Math.pow(e,2)}.sum())
-      computationGraph=computationGraph.outerJoinVertices(iterationRDD)((vId,oldValue,newValue)=>if(normalizationValue==0) 0 else newValue.getOrElse(0d)/normalizationValue).cache()
+      computationGraph=computationGraph.outerJoinVertices(iterationRDD)((vId,oldValue,newValue)=>if(normalizationValue==0) 0 else newValue.getOrElse(0d)/normalizationValue)
       oldValue=newValue
       newValue=computationGraph.vertices.map{case (vId,e)=>e}.sum()/numberOfNodes
       iterationRDD.unpersist()
       iteration+=1
     }
-    computationGraph
+    val out=computationGraph
+    out.unpersist(false)
+    out
   }
   /**
    * Computes Eigenvector Centrality for each vertex in graph

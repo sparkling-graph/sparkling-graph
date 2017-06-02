@@ -45,11 +45,12 @@ case object ShortestPathsAlgorithm  {
       pathProcessor.mergePathContainers
     )
     val initMap: Graph[PT, ED] = graph.outerJoinVertices(initDistances)((vId, old, newValue) => newValue.getOrElse(pathProcessor.getNewContainerForPaths()))
-    initMap.pregel[PT](pathProcessor.EMPTY_CONTAINER)(
+    val out=initMap.pregel[PT](pathProcessor.EMPTY_CONTAINER)(
       vprog = vertexProgram(pathProcessor),
       sendMsg = sendMessage(treatAsUndirected,pathProcessor),
       mergeMsg =  pathProcessor.mergePathContainers
     )
+    out
   }
 
   /**
@@ -91,7 +92,7 @@ case object ShortestPathsAlgorithm  {
    * @tparam ED - edge data type (must be numeric)
    * @return graph where each vertex has map of its shortest paths
    */
-
+  //TODO: NEED TO INVESTIGATE SOME INFINITE LOOPS PROBLEM!
   def computeShortestPaths[VD, ED: ClassTag](graph: Graph[VD, ED], vertexPredicate: VertexPredicate[VD] = AllPathPredicate, treatAsUndirected: Boolean = false)(implicit num: Numeric[ED]) = {
     computeAllPathsUsing(graph, vertexPredicate, treatAsUndirected, new FastUtilWithPath[VD, ED]())
   }

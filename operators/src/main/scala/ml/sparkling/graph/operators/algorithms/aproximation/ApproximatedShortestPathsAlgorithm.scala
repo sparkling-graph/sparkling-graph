@@ -61,7 +61,7 @@ case object ApproximatedShortestPathsAlgorithm  {
         });
         (vertexId,paths)
       }
-    }) .cache()
+    })
     val fromMapped: RDD[(VertexId, (List[VertexId], JDouble))] =modifiedPaths.join(coarsedGraph.vertices,100).mapPartitions(
       iter=>iter.flatMap{
         case (from,(data,componentFrom) )=>{
@@ -70,9 +70,9 @@ case object ApproximatedShortestPathsAlgorithm  {
           }
         }
       }
-    ).cache()
+    )
 
-    val toJoined: RDD[(VertexId, ((List[VertexId], JDouble), List[VertexId]))] =fromMapped.join(coarsedGraph.vertices).cache()
+    val toJoined: RDD[(VertexId, ((List[VertexId], JDouble), List[VertexId]))] =fromMapped.join(coarsedGraph.vertices)
     val toMapped: RDD[(VertexId, (List[VertexId], JDouble))] =toJoined.mapPartitions((iter)=>{
       iter.flatMap{
         case (to,((componentFrom,len),componentTo))=>{
@@ -91,8 +91,8 @@ case object ApproximatedShortestPathsAlgorithm  {
           case (datas,len)=>datas.map((id)=>(id,len))
         })
       }
-    }).cache()
-    val outGraph=Graph(toMappedGroups, graph.edges,ListBuffer[(VertexId, JDouble)]()).cache()
+    })
+    val outGraph=Graph(toMappedGroups, graph.edges,ListBuffer[(VertexId, JDouble)]())
     val one:JDouble=1.0
     val two:JDouble=2.0
     val neighboursExchanged: RDD[(VertexId,ListBuffer[VertexId])] =outGraph.edges
@@ -121,7 +121,7 @@ case object ApproximatedShortestPathsAlgorithm  {
 
     val neighbours=neighboursExchanged.fullOuterJoin(secondLevelNeighbours).map{
       case (vId,(firstOpt,secondOpt))=>(vId,(firstOpt.map(d=>d.map(id=>(id,one)))::(secondOpt.map(_.map(id=>(id,two))))::Nil).flatten.flatten.filter(_._1!=vId))
-    }.cache()
+    }
     val out: Graph[ListBuffer[(VertexId, JDouble)], ED] =outGraph.joinVertices(neighbours){
       case (id,data,newData)=>data++newData
     }
@@ -153,8 +153,6 @@ case object ApproximatedShortestPathsAlgorithm  {
     logger.info(s"Coarsed graph has size ${coarsedGraph.vertices.count()} in comparision to ${graph.vertices.count()}")
     val verticesGroups = coarsedGraph.vertices.map(_._1).sortBy(k => k).collect().grouped(bucketSize.toInt).zipWithIndex.toList
     val numberOfIterations=verticesGroups.length;
-    graph.cache()
-    coarsedGraph.cache()
     (verticesGroups).foreach{
       case (group,iteration) => {
         logger.info(s"Approximated Shortest Paths iteration ${iteration+1} from  ${numberOfIterations}")

@@ -20,6 +20,7 @@ class Modularity$Test (implicit sc:SparkContext)   extends MeasureTest{
     val result=Modularity.compute(graphComponents)
     Then("Should calculate Freemans Centrality")
     result should be (1)
+    graph.unpersist(true)
   }
 
   "Modularity  for star graph" should "be 1 when calculated using DSL" in{
@@ -31,6 +32,7 @@ class Modularity$Test (implicit sc:SparkContext)   extends MeasureTest{
     val result=graphComponents.modularity()
     Then("Should calculate Freemans Centrality")
     result should be (1)
+    graph.unpersist(true)
   }
 
   "Modularity  for all single components" should "be -1 " in{
@@ -42,6 +44,7 @@ class Modularity$Test (implicit sc:SparkContext)   extends MeasureTest{
     val result=graphComponents.modularity()
     Then("Should calculate Freemans Centrality")
     result should be (-1)
+    graph.unpersist(true)
   }
 
 

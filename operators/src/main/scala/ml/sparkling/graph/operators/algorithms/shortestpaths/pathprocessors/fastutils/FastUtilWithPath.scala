@@ -57,23 +57,30 @@ class FastUtilWithPath[VD,ED]() extends  PathProcessor[VD,ED,WithPathContainer]{
     map.forEach(new BiConsumer[JLong,JPathCollection](){
       def accept(k: JLong, u: JPathCollection) = {
         if (!targetVertexId.equals(k)) {
-          out.put(k, extendPathsSet(map.get(k), vertexId, distance))
-        } else {
+          val coll=extendPathsSet(targetVertexId,map.get(k), vertexId, distance)
+          if(coll.size()>0){
+            out.put(k,coll)
+          }
+        }else{
           out.remove(k)
         }
       }
     })
+    out.remove(targetVertexId)
     out
   }
 
-  private def extendPathsSet(set:JPathCollection,vertexId:VertexId,distance:ED)(implicit num:Numeric[ED]):JPathCollection={
+  private def extendPathsSet(targetVertexId:VertexId,set:JPathCollection,vertexId:VertexId,distance:ED)(implicit num:Numeric[ED]):JPathCollection={
     val out =getPathsContainer(set.size())
+    val javaTarget:JDouble=targetVertexId.toDouble;
     set.forEach(new Consumer[JPath](){
       def accept( l: JPath) = {
-        val lClone=l.asInstanceOf[SinglePath].clone()
-        lClone.add(vertexId.toDouble)
-        lClone.set(0,lClone.get(0)+num.toDouble(distance))
-        out.add(lClone)
+        if(l.indexOf(targetVertexId.toDouble)<1){
+          val lClone=l.asInstanceOf[SinglePath].clone()
+          lClone.add(vertexId.toDouble)
+          lClone.set(0,lClone.get(0)+num.toDouble(distance))
+          out.add(lClone)
+        }
       }
     })
     out
@@ -88,8 +95,8 @@ class FastUtilWithPath[VD,ED]() extends  PathProcessor[VD,ED,WithPathContainer]{
         set1Clone.addAll(set2)
         set1Clone
       }
-      case 1 => set2
-      case -1 => set1
+      case 1 => set2.asInstanceOf[PathsSet].clone()
+      case -1 => set1.asInstanceOf[PathsSet].clone()
     }
   }
   private def getPathsContainer(size:Int=50): JPathCollection ={

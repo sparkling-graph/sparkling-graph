@@ -19,6 +19,7 @@ class PSCAN$Test (implicit sc:SparkContext)   extends MeasureTest {
     val components: Graph[ComponentID, Int] = PSCAN.computeConnectedComponents(graph)
     Then("Should compute components correctly")
     components.vertices.map{case (vId,cId)=>cId}.distinct().collect().size  should equal (1)
+    graph.unpersist(true)
   }
 
 
@@ -30,6 +31,7 @@ class PSCAN$Test (implicit sc:SparkContext)   extends MeasureTest {
     val components: Graph[ComponentID, Int] =graph.PSCAN()
     Then("Should compute components correctly")
     components.vertices.map{case (vId,cId)=>cId}.distinct().collect().size  should equal (1)
+    graph.unpersist(true)
   }
 
   "Components for ring graph" should  " be computed" in{
@@ -40,6 +42,7 @@ class PSCAN$Test (implicit sc:SparkContext)   extends MeasureTest {
     val components: Graph[ComponentID, Int] = PSCAN.computeConnectedComponents(graph)
     Then("Should compute components correctly")
     components.vertices.map{case (vId,cId)=>cId}.distinct().collect().size  should equal (5)
+    graph.unpersist(true)
   }
   "Components for 3 component graph" should  " be computed" in{
     Given("graph")
@@ -49,6 +52,7 @@ class PSCAN$Test (implicit sc:SparkContext)   extends MeasureTest {
     val components: Graph[ComponentID, Int] = PSCAN.computeConnectedComponents(graph)
     Then("Should compute components correctly")
     components.vertices.map{case (vId,cId)=>cId}.distinct().collect().size  should equal (3)
+    graph.unpersist(true)
   }
 
   "Dynamic components detection for 3 component graph" should  " be computed" in{
@@ -59,6 +63,7 @@ class PSCAN$Test (implicit sc:SparkContext)   extends MeasureTest {
     val components: Graph[ComponentID, Int] = PSCAN.computeConnectedComponentsUsing(graph,3)
     Then("Should compute components correctly")
     components.vertices.map{case (vId,cId)=>cId}.distinct().collect().size  should equal (3)
+    graph.unpersist(true)
   }
 
   "Dynamic components detection  for RMAT graph" should  " be computed" in{
@@ -69,6 +74,7 @@ class PSCAN$Test (implicit sc:SparkContext)   extends MeasureTest {
       val components: Graph[ComponentID, Int] = PSCAN.computeConnectedComponentsUsing(graph,24)
       Then("Should compute components correctly")
       components.vertices.map{case (vId,cId)=>cId}.distinct().collect().size  should equal (24 +- 22)
+      graph.unpersist(true)
     }
   }
 
@@ -79,6 +85,7 @@ class PSCAN$Test (implicit sc:SparkContext)   extends MeasureTest {
     val components: Graph[ComponentID, Int] = PSCAN.computeConnectedComponentsUsing(graph,24)
     Then("Should compute components correctly")
     components.vertices.map{case (vId,cId)=>cId}.distinct().collect().size  should equal (24 +- 22)
+    graph.unpersist(true)
   }
 
 }

@@ -34,41 +34,43 @@ object Hits extends VertexMeasure[(Double, Double)] {
           context.sendToDst(sourceHub)
           context.sendToSrc(0d)
           },
-        mergeMsg = (a,b)=>a+b).cache()
-      val normAuths = withNewAuths.map{case (vId,auth) => auth}.max()
-      computationGraph = computationGraph.outerJoinVertices(withNewAuths){
-        case (vId, (hub,auth), Some(newValue)) => (hub, newValue / normAuths)
-        case (vId, (hub,auth), None) => (hub, 0d)
-      }.cache()
-      withNewAuths.unpersist(blocking=false)
+        mergeMsg = (a,b)=>a+b)
+      val normAuths = withNewAuths.map{case (_,auth) => auth}.max()
+      val newComputationGraphWithAuths = computationGraph.outerJoinVertices(withNewAuths){
+        case (_, (hub,_), Some(newValue)) => (hub, newValue / normAuths)
+        case (_, (hub,_), None) => (hub, 0d)
+      }
       val withNewHubs = computationGraph.aggregateMessages[Double](
         sendMsg = context=>{
           val destinationAuth: Double = context.dstAttr match{
-           case  (hub,auth) => auth
+           case  (_,auth) => auth
           }
           context.sendToSrc(destinationAuth)
           context.sendToDst(0d)
           },
-        mergeMsg = (a,b)=>a+b).cache()
-      val normHubs = withNewHubs.map{case (vId,hub) => hub}.max()
-      computationGraph = computationGraph.outerJoinVertices(withNewHubs){
-        case (vId, (hub,auth), Some(newValue)) => (newValue/normHubs, auth)
-        case (vId, (hub,auth), None) => (0d, auth)
+        mergeMsg = (a,b)=>a+b)
+      val normHubs = withNewHubs.map{case (_,hub) => hub}.max()
+      val newComputationGraphWithHubs = newComputationGraphWithAuths.outerJoinVertices(withNewHubs){
+        case (_, (_,auth), Some(newValue)) => (newValue/normHubs, auth)
+        case (_, (_,auth), None) => (0d, auth)
       }.cache()
-      withNewHubs.unpersist(blocking=false)
+      computationGraph.unpersist(false)
+      computationGraph=newComputationGraphWithHubs
       oldValues = newValues
-      newValues = computationGraph.vertices.map{case (vId,(hub,auth)) => (hub,auth)}.fold((0d, 0d))(sumHubAuthTuples)
+      newValues = computationGraph.vertices.map{case (_,(hub,auth)) => (hub,auth)}.fold((0d, 0d))(sumHubAuthTuples)
       newValues = newValues match{
         case (hub,auth)=> (hub/numVertices,auth/numVertices)
       }
       iteration += 1
     }
-    if (normalize) {
+    val out=if (normalize) {
       val sum = computationGraph.vertices.values.fold((0d, 0d))(sumHubAuthTuples)
       computationGraph.mapVertices(normalizeHubAuthBy(sum))
     } else {
       computationGraph
     }
+    out.unpersist(false)
+    out
   }
 
   def normalizeHubAuthBy(denominator:(Double,Double))(vId:VertexId,data:(Double,Double)):(Double,Double)={

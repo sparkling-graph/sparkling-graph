@@ -26,6 +26,7 @@ class Hits$Test(implicit sc:SparkContext)  extends MeasureTest  {
         b should be (d +- 1e-5)
       }
     }
+    graph.unpersist(true)
   }
 
   "Hits  for line graph" should "be correctly calculated using DSL" in {
@@ -43,6 +44,7 @@ class Hits$Test(implicit sc:SparkContext)  extends MeasureTest  {
         b should be (d +- 1e-5)
       }
     }
+    graph.unpersist(true)
   }
 
   "Hits for full 4 node directed graph" should "be correctly calculated" in{
@@ -63,6 +65,7 @@ class Hits$Test(implicit sc:SparkContext)  extends MeasureTest  {
         b should be (d +- 1e-5)
       }
     }
+    graph.unpersist(true)
   }
 
 

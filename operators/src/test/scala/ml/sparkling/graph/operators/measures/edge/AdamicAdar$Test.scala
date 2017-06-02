@@ -20,6 +20,7 @@ class AdamicAdar$Test(implicit sc:SparkContext) extends MeasureTest {
      val resultValues=result.edges.map(_.attr).distinct().collect()
      resultValues(0) should equal(0)
      resultValues.size should equal(1)
+     graph.unpersist(true)
    }
 
    "Adamic/Adar for full graph using DSL" should "be 1.8205 for each node" in{
@@ -32,6 +33,7 @@ class AdamicAdar$Test(implicit sc:SparkContext) extends MeasureTest {
      val resultValues=result.edges.map(_.attr).distinct().collect()
      resultValues(0) should equal(1.82047 +- 1e-5)
      resultValues.size should equal(1)
+     graph.unpersist(true)
    }
 
 

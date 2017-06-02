@@ -39,6 +39,7 @@ class Closeness$Test(implicit sc: SparkContext) extends MeasureTest {
       a should be(b +- 1e-5)
     }
     }
+    graph.unpersist(true)
   }
 
 
@@ -56,6 +57,7 @@ class Closeness$Test(implicit sc: SparkContext) extends MeasureTest {
       a should be(b +- 1e-5)
     }
     }
+    graph.unpersist(true)
   }
 
 
@@ -75,6 +77,7 @@ class Closeness$Test(implicit sc: SparkContext) extends MeasureTest {
       a should be(b +- 1e-5)
     }
     }
+    graph.unpersist(true)
   }
 
   "Closeness for full undirected graph " should "be correctly calculated" in {
@@ -91,6 +94,7 @@ class Closeness$Test(implicit sc: SparkContext) extends MeasureTest {
       a should be(b +- 1e-5)
     }
     }
+    graph.unpersist(true)
   }
 
 
@@ -108,6 +112,7 @@ class Closeness$Test(implicit sc: SparkContext) extends MeasureTest {
       a should be(b +- 1e-5)
     }
     }
+    graph.unpersist(true)
   }
 
   "Closeness  using iterative approach" should "be correctly calculated" in {
@@ -124,6 +129,7 @@ class Closeness$Test(implicit sc: SparkContext) extends MeasureTest {
       a should be(b +- 1e-5)
     }
     }
+    graph.unpersist(true)
   }
 
 }

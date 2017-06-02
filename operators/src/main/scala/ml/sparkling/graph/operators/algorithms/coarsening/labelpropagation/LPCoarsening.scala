@@ -33,7 +33,7 @@ case object LPCoarsening extends CoarseningAlgorithm{
   val logger=Logger.getLogger(LPCoarsening.getClass())
   override def coarse[VD:ClassTag,ED:ClassTag](graph: Graph[VD, ED],treatAsUndirected:Boolean=false,checkpointingFrequency:Int=25,edgeValueSelector:EdgeValueSelector=DefaultEdgeValueSelector): Graph[Component, ED] = {
     logger.info(s"Coarsing graph G using undirected parameter $treatAsUndirected")
-    val filteredGraph=graph.filter(preprocess=(g:Graph[VD,ED])=>g,epred=(e:EdgeTriplet[VD, ED])=>e.srcId!=e.dstId).cache()
+    val filteredGraph=graph.filter(preprocess=(g:Graph[VD,ED])=>g,epred=(e:EdgeTriplet[VD, ED])=>e.srcId!=e.dstId)
     var iterationGraph: Graph[VertexWrapper, ED] =filteredGraph.mapVertices((vId, _)=>VertexWrapper(vId,vId,vId,false))
     var changed:Boolean=true;
     var iteration=0
@@ -61,7 +61,7 @@ case object LPCoarsening extends CoarseningAlgorithm{
           if(treatAsUndirected) toDst++toSrc else toDst
         },
         mergeMsg = (a,b)=>a++b
-      ).cache()
+      )
      val innerIterationGraphSemi=innerIterationGraph.pregel[List[VertexId]](List.empty,maxIterations = 1)(
         vprog=(vId,data,msg)=>{
           if(msg.length==0) data else
@@ -78,27 +78,27 @@ case object LPCoarsening extends CoarseningAlgorithm{
           if(treatAsUndirected) Iterator((triplet.srcId,List(triplet.dstAttr.currentId)),(triplet.dstId,List(triplet.srcAttr.currentId))) else Iterator((triplet.dstId,List(triplet.srcAttr.currentId)))
         },
         mergeMsg = (a,b)=>a++b
-      ).cache()
+      )
       logger.debug(s"Looking if any vertice updated id during coarse")
       val changedStats=innerIterationGraphSemi.vertices.values.treeAggregate(ChangedStats(0,0))(ChangedStatsAgregator.add,ChangedStatsAgregator.add)
       logger.info(s"Vertices changed: ${changedStats.changed}, vertices not changed: ${changedStats.notChanged}")
       changed=changedStats.changed>0;
-      iterationGraph=innerIterationGraphSemi.cache();
+      iterationGraph=innerIterationGraphSemi;
     }
     val components: Graph[VertexId, ED] =iterationGraph.mapVertices(ToNewId.apply)
     val newVertices=components.vertices.map{
       case (oldId,newId)=>(newId,oldId)
     }.groupByKey().map{
       case (newId,idsInComponent)=>(newId,idsInComponent.toList)
-    }.cache()
+    }
     logger.info(s"Number of vertices after coarse: ${newVertices.count()}")
     val newEdges=graph.edges.map(e=>(e.srcId,e))
       .join(components.vertices).map{
       case (oldSrc,(edge,newSrc))=>(edge.dstId,(edge,newSrc))
     }.join(components.vertices).map{
       case (oldDst,((edge,newSrc),newDst))=>Edge(newSrc,newDst,edge.attr)
-    }.filter(e=>e.srcId!=e.dstId).cache()
-    Graph(newVertices,newEdges).groupEdges(edgeValueSelector.getValue).cache()
+    }.filter(e=>e.srcId!=e.dstId)
+    Graph(newVertices,newEdges).groupEdges(edgeValueSelector.getValue)
   }
 
 }

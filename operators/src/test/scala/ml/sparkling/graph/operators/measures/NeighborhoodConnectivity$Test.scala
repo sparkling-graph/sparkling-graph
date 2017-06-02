@@ -24,6 +24,7 @@ class NeighborhoodConnectivity$Test(implicit sc:SparkContext)  extends MeasureTe
     verticesSortedById .map{case (vId,data)=>data} should equal (Array(
       1d,1d,1d,0d,0d
     ))
+    graph.unpersist(true)
   }
 
   "Neighbor connectivity for directed line graph" should "be correctly calculated when using DSL" in {
@@ -37,6 +38,7 @@ class NeighborhoodConnectivity$Test(implicit sc:SparkContext)  extends MeasureTe
     verticesSortedById .map{case (vId,data)=>data} should equal (Array(
       1d,1d,1d,0d,0d
     ))
+    graph.unpersist(true)
   }
 
   "Neighbor connectivity for undirected line graph" should "be correctly calculated" in {
@@ -50,6 +52,7 @@ class NeighborhoodConnectivity$Test(implicit sc:SparkContext)  extends MeasureTe
     verticesSortedById .map{case (vId,data)=>data} should equal (Array(
       2d,1.5,2d,1.5,2d
     ))
+    graph.unpersist(true)
   }
 
   "Neighbor connectivity for full 4 node directed graph" should "be correctly calculated" in{
@@ -63,6 +66,7 @@ class NeighborhoodConnectivity$Test(implicit sc:SparkContext)  extends MeasureTe
     verticesSortedById .map{case (vId,data)=>data} should equal (Array(
       1d,1d,2d,1.5
     ))
+    graph.unpersist(true)
   }
 
   "Neighbor connectivity for full 4 node undirected graph" should "be correctly calculated" in{
@@ -76,6 +80,7 @@ class NeighborhoodConnectivity$Test(implicit sc:SparkContext)  extends MeasureTe
     verticesSortedById .map{case (vId,data)=>data} should equal (Array(
       3d,3d,3d,3d
     ))
+    graph.unpersist(true)
   }
 
 }

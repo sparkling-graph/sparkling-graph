@@ -51,12 +51,11 @@ object FullGraphDescriptor {
 
 
   def describeGraph[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED],measureFilter:MeasureFilter=anyMeasureFilter)(implicit num: Numeric[ED]) = {
-    val cachedGraph = graph.cache()
-    val outGraph: Graph[List[Any], ED] = cachedGraph.mapVertices((vId, data) => List(data))
+    val outGraph: Graph[List[Any], ED] = graph.mapVertices((vId, data) => List(data))
 
     measures.filter(measureFilter).foldLeft(outGraph) {
       case (acc, (measureName, measure)) => {
-        val graphMeasures = executeOperator(graph, vertexMeasureConfiguration, cachedGraph, measure, measureName)
+        val graphMeasures = executeOperator(graph, vertexMeasureConfiguration, graph, measure, measureName)
         graphMeasures.unpersist()
         acc.joinVertices(graphMeasures.vertices)(extendValueList)
       }
@@ -91,17 +90,16 @@ object FullGraphDescriptor {
   }
 
   def describeGraphToDirectory[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], directory: String, vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED],measureFilter:MeasureFilter=anyMeasureFilter)(implicit num: Numeric[ED]):List[(String,Long)] = {
-    val cachedGraph = graph.cache()
-    val outGraph = cachedGraph.mapVertices((vId, data) => List(data)).cache()
+    val outGraph = graph.mapVertices((vId, data) => List(data))
     measures.filter(measureFilter).map { case (measureName, measure) => {
       val (_,timeResult)=time(measureName)({
-        val graphMeasuresOpt = executeOperatorToPath(graph, vertexMeasureConfiguration, cachedGraph, measure, measureName, s"${directory}/${measureName}")
+        val graphMeasuresOpt = executeOperatorToPath(graph, vertexMeasureConfiguration, graph, measure, measureName, s"${directory}/${measureName}")
         graphMeasuresOpt match {
           case Some(graphMeasures) => {
             val outputCSV = outGraph.outerJoinVertices(graphMeasures.vertices)(extendValueList)
               .vertices.map {
               case (id, data) => s"${id};${data.reverse.mkString(";")}"
-            }.cache()
+            }
             outputCSV.saveAsTextFile(s"${directory}/${measureName}")
             graphMeasures.unpersist()
           }

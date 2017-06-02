@@ -2,7 +2,7 @@ package ml.sparkling.graph.operators
 
 import org.apache.log4j.Logger
 import org.apache.spark.SparkContext
-import org.apache.spark.graphx.GraphLoader
+import org.apache.spark.graphx.{Graph, GraphLoader}
 import org.scalatest._
 
 /**
@@ -13,7 +13,12 @@ abstract class MeasureTest(implicit sc:SparkContext)  extends FlatSpec with Befo
   val logger=Logger.getLogger(this.getClass)
 
   def loadGraph(file:String)={
-    GraphLoader.edgeListFile(sc,file.toString)
+    val out: Graph[Int, Int] =GraphLoader.edgeListFile(sc,file.toString)
+    out.vertices.setName(s"Graph vertices ${file}")
+    out.edges.setName(s"Graph edges ${file}")
+    out.triplets.setName(s"Graph triplets ${file}")
+    out
+    out
   }
 
 

@@ -32,6 +32,7 @@ object PropagationBasedPartitioning {
     while ((numberOfComponents>numberOfPartitions && numberOfComponents!=1 && oldNumberOfComponents!=numberOfComponents) || oldNumberOfComponents>Int.MaxValue){
       logger.info(s"Propagation based partitioning: iteration:$iteration, last number of components:$oldNumberOfComponents, current number of components:$numberOfComponents")
       iteration=iteration+1;
+      oldComponents.unpersist(false)
       oldComponents=operationGraph.vertices.cache();
       val newIds=operationGraph.aggregateMessages[VertexId](ctx=>{
         if(ctx.srcAttr<ctx.dstAttr){
@@ -39,10 +40,13 @@ object PropagationBasedPartitioning {
         }else if(ctx.dstAttr<ctx.srcAttr){
           ctx.sendToSrc(ctx.dstAttr)
         }
-      },Math.min).cache()
-      operationGraph=operationGraph.outerJoinVertices(newIds){
-        case (vId,oldData,newData)=>newData.getOrElse(oldData)
+      },Math.min)
+
+      val newOperationGraph=operationGraph.outerJoinVertices(newIds){
+        case (_,oldData,newData)=>newData.getOrElse(oldData)
       }.cache()
+      operationGraph.unpersist(false)
+      operationGraph=newOperationGraph
       oldNumberOfComponents=numberOfComponents
       numberOfComponents=operationGraph.vertices.map(_._2).distinct().count()
       if(iteration%checkpointingFrequency==0){
@@ -56,9 +60,13 @@ object PropagationBasedPartitioning {
     val (communities,numberOfCommunities)=(oldComponents,oldNumberOfComponents)
     val vertexToCommunityId: Map[VertexId, ComponentID] = communities.treeAggregate(Map[VertexId,VertexId]())((agg,data)=>{agg+(data._1->data._2)},(agg1,agg2)=>agg1++agg2)
     val (vertexMap,newNumberOfCummunities)=PartitioningUtils.coarsePartitions(numberOfPartitions, numberOfCommunities, vertexToCommunityId)
-    val strategy=ByComponentIdPartitionStrategy(sc.broadcast(vertexMap))
+    val broadcastedMap = sc.broadcast(vertexMap)
+    val strategy=ByComponentIdPartitionStrategy(broadcastedMap)
     logger.info(s"Partitioning graph using coarsed map with ${vertexMap.size} entries (${vertexToCommunityId.size} before coarse) and ${numberOfCommunities} partitions")
-    graph.partitionBy(strategy,newNumberOfCummunities.toInt)
+    communities.unpersist(false)
+    val out=graph.partitionBy(strategy,newNumberOfCummunities.toInt)
+    broadcastedMap.destroy()
+    out
   }
 
 }

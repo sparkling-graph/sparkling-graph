@@ -21,6 +21,7 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
     val partitionedGraph: Graph[Int, Int] = PSCANBasedPartitioning.partitionGraphBy(graph,4)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (4)
+    graph.unpersist(true)
   }
 
   "One component graph " should  " have four partitions when calculated using DSL" in{
@@ -31,6 +32,7 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
     val partitionedGraph: Graph[Int, Int] = PSCANBasedPartitioning.partitionGraphBy(graph,1)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (1)
+    graph.unpersist(true)
   }
 
   "Five component graph " should  " have five partitions" in{
@@ -41,6 +43,7 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
     val partitionedGraph: Graph[Int, Int] =PSCANBasedPartitioning.partitionGraphBy(graph,5)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (5)
+    graph.unpersist(true)
   }
 
   "Dynamic partitioning for random graph" should  " be computed" in{
@@ -51,10 +54,10 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
     val partitionedGraph: Graph[Int, Int] =PSCANBasedPartitioning.partitionGraphBy(graph,24)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (24)
+    graph.unpersist(true)
   }
   "Dynamic partitioning for WATS graph" should  " be computed" in{
     Given("graph")
-    val filePath = getClass.getResource("/graphs/coarsening_to_3")
     val seededRandomNumberGeneratorProvider:RandomNumberGeneratorProvider=(givenSeed:Long)=>{
       ScalaRandomNumberGenerator(givenSeed+1)
     }
@@ -63,6 +66,7 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
     val partitionedGraph: Graph[Int, Int] =PSCANBasedPartitioning.partitionGraphBy(graph,24)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (24)
+    graph.unpersist(true)
   }
 
 }
