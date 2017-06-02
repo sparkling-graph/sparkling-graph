@@ -42,10 +42,7 @@ class SparkTest extends Spec with BeforeAndAfterAll  {
 
   override def afterAll() = {
     if(!sc.isStopped){
-//      sc.stop()
-      while(true){
-      Thread.sleep(1000)
-      }
+      sc.stop()
     }
     FileUtils.deleteDirectory(file.toFile)
   }
