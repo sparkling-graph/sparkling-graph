@@ -18,7 +18,7 @@ object PropagationBasedPartitioning {
 
   val logger=Logger.getLogger(PropagationBasedPartitioning.getClass())
 
-  def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],numParts:Int= -1,checkpointingFrequency:Int=10)(implicit sc:SparkContext): Graph[VD, ED] ={
+  def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],numParts:Int= -1,checkpointingFrequency:Int=50)(implicit sc:SparkContext): Graph[VD, ED] ={
     val numberOfPartitions=if (numParts== -1) sc.defaultParallelism else numParts
 
     var operationGraph=graph.mapVertices{
@@ -65,6 +65,7 @@ object PropagationBasedPartitioning {
     logger.info(s"Partitioning graph using coarsed map with ${vertexMap.size} entries (${vertexToCommunityId.size} before coarse) and ${numberOfCommunities} partitions")
     communities.unpersist(false)
     val out=graph.partitionBy(strategy,newNumberOfCummunities.toInt)
+    out.edges.foreachPartition((_)=>{})
     broadcastedMap.destroy()
     out
   }

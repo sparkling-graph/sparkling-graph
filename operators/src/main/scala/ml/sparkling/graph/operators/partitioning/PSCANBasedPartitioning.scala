@@ -27,6 +27,7 @@ object PSCANBasedPartitioning {
     val strategy=ByComponentIdPartitionStrategy(broadcastedMap)
     logger.info(s"Partitioning graph using coarsed map with ${coarsedVertexMap.size} entries (${vertexToCommunityId.size} before coarse) and ${coarsedNumberOfPartitions} partitions (before ${numberOfCommunities})")
     val out=graph.partitionBy(strategy,coarsedNumberOfPartitions)
+    out.edges.foreachPartition((_)=>{})
     broadcastedMap.destroy()
     graph.unpersist(false)
     out
