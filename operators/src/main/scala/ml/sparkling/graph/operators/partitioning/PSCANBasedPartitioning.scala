@@ -19,8 +19,9 @@ object PSCANBasedPartitioning {
   val logger=Logger.getLogger(PSCANBasedPartitioning.getClass())
 
   def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],numberOfPartitions:Int)(implicit sc:SparkContext): Graph[VD, ED] ={
-    val communities: Graph[ComponentID, ED] = PSCAN.computeConnectedComponentsUsing(graph,numberOfPartitions)
-    val numberOfCommunities=communities.vertices.values.distinct().count()
+    logger.info("Computing components using PSCAN")
+    val (communities,numberOfCommunities): (Graph[ComponentID, ED],Long) = PSCAN.computeConnectedComponentsUsing(graph,numberOfPartitions)
+    logger.info("Components computed!")
     val vertexToCommunityId: Map[VertexId, ComponentID] = communities.vertices.treeAggregate(Map[VertexId,VertexId]())((agg,data)=>{agg+(data._1->data._2)},(agg1,agg2)=>agg1++agg2)
     val (coarsedVertexMap,coarsedNumberOfPartitions) = PartitioningUtils.coarsePartitions(numberOfPartitions,numberOfCommunities,vertexToCommunityId)
     val broadcastedMap = sc.broadcast(coarsedVertexMap)

@@ -5,7 +5,7 @@ import ml.sparkling.graph.operators.measures.utils.CollectionsUtils._
 import ml.sparkling.graph.operators.measures.utils.NeighboursUtils
 import ml.sparkling.graph.operators.measures.utils.NeighboursUtils.NeighbourSet
 import org.apache.log4j.Logger
-import org.apache.spark.graphx.Graph
+import org.apache.spark.graphx.{Edge, Graph}
 
 import scala.reflect.ClassTag
 
@@ -38,18 +38,18 @@ case object PSCAN extends CommunityDetectionAlgorithm{
     })
   }
 
-  def computeConnectedComponentsUsing[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],requiredNumberOfComponents:Int=32):Graph[ComponentID,ED]={
+  def computeConnectedComponentsUsing[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],requiredNumberOfComponents:Int=32):(Graph[ComponentID,ED],Long)={
     val neighbours: Graph[NeighbourSet, ED] = NeighboursUtils.getWithNeighbours(graph,treatAsUndirected = true)
     val edgesWithSimilarity=neighbours.mapTriplets(edge=>{
       val sizeOfIntersection=intersectSize(edge.srcAttr,edge.dstAttr)
       val denominator = Math.sqrt(edge.srcAttr.size()*edge.dstAttr.size())
       sizeOfIntersection/denominator
-    })
+    }).mapVertices((vId,_)=>vId).cache()
     val edgesWeights=edgesWithSimilarity.edges.map(_.attr).distinct().sortBy(t=>t).collect();
     var min=0
     var max=edgesWeights.length-1
     val wholeMax=edgesWeights.length-1
-    var components=edgesWithSimilarity.mapVertices((vId,_)=>vId)
+    var components=edgesWithSimilarity.mapVertices((vId,_)=>vId).cache()
     var numberOfComponents=graph.numVertices
     var found=false;
     logger.info(s"Will try to find optimal epsilon value from ${edgesWeights.length} edges weights")
@@ -57,15 +57,11 @@ case object PSCAN extends CommunityDetectionAlgorithm{
       val index=Math.floor((min+max)/2.0).toInt
       val cutOffValue= edgesWeights(index);
       logger.info(s"Evaluating PSCAN for epsilon=$cutOffValue")
-      val cutOffGraph=edgesWithSimilarity.filter[NeighbourSet, Double](
-        preprocess=g=>g,
-        epred=edge=>{
-          edge.attr >cutOffValue
-        })
-      val componentsGraph=cutOffGraph.connectedComponents()
+      val componentsGraph=new PSCANConnectedComponents(cutOffValue).run(edgesWithSimilarity)
       val currentNumberOfComponents=componentsGraph.vertices.map(_._2).distinct().count()
       logger.info(s"PSCAN resulted in $currentNumberOfComponents components ($requiredNumberOfComponents required)")
       if(currentNumberOfComponents>=requiredNumberOfComponents&&(Math.abs(requiredNumberOfComponents-currentNumberOfComponents)<Math.abs(requiredNumberOfComponents-numberOfComponents)||numberOfComponents<requiredNumberOfComponents)){
+        components.unpersist(false)
         components=componentsGraph;
         numberOfComponents=currentNumberOfComponents;
       }
@@ -90,9 +86,12 @@ case object PSCAN extends CommunityDetectionAlgorithm{
       }
     }
     logger.info(s"Using PSCAN with  $numberOfComponents components ($requiredNumberOfComponents required)")
-    graph.outerJoinVertices(components.vertices)((vId,oldData,newData)=>{
+    edgesWithSimilarity.unpersist(false)
+    val out=graph.outerJoinVertices(components.vertices)((vId,oldData,newData)=>{
       newData.getOrElse(defaultComponentId)
     })
+    components.unpersist(false)
+    (out,numberOfComponents)
   }
 
   override def detectCommunities[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED]): Graph[ComponentID, ED] = {

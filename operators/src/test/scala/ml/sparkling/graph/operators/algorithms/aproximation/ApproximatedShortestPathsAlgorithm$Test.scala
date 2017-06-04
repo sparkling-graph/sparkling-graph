@@ -11,15 +11,7 @@ import org.apache.spark.graphx.util.GraphGenerators
   * Created by  Roman Bartusiak <riomus@gmail.com> on 07.02.17.
   */
 class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extends MeasureTest  {
-  def time[T](str: String)(thunk: => T): (T,Long) = {
-    logger.info(s"$str...")
-    val t1 = System.currentTimeMillis
-    val x = thunk
-    val t2 = System.currentTimeMillis
-    val diff=t2 - t1
-    logger.info(s"$diff ms")
-    (x,diff)
-  }
+
 
   "Approximated shortest paths for simple graph" should "be correctly calculated using iterative approach" in{
     Given("graph")

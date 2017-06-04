@@ -20,7 +20,7 @@ object PartitioningUtils {
       logger.info(s"Number of communities ($numberOfCommunities) is bigger thant requested number of partitions ($numberOfPartitions)")
       var communities= vertexToCommunityId.toList.map(t => (t._2, t._1)).groupBy(t => t._1).toList.sortBy(_._2.length);
       while (communities.length > numberOfPartitions && communities.length >= 2) {
-        logger.info(s"Coarsing two smallest communities into one community, size before coarse: ${communities.length}")
+        logger.debug(s"Coarsing two smallest communities into one community, size before coarse: ${communities.length}")
         communities= communities match{
           case (firstCommunityId,firstData)::(secondCommunityId,secondData)::tail=>((Math.min(firstCommunityId,secondCommunityId),firstData:::secondData)::tail).sortBy(_._2.length)
           case t::Nil=>t::Nil

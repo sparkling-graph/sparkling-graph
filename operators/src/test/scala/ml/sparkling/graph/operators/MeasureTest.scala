@@ -9,6 +9,15 @@ import org.scalatest._
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
 abstract class MeasureTest(implicit sc:SparkContext)  extends FlatSpec with BeforeAndAfterAll with GivenWhenThen with Matchers with BeforeAndAfterEach{
+  def time[T](str: String)(thunk: => T): (T,Long) = {
+    logger.info(s"$str...")
+    val t1 = System.currentTimeMillis
+    val x = thunk
+    val t2 = System.currentTimeMillis
+    val diff=t2 - t1
+    logger.info(s"$diff ms")
+    (x,diff)
+  }
 
   val logger=Logger.getLogger(this.getClass)
 

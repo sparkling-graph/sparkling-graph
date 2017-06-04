@@ -6,6 +6,7 @@ import ml.sparkling.graph.operators.MeasureTest
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
 import org.apache.spark.graphx.util.GraphGenerators
+import org.scalatest.tagobjects.Slow
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
@@ -48,7 +49,6 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
 
   "Dynamic partitioning for random graph" should  " be computed" in{
     Given("graph")
-    val filePath = getClass.getResource("/graphs/coarsening_to_3")
     val graph:Graph[Int,Int]=GraphGenerators.rmatGraph(sc,1000,10000)
     When("Partition using PSCAN")
     val partitionedGraph: Graph[Int, Int] =PSCANBasedPartitioning.partitionGraphBy(graph,24)
@@ -56,6 +56,23 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
     partitionedGraph.edges.partitions.size  should equal (24)
     graph.unpersist(true)
   }
+
+
+  "Dynamic partitioning for random graph" should  " be computed in apropriate time"  taggedAs(Slow) in{
+    for (x<-0 to 3) {
+      logger.info(s"Run $x")
+      Given("graph")
+      val graph: Graph[Int, Int] = GraphGenerators.rmatGraph(sc, 10000, 500000).cache()
+      When("Partition using PSCAN")
+      val (partitionedGraph, partitioningTime): (Graph[Int, Int], Long) = time("Partitioning")(PSCANBasedPartitioning.partitionGraphBy(graph, 24))
+      Then("Should compute partitions correctly")
+      partitionedGraph.edges.partitions.size should equal(24)
+      partitioningTime should be < (50000l)
+      graph.unpersist(true)
+      partitionedGraph.unpersist(true)
+    }
+  }
+
   "Dynamic partitioning for WATS graph" should  " be computed" in{
     Given("graph")
     val seededRandomNumberGeneratorProvider:RandomNumberGeneratorProvider=(givenSeed:Long)=>{
