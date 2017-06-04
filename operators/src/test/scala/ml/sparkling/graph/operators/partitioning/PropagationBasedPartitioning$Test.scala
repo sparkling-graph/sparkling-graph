@@ -4,6 +4,7 @@ import ml.sparkling.graph.operators.MeasureTest
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
 import org.apache.spark.graphx.util.GraphGenerators
+import org.scalatest.tagobjects.Slow
 
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
@@ -54,5 +55,20 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (24)
     graph.unpersist(true)
+  }
+
+  ignore should  "Dynamic partitioning for random graph   be computed in apropriate time"  taggedAs(Slow) in{
+    for (x<-0 to 3) {
+      logger.info(s"Run $x")
+      Given("graph")
+      val graph: Graph[Int, Int] = GraphGenerators.rmatGraph(sc, 10000, 500000).cache()
+      When("Partition using PSCAN")
+      val (partitionedGraph, partitioningTime): (Graph[Int, Int], Long) = time("Partitioning")(PropagationBasedPartitioning.partitionGraphBy(graph, 24))
+      Then("Should compute partitions correctly")
+      partitionedGraph.edges.partitions.size should equal(24)
+      partitioningTime should be < (10000l)
+      graph.unpersist(true)
+      partitionedGraph.unpersist(true)
+    }
   }
 }

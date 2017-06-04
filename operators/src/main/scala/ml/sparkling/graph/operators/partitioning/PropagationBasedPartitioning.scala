@@ -23,7 +23,7 @@ object PropagationBasedPartitioning {
 
     var operationGraph=graph.mapVertices{
       case (vId,_)=>vId
-    }
+    }.cache()
     var oldComponents=operationGraph.vertices;
 
     var numberOfComponents=graph.numVertices;
@@ -33,14 +33,14 @@ object PropagationBasedPartitioning {
       logger.info(s"Propagation based partitioning: iteration:$iteration, last number of components:$oldNumberOfComponents, current number of components:$numberOfComponents")
       iteration=iteration+1;
       oldComponents.unpersist(false)
-      oldComponents=operationGraph.vertices.cache();
+      oldComponents=operationGraph.vertices
       val newIds=operationGraph.aggregateMessages[VertexId](ctx=>{
         if(ctx.srcAttr<ctx.dstAttr){
           ctx.sendToDst(ctx.srcAttr)
         }else if(ctx.dstAttr<ctx.srcAttr){
           ctx.sendToSrc(ctx.dstAttr)
         }
-      },Math.min)
+      },math.min)
 
       val newOperationGraph=operationGraph.outerJoinVertices(newIds){
         case (_,oldData,newData)=>newData.getOrElse(oldData)

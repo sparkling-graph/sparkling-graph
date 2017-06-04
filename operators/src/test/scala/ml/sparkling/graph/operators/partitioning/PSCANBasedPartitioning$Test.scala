@@ -58,7 +58,7 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
   }
 
 
-  "Dynamic partitioning for random graph" should  " be computed in apropriate time"  taggedAs(Slow) in{
+  ignore should "Dynamic partitioning for random graph be computed in apropriate time"  taggedAs(Slow) in{
     for (x<-0 to 3) {
       logger.info(s"Run $x")
       Given("graph")
