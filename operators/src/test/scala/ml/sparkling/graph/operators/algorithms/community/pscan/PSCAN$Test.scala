@@ -73,7 +73,7 @@ class PSCAN$Test (implicit sc:SparkContext)   extends MeasureTest {
       When("Computes components")
       val (_,numberOfComponents)= PSCAN.computeConnectedComponentsUsing(graph,24)
       Then("Should compute components correctly")
-      numberOfComponents  should equal (24)
+      numberOfComponents  shouldBe (24 +- 5)
       graph.unpersist(true)
     }
   }
@@ -84,7 +84,7 @@ class PSCAN$Test (implicit sc:SparkContext)   extends MeasureTest {
     When("Computes components")
     val (_,numberOfComponents)= PSCAN.computeConnectedComponentsUsing(graph,24)
     Then("Should compute components correctly")
-    numberOfComponents  should equal (24)
+    numberOfComponents  shouldBe (24 +-5)
     graph.unpersist(true)
   }
 
