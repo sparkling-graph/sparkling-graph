@@ -18,6 +18,7 @@ class SparkTest extends Spec with BeforeAndAfterAll {
     val conf = new SparkConf()
       .setMaster(master)
       .setAppName(appName)
+      .set("spark.ui.enabled","false")
     new SparkContext(conf)
   }
 

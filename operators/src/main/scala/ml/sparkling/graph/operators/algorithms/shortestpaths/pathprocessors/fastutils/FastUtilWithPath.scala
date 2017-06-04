@@ -21,7 +21,7 @@ class FastUtilWithPath[VD,ED]() extends  PathProcessor[VD,ED,WithPathContainer]{
   def EMPTY_CONTAINER=getNewContainerForPaths(0)
 
   def getNewContainerForPaths() ={
-    new PathsMap().asInstanceOf[WithPathContainer]
+    new PathsMap(16,0.5f).asInstanceOf[WithPathContainer]
   }
 
   def getNewContainerForPaths(size:Int) ={

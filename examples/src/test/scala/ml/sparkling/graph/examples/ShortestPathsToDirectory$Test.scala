@@ -23,7 +23,7 @@ class ShortestPathsToDirectory$Test extends FlatSpec with BeforeAndAfterAll with
     Given("Using given graph")
     val graph = getClass.getResource("/examples_graphs/5_nodes_directed")
     When("Computes paths")
-    ShortestPathsToDirectory.main(Array("--withIndexing", "false","--checkpoint-dir",file.toString,  "--master", "local[*]", "--load-partitions", "1", "--bucket-size", "1000", "--treat-as-undirected", "false", graph.toString, s"${file.toString}/1"))
+    ShortestPathsToDirectory.main(Array("--no-ui","--withIndexing", "false","--checkpoint-dir",file.toString,  "--master", "local[*]", "--load-partitions", "1", "--bucket-size", "1000", "--treat-as-undirected", "false", graph.toString, s"${file.toString}/1"))
     Then("Should correctly compute")
     val result: List[String] = Source.fromFile(s"${file.toString}/1/from_1/part-00000").getLines().toList.sortBy(_.split(",")(0))
     result should equal(

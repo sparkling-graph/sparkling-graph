@@ -17,7 +17,7 @@ import scala.collection.JavaConversions._
 class FastUtilWithDistance[VD, ED]() extends PathProcessor[VD, ED, DataMap] {
   def EMPTY_CONTAINER = getNewContainerForPaths()
   def getNewContainerForPaths() = {
-   new DataMap()
+   new DataMap(16,0.5f)
   }
 
   def putNewPath(map: DataMap, to: VertexId, weight: ED)(implicit num: Numeric[ED]): DataMap = {
