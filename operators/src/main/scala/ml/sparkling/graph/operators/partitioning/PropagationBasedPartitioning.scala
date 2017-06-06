@@ -1,12 +1,9 @@
 package ml.sparkling.graph.operators.partitioning
 
-import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.{CommunityDetectionAlgorithm, CommunityDetectionMethod, ComponentID}
-import ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.{ByComponentIdPartitionStrategy, logger}
-import ml.sparkling.graph.operators.partitioning.PSCANBasedPartitioning.logger
+import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.{ ComponentID}
 import org.apache.log4j.Logger
 import org.apache.spark.SparkContext
-import org.apache.spark.broadcast.Broadcast
-import org.apache.spark.graphx.{Graph, PartitionID, PartitionStrategy, VertexId}
+import org.apache.spark.graphx.{Graph,VertexId}
 
 import scala.reflect.ClassTag
 
@@ -60,13 +57,13 @@ object PropagationBasedPartitioning {
     val (communities,numberOfCommunities)=(oldComponents,oldNumberOfComponents)
     val vertexToCommunityId: Map[VertexId, ComponentID] = communities.treeAggregate(Map[VertexId,VertexId]())((agg,data)=>{agg+(data._1->data._2)},(agg1,agg2)=>agg1++agg2)
     val (vertexMap,newNumberOfCummunities)=PartitioningUtils.coarsePartitions(numberOfPartitions, numberOfCommunities, vertexToCommunityId)
-    val broadcastedMap = sc.broadcast(vertexMap)
-    val strategy=ByComponentIdPartitionStrategy(broadcastedMap)
+    val strategy=ByComponentIdPartitionStrategy(vertexMap,newNumberOfCummunities)
     logger.info(s"Partitioning graph using coarsed map with ${vertexMap.size} entries (${vertexToCommunityId.size} before coarse) and ${numberOfCommunities} partitions")
     communities.unpersist(false)
-    val out=graph.partitionBy(strategy,newNumberOfCummunities.toInt)
-    out.edges.foreachPartition((_)=>{})
-    broadcastedMap.destroy()
+    val out=new CustomGraphPartitioningImplementation[VD,ED](graph).partitionBy(strategy).cache()
+    out.edges.count()
+    out.vertices.count()
+    graph.unpersist(false)
     out
   }
 

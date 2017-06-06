@@ -3,8 +3,10 @@ package ml.sparkling.graph.operators.partitioning
 import ml.sparkling.graph.api.generators.RandomNumbers.{RandomNumberGeneratorProvider, ScalaRandomNumberGenerator}
 import ml.sparkling.graph.generators.wattsandstrogatz.{WattsAndStrogatzGenerator, WattsAndStrogatzGeneratorConfiguration}
 import ml.sparkling.graph.operators.MeasureTest
+import ml.sparkling.graph.operators.measures.vertex.eigenvector.EigenvectorCentrality
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
+import org.apache.spark.graphx.PartitionStrategy.EdgePartition2D
 import org.apache.spark.graphx.util.GraphGenerators
 import org.scalatest.tagobjects.Slow
 
@@ -86,4 +88,24 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
     graph.unpersist(true)
   }
 
+
+  ignore should "Dynamic partitioning for random graph give faster results for eignevector"  taggedAs(Slow) in{
+    Given("graph")
+    val graphInit: Graph[Int, Int] = GraphGenerators.rmatGraph(sc, 50000, 1050000).partitionBy(EdgePartition2D,8)
+    val graph=Graph.fromEdges(graphInit.edges,0).cache()
+    val partitionedGraph= PSCANBasedPartitioning.partitionGraphBy(graph, 8).cache()
+    graph.edges.foreachPartition((_)=>{})
+    graph.vertices.foreachPartition((_)=>{})
+    for (x<-0 to 3) {
+      logger.info(s"Run $x")
+      When("Partition using PSCAN")
+      val (_,computationTime)=time("Eigenvector for standard partitioning")(EigenvectorCentrality.compute(graph).vertices.foreachPartition((_)=>{}))
+      val (_,computationTimeCustom)=time("Eigenvector for custom partitioning")(EigenvectorCentrality.compute(partitionedGraph).vertices.foreachPartition((_)=>{}))
+      Then("Should compute partitions correctly")
+      computationTimeCustom should be < (computationTime)
+      graph.unpersist(true)
+      partitionedGraph.unpersist(true)
+      graphInit.unpersist(true)
+    }
+  }
 }
