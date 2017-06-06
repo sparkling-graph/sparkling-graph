@@ -1,9 +1,9 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <title>CommunityBasedPartitioning - ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning</title>
-          <meta name="description" content="CommunityBasedPartitioning - ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning" />
-          <meta name="keywords" content="CommunityBasedPartitioning ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning" />
+          <title>CustomGraphPartitioningImplementation - ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation</title>
+          <meta name="description" content="CustomGraphPartitioningImplementation - ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation" />
+          <meta name="keywords" content="CustomGraphPartitioningImplementation ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -16,7 +16,7 @@
       <script type="text/javascript">
          if(top === self) {
             var url = '../../../../../index.html';
-            var hash = 'ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$';
+            var hash = 'ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -26,14 +26,14 @@
    	  </script>
     
         </head>
-        <body class="value">
+        <body class="type">
       <div id="definition">
-        <img alt="Object" src="../../../../../lib/object_big.png" />
+        <img alt="Class" src="../../../../../lib/class_big.png" />
         <p id="owner"><a href="../../../../package.html" class="extype" name="ml">ml</a>.<a href="../../../package.html" class="extype" name="ml.sparkling">sparkling</a>.<a href="../../package.html" class="extype" name="ml.sparkling.graph">graph</a>.<a href="../package.html" class="extype" name="ml.sparkling.graph.operators">operators</a>.<a href="package.html" class="extype" name="ml.sparkling.graph.operators.partitioning">partitioning</a></p>
-        <h1>CommunityBasedPartitioning</h1><h3><span class="morelinks"><div>Related Doc:
+        <h1>CustomGraphPartitioningImplementation</h1><h3><span class="morelinks"><div>Related Doc:
             <a href="package.html" class="extype" name="ml.sparkling.graph.operators.partitioning">package partitioning</a>
           </div></span></h3><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -42,16 +42,14 @@
       <h4 id="signature" class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
-        <span class="kind">object</span>
+        <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <span class="name">CommunityBasedPartitioning</span>
+        <span class="name">CustomGraphPartitioningImplementation</span><span class="tparams">[<span name="VD">VD</span>, <span name="ED">ED</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
-First approach to community based graph partitioning. It is not efficient due to need of gathering vertex to component id on driver node.
-</p></div><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -71,7 +69,7 @@ First approach to community based graph partitioning. It is not efficient due to
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning"><span>CommunityBasedPartitioning</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation"><span>CustomGraphPartitioningImplementation</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -88,7 +86,27 @@ First approach to community based graph partitioning. It is not efficient due to
 
       <div id="template">
         <div id="allMembers">
-        
+        <div id="constructors" class="members">
+              <h3>Instance Constructors</h3>
+              <ol><li name="ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(graph:org.apache.spark.graphx.Graph[VD,ED])(implicitevidence$1:scala.reflect.ClassTag[VD],implicitevidence$2:scala.reflect.ClassTag[ED]):ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation[VD,ED]"></a>
+      <a id="&lt;init&gt;:CustomGraphPartitioningImplementation[VD,ED]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">CustomGraphPartitioningImplementation</span><span class="params">(<span name="graph">graph: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation.ED">ED</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation.VD">VD</span>]</span>, <span name="arg1">arg1: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation.ED">ED</span>]</span>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@&lt;init&gt;(graph:org.apache.spark.graphx.Graph[VD,ED])(implicitevidence$1:scala.reflect.ClassTag[VD],implicitevidence$2:scala.reflect.ClassTag[ED]):ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation[VD,ED]" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
 
         
 
@@ -108,7 +126,7 @@ First approach to community based graph partitioning. It is not efficient due to
         <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@!=(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -125,7 +143,7 @@ First approach to community based graph partitioning. It is not efficient due to
         <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@##():Int" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@##():Int" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -142,7 +160,7 @@ First approach to community based graph partitioning. It is not efficient due to
         <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@==(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@==(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -159,7 +177,7 @@ First approach to community based graph partitioning. It is not efficient due to
         <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@asInstanceOf[T0]:T0" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -176,7 +194,7 @@ First approach to community based graph partitioning. It is not efficient due to
         <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@clone():Object" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@clone():Object" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -199,7 +217,7 @@ First approach to community based graph partitioning. It is not efficient due to
         <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -216,7 +234,7 @@ First approach to community based graph partitioning. It is not efficient due to
         <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@equals(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -233,7 +251,7 @@ First approach to community based graph partitioning. It is not efficient due to
         <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@finalize():Unit" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@finalize():Unit" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -256,7 +274,7 @@ First approach to community based graph partitioning. It is not efficient due to
         <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@getClass():Class[_]" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@getClass():Class[_]" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -273,7 +291,7 @@ First approach to community based graph partitioning. It is not efficient due to
         <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@hashCode():Int" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@hashCode():Int" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -290,28 +308,11 @@ First approach to community based graph partitioning. It is not efficient due to
         <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning#logger" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="logger:org.apache.log4j.Logger"></a>
-      <a id="logger:Logger"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">logger</span><span class="result">: <span class="extype" name="org.apache.log4j.Logger">Logger</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@logger:org.apache.log4j.Logger" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -324,7 +325,7 @@ First approach to community based graph partitioning. It is not efficient due to
         <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -341,7 +342,7 @@ First approach to community based graph partitioning. It is not efficient due to
         <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@notify():Unit" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@notify():Unit" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -358,41 +359,24 @@ First approach to community based graph partitioning. It is not efficient due to
         <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@notifyAll():Unit" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@notifyAll():Unit" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning#partitionGraphBy" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="partitionGraphBy[VD,ED](graph:org.apache.spark.graphx.Graph[VD,ED],communityDetectionMethod:ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.CommunityDetectionMethod[VD,ED],numParts:Int)(implicitevidence$1:scala.reflect.ClassTag[VD],implicitevidence$2:scala.reflect.ClassTag[ED],implicitsc:org.apache.spark.SparkContext):org.apache.spark.graphx.Graph[VD,ED]"></a>
-      <a id="partitionGraphBy[VD,ED](Graph[VD,ED],CommunityDetectionMethod[VD,ED],Int)(ClassTag[VD],ClassTag[ED],SparkContext):Graph[VD,ED]"></a>
+    </li><li name="ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation#partitionBy" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="partitionBy(partitionStrategy:ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy):org.apache.spark.graphx.Graph[VD,ED]"></a>
+      <a id="partitionBy(ByComponentIdPartitionStrategy):Graph[VD,ED]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">partitionGraphBy</span><span class="tparams">[<span name="VD">VD</span>, <span name="ED">ED</span>]</span><span class="params">(<span name="graph">graph: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.partitionGraphBy.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.partitionGraphBy.ED">ED</span>]</span>, <span name="communityDetectionMethod">communityDetectionMethod: <a href="../../api/operators/algorithms/community/CommunityDetection$.html#CommunityDetectionMethod[VD,ED]=org.apache.spark.graphx.Graph[VD,ED]=&gt;org.apache.spark.graphx.Graph[ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID,ED]" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.CommunityDetectionMethod">CommunityDetectionMethod</a>[<span class="extype" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.partitionGraphBy.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.partitionGraphBy.ED">ED</span>]</span>, <span name="numParts">numParts: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.partitionGraphBy.VD">VD</span>]</span>, <span name="arg1">arg1: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.partitionGraphBy.ED">ED</span>]</span>, <span name="sc">sc: <span class="extype" name="org.apache.spark.SparkContext">SparkContext</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.partitionGraphBy.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.partitionGraphBy.ED">ED</span>]</span>
+        <span class="name">partitionBy</span><span class="params">(<span name="partitionStrategy">partitionStrategy: <a href="ByComponentIdPartitionStrategy.html" class="extype" name="ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy">ByComponentIdPartitionStrategy</a></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation.ED">ED</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@partitionGraphBy[VD,ED](graph:org.apache.spark.graphx.Graph[VD,ED],communityDetectionMethod:ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.CommunityDetectionMethod[VD,ED],numParts:Int)(implicitevidence$1:scala.reflect.ClassTag[VD],implicitevidence$2:scala.reflect.ClassTag[ED],implicitsc:org.apache.spark.SparkContext):org.apache.spark.graphx.Graph[VD,ED]" title="Permalink" target="_top">
-        <img src="../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning#partitionGraphUsing" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="partitionGraphUsing[VD,ED](graph:org.apache.spark.graphx.Graph[VD,ED],communityDetectionMethod:ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.CommunityDetectionAlgorithm,numParts:Int)(implicitevidence$3:scala.reflect.ClassTag[VD],implicitevidence$4:scala.reflect.ClassTag[ED],implicitsc:org.apache.spark.SparkContext):org.apache.spark.graphx.Graph[VD,ED]"></a>
-      <a id="partitionGraphUsing[VD,ED](Graph[VD,ED],CommunityDetectionAlgorithm,Int)(ClassTag[VD],ClassTag[ED],SparkContext):Graph[VD,ED]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">partitionGraphUsing</span><span class="tparams">[<span name="VD">VD</span>, <span name="ED">ED</span>]</span><span class="params">(<span name="graph">graph: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.partitionGraphUsing.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.partitionGraphUsing.ED">ED</span>]</span>, <span name="communityDetectionMethod">communityDetectionMethod: <a href="../../api/operators/algorithms/community/CommunityDetection$$CommunityDetectionAlgorithm.html" class="extype" name="ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.CommunityDetectionAlgorithm">CommunityDetectionAlgorithm</a></span>, <span name="numParts">numParts: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.partitionGraphUsing.VD">VD</span>]</span>, <span name="arg1">arg1: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.partitionGraphUsing.ED">ED</span>]</span>, <span name="sc">sc: <span class="extype" name="org.apache.spark.SparkContext">SparkContext</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.Graph">Graph</span>[<span class="extype" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.partitionGraphUsing.VD">VD</span>, <span class="extype" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.partitionGraphUsing.ED">ED</span>]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@partitionGraphUsing[VD,ED](graph:org.apache.spark.graphx.Graph[VD,ED],communityDetectionMethod:ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.CommunityDetectionAlgorithm,numParts:Int)(implicitevidence$3:scala.reflect.ClassTag[VD],implicitevidence$4:scala.reflect.ClassTag[ED],implicitsc:org.apache.spark.SparkContext):org.apache.spark.graphx.Graph[VD,ED]" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@partitionBy(partitionStrategy:ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy):org.apache.spark.graphx.Graph[VD,ED]" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -409,7 +393,7 @@ First approach to community based graph partitioning. It is not efficient due to
         <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -426,7 +410,7 @@ First approach to community based graph partitioning. It is not efficient due to
         <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@toString():String" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@toString():String" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -443,7 +427,7 @@ First approach to community based graph partitioning. It is not efficient due to
         <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@wait():Unit" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@wait():Unit" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -466,7 +450,7 @@ First approach to community based graph partitioning. It is not efficient due to
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -489,7 +473,7 @@ First approach to community based graph partitioning. It is not efficient due to
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$@wait(x$1:Long):Unit" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CustomGraphPartitioningImplementation@wait(x$1:Long):Unit" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>

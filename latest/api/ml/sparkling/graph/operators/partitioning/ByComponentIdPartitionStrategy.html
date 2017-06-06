@@ -1,9 +1,9 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <title>ByComponentIdPartitionStrategy - ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.ByComponentIdPartitionStrategy</title>
-          <meta name="description" content="ByComponentIdPartitionStrategy - ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.ByComponentIdPartitionStrategy" />
-          <meta name="keywords" content="ByComponentIdPartitionStrategy ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.ByComponentIdPartitionStrategy" />
+          <title>ByComponentIdPartitionStrategy - ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy</title>
+          <meta name="description" content="ByComponentIdPartitionStrategy - ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy" />
+          <meta name="keywords" content="ByComponentIdPartitionStrategy ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -16,7 +16,7 @@
       <script type="text/javascript">
          if(top === self) {
             var url = '../../../../../index.html';
-            var hash = 'ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy';
+            var hash = 'ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -29,11 +29,11 @@
         <body class="type">
       <div id="definition">
         <img alt="Class" src="../../../../../lib/class_big.png" />
-        <p id="owner"><a href="../../../../package.html" class="extype" name="ml">ml</a>.<a href="../../../package.html" class="extype" name="ml.sparkling">sparkling</a>.<a href="../../package.html" class="extype" name="ml.sparkling.graph">graph</a>.<a href="../package.html" class="extype" name="ml.sparkling.graph.operators">operators</a>.<a href="package.html" class="extype" name="ml.sparkling.graph.operators.partitioning">partitioning</a>.<a href="CommunityBasedPartitioning$.html" class="extype" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning">CommunityBasedPartitioning</a></p>
+        <p id="owner"><a href="../../../../package.html" class="extype" name="ml">ml</a>.<a href="../../../package.html" class="extype" name="ml.sparkling">sparkling</a>.<a href="../../package.html" class="extype" name="ml.sparkling.graph">graph</a>.<a href="../package.html" class="extype" name="ml.sparkling.graph.operators">operators</a>.<a href="package.html" class="extype" name="ml.sparkling.graph.operators.partitioning">partitioning</a></p>
         <h1>ByComponentIdPartitionStrategy</h1><h3><span class="morelinks"><div>Related Doc:
-            <a href="CommunityBasedPartitioning$.html" class="extype" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning">package CommunityBasedPartitioning</a>
+            <a href="package.html" class="extype" name="ml.sparkling.graph.operators.partitioning">package partitioning</a>
           </div></span></h3><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -45,13 +45,13 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">ByComponentIdPartitionStrategy</span><span class="params">(<span name="idMap">idMap: <span class="extype" name="org.apache.spark.broadcast.Broadcast">Broadcast</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>, <a href="../../api/operators/algorithms/community/CommunityDetection$.html#ComponentID=Long" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID">ComponentID</a>]]</span>)</span><span class="result"> extends <span class="extype" name="org.apache.spark.graphx.PartitionStrategy">PartitionStrategy</span> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">ByComponentIdPartitionStrategy</span><span class="params">(<span name="idMap">idMap: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>, <span class="extype" name="scala.Int">Int</span>]</span>, <span name="partitions">partitions: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result"> extends <span class="extype" name="org.apache.spark.Partitioner">Partitioner</span> with <span class="extype" name="org.apache.spark.graphx.PartitionStrategy">PartitionStrategy</span> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
       
           <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <span class="extype" name="org.apache.spark.graphx.PartitionStrategy">PartitionStrategy</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <span class="extype" name="org.apache.spark.graphx.PartitionStrategy">PartitionStrategy</span>, <span class="extype" name="org.apache.spark.Partitioner">Partitioner</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -69,7 +69,7 @@
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.ByComponentIdPartitionStrategy"><span>ByComponentIdPartitionStrategy</span></li><li class="in" name="scala.Product"><span>Product</span></li><li class="in" name="scala.Equals"><span>Equals</span></li><li class="in" name="org.apache.spark.graphx.PartitionStrategy"><span>PartitionStrategy</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy"><span>ByComponentIdPartitionStrategy</span></li><li class="in" name="scala.Product"><span>Product</span></li><li class="in" name="scala.Equals"><span>Equals</span></li><li class="in" name="org.apache.spark.graphx.PartitionStrategy"><span>PartitionStrategy</span></li><li class="in" name="org.apache.spark.Partitioner"><span>Partitioner</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -88,8 +88,8 @@
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.ByComponentIdPartitionStrategy#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(idMap:org.apache.spark.broadcast.Broadcast[Map[org.apache.spark.graphx.VertexId,ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID]]):ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.ByComponentIdPartitionStrategy"></a>
+              <ol><li name="ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(idMap:Map[org.apache.spark.graphx.VertexId,Int],partitions:Int):ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy"></a>
       <a id="&lt;init&gt;:ByComponentIdPartitionStrategy"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -97,10 +97,10 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">ByComponentIdPartitionStrategy</span><span class="params">(<span name="idMap">idMap: <span class="extype" name="org.apache.spark.broadcast.Broadcast">Broadcast</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>, <a href="../../api/operators/algorithms/community/CommunityDetection$.html#ComponentID=Long" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID">ComponentID</a>]]</span>)</span>
+        <span class="name">ByComponentIdPartitionStrategy</span><span class="params">(<span name="idMap">idMap: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>, <span class="extype" name="scala.Int">Int</span>]</span>, <span name="partitions">partitions: <span class="extype" name="scala.Int">Int</span></span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@&lt;init&gt;(idMap:org.apache.spark.broadcast.Broadcast[Map[org.apache.spark.graphx.VertexId,ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID]]):ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.ByComponentIdPartitionStrategy" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@&lt;init&gt;(idMap:Map[org.apache.spark.graphx.VertexId,Int],partitions:Int):ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -126,7 +126,7 @@
         <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@!=(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -143,7 +143,7 @@
         <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@##():Int" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@##():Int" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -160,7 +160,7 @@
         <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@==(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@==(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -177,7 +177,7 @@
         <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@asInstanceOf[T0]:T0" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -194,7 +194,7 @@
         <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@clone():Object" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@clone():Object" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -217,7 +217,7 @@
         <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -234,7 +234,7 @@
         <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@finalize():Unit" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@finalize():Unit" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -257,12 +257,29 @@
         <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@getClass():Class[_]" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@getClass():Class[_]" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.ByComponentIdPartitionStrategy#getPartition" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+    </li><li name="ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy#getPartition" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getPartition(key:Any):org.apache.spark.graphx.PartitionID"></a>
+      <a id="getPartition(Any):PartitionID"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getPartition</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.PartitionID">PartitionID</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@getPartition(key:Any):org.apache.spark.graphx.PartitionID" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy">ByComponentIdPartitionStrategy</a> → Partitioner</dd></dl></div>
+    </li><li name="ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy#getPartition" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getPartition(src:org.apache.spark.graphx.VertexId,dst:org.apache.spark.graphx.VertexId,numParts:org.apache.spark.graphx.PartitionID):org.apache.spark.graphx.PartitionID"></a>
       <a id="getPartition(VertexId,VertexId,PartitionID):PartitionID"></a>
       <h4 class="signature">
@@ -274,24 +291,24 @@
         <span class="name">getPartition</span><span class="params">(<span name="src">src: <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span></span>, <span name="dst">dst: <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span></span>, <span name="numParts">numParts: <span class="extype" name="org.apache.spark.graphx.PartitionID">PartitionID</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.PartitionID">PartitionID</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@getPartition(src:org.apache.spark.graphx.VertexId,dst:org.apache.spark.graphx.VertexId,numParts:org.apache.spark.graphx.PartitionID):org.apache.spark.graphx.PartitionID" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@getPartition(src:org.apache.spark.graphx.VertexId,dst:org.apache.spark.graphx.VertexId,numParts:org.apache.spark.graphx.PartitionID):org.apache.spark.graphx.PartitionID" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.ByComponentIdPartitionStrategy">ByComponentIdPartitionStrategy</a> → PartitionStrategy</dd></dl></div>
-    </li><li name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning.ByComponentIdPartitionStrategy#idMap" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="idMap:org.apache.spark.broadcast.Broadcast[Map[org.apache.spark.graphx.VertexId,ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID]]"></a>
-      <a id="idMap:Broadcast[Map[VertexId,ComponentID]]"></a>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy">ByComponentIdPartitionStrategy</a> → PartitionStrategy</dd></dl></div>
+    </li><li name="ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy#idMap" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="idMap:Map[org.apache.spark.graphx.VertexId,Int]"></a>
+      <a id="idMap:Map[VertexId,Int]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">idMap</span><span class="result">: <span class="extype" name="org.apache.spark.broadcast.Broadcast">Broadcast</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>, <a href="../../api/operators/algorithms/community/CommunityDetection$.html#ComponentID=Long" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID">ComponentID</a>]]</span>
+        <span class="name">idMap</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>, <span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@idMap:org.apache.spark.broadcast.Broadcast[Map[org.apache.spark.graphx.VertexId,ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID]]" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@idMap:Map[org.apache.spark.graphx.VertexId,Int]" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -308,7 +325,7 @@
         <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -325,7 +342,7 @@
         <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -342,7 +359,7 @@
         <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@notify():Unit" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@notify():Unit" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -359,11 +376,45 @@
         <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@notifyAll():Unit" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@notifyAll():Unit" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy#numPartitions" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="numPartitions:org.apache.spark.graphx.PartitionID"></a>
+      <a id="numPartitions:PartitionID"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">numPartitions</span><span class="result">: <span class="extype" name="org.apache.spark.graphx.PartitionID">PartitionID</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@numPartitions:org.apache.spark.graphx.PartitionID" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy">ByComponentIdPartitionStrategy</a> → Partitioner</dd></dl></div>
+    </li><li name="ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy#partitions" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="partitions:Int"></a>
+      <a id="partitions:Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">partitions</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@partitions:Int" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -376,7 +427,7 @@
         <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -393,7 +444,7 @@
         <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@wait():Unit" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@wait():Unit" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -416,7 +467,7 @@
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -439,7 +490,7 @@
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning$$ByComponentIdPartitionStrategy@wait(x$1:Long):Unit" title="Permalink" target="_top">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy@wait(x$1:Long):Unit" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -465,6 +516,8 @@
               <h3>Inherited from <span class="extype" name="scala.Equals">Equals</span></h3>
             </div><div class="parent" name="org.apache.spark.graphx.PartitionStrategy">
               <h3>Inherited from <span class="extype" name="org.apache.spark.graphx.PartitionStrategy">PartitionStrategy</span></h3>
+            </div><div class="parent" name="org.apache.spark.Partitioner">
+              <h3>Inherited from <span class="extype" name="org.apache.spark.Partitioner">Partitioner</span></h3>
             </div><div class="parent" name="scala.Serializable">
               <h3>Inherited from <span class="extype" name="scala.Serializable">Serializable</span></h3>
             </div><div class="parent" name="java.io.Serializable">
