@@ -98,6 +98,7 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
     graph.vertices.foreachPartition((_)=>{})
     for (x<-0 to 3) {
       logger.info(s"Run $x")
+      graph.degrees
       When("Partition using PSCAN")
       val (_,computationTime)=time("Eigenvector for standard partitioning")(EigenvectorCentrality.compute(graph).vertices.foreachPartition((_)=>{}))
       val (_,computationTimeCustom)=time("Eigenvector for custom partitioning")(EigenvectorCentrality.compute(partitionedGraph).vertices.foreachPartition((_)=>{}))
