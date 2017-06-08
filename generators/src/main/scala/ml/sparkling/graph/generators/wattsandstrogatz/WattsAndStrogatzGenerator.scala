@@ -4,6 +4,7 @@ import ml.sparkling.graph.api.generators.RandomNumbers.RandomNumberGeneratorProv
 import ml.sparkling.graph.api.generators.{GraphGenerator, GraphGeneratorConfiguration, RandomNumbers}
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
+import org.apache.spark.rdd.RDD
 import org.apache.spark.storage.StorageLevel
 
 
@@ -12,7 +13,8 @@ import org.apache.spark.storage.StorageLevel
   */
 object WattsAndStrogatzGenerator extends GraphGenerator[WattsAndStrogatzGeneratorConfiguration, Int, Int] {
   override def generate(configuration: WattsAndStrogatzGeneratorConfiguration)(implicit ctx: SparkContext): Graph[Int, Int] = {
-    val vertexTuples = ctx
+    val partitions=if(configuration.partitions == -1) ctx.defaultParallelism else configuration.partitions
+    val vertexTuples: RDD[(Long, Long)] = ctx
       .parallelize((0l to configuration.numberOfNodes - 1), Math.min(Math.max(1,configuration.numberOfNodes / 10), ctx.defaultParallelism).toInt)
       .flatMap(vId => {
         val moves = 1l to configuration.meanDegree / 2 toList
@@ -20,7 +22,7 @@ object WattsAndStrogatzGenerator extends GraphGenerator[WattsAndStrogatzGenerato
         next
       }).distinct()
 
-    val rewiredTuples = vertexTuples.zipWithIndex().groupBy(_._1._1).flatMap {
+    val rewiredTuples: RDD[(Long, Long)] = vertexTuples.zipWithIndex().groupBy(_._1._1).flatMap {
       case (srcId, dataIterable) => {
         val currentDst = dataIterable.map {
           case ((srcId, dstId), index) => dstId
@@ -38,7 +40,7 @@ object WattsAndStrogatzGenerator extends GraphGenerator[WattsAndStrogatzGenerato
         rewiredDst.map(dstId => (srcId, dstId))
       }
     }.filter(t=>t._1!=t._2)
-    val outVertices = if (configuration.mixing) {
+    val outVertices: RDD[(Long, Long)] = if (configuration.mixing) {
       val vertexMix = rewiredTuples.flatMap(t => Iterable(t._1, t._2)).distinct().mapPartitionsWithIndex {
         case (index, data) => {
           val generator = configuration.randomNumberGeneratorProvider(index)
@@ -53,7 +55,15 @@ object WattsAndStrogatzGenerator extends GraphGenerator[WattsAndStrogatzGenerato
     } else {
       rewiredTuples
     };
-    Graph.fromEdgeTuples(outVertices, 1,edgeStorageLevel = configuration.storageLevel,vertexStorageLevel = configuration.storageLevel)
+    val repartitionedVertices=outVertices.repartition(partitions).cache();
+    if(ctx.getCheckpointDir.isDefined){
+      repartitionedVertices.checkpoint()
+    }
+    repartitionedVertices.count();
+    outVertices.unpersist(false)
+    val out=Graph.fromEdgeTuples(repartitionedVertices, 1,edgeStorageLevel = configuration.storageLevel,vertexStorageLevel = configuration.storageLevel)
+    repartitionedVertices.unpersist(false)
+    out
   }
 }
 
@@ -61,4 +71,5 @@ case class WattsAndStrogatzGeneratorConfiguration(val numberOfNodes: Long,
                                                   val meanDegree: Long,
                                                   val rewiringProbability: Double, mixing: Boolean = false,
                                                   val randomNumberGeneratorProvider: RandomNumberGeneratorProvider = RandomNumbers.ScalaRandomNumberGeneratorProvider,
-                                                  val storageLevel:StorageLevel=StorageLevel.MEMORY_AND_DISK) extends GraphGeneratorConfiguration
+                                                  val storageLevel:StorageLevel=StorageLevel.MEMORY_ONLY,
+                                                  val partitions:Int = -1) extends GraphGeneratorConfiguration
