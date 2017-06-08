@@ -20,7 +20,7 @@ object CommunityBasedPartitioning {
   def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],communityDetectionMethod:CommunityDetectionMethod[VD,ED],numParts:Int= -1)(implicit sc:SparkContext): Graph[VD, ED] ={
     val numberOfPartitions=if (numParts== -1) sc.defaultParallelism else numParts
     val communities: Graph[ComponentID, ED] = communityDetectionMethod(graph)
-    val numberOfCommunities=communities.vertices.values.distinct().collect().size
+    val numberOfCommunities=communities.vertices.values.distinct().count()
     val vertexToCommunityId: Map[VertexId, ComponentID] = communities.vertices.treeAggregate(Map[VertexId,VertexId]())((agg,data)=>{agg+(data._1->data._2)},(agg1,agg2)=>agg1++agg2)
     val (coarsedVertexMap,coarsedNumberOfPartitions) = PartitioningUtils.coarsePartitions(numberOfPartitions,numberOfCommunities,vertexToCommunityId)
     val strategy=ByComponentIdPartitionStrategy(coarsedVertexMap,coarsedNumberOfPartitions)

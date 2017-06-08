@@ -13,6 +13,8 @@ import org.apache.spark.graphx._
 
 import scala.reflect.ClassTag
 import scala.collection.JavaConversions._
+import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 /**
  * Main object of shortest paths algorithm
@@ -111,7 +113,10 @@ case object ShortestPathsAlgorithm  {
     val bucketSize=bucketSizeProvider(graph)
     logger.info(s"Computing APSP using iterative approach with bucket of size ${bucketSize}")
     graph.cache()
-    val vertexIds=graph.vertices.map{case (vId,data)=>vId}.collect()
+    val vertexIds=graph.vertices.map{case (vId,data)=>vId}.treeAggregate(mutable.ListBuffer.empty[VertexId])(
+      (agg:ListBuffer[VertexId],data:VertexId)=>{agg+=data;agg},
+      (agg:ListBuffer[VertexId],agg2:ListBuffer[VertexId])=>{agg++=agg2;agg}
+    ).toList;
     val outGraph:Graph[FastUtilWithDistance.DataMap ,ED] = graph.mapVertices((vId,data)=>new FastUtilWithDistance.DataMap)
     outGraph.cache()
     val vertices =vertexIds.grouped(bucketSize.toInt).toList

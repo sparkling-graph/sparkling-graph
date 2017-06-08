@@ -7,6 +7,8 @@ import ml.sparkling.graph.operators.measures.utils.NeighboursUtils.NeighbourSet
 import org.apache.log4j.Logger
 import org.apache.spark.graphx.{Edge, Graph}
 
+import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 import scala.reflect.ClassTag
 
 /**
@@ -45,7 +47,10 @@ case object PSCAN extends CommunityDetectionAlgorithm{
       val denominator = Math.sqrt(edge.srcAttr.size()*edge.dstAttr.size())
       sizeOfIntersection/denominator
     }).mapVertices((vId,_)=>vId).cache()
-    val edgesWeights=edgesWithSimilarity.edges.map(_.attr).distinct().sortBy(t=>t).collect();
+    val edgesWeights=edgesWithSimilarity.edges.map(_.attr).distinct().treeAggregate(mutable.ListBuffer.empty[Double])(
+      (agg:ListBuffer[Double],data:Double)=>{agg+=data;agg},
+      (agg:ListBuffer[Double],agg2:ListBuffer[Double])=>{agg++=agg2;agg}
+    ).toList.sorted;
     var min=0
     var max=edgesWeights.length-1
     val wholeMax=edgesWeights.length-1

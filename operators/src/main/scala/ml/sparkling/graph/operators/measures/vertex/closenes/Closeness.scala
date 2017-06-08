@@ -6,10 +6,12 @@ import ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgori
 import ml.sparkling.graph.operators.measures.vertex.closenes.ClosenessUtils._
 import ml.sparkling.graph.operators.predicates.InArrayPredicate
 import org.apache.log4j.Logger
-import org.apache.spark.graphx.Graph
+import org.apache.spark.graphx.{Graph, VertexId}
 import org.apache.spark.rdd.RDD
 
 import scala.collection.JavaConverters._
+import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 import scala.reflect.ClassTag
 
 /**
@@ -36,7 +38,10 @@ object Closeness extends VertexMeasure[Double] {
                                                vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED],
                                                normalize: Boolean = false,
                                                checkpointingFrequency: Int = 20)(implicit num: Numeric[ED]): Graph[Double, ED] = {
-    val groupedVerticesIds = graph.vertices.map(_._1).collect().grouped(vertexMeasureConfiguration.bucketSizeProvider(graph).toInt).toList
+    val groupedVerticesIds = graph.vertices.map(_._1).treeAggregate(mutable.ListBuffer.empty[VertexId])(
+      (agg:ListBuffer[VertexId],data:VertexId)=>{agg+=data;agg},
+      (agg:ListBuffer[VertexId],agg2:ListBuffer[VertexId])=>{agg++=agg2;agg}
+    ).grouped(vertexMeasureConfiguration.bucketSizeProvider(graph).toInt).toList.map(_.toArray)
     val numberOfIterations=groupedVerticesIds.size
     val distanceSumGraph = graph.mapVertices((vId, data) => (0l, 0d))
     graph.cache()
