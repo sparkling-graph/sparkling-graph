@@ -69,7 +69,7 @@ object PropagationBasedPartitioning {
     out
   }
 
-  private def buildPartitioningStrategy[ED: ClassTag, VD: ClassTag](graph: Graph[VD, ED], numParts: Int, checkpointingFrequency: Int)(implicit sc:SparkContext) = {
+  def buildPartitioningStrategy[ED: ClassTag, VD: ClassTag](graph: Graph[VD, ED], numParts: Int, checkpointingFrequency: Int)(implicit sc:SparkContext) = {
     val ((vertexMap, newNumberOfCummunities), vertexToCommunityId) = precomputePartitions(graph, numParts, checkpointingFrequency);
     val strategy = ByComponentIdPartitionStrategy(vertexMap, newNumberOfCummunities)
     (vertexMap, newNumberOfCummunities, vertexToCommunityId, strategy)
