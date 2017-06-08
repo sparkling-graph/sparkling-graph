@@ -5,6 +5,7 @@ import org.apache.log4j.Logger
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.{Graph, VertexId, VertexRDD}
 
+import scala.collection.mutable
 import scala.reflect.ClassTag
 
 /**
@@ -54,7 +55,7 @@ object PropagationBasedPartitioning {
       }
     }
     val (communities,numberOfCommunities)=(oldComponents,oldNumberOfComponents)
-    val vertexToCommunityId: Map[VertexId, ComponentID] = communities.treeAggregate(Map[VertexId,VertexId]())((agg,data)=>{agg+(data._1->data._2)},(agg1,agg2)=>agg1++agg2)
+    val vertexToCommunityId: Map[VertexId, ComponentID] = communities.treeAggregate(mutable.Map[VertexId,VertexId]())((agg, data)=>{agg+=(data._1->data._2); agg}, (agg1, agg2)=>{agg1++=agg2;agg1}).toMap
     communities.unpersist(false)
     return (PartitioningUtils.coarsePartitions(numberOfPartitions, numberOfCommunities, vertexToCommunityId),vertexToCommunityId)
   }

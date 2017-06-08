@@ -21,13 +21,25 @@ object Modularity extends VertexDependentGraphMeasure[Double,ComponentID]{
          Iterator((triplet.srcAttr, (0, 1)))
        }
      })
-     edgesCounts.groupByKey().map[Double]{
-      case (communityId,data)=>
-        val (edgesFull,edgesSome)=data.reduce[(Int,Int)]{
-        case ((e1,a1),(e2,a2))=>(e1+e2,a1+a2)
-      }
-        (edgesFull/edgesNum)-Math.pow(edgesSome/edgesNum,2)
-    }.sum()
+     edgesCounts.aggregateByKey((0,0))(
+       (agg:(Int,Int),data:(Int,Int))=>
+         (agg,data) match{
+           case ((a1,b1),(a2,b2))=>(a1+a2,(b1+b2))
+         },
+     (agg1:(Int,Int),agg2:(Int,Int))=>{
+       (agg1,agg2) match{
+         case ((a1,b1),(a2,b2))=>(a1+a2,(b1+b2))
+       }
+     }
+     ).treeAggregate(0.0)(
+       (agg:Double,data:(V,(Int,Int)))=>{
+         data match{
+           case (_,(edgesFull,edgesSome))=>
+             agg+(edgesFull/edgesNum)-Math.pow(edgesSome/edgesNum,2)
+         }
+       },
+       (agg1,agg2)=>agg1+agg2
+     )
 
   }
 

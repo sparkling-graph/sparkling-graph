@@ -6,6 +6,7 @@ import org.apache.log4j.Logger
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.{Graph, VertexId}
 
+import scala.collection.mutable
 import scala.reflect.ClassTag
 
 /**
@@ -37,9 +38,9 @@ object PSCANBasedPartitioning {
     logger.info("Computing components using PSCAN")
     val (communities, numberOfCommunities): (Graph[ComponentID, ED], VertexId) = PSCAN.computeConnectedComponentsUsing(graph, numberOfPartitions)
     logger.info("Components computed!")
-    val vertexToCommunityId: Map[VertexId, ComponentID] = communities.vertices.treeAggregate(Map[VertexId, VertexId]())((agg, data) => {
-      agg + (data._1 -> data._2)
-    }, (agg1, agg2) => agg1 ++ agg2)
+    val vertexToCommunityId: Map[VertexId, ComponentID] = communities.vertices.treeAggregate(mutable.Map[VertexId, VertexId]())((agg, data) => {
+      agg += (data._1 -> data._2); agg
+    }, (agg1, agg2) =>{agg1 ++= agg2; agg1} ).toMap
     val (coarsedVertexMap, coarsedNumberOfPartitions) = PartitioningUtils.coarsePartitions(numberOfPartitions, numberOfCommunities, vertexToCommunityId)
     (numberOfCommunities, vertexToCommunityId, coarsedVertexMap, coarsedNumberOfPartitions)
   }
