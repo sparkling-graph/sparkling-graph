@@ -62,13 +62,15 @@ case object PSCAN extends CommunityDetectionAlgorithm{
       val index=Math.floor((min+max)/2.0).toInt
       val cutOffValue= edgesWeights(index);
       logger.info(s"Evaluating PSCAN for epsilon=$cutOffValue")
-      val componentsGraph=new PSCANConnectedComponents(cutOffValue).run(edgesWithSimilarity)
+      val componentsGraph=new PSCANConnectedComponents(cutOffValue).run(edgesWithSimilarity).cache()
       val currentNumberOfComponents=componentsGraph.vertices.map(_._2).distinct().count()
       logger.info(s"PSCAN resulted in $currentNumberOfComponents components ($requiredNumberOfComponents required)")
       if(currentNumberOfComponents>=requiredNumberOfComponents&&(Math.abs(requiredNumberOfComponents-currentNumberOfComponents)<Math.abs(requiredNumberOfComponents-numberOfComponents)||numberOfComponents<requiredNumberOfComponents)){
         components.unpersist(false)
         components=componentsGraph;
         numberOfComponents=currentNumberOfComponents;
+      }else{
+        componentsGraph.unpersist(false)
       }
       if(min==max||index==0||index==wholeMax){
         found=true;
