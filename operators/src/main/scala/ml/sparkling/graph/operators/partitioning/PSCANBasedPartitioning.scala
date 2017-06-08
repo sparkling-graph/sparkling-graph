@@ -41,6 +41,7 @@ object PSCANBasedPartitioning {
     val vertexToCommunityId: Map[VertexId, ComponentID] = communities.vertices.treeAggregate(mutable.Map[VertexId, VertexId]())((agg, data) => {
       agg += (data._1 -> data._2); agg
     }, (agg1, agg2) =>{agg1 ++= agg2; agg1} ,3).toMap
+    communities.unpersist(false)
     val (coarsedVertexMap, coarsedNumberOfPartitions) = PartitioningUtils.coarsePartitions(numberOfPartitions, numberOfCommunities, vertexToCommunityId)
     (numberOfCommunities, vertexToCommunityId, coarsedVertexMap, coarsedNumberOfPartitions)
   }
