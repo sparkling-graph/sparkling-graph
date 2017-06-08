@@ -3,7 +3,7 @@ package ml.sparkling.graph.generators.wattsandstrogatz
 import ml.sparkling.graph.api.generators.RandomNumbers.RandomNumberGeneratorProvider
 import ml.sparkling.graph.api.generators.{GraphGenerator, GraphGeneratorConfiguration, RandomNumbers}
 import org.apache.spark.SparkContext
-import org.apache.spark.graphx.Graph
+import org.apache.spark.graphx.{Edge, Graph}
 import org.apache.spark.graphx.PartitionStrategy.EdgePartition2D
 import org.apache.spark.rdd.RDD
 import org.apache.spark.storage.StorageLevel
@@ -46,7 +46,7 @@ object WattsAndStrogatzGenerator extends GraphGenerator[WattsAndStrogatzGenerato
       }
     }.filter(t=>t._1!=t._2)
     val outVertices: RDD[(Long, Long)] = if (configuration.mixing) {
-      val vertexMix = rewiredTuples.flatMap(t => Iterable(t._1, t._2)).distinct().mapPartitionsWithIndex {
+      val vertexMix =ctx.parallelize((0l to configuration.numberOfNodes - 1), partitions).mapPartitionsWithIndex {
         case (index, data) => {
           val generator = configuration.randomNumberGeneratorProvider(index)
           data.map((id) => (id, generator.nextDouble()))
@@ -61,13 +61,14 @@ object WattsAndStrogatzGenerator extends GraphGenerator[WattsAndStrogatzGenerato
       rewiredTuples
     };
     val repartitionedVertices=outVertices.repartition(partitions).cache();
-    if(ctx.getCheckpointDir.isDefined){
-      repartitionedVertices.checkpoint()
-    }
-    repartitionedVertices.count();
-    outVertices.unpersist(false)
-    val out=Graph.fromEdgeTuples(repartitionedVertices, 0,edgeStorageLevel = configuration.storageLevel,vertexStorageLevel = configuration.storageLevel).partitionBy(EdgePartition2D,partitions)
+    //TODO: NEED TO FIX COLLECTING DATA
+    val collectedVertices=repartitionedVertices.collect()
     repartitionedVertices.unpersist(false)
+    outVertices.unpersist(false)
+    val edges=ctx.parallelize(collectedVertices,partitions).map{
+      case (v1,v2)=>Edge(v1,v2,0)
+    }
+    val out=Graph.fromEdges(edges, 0,edgeStorageLevel = configuration.storageLevel,vertexStorageLevel = configuration.storageLevel)
     out
   }
 }
