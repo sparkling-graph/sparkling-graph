@@ -4,6 +4,7 @@ import ml.sparkling.graph.api.generators.RandomNumbers.RandomNumberGeneratorProv
 import ml.sparkling.graph.api.generators.{GraphGenerator, GraphGeneratorConfiguration, RandomNumbers}
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
+import org.apache.spark.graphx.PartitionStrategy.EdgePartition2D
 import org.apache.spark.rdd.RDD
 import org.apache.spark.storage.StorageLevel
 
@@ -13,19 +14,23 @@ import org.apache.spark.storage.StorageLevel
   */
 object WattsAndStrogatzGenerator extends GraphGenerator[WattsAndStrogatzGeneratorConfiguration, Int, Int] {
   override def generate(configuration: WattsAndStrogatzGeneratorConfiguration)(implicit ctx: SparkContext): Graph[Int, Int] = {
-    val partitions=if(configuration.partitions == -1) ctx.defaultParallelism else configuration.partitions
+    val partitions: Int =if(configuration.partitions == -1) ctx.defaultParallelism else configuration.partitions
+    val numberOfNodes=configuration.numberOfNodes;
     val vertexTuples: RDD[(Long, Long)] = ctx
-      .parallelize((0l to configuration.numberOfNodes - 1), Math.min(Math.max(1,configuration.numberOfNodes / 10), ctx.defaultParallelism).toInt)
+      .parallelize((0l to configuration.numberOfNodes - 1), partitions)
       .flatMap(vId => {
         val moves = 1l to configuration.meanDegree / 2 toList
-        val next = moves.map(move => (vId, (vId + move) % configuration.numberOfNodes))
+        val next = moves.map(move => (vId, (vId + move) % numberOfNodes))
         next
-      }).distinct()
-
-    val rewiredTuples: RDD[(Long, Long)] = vertexTuples.zipWithIndex().groupBy(_._1._1).flatMap {
+      }).distinct(partitions)
+    val rewiredTuples: RDD[(Long, Long)] = vertexTuples.zipWithIndex().groupBy(n=>{
+      n match {
+        case ((index,_),_)=>index
+      }
+    },numPartitions = partitions).flatMap {
       case (srcId, dataIterable) => {
         val currentDst = dataIterable.map {
-          case ((srcId, dstId), index) => dstId
+          case ((_, dstId), _) => dstId
         }.toList
         val rewiredDst = dataIterable.map {
           case ((srcId, dstId), index) => {
@@ -48,9 +53,9 @@ object WattsAndStrogatzGenerator extends GraphGenerator[WattsAndStrogatzGenerato
         }
       }.sortBy(_._2).map(_._1).zipWithIndex()
       rewiredTuples.join(vertexMix).map {
-        case (src, (dst, newSrc)) => (dst, newSrc)
+        case (_, (dst, newSrc)) => (dst, newSrc)
       }.join(vertexMix).map {
-        case (dst, (newSrc, newDst)) => (newSrc, newDst)
+        case (_, (newSrc, newDst)) => (newSrc, newDst)
       }
     } else {
       rewiredTuples
@@ -61,7 +66,7 @@ object WattsAndStrogatzGenerator extends GraphGenerator[WattsAndStrogatzGenerato
     }
     repartitionedVertices.count();
     outVertices.unpersist(false)
-    val out=Graph.fromEdgeTuples(repartitionedVertices, 1,edgeStorageLevel = configuration.storageLevel,vertexStorageLevel = configuration.storageLevel)
+    val out=Graph.fromEdgeTuples(repartitionedVertices, 0,edgeStorageLevel = configuration.storageLevel,vertexStorageLevel = configuration.storageLevel).partitionBy(EdgePartition2D,partitions)
     repartitionedVertices.unpersist(false)
     out
   }

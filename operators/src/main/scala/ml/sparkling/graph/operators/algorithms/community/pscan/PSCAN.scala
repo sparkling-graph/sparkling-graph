@@ -5,7 +5,7 @@ import ml.sparkling.graph.operators.measures.utils.CollectionsUtils._
 import ml.sparkling.graph.operators.measures.utils.NeighboursUtils
 import ml.sparkling.graph.operators.measures.utils.NeighboursUtils.NeighbourSet
 import org.apache.log4j.Logger
-import org.apache.spark.graphx.{Edge, Graph}
+import org.apache.spark.graphx.{Edge, Graph, VertexId}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -42,15 +42,16 @@ case object PSCAN extends CommunityDetectionAlgorithm{
 
   def computeConnectedComponentsUsing[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],requiredNumberOfComponents:Int=32):(Graph[ComponentID,ED],Long)={
     val neighbours: Graph[NeighbourSet, ED] = NeighboursUtils.getWithNeighbours(graph,treatAsUndirected = true)
-    val edgesWithSimilarity=neighbours.mapTriplets(edge=>{
+    val edgesWithSimilarity: Graph[VertexId, Double] =neighbours.mapTriplets(edge=>{
       val sizeOfIntersection=intersectSize(edge.srcAttr,edge.dstAttr)
       val denominator = Math.sqrt(edge.srcAttr.size()*edge.dstAttr.size())
       sizeOfIntersection/denominator
     }).mapVertices((vId,_)=>vId).cache()
+    neighbours.unpersist(false)
     val edgesWeights=edgesWithSimilarity.edges.map(_.attr).distinct().treeAggregate(mutable.ListBuffer.empty[Double])(
       (agg:ListBuffer[Double],data:Double)=>{agg+=data;agg},
       (agg:ListBuffer[Double],agg2:ListBuffer[Double])=>{agg++=agg2;agg}
-    ).toList.sorted;
+    ,3).toList.sorted;
     var min=0
     var max=edgesWeights.length-1
     val wholeMax=edgesWeights.length-1
@@ -94,9 +95,9 @@ case object PSCAN extends CommunityDetectionAlgorithm{
     }
     logger.info(s"Using PSCAN with  $numberOfComponents components ($requiredNumberOfComponents required)")
     edgesWithSimilarity.unpersist(false)
-    val out=graph.outerJoinVertices(components.vertices)((vId,oldData,newData)=>{
+    val out=graph.outerJoinVertices(components.vertices)((_,_,newData)=>{
       newData.getOrElse(defaultComponentId)
-    })
+    }).cache()
     components.unpersist(false)
     (out,numberOfComponents)
   }
