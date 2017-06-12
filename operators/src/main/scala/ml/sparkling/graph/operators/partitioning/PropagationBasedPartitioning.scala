@@ -16,7 +16,7 @@ object PropagationBasedPartitioning {
 
   val logger=Logger.getLogger(PropagationBasedPartitioning.getClass())
 
-  def precomputePartitions[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],numParts:Int= -1,checkpointingFrequency:Int=50)(implicit sc:SparkContext):((Map[VertexId, Int], Int),Map[VertexId, ComponentID])={
+  def precomputePartitions[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],numParts:Int= -1,checkpointingFrequency:Int=50)(implicit sc:SparkContext):(Map[VertexId, Int], Int)={
     val numberOfPartitions=if (numParts== -1) sc.defaultParallelism else numParts
     var operationGraph=graph.mapVertices{
       case (vId,_)=>vId
@@ -55,14 +55,13 @@ object PropagationBasedPartitioning {
       }
     }
     val (communities,numberOfCommunities)=(oldComponents,oldNumberOfComponents)
-    val vertexToCommunityId: Map[VertexId, ComponentID] = communities.treeAggregate(mutable.Map[VertexId,VertexId]())((agg, data)=>{agg+=(data._1->data._2); agg}, (agg1, agg2)=>{agg1++=agg2;agg1}).toMap
     communities.unpersist(false)
-    return (PartitioningUtils.coarsePartitions(numberOfPartitions, numberOfCommunities, vertexToCommunityId),vertexToCommunityId)
+    return PartitioningUtils.coarsePartitions(numberOfPartitions, numberOfCommunities, communities)
   }
 
   def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],numParts:Int= -1,checkpointingFrequency:Int=50)(implicit sc:SparkContext): Graph[VD, ED] ={
-    val (vertexMap: Map[VertexId, Int], newNumberOfCummunities: Int, vertexToCommunityId: Map[VertexId, ComponentID], strategy: ByComponentIdPartitionStrategy) = buildPartitioningStrategy(graph, numParts, checkpointingFrequency)
-    logger.info(s"Partitioning graph using coarsed map with ${vertexMap.size} entries (${vertexToCommunityId.size} before coarse) and ${newNumberOfCummunities} partitions")
+    val (vertexMap: Map[VertexId, Int], newNumberOfCummunities: Int, strategy: ByComponentIdPartitionStrategy) = buildPartitioningStrategy(graph, numParts, checkpointingFrequency)
+    logger.info(s"Partitioning graph using coarsed map with ${vertexMap.size} entries and ${newNumberOfCummunities} partitions")
     val out=new CustomGraphPartitioningImplementation[VD,ED](graph).partitionBy(strategy).cache()
     out.edges.count()
     out.vertices.count()
@@ -71,8 +70,8 @@ object PropagationBasedPartitioning {
   }
 
   def buildPartitioningStrategy[ED: ClassTag, VD: ClassTag](graph: Graph[VD, ED], numParts: Int, checkpointingFrequency: Int)(implicit sc:SparkContext) = {
-    val ((vertexMap, newNumberOfCummunities), vertexToCommunityId) = precomputePartitions(graph, numParts, checkpointingFrequency);
+    val (vertexMap, newNumberOfCummunities) = precomputePartitions(graph, numParts, checkpointingFrequency);
     val strategy = ByComponentIdPartitionStrategy(vertexMap, newNumberOfCummunities)
-    (vertexMap, newNumberOfCummunities, vertexToCommunityId, strategy)
+    (vertexMap, newNumberOfCummunities, strategy)
   }
 }

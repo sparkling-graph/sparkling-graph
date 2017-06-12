@@ -19,8 +19,8 @@ object PSCANBasedPartitioning {
   val logger=Logger.getLogger(PSCANBasedPartitioning.getClass())
 
   def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],numberOfPartitions:Int)(implicit sc:SparkContext): Graph[VD, ED] ={
-    val (numberOfCommunities: VertexId, vertexToCommunityId: Map[VertexId, ComponentID], coarsedVertexMap: Map[VertexId, Int], coarsedNumberOfPartitions: Int, strategy: ByComponentIdPartitionStrategy) = buildPartitioningStrategy(graph, numberOfPartitions)
-    logger.info(s"Partitioning graph using coarsed map with ${coarsedVertexMap.size} entries (${vertexToCommunityId.size} before coarse) and ${coarsedNumberOfPartitions} partitions (before ${numberOfCommunities})")
+    val (numberOfCommunities: VertexId,  coarsedVertexMap: Map[VertexId, Int], coarsedNumberOfPartitions: Int, strategy: ByComponentIdPartitionStrategy) = buildPartitioningStrategy(graph, numberOfPartitions)
+    logger.info(s"Partitioning graph using coarsed map with ${coarsedVertexMap.size} entries and ${coarsedNumberOfPartitions} partitions (before ${numberOfCommunities})")
     val out=new CustomGraphPartitioningImplementation[VD,ED](graph).partitionBy(strategy)
     out.edges.foreachPartition((_)=>{})
     graph.unpersist(false)
@@ -29,9 +29,9 @@ object PSCANBasedPartitioning {
 
 
   def buildPartitioningStrategy[ED: ClassTag, VD: ClassTag](graph: Graph[VD, ED], numberOfPartitions: Int)(implicit sc:SparkContext) = {
-    val (numberOfCommunities: VertexId, vertexToCommunityId: Map[VertexId, ComponentID], coarsedVertexMap: Map[VertexId, Int], coarsedNumberOfPartitions: Int) = precomputePartitions(graph, numberOfPartitions)
+    val (numberOfCommunities: VertexId, coarsedVertexMap: Map[VertexId, Int], coarsedNumberOfPartitions: Int) = precomputePartitions(graph, numberOfPartitions)
     val strategy = ByComponentIdPartitionStrategy(coarsedVertexMap, coarsedNumberOfPartitions)
-    (numberOfCommunities, vertexToCommunityId, coarsedVertexMap, coarsedNumberOfPartitions, strategy)
+    (numberOfCommunities, coarsedVertexMap, coarsedNumberOfPartitions, strategy)
   }
 
   def precomputePartitions[ED: ClassTag, VD: ClassTag](graph: Graph[VD, ED], numberOfPartitions: Int)(implicit sc:SparkContext) = {
@@ -42,7 +42,7 @@ object PSCANBasedPartitioning {
       agg += (data._1 -> data._2); agg
     }, (agg1, agg2) =>{agg1 ++= agg2; agg1} ,3).toMap
     communities.unpersist(false)
-    val (coarsedVertexMap, coarsedNumberOfPartitions) = PartitioningUtils.coarsePartitions(numberOfPartitions, numberOfCommunities, vertexToCommunityId)
-    (numberOfCommunities, vertexToCommunityId, coarsedVertexMap, coarsedNumberOfPartitions)
+    val (coarsedVertexMap, coarsedNumberOfPartitions) = PartitioningUtils.coarsePartitions(numberOfPartitions, numberOfCommunities, communities.vertices)
+    (numberOfCommunities, coarsedVertexMap, coarsedNumberOfPartitions)
   }
 }
