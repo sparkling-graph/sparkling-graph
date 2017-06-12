@@ -42,7 +42,7 @@ object PSCANBasedPartitioning {
       agg += (data._1 -> data._2); agg
     }, (agg1, agg2) =>{agg1 ++= agg2; agg1} ,3).toMap
     communities.unpersist(false)
-    val (coarsedVertexMap, coarsedNumberOfPartitions) = PartitioningUtils.coarsePartitions(numberOfPartitions, numberOfCommunities, communities.vertices)
+    val (coarsedVertexMap, coarsedNumberOfPartitions) = ParallelPartitioningUtils.coarsePartitions(numberOfPartitions, numberOfCommunities, communities.vertices)
     (numberOfCommunities, coarsedVertexMap, coarsedNumberOfPartitions)
   }
 }
