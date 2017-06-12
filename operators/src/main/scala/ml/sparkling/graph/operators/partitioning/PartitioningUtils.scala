@@ -43,7 +43,7 @@ object PartitioningUtils {
               data
             }
           }
-        }.sortBy(_._2.length)
+        }.sortBy(_._2.length).cache()
         communities.unpersist()
         communities=newCommunities;
       }
