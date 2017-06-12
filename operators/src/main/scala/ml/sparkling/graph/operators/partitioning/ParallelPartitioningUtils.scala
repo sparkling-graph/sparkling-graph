@@ -14,7 +14,7 @@ import scala.collection.mutable
 object ParallelPartitioningUtils {
 
   @transient
-  val logger=Logger.getLogger(PartitioningUtils.getClass())
+  val logger=Logger.getLogger(ParallelPartitioningUtils.getClass())
 
   def coarsePartitions(numberOfPartitions: PartitionID, numberOfCommunities: VertexId, vertexToCommunityId: RDD[(VertexId, ComponentID)]):(Map[VertexId, Int], Int) = {
     val (map,size)=if (numberOfCommunities > numberOfPartitions) {
