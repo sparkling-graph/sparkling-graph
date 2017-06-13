@@ -16,14 +16,14 @@ object ParallelPartitioningUtils {
   @transient
   val logger=Logger.getLogger(ParallelPartitioningUtils.getClass())
 
-  def coarsePartitions(numberOfPartitions: PartitionID, numberOfCommunities: VertexId, vertexToCommunityId: RDD[(VertexId, ComponentID)]):(Map[VertexId, Int], Int) = {
+  def coarsePartitions(numberOfPartitions: PartitionID, numberOfCommunities: Long, vertexToCommunityId: RDD[(VertexId, ComponentID)],parallelLimit:Long=10000):(Map[VertexId, Int], Int) = {
     val (map,size)=if (numberOfCommunities > numberOfPartitions) {
       logger.info(s"Number of communities ($numberOfCommunities) is bigger thant requested number of partitions ($numberOfPartitions)")
       var communities= vertexToCommunityId.map(t => (t._2, t._1)).aggregateByKey(mutable.ListBuffer.empty[VertexId])(
         (buff,id)=>{buff+=id;buff},
         (buff1,buff2)=>{buff1 ++= buff2;buff1}
       ).sortBy(_._2.length)
-      while (communities.count() > numberOfPartitions && communities.count()  >= 2) {
+      while (communities.count() > numberOfPartitions && communities.count()  >= 2 && communities.count()>parallelLimit) {
         val toReduce=communities.count() - numberOfPartitions
         logger.info(s"Coarsing two smallest communities into one community, size before coarse: ${communities.count()}, need to coarse $toReduce")
         val newCommunities= communities.mapPartitionsWithIndex{
@@ -66,13 +66,13 @@ object ParallelPartitioningUtils {
     val componentsIds =map.map(_._2).distinct.zipWithIndex()
     val outMap=map.map{
       case (vId,cId)=>(cId,vId)
-    }.join(componentsIds).map(_._2).treeAggregate(mutable.Map.empty[VertexId,Int])(
+    }.join(componentsIds).map(_._2).treeAggregate(mutable.Map.empty[VertexId,ComponentID])(
       (buff,t)=>{buff+=((t._1,t._2.toInt));buff},
       (buff1,buff2)=>{
         buff1++=buff2;
         buff1
       }
     ).toMap
-    (outMap,size)
+    PartitioningUtils.coarsePartitions(numberOfPartitions,size,outMap)
   }
 }

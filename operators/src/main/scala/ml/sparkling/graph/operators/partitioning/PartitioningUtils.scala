@@ -18,7 +18,7 @@ object PartitioningUtils {
   @transient
   val logger=Logger.getLogger(PartitioningUtils.getClass())
 
-  def coarsePartitions(numberOfPartitions: PartitionID, numberOfCommunities: VertexId, vertexToCommunityId: Map[VertexId, ComponentID]): (Map[VertexId, Int], Int) = {
+  def coarsePartitions(numberOfPartitions: PartitionID, numberOfCommunities: Long, vertexToCommunityId: Map[VertexId, ComponentID]): (Map[VertexId, Int], Int) = {
     val (map,size)=if (numberOfCommunities > numberOfPartitions) {
       logger.info(s"Number of communities ($numberOfCommunities) is bigger thant requested number of partitions ($numberOfPartitions)")
       var communities= vertexToCommunityId.toList.map(t => (t._2, t._1)).groupBy(t => t._1).toList.sortBy(_._2.length);
