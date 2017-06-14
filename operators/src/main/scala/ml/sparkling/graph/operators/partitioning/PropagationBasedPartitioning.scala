@@ -56,7 +56,7 @@ object PropagationBasedPartitioning {
     }
     val (communities,numberOfCommunities)=(oldComponents,oldNumberOfComponents)
     communities.unpersist(false)
-    return PartitioningUtils.coarsePartitions(numberOfPartitions, numberOfCommunities, communities)
+    return ParallelPartitioningUtils.coarsePartitions(numberOfPartitions, numberOfCommunities, communities)
   }
 
   def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],numParts:Int= -1,checkpointingFrequency:Int=50)(implicit sc:SparkContext): Graph[VD, ED] ={
