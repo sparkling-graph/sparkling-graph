@@ -2,9 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>PartitioningUtils - ml.sparkling.graph.operators.partitioning.PartitioningUtils</title>
-          <meta name="description" content="PartitioningUtils - ml.sparkling.graph.operators.partitioning.PartitioningUtils" />
-          <meta name="keywords" content="PartitioningUtils ml.sparkling.graph.operators.partitioning.PartitioningUtils" />
+          <title>ParallelPartitioningUtils - ml.sparkling.graph.operators.partitioning.ParallelPartitioningUtils</title>
+          <meta name="description" content="ParallelPartitioningUtils - ml.sparkling.graph.operators.partitioning.ParallelPartitioningUtils" />
+          <meta name="keywords" content="ParallelPartitioningUtils ml.sparkling.graph.operators.partitioning.ParallelPartitioningUtils" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -12,7 +12,7 @@
       <script type="text/javascript">
          if(top === self) {
             var url = '../../../../../index.html';
-            var hash = 'ml.sparkling.graph.operators.partitioning.PartitioningUtils$';
+            var hash = 'ml.sparkling.graph.operators.partitioning.ParallelPartitioningUtils$';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -26,7 +26,7 @@
       <div id="definition">
         <img src="../../../../../lib/object_big.png" />
         <p id="owner"><a href="../../../../package.html" class="extype" name="ml">ml</a>.<a href="../../../package.html" class="extype" name="ml.sparkling">sparkling</a>.<a href="../../package.html" class="extype" name="ml.sparkling.graph">graph</a>.<a href="../package.html" class="extype" name="ml.sparkling.graph.operators">operators</a>.<a href="package.html" class="extype" name="ml.sparkling.graph.operators.partitioning">partitioning</a></p>
-        <h1>PartitioningUtils</h1>
+        <h1>ParallelPartitioningUtils</h1>
       </div>
 
       <h4 id="signature" class="signature">
@@ -35,7 +35,7 @@
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <span class="name">PartitioningUtils</span>
+        <span class="name">ParallelPartitioningUtils</span>
       </span>
       </h4>
       
@@ -60,7 +60,7 @@
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="ml.sparkling.graph.operators.partitioning.PartitioningUtils"><span>PartitioningUtils</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="ml.sparkling.graph.operators.partitioning.ParallelPartitioningUtils"><span>ParallelPartitioningUtils</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -183,16 +183,16 @@
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="ml.sparkling.graph.operators.partitioning.PartitioningUtils#coarsePartitions" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="coarsePartitions(numberOfPartitions:org.apache.spark.graphx.PartitionID,numberOfCommunities:Long,vertexToCommunityId:Map[org.apache.spark.graphx.VertexId,ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID]):(Map[org.apache.spark.graphx.VertexId,Int],Int)"></a>
-      <a id="coarsePartitions(PartitionID,Long,Map[VertexId,ComponentID]):(Map[VertexId,Int],Int)"></a>
+    </li><li name="ml.sparkling.graph.operators.partitioning.ParallelPartitioningUtils#coarsePartitions" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="coarsePartitions(numberOfPartitions:org.apache.spark.graphx.PartitionID,numberOfCommunities:Long,vertexToCommunityId:org.apache.spark.rdd.RDD[(org.apache.spark.graphx.VertexId,ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID)],parallelLimit:Long):(Map[org.apache.spark.graphx.VertexId,Int],Int)"></a>
+      <a id="coarsePartitions(PartitionID,Long,RDD[(VertexId,ComponentID)],Long):(Map[VertexId,Int],Int)"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">coarsePartitions</span><span class="params">(<span name="numberOfPartitions">numberOfPartitions: <span class="extype" name="org.apache.spark.graphx.PartitionID">PartitionID</span></span>, <span name="numberOfCommunities">numberOfCommunities: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Long" class="extype" target="_top">Long</a></span>, <span name="vertexToCommunityId">vertexToCommunityId: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>, <a href="../../api/operators/algorithms/community/CommunityDetection$.html#ComponentID=Long" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID">ComponentID</a>]</span>)</span><span class="result">: (<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Int" class="extype" target="_top">Int</a>], <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Int" class="extype" target="_top">Int</a>)</span>
+        <span class="name">coarsePartitions</span><span class="params">(<span name="numberOfPartitions">numberOfPartitions: <span class="extype" name="org.apache.spark.graphx.PartitionID">PartitionID</span></span>, <span name="numberOfCommunities">numberOfCommunities: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Long" class="extype" target="_top">Long</a></span>, <span name="vertexToCommunityId">vertexToCommunityId: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[(<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>, <a href="../../api/operators/algorithms/community/CommunityDetection$.html#ComponentID=Long" class="extmbr" name="ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID">ComponentID</a>)]</span>, <span name="parallelLimit">parallelLimit: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Long" class="extype" target="_top">Long</a> = <span class="symbol">50000</span></span>)</span><span class="result">: (<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Int" class="extype" target="_top">Int</a>], <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Int" class="extype" target="_top">Int</a>)</span>
       </span>
       </h4>
       
@@ -280,7 +280,7 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="ml.sparkling.graph.operators.partitioning.PartitioningUtils#logger" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="ml.sparkling.graph.operators.partitioning.ParallelPartitioningUtils#logger" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="logger:org.apache.log4j.Logger"></a>
       <a id="logger:Logger"></a>
       <h4 class="signature">
