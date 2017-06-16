@@ -21,7 +21,8 @@ object ParallelPartitioningUtils {
       logger.info(s"Number of communities ($numberOfCommunities) is bigger thant requested number of partitions ($numberOfPartitions)")
       var communities= vertexToCommunityId.map(t => (t._2, t._1)).aggregateByKey(mutable.ListBuffer.empty[VertexId])(
         (buff,id)=>{buff+=id;buff},
-        (buff1,buff2)=>{buff1 ++= buff2;buff1}
+        (buff1,buff2)=>{buff1 ++= buff2;buff1},
+        partitions
       ).sortBy(_._2.length,numPartitions = partitions).repartition(partitions)
       while (communities.count() > numberOfPartitions && communities.count()  >= 2 && communities.count()>parallelLimit) {
         val toReduce=communities.count() - numberOfPartitions
