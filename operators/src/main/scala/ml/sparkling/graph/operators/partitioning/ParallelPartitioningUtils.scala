@@ -22,7 +22,7 @@ object ParallelPartitioningUtils {
       var communities= vertexToCommunityId.map(t => (t._2, t._1)).aggregateByKey(mutable.ListBuffer.empty[VertexId])(
         (buff,id)=>{buff+=id;buff},
         (buff1,buff2)=>{buff1 ++= buff2;buff1}
-      ).sortBy(_._2.length,numPartitions = partitions)
+      ).sortBy(_._2.length,numPartitions = partitions).repartition(partitions)
       while (communities.count() > numberOfPartitions && communities.count()  >= 2 && communities.count()>parallelLimit) {
         val toReduce=communities.count() - numberOfPartitions
         logger.info(s"Coarsing two smallest communities into one community, size before coarse: ${communities.count()}, need to coarse $toReduce")
