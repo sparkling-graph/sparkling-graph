@@ -19,10 +19,9 @@ object ParallelPartitioningUtils {
   def coarsePartitions(numberOfPartitions: PartitionID, numberOfCommunities: Long, vertexToCommunityId: RDD[(VertexId, ComponentID)],parallelLimit:Long=50000,partitions:Int=15):(Map[VertexId, Int], Int) = {
     val (map,size)=if (numberOfCommunities > numberOfPartitions) {
       logger.info(s"Number of communities ($numberOfCommunities) is bigger thant requested number of partitions ($numberOfPartitions)")
-      var communities= vertexToCommunityId.map(t => (t._2, t._1)).aggregateByKey(mutable.ListBuffer.empty[VertexId])(
+      var communities= vertexToCommunityId.map(t => (t._2, t._1)).aggregateByKey(mutable.ListBuffer.empty[VertexId],partitions)(
         (buff,id)=>{buff+=id;buff},
-        (buff1,buff2)=>{buff1 ++= buff2;buff1},
-        partitions
+        (buff1,buff2)=>{buff1 ++= buff2;buff1}
       ).sortBy(_._2.length,numPartitions = partitions).repartition(partitions)
       while (communities.count() > numberOfPartitions && communities.count()  >= 2 && communities.count()>parallelLimit) {
         val toReduce=communities.count() - numberOfPartitions
