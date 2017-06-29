@@ -19,7 +19,7 @@ class ContinuousTimeRandomWalk[VD, ED: ClassTag](graph: Graph[VD, ED], initTemp:
 
   def sampleVertices(sampleSize: Int = 1) = {
 
-    val initGraph = ctrwProcessor.initGraph.mapVertices((id, v) => ctrwProcessor.createInitMessages(sampleSize))
+    val initGraph = ctrwProcessor.initGraph.mapVertices((id, v) => ctrwProcessor.createInitMessages(sampleSize) _)
 
     val resultGraph = Pregel[CTRWVertex, CTRWVertex, ED, List[CTRWMessage]](
       ctrwProcessor.initGraph,
