@@ -26,7 +26,7 @@ class BetweennessEdmonds$Test(implicit sc: SparkContext) extends MeasureTest {
     val filePath = getClass.getResource("/graphs/graph_ER_15")
     val graph: Graph[Int, Int] = loadGraph(filePath.toString)
     When("Computes betweenness")
-    val result = new EdmondsBC(graph).computeBC
+    val result = EdmondsBC.computeBC(graph)
     Then("Should calculate betweenness correctly")
     val bcFile = getClass.getResource("/graphs/graph_ER_15_bc")
     val bcCorrectValues = sc.textFile(bcFile.getPath)

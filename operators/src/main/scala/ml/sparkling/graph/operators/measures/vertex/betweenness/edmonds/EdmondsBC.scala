@@ -98,3 +98,8 @@ class EdmondsBC[VD, ED: ClassTag](graph: Graph[VD, ED]) extends Serializable {
     result
   }
 }
+
+object EdmondsBC extends Serializable {
+  def computeBC[VD, ED: ClassTag](graph: Graph[VD, ED]) =
+    new EdmondsBC[VD, ED](graph).computeBC
+}

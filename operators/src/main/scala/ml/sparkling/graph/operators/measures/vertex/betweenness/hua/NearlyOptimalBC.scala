@@ -33,3 +33,8 @@ class NearlyOptimalBC[VD, ED: ClassTag](graph: Graph[VD, ED]) extends Serializab
   }
 
 }
+
+object HuaBC extends Serializable {
+  def computeBC[VD, ED: ClassTag](graph: Graph[VD, ED]) =
+    new NearlyOptimalBC[VD, ED](graph).computeBC
+}
