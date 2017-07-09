@@ -29,7 +29,8 @@ class CFBCProcessor[VD, ED: ClassTag](graph: Graph[VD, ED], flowGenerator: FlowG
   }
 
   def joinReceivedFlows(vertexId: VertexId, vertex: CFBCVertex, msg: Array[CFBCFlow]) =
-    vertex.applyNeighbourFlows(msg.groupBy(_.key).map(it => if (it._2.nonEmpty) CFBCNeighbourFlow(it._2, vertex) else CFBCNeighbourFlow(it._1._1, it._1._2)))
+    vertex.applyNeighbourFlows(msg.groupBy(_.key).map({ case(key, it) =>
+      if (it.nonEmpty) CFBCNeighbourFlow(it, vertex) else CFBCNeighbourFlow(key) }))
 
 
   def applyFlows(epsilon: Double)(id: VertexId, data: CFBCVertex) = {
@@ -45,12 +46,12 @@ class CFBCProcessor[VD, ED: ClassTag](graph: Graph[VD, ED], flowGenerator: FlowG
       val flowOpt = data.flowsMap.get(nb.key)
       flowOpt match {
         case Some(flow) => Some(updateFlow(flow, nb))
-        case None if !nb.anyCompleted => Some(updateFlow(CFBCFlow.empty(nb.key._1, nb.key._2), nb))
+        case None if !nb.anyCompleted => Some(updateFlow(CFBCFlow.empty(nb.key), nb))
         case _ => None
       }
     }
 
-    val k2 = newFlows.filter(_.nonEmpty).map(f => (f.get.key, f.get)).toMap
+    val k2 = newFlows.filter(_.nonEmpty).flatten.map(f => (f.key, f)).toMap
 
     data.updateFlows((data.flowsMap ++ k2).values.toArray)
   }

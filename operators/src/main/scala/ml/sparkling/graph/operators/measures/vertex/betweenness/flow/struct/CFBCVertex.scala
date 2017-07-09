@@ -12,19 +12,18 @@ class CFBCVertex(
                   val sampleVertices: Array[VertexId],
                   val flows: (Array[CFBCFlow], Iterable[CFBCNeighbourFlow]),
                   val processedFlows: Int) extends Serializable {
-  lazy val relatedFlows = flows._1.filter(f => f.dst == id || f.src == id)
-  lazy val availableSamples = sampleVertices/*.diff(flows._1.filter(_.src == id).map(_.dst) :+ id)*/
+  lazy val relatedFlows = vertexFlows.filter(f => f.dst == id || f.src == id)
+  lazy val availableSamples = sampleVertices
 
-  lazy val vertexPhi = flows._1.count(_.src == id)
+  lazy val vertexPhi = vertexFlows.count(_.src == id)
 
-  lazy val flowsMap = flows._1.map(f => ((f.src, f.dst), f)).toMap
+  lazy val flowsMap = vertexFlows.map(f => ((f.src, f.dst), f)).toMap
 
-  val vertexFlows = flows._1
-  val neighboursFlows = flows._2
+  val (vertexFlows, neighboursFlows) = flows
 
   def isFinalized(k: Int) = sampleVertices.isEmpty || processedFlows >= k
 
-  def getFlow(key: (VertexId, VertexId)) = flowsMap.getOrElse(key, CFBCFlow.empty(key._1, key._2))
+  def getFlow(key: (VertexId, VertexId)) = flowsMap.getOrElse(key, CFBCFlow.empty(key))
 
   def updateBC(currentFlowing: Double) = {
     val newBC = (processedFlows * bc + currentFlowing) / (processedFlows + 1)
@@ -37,18 +36,18 @@ class CFBCVertex(
   }
 
   def addNewFlow(flow: CFBCFlow) =
-    new CFBCVertex(id, degree, bc, sampleVertices.filterNot(_ == flow.dst), (flows._1 :+ flow, flows._2), processedFlows)
+    new CFBCVertex(id, degree, bc, sampleVertices.filterNot(_ == flow.dst), (vertexFlows :+ flow, neighboursFlows), processedFlows)
 
   def updateFlows(fls: Array[CFBCFlow]) =
-    new CFBCVertex(id, degree, bc, sampleVertices, (fls, flows._2), processedFlows)
+    new CFBCVertex(id, degree, bc, sampleVertices, (fls, neighboursFlows), processedFlows)
 
   def removeFlows(toRemove: Seq[CFBCFlow]) = {
-    val newFlows = flows._1.diff(toRemove).map(_.countdownVitality)
-    new CFBCVertex(id, degree, bc, sampleVertices, (newFlows, flows._2), processedFlows)
+    val newFlows = vertexFlows.diff(toRemove).map(_.countdownVitality)
+    new CFBCVertex(id, degree, bc, sampleVertices, (newFlows, neighboursFlows), processedFlows)
   }
 
   def applyNeighbourFlows(nbhFlows: Iterable[CFBCNeighbourFlow]) =
-    new CFBCVertex(id, degree, bc, sampleVertices, (flows._1, nbhFlows), processedFlows)
+    new CFBCVertex(id, degree, bc, sampleVertices, (vertexFlows, nbhFlows), processedFlows)
 }
 
 object CFBCVertex extends Serializable {

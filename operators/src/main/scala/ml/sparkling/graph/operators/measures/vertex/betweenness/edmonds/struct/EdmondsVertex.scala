@@ -1,5 +1,6 @@
 package ml.sparkling.graph.operators.measures.vertex.betweenness.edmonds.struct
 
+import ml.sparkling.graph.operators.measures.vertex.betweenness.edmonds.struct.messages.EdmondsMessage
 import org.apache.spark.graphx.VertexId
 
 /**
@@ -7,6 +8,8 @@ import org.apache.spark.graphx.VertexId
   */
 class EdmondsVertex(val preds: List[VertexId], val sigma: Int, val depth: Int, val delta: Double, val bc:Double) extends Serializable {
   val explored = preds.nonEmpty
+
+  def applyMessage(msg: EdmondsMessage): EdmondsVertex = EdmondsVertex(msg.preds, msg.sigma, msg.depth)
 
   override def toString = s"EdmondsVertex($sigma, $depth, $delta, $bc)"
 }

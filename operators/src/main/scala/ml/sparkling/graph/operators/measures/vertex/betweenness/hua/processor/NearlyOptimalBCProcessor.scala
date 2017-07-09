@@ -107,7 +107,7 @@ class NearlyOptimalBCProcessor[VD, ED: ClassTag](graph: Graph[VD, ED]) extends S
     val createdFlows = expandMessages.map({ case (root, expand: List[BFSBCExtendMessage]) =>
       if (msgVertex2.contains(root)) throw new Error("Attempt to create duplicate of vertex")
       val sigma = expand.map(_.sigma).sum
-      val distance = expand.head.distance
+      val distance = expand.headOption.map(_.distance).getOrElse(.0)
       val vertex = NOBFSVertex(distance, sigma, state = NOBFSVertex.toConfirm)
       (root, vertex)
     })
@@ -116,55 +116,6 @@ class NearlyOptimalBCProcessor[VD, ED: ClassTag](graph: Graph[VD, ED]) extends S
   }
 
   def sendMessages(round: Int)(ctx: EdgeContext[NOVertex, ED, List[NOMessage[VertexId]]]): Unit = {
-    def sendPointer(triplet: EdgeTriplet[NOVertex, ED])(dst: VertexId, send: (List[NOMessage[VertexId]]) => Unit) = {
-      val srcAttr = triplet.otherVertexAttr(dst)
-      srcAttr.dfsPointer match {
-        case Some(pointer) if pointer.returning && pointer.toSent && srcAttr.pred.contains(dst) => send(List(pointer))
-        case Some(pointer) if pointer.toSent && pointer.next.contains(dst) => send(List(pointer))
-        case _ =>
-      }
-    }
-
-    def sendBFSExtendMessage(triplet: EdgeTriplet[NOVertex, ED])(dst: VertexId, send: (List[NOMessage[VertexId]]) => Unit) = {
-      val srcAttr = triplet.otherVertexAttr(dst)
-      val dstAttr = triplet.vertexAttr(dst)
-
-      srcAttr.bfsMap.foreach({ case (root, vertex) =>
-        if (!dstAttr.bfsMap.contains(root) && vertex.state == NOBFSVertex.toConfirm)
-          send(List(BFSBCExtendMessage.create(root, vertex)))
-      })
-
-    }
-
-    def sendConfirmation(triplet: EdgeTriplet[NOVertex, ED])(dst: VertexId, send: (List[NOMessage[VertexId]]) => Unit) = {
-      val srcAttr = triplet.otherVertexAttr(dst)
-      val dstAttr = triplet.vertexAttr(dst)
-
-      srcAttr.bfsMap.filter({ case (key, v) => v.state == NOBFSVertex.toConfirm })
-        .foreach({ case (key, v) =>
-          dstAttr.bfsMap.get(key) match {
-            case Some(parent) if isParentWaitingForConfirm(v, parent) =>
-              send(List(BFSBCConfirmMessage(key)))
-            case _ =>
-          }
-        })
-    }
-
-    def isParentWaitingForConfirm(vert: NOBFSVertex, parent: NOBFSVertex) =
-      isParent(vert, parent) && parent.state == NOBFSVertex.waitForConfirm
-
-    def isParent(vert: NOBFSVertex, parent: NOBFSVertex) = vert.distance == parent.distance + 1
-
-    def sendAggregate(triplet: EdgeTriplet[NOVertex, ED])(dst: VertexId, send: (List[NOMessage[VertexId]]) => Unit) = {
-      val srcAttr = triplet.otherVertexAttr(dst)
-      val dstAttr = triplet.vertexAttr(dst)
-
-      srcAttr.bfsMap.filter({ case (key, v) => dstAttr.bfsMap.get(key).exists(p => isParent(v, p)) && v.isCompleted})
-        .foreach({ case (key, v) =>
-          send(List(BCAggregationMessage(key, 1.0 / v.sigma.toDouble + v.psi)))
-        })
-    }
-
     val triplet = ctx.toEdgeTriplet
     val pointerSender = sendPointer(triplet) _
     pointerSender(ctx.srcId, ctx.sendToSrc)
@@ -181,5 +132,50 @@ class NearlyOptimalBCProcessor[VD, ED: ClassTag](graph: Graph[VD, ED]) extends S
     val aggregationSender = sendAggregate(triplet) _
     aggregationSender(ctx.srcId, ctx.sendToSrc)
     aggregationSender(ctx.dstId, ctx.sendToDst)
+  }
+
+  private def sendPointer(triplet: EdgeTriplet[NOVertex, ED])(dst: VertexId, send: (List[NOMessage[VertexId]]) => Unit) = {
+    val srcAttr = triplet.otherVertexAttr(dst)
+    srcAttr.dfsPointer match {
+      case Some(pointer) if pointer.returning && pointer.toSent && srcAttr.pred.contains(dst) => send(List(pointer))
+      case Some(pointer) if pointer.toSent && pointer.next.contains(dst) => send(List(pointer))
+      case _ =>
+    }
+  }
+
+  private def sendBFSExtendMessage(triplet: EdgeTriplet[NOVertex, ED])(dst: VertexId, send: (List[NOMessage[VertexId]]) => Unit) = {
+    val srcAttr = triplet.otherVertexAttr(dst)
+    val dstAttr = triplet.vertexAttr(dst)
+    srcAttr.bfsMap.foreach({ case (root, vertex) =>
+      if (!dstAttr.bfsMap.contains(root) && vertex.state == NOBFSVertex.toConfirm)
+        send(List(BFSBCExtendMessage.create(root, vertex)))
+    })
+  }
+
+  private def sendConfirmation(triplet: EdgeTriplet[NOVertex, ED])(dst: VertexId, send: (List[NOMessage[VertexId]]) => Unit) = {
+    val srcAttr = triplet.otherVertexAttr(dst)
+    val dstAttr = triplet.vertexAttr(dst)
+    srcAttr.bfsMap.filter({ case (key, v) => v.state == NOBFSVertex.toConfirm })
+      .foreach({ case (key, v) =>
+        dstAttr.bfsMap.get(key) match {
+          case Some(parent) if isParentWaitingForConfirm(v, parent) =>
+            send(List(BFSBCConfirmMessage(key)))
+          case _ =>
+        }
+      })
+  }
+
+  private def isParentWaitingForConfirm(vert: NOBFSVertex, parent: NOBFSVertex) =
+    isParent(vert, parent) && parent.state == NOBFSVertex.waitForConfirm
+
+  private def isParent(vert: NOBFSVertex, parent: NOBFSVertex) = vert.distance == parent.distance + 1
+
+  private def sendAggregate(triplet: EdgeTriplet[NOVertex, ED])(dst: VertexId, send: (List[NOMessage[VertexId]]) => Unit) = {
+    val srcAttr = triplet.otherVertexAttr(dst)
+    val dstAttr = triplet.vertexAttr(dst)
+    srcAttr.bfsMap.filter({ case (key, v) => dstAttr.bfsMap.get(key).exists(p => isParent(v, p)) && v.isCompleted})
+      .foreach({ case (key, v) =>
+        send(List(BCAggregationMessage(key, 1.0 / v.sigma.toDouble + v.psi)))
+      })
   }
 }

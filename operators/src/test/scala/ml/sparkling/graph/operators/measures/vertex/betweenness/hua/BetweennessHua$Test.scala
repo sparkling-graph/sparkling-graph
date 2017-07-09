@@ -32,7 +32,7 @@ class BetweennessHua$Test (implicit sc: SparkContext) extends MeasureTest {
     Then("Should calculate betweenness correctly")
     val bcFile = getClass.getResource("/graphs/graph_ER_15_bc")
     val bcCorrectValues = sc.textFile(bcFile.getPath)
-      .filter(_.length > 0)
+      .filter(_.nonEmpty)
       .map(l => { val t = l.split("\t", 2); (t(0).toInt, t(1).toDouble) })
       .sortBy({ case (vId, data) => vId })
       .map({ case (vId, data) => data}).collect()

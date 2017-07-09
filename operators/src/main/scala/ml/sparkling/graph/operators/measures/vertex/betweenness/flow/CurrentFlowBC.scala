@@ -55,7 +55,7 @@ class CurrentFlowBC[VD, ED: ClassTag](graph: Graph[VD, ED], flowGenerator: FlowG
       g1.vertices.count
       g1.edges.count
 
-      unfinalizedVertices = g1.vertices.aggregate(false)((acc, v) => acc || !v._2.isFinalized(k), _ || _)
+      unfinalizedVertices = g1.vertices.aggregate(false)({ case (acc, (_, vData)) => acc || !vData.isFinalized(k) }, _ || _)
 
       g2.unpersist(false)
       g3.unpersist(false)

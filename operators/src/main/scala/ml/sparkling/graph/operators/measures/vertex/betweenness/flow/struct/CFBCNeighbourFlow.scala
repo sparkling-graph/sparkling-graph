@@ -27,17 +27,41 @@ object CFBCNeighbourFlow extends Serializable {
             anyCompleted: Boolean = true
            ): CFBCNeighbourFlow = new CFBCNeighbourFlow(src, dst, sumOfPotential, sumOfDifferences, numberOfFlows, allCompleted, anyCompleted)
 
+  def apply(key: (VertexId, VertexId)) = key match { case (src, dst) => apply(src, dst) }
+
   def apply(flows: Iterable[CFBCFlow], vertex: CFBCVertex): CFBCNeighbourFlow = {
 
-    def aggregatePotential(vertexFlow: CFBCFlow)(acc: (Double, Double, Boolean, Boolean), flow: CFBCFlow) =
-      (acc._1 + flow.potential, acc._2 + Math.abs(flow.potential - vertexFlow.potential), acc._3 && flow.completed, acc._4 || flow.completed)
+    def aggregatePotential(vertexFlow: CFBCFlow)(acc: NeighbourFlowStats, flow: CFBCFlow) =
+      NeighbourFlowStats.fromFlow(vertexFlow)(flow).merge(acc)
 
-    def mergePotential(acc1: (Double, Double, Boolean, Boolean), acc2: (Double, Double, Boolean, Boolean)) =
-      (acc1._1 + acc2._1, acc1._2 + acc2._2, acc1._3 && acc2._3, acc1._4 || acc2._4)
+    def mergePotential(acc1: NeighbourFlowStats, acc2: NeighbourFlowStats) = acc1.merge(acc2)
 
-    val (src, dst) = flows.head.key
+    val (src, dst) = flows.headOption.map(_.key) match { case Some(k) => k }
     val aggregaeFunc = aggregatePotential(vertex.getFlow((src, dst))) _
-    val (sum, diff, allComp, anyComp) = flows.aggregate((0.0, 0.0, true, false))(aggregaeFunc, mergePotential)
-    CFBCNeighbourFlow(src, dst, sum, diff, flows.size, allComp, anyComp)
+    val stats = flows.aggregate(NeighbourFlowStats.empty)(aggregaeFunc, mergePotential)
+    CFBCNeighbourFlow(src, dst, stats.potential, stats.sumPotentialDiff, flows.size, stats.allCompleted, stats.anyCompleted)
+  }
+
+  class NeighbourFlowStats( val potential: Double,
+                            val sumPotentialDiff: Double,
+                            val allCompleted: Boolean,
+                            val anyCompleted: Boolean) extends Serializable {
+    def merge(other: NeighbourFlowStats): NeighbourFlowStats = {
+      NeighbourFlowStats(
+        potential + other.potential,
+        sumPotentialDiff + other.sumPotentialDiff,
+        allCompleted && other.allCompleted,
+        anyCompleted || other.anyCompleted)
+    }
+  }
+
+  object NeighbourFlowStats extends Serializable {
+    def apply(potential: Double, sumPotentialDiff: Double, allCompleted: Boolean, anyCompleted: Boolean): NeighbourFlowStats =
+      new NeighbourFlowStats(potential, sumPotentialDiff, allCompleted, anyCompleted)
+
+    def fromFlow(vertexFlow: CFBCFlow)(nbflow: CFBCFlow): NeighbourFlowStats =
+      apply(nbflow.potential, Math.abs(nbflow.potential - vertexFlow.potential), nbflow.completed, nbflow.completed)
+
+    def empty = apply(.0, .0, true, false)
   }
 }

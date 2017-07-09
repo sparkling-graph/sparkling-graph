@@ -11,25 +11,25 @@ class EdmondsBCAggregator[ED] extends Serializable {
   def aggregate(graph: Graph[EdmondsVertex, ED], source: VertexId) = {
 //    val startTime = System.nanoTime()
 
-    val maxDepth = graph.vertices.aggregate(0)((depth, v) => Math.max(v._2.depth, depth), Math.max)
+    val maxDepth = graph.vertices.aggregate(0)({ case (depth, (vId, vData)) => Math.max(vData.depth, depth) }, Math.max)
 
     var g = graph
-    var oldGraph: Graph[EdmondsVertex, ED] = null
+    var oldGraph: Option[Graph[EdmondsVertex, ED]] = None
 
     var messages = aggregateMessages(g, maxDepth).cache
     messages.count
 
     for (i <- 1 until maxDepth reverse) {
-      oldGraph = g
+      oldGraph = Some(g)
 
-      g = applyMessages(oldGraph, messages).cache
+      g = applyMessages(g, messages).cache
       val oldMessages = messages
       messages = aggregateMessages(g, i).cache
       messages.count
 
       oldMessages.unpersist(false)
-      oldGraph.unpersistVertices(false)
-      oldGraph.edges.unpersist(false)
+      oldGraph.foreach(_.unpersistVertices(false))
+      oldGraph.foreach(_.edges.unpersist(false))
     }
 
     messages.unpersist(false)

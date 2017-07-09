@@ -24,9 +24,9 @@ object Pregel extends Serializable {
     var messages = g.aggregateMessages(send(round), merge)
     var activeMessages = messages.count()
 
-    var prevG: Graph[VD, ED] = null
+    var prevG: Option[Graph[VD, ED]] = None
     while (activeMessages > 0 || numOfEmptyRounds < interruptAfterEmptyRounds) {
-      prevG = g
+      prevG = Some(g)
       g = g.outerJoinVertices(messages)(vpred(round)).cache
 
       if (round % 20 == 0) { g.checkpoint(); g.vertices.count; g.edges.count }
@@ -40,8 +40,8 @@ object Pregel extends Serializable {
       numOfEmptyRounds = if (activeMessages == 0) numOfEmptyRounds + 1 else 0
 
       oldMessages.unpersist(blocking = false)
-      prevG.unpersistVertices(blocking = false)
-      prevG.edges.unpersist(blocking = false)
+      prevG.foreach(_.unpersistVertices(blocking = false))
+      prevG.foreach(_.edges.unpersist(blocking = false))
     }
     messages.unpersist(blocking = false)
     g
