@@ -71,7 +71,7 @@ class NearlyOptimalBCProcessor[VD, ED: ClassTag](graph: Graph[VD, ED]) extends S
 
   def updateSuccSet(vertex: NOVertex, pointer: Option[DFSPointer]): Option[Array[VertexId]] = pointer match {
     case Some(p) if p.next.nonEmpty && vertex.succ.nonEmpty =>
-      Some(vertex.succ.getOrElse(empty[VertexId]).filterNot(p.next.contains(_)))
+      Some(vertex.succ.getOrElse(empty[VertexId]).filterNot(it => p.next.exists(_ == it)))
     case _ => vertex.succ
   }
 
@@ -137,8 +137,8 @@ class NearlyOptimalBCProcessor[VD, ED: ClassTag](graph: Graph[VD, ED]) extends S
   private def sendPointer(triplet: EdgeTriplet[NOVertex, ED])(dst: VertexId, send: (List[NOMessage[VertexId]]) => Unit) = {
     val srcAttr = triplet.otherVertexAttr(dst)
     srcAttr.dfsPointer match {
-      case Some(pointer) if pointer.returning && pointer.toSent && srcAttr.pred.contains(dst) => send(List(pointer))
-      case Some(pointer) if pointer.toSent && pointer.next.contains(dst) => send(List(pointer))
+      case Some(pointer) if pointer.returning && pointer.toSent && srcAttr.pred.exists(_ == dst) => send(List(pointer))
+      case Some(pointer) if pointer.toSent && pointer.next.exists(_ == dst) => send(List(pointer))
       case _ =>
     }
   }

@@ -27,7 +27,7 @@ object CFBCNeighbourFlow extends Serializable {
             anyCompleted: Boolean = true
            ): CFBCNeighbourFlow = new CFBCNeighbourFlow(src, dst, sumOfPotential, sumOfDifferences, numberOfFlows, allCompleted, anyCompleted)
 
-  def apply(key: (VertexId, VertexId)) = key match { case (src, dst) => apply(src, dst) }
+  def apply(key: (VertexId, VertexId)): CFBCNeighbourFlow = key match { case (src, dst) => apply(src, dst) }
 
   def apply(flows: Iterable[CFBCFlow], vertex: CFBCVertex): CFBCNeighbourFlow = {
 

@@ -34,7 +34,7 @@ class NOInitBFSProcessor[ED] extends BFSProcessor[NOVertex, ED, List[NOMessage[V
     def createConfirmMsg(dstId: VertexId) = {
       val dstAttr = triplet.vertexAttr(dstId)
       val srcAttr = triplet.otherVertexAttr(dstId)
-      if (!dstAttr.isCompleted && srcAttr.pred.contains(dstId)) Iterator((dstId, List(BFSConfirmMessage(triplet.otherVertexId(dstId))))) else Iterator.empty
+      if (!dstAttr.isCompleted && srcAttr.pred.exists(_ == dstId)) Iterator((dstId, List(BFSConfirmMessage(triplet.otherVertexId(dstId))))) else Iterator.empty
     }
 
     val confirmMsg = createConfirmMsg(triplet.srcId) ++ createConfirmMsg(triplet.dstId)

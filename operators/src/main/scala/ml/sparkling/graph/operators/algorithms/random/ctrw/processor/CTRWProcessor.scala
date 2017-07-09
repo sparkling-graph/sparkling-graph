@@ -28,7 +28,7 @@ class CTRWProcessor[VD, ED: ClassTag](graph: Graph[VD, ED], factory: MessageFact
     def messagesTo(dest: VertexId) = {
       def messages = triplet.otherVertexAttr(dest).messages
 
-      messages filter (_.nextVertex.contains(dest)) toList
+      messages filter (_.nextVertex.exists(_ == dest)) toList
     }
 
     Iterator((triplet.srcId, messagesTo(triplet.srcId))) ++ Iterator((triplet.dstId, messagesTo(triplet.dstId)))
@@ -40,7 +40,7 @@ class CTRWProcessor[VD, ED: ClassTag](graph: Graph[VD, ED], factory: MessageFact
     def messagesTo(dest: VertexId) = {
       def messages = triplet.otherVertexAttr(dest).messages
 
-      messages filter (_.nextVertex.contains(dest)) toList
+      messages filter (_.nextVertex.exists(_ ==dest)) toList
     }
 
     def send(msg: List[CTRWMessage], f: (List[CTRWMessage]) => Unit) =
