@@ -9,6 +9,8 @@ import ml.sparkling.graph.operators.algorithms.link.BasicLinkPredictor$Test
 import ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgorithm$Test
 import ml.sparkling.graph.operators.measures.edge.AdamicAdar$Test
 import ml.sparkling.graph.operators.measures.graph.{FreemanCentrality$Test, Modularity$Test}
+import ml.sparkling.graph.operators.measures.vertex.betweenness.edmonds.BetweennessEdmonds$Test
+import ml.sparkling.graph.operators.measures.vertex.betweenness.hua.BetweennessHua$Test
 import ml.sparkling.graph.operators.measures.vertex.closenes.Closeness$Test
 import ml.sparkling.graph.operators.measures.vertex.clustering.LocalClustering$Test
 import ml.sparkling.graph.operators.measures.vertex.eigenvector.EigenvectorCentrality$Test
@@ -65,7 +67,9 @@ class SparkTest extends Spec with BeforeAndAfterAll  {
       new ShortestPathsAlgorithm$Test,
       new ApproximatedShortestPathsAlgorithm$Test,
       new PropagationBasedPartitioning$Test,
-      new PSCANBasedPartitioning$Test
+      new PSCANBasedPartitioning$Test,
+      new BetweennessEdmonds$Test,
+      new BetweennessHua$Test
     )
   }
 
