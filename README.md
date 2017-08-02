@@ -43,7 +43,7 @@ libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.7"
     *  Neighbor connectivity
     *  Vertex embeddedness
     * Betweenness
-      * Edminds
+      * Edmonds
       * Flow
       * Hua
   * Edges
