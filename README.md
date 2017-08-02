@@ -42,6 +42,10 @@ libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.7"
     *  Hits
     *  Neighbor connectivity
     *  Vertex embeddedness
+    * Betweenness
+      * Edminds
+      * Flow
+      * Hua
   * Edges
     * Adamic/Adar
     * Common neighbours
@@ -62,7 +66,6 @@ libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.7"
   *  GML
 * Measures
   * Katz
-  * Betweenness
 * Comunity detection methods
   * Modularity maximization
   * Infomap
