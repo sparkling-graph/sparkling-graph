@@ -27,7 +27,7 @@ object CommunityBasedPartitioning {
     val (coarsedVertexMap,coarsedNumberOfPartitions) = ParallelPartitioningUtils.coarsePartitions(numberOfPartitions,numberOfCommunities,communities.vertices)
     val strategy=ByComponentIdPartitionStrategy(coarsedVertexMap,coarsedNumberOfPartitions)
     logger.info(s"Partitioning graph using coarsed map with ${coarsedVertexMap.size} entries  and ${coarsedNumberOfPartitions} partitions")
-    val out=new CustomGraphPartitioningImplementation[VD,ED](graph).partitionBy(strategy)
+    val out=new CustomGraphPartitioningImplementation[VD,ED](graph).partitionBy(strategy).cache()
     out.edges.foreachPartition((_)=>{})
     graph.unpersist(false)
     out

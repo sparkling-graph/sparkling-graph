@@ -21,7 +21,7 @@ object PSCANBasedPartitioning {
   def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],numberOfPartitions:Int)(implicit sc:SparkContext): Graph[VD, ED] ={
     val (numberOfCommunities: VertexId,  coarsedVertexMap: Map[VertexId, Int], coarsedNumberOfPartitions: Int, strategy: ByComponentIdPartitionStrategy) = buildPartitioningStrategy(graph, numberOfPartitions)
     logger.info(s"Partitioning graph using coarsed map with ${coarsedVertexMap.size} entries and ${coarsedNumberOfPartitions} partitions (before ${numberOfCommunities})")
-    val out=new CustomGraphPartitioningImplementation[VD,ED](graph).partitionBy(strategy)
+    val out=new CustomGraphPartitioningImplementation[VD,ED](graph).partitionBy(strategy).cache()
     out.edges.foreachPartition((_)=>{})
     graph.unpersist(false)
     out
