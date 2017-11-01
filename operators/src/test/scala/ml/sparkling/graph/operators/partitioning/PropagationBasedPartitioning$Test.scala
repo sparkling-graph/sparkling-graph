@@ -66,7 +66,7 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
     partitionedGraph.unpersist(true)
   }
 
-  "Dynamic partitioning for random graph" should  "   be computed in apropriate time"  taggedAs(Slow) in{
+  ignore should "Dynamic partitioning for random graph   be computed in apropriate time"  taggedAs(Slow) in{
     for (x<-0 to 3) {
       logger.info(s"Run $x")
       Given("graph")
