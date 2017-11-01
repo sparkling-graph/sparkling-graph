@@ -42,6 +42,10 @@ libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.7"
     *  Hits
     *  Neighbor connectivity
     *  Vertex embeddedness
+    * Betweenness
+      * Edmonds
+      * Flow
+      * Hua
   * Edges
     * Adamic/Adar
     * Common neighbours
@@ -62,7 +66,6 @@ libraryDependencies += "ml.sparkling" %% "sparkling-graph-operators" % "0.0.7"
   *  GML
 * Measures
   * Katz
-  * Betweenness
 * Comunity detection methods
   * Modularity maximization
   * Infomap
@@ -91,13 +94,13 @@ Please check [API](http://sparkling-graph.github.io/sparkling-graph/latest/api/)
 If you use SparklingGraph in your research and publish it, please consider citing us, it will help us get funding for making the library better.
 Currently manuscript is in preparation, so please us following references:
 
- ``` Bartusiak et al. (2016). SparklingGraph: large scale, distributed graph processing made easy. Manuscript in preparation. ```
+ ``` Bartusiak et al. (2017). SparklingGraph: large scale, distributed graph processing made easy. Manuscript in preparation. ```
  
  ```
 @unpublished{sparkling-graph
 title={SparklingGraph: large scale, distributed graph processing made easy},
 author={Bartusiak R., Kajdanowicz T.},
 note = {Manuscript in preparation},
-year = {2016}
+year = {2017}
 }
 ```
