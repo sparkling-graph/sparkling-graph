@@ -60,12 +60,10 @@ object WattsAndStrogatzGenerator extends GraphGenerator[WattsAndStrogatzGenerato
     } else {
       rewiredTuples
     };
-    val repartitionedVertices=outVertices.repartition(partitions).cache();
-    //TODO: NEED TO FIX COLLECTING DATA
-    val collectedVertices=repartitionedVertices.collect()
-    repartitionedVertices.unpersist(false)
+    val collectedVertices=outVertices.localCheckpoint()
     outVertices.unpersist(false)
-    val edges=ctx.parallelize(collectedVertices,partitions).map{
+    collectedVertices.foreachPartition(_=>())
+    val edges=collectedVertices.map{
       case (v1,v2)=>Edge(v1,v2,0)
     }
     val out=Graph.fromEdges(edges, 0,edgeStorageLevel = configuration.storageLevel,vertexStorageLevel = configuration.storageLevel)
