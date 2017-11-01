@@ -34,10 +34,7 @@ case object PSCAN extends CommunityDetectionAlgorithm{
       })
 
     val componentsGraph=cutOffGraph.connectedComponents()
-
-    graph.outerJoinVertices(componentsGraph.vertices)((vId,oldData,newData)=>{
-      newData.getOrElse(defaultComponentId)
-    })
+    Graph(componentsGraph.vertices,graph.edges)
   }
 
   def computeConnectedComponentsUsing[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],requiredNumberOfComponents:Int=32):(Graph[ComponentID,ED],Long)={
@@ -95,9 +92,7 @@ case object PSCAN extends CommunityDetectionAlgorithm{
     }
     logger.info(s"Using PSCAN with  $numberOfComponents components ($requiredNumberOfComponents required)")
     edgesWithSimilarity.unpersist(false)
-    val out=graph.outerJoinVertices(components.vertices)((_,_,newData)=>{
-      newData.getOrElse(defaultComponentId)
-    }).cache()
+    val out=Graph(components.vertices,graph.edges)
     components.unpersist(false)
     (out,numberOfComponents)
   }

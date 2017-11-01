@@ -2,7 +2,6 @@ package ml.sparkling.graph.operators.partitioning
 
 import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID
 import org.apache.log4j.Logger
-import org.apache.spark.broadcast.Broadcast
 import org.apache.spark.{ Partitioner}
 import org.apache.spark.graphx._
 
