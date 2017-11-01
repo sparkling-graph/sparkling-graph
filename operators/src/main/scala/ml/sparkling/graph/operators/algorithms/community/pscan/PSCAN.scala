@@ -48,9 +48,9 @@ case object PSCAN extends CommunityDetectionAlgorithm{
       sizeOfIntersection/denominator
     }).mapVertices((vId,_)=>vId).cache()
     neighbours.unpersist(false)
-    val edgesWeights=edgesWithSimilarity.edges.map(_.attr).distinct().treeAggregate(mutable.ListBuffer.empty[Double])(
-      (agg:ListBuffer[Double],data:Double)=>{agg+=data;agg},
-      (agg:ListBuffer[Double],agg2:ListBuffer[Double])=>{agg++=agg2;agg}
+    val edgesWeights=edgesWithSimilarity.edges.map(_.attr).mapPartitions(_.toSet.iterator).treeAggregate(mutable.Set.empty[Double])(
+      (agg:mutable.Set[Double],data:Double)=>{agg+=data;agg},
+      (agg:mutable.Set[Double],agg2:mutable.Set[Double])=>{agg++=agg2;agg}
     ,3).toList.sorted;
     var min=0
     var max=edgesWeights.length-1
@@ -64,7 +64,7 @@ case object PSCAN extends CommunityDetectionAlgorithm{
       val cutOffValue= edgesWeights(index);
       logger.info(s"Evaluating PSCAN for epsilon=$cutOffValue")
       val componentsGraph=new PSCANConnectedComponents(cutOffValue).run(edgesWithSimilarity).cache()
-      val currentNumberOfComponents=componentsGraph.vertices.map(_._2).distinct().count()
+      val currentNumberOfComponents=componentsGraph.vertices.map(_._2).countApproxDistinct()
       logger.info(s"PSCAN resulted in $currentNumberOfComponents components ($requiredNumberOfComponents required)")
       if(currentNumberOfComponents>=requiredNumberOfComponents&&(Math.abs(requiredNumberOfComponents-currentNumberOfComponents)<Math.abs(requiredNumberOfComponents-numberOfComponents)||numberOfComponents<requiredNumberOfComponents)){
         components.unpersist(false)

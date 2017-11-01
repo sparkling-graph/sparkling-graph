@@ -45,7 +45,10 @@ object PropagationBasedPartitioning {
       operationGraph.unpersist(false)
       operationGraph=newOperationGraph
       oldNumberOfComponents=numberOfComponents
-      numberOfComponents=operationGraph.vertices.map(_._2).countApproxDistinct()
+      numberOfComponents=operationGraph.vertices.map(_._2).mapPartitions(data=>data.toSet.iterator).treeAggregate(scala.collection.mutable.Set[VertexId]())(
+        (a,b)=>a += b,
+        (a,b)=>a ++= b
+      ).size
       if(iteration%checkpointingFrequency==0){
         oldComponents.checkpoint();
         operationGraph.checkpoint();
