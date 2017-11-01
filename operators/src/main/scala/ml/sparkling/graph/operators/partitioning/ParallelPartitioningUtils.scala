@@ -23,9 +23,10 @@ object ParallelPartitioningUtils {
         (buff,id)=>{buff+=id;buff},
         (buff1,buff2)=>{buff1 ++= buff2;buff1}
       ).sortBy(_._2.length,numPartitions = partitions).repartition(partitions)
-      while (communities.count() > numberOfPartitions && communities.count()  >= 2 && communities.count()>parallelLimit) {
+      var communitiesCount=communities.count()
+      while (communitiesCount > numberOfPartitions &&communitiesCount  >= 2 && communitiesCount>parallelLimit) {
         val toReduce=communities.count() - numberOfPartitions
-        logger.info(s"Coarsing two smallest communities into one community, size before coarse: ${communities.count()}, need to coarse $toReduce")
+        logger.info(s"Coarsing two smallest communities into one community, size before coarse: ${communitiesCount}, need to coarse $toReduce")
         val newCommunities= communities.mapPartitionsWithIndex{
           case (id,data)=>{
             if(id==0){
@@ -54,6 +55,7 @@ object ParallelPartitioningUtils {
         }.sortBy(_._2.length,numPartitions = partitions).cache()
         communities.unpersist()
         communities=newCommunities;
+        communitiesCount=communities.count()
       }
       val outMap=communities.flatMap{
         case (community, data) => data.map((id) => (id, community))

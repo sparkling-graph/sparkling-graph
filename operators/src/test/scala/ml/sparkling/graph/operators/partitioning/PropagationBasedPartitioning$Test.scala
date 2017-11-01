@@ -18,7 +18,7 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
     Given("graph")
     val filePath = getClass.getResource("/graphs/4_nodes_full")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
-    When("Partition using PSCAN")
+    When("Partition using propagation")
     val partitionedGraph: Graph[Int, Int] = PropagationBasedPartitioning.partitionGraphBy(graph,4)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (4)
@@ -30,7 +30,7 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
     Given("graph")
     val filePath = getClass.getResource("/graphs/4_nodes_full")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
-    When("Partition using PSCAN")
+    When("Partition using propagation")
     val partitionedGraph: Graph[Int, Int] = PropagationBasedPartitioning.partitionGraphBy(graph,1)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (1)
@@ -43,7 +43,7 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
     Given("graph")
     val filePath = getClass.getResource("/graphs/coarsening_to_3")
     val graph:Graph[Int,Int]=loadGraph(filePath.toString)
-    When("Partition using PSCAN")
+    When("Partition using propagation")
     val partitionedGraph: Graph[Int, Int] = PropagationBasedPartitioning.partitionGraphBy(graph,3)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (3)
@@ -66,12 +66,12 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
     partitionedGraph.unpersist(true)
   }
 
-  ignore should  "Dynamic partitioning for random graph   be computed in apropriate time"  taggedAs(Slow) in{
+  "Dynamic partitioning for random graph" should  "   be computed in apropriate time"  taggedAs(Slow) in{
     for (x<-0 to 3) {
       logger.info(s"Run $x")
       Given("graph")
       val graph: Graph[Int, Int] = GraphGenerators.rmatGraph(sc, 10000, 500000).cache()
-      When("Partition using PSCAN")
+      When("Partition using propagation")
       val (partitionedGraph, partitioningTime): (Graph[Int, Int], Long) = time("Partitioning")(PropagationBasedPartitioning.partitionGraphBy(graph, 24))
       Then("Should compute partitions correctly")
       partitionedGraph.edges.partitions.size should equal(24)

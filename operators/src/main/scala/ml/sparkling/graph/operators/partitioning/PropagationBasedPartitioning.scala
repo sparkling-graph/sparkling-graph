@@ -34,14 +34,14 @@ object PropagationBasedPartitioning {
       val newIds=operationGraph.aggregateMessages[VertexId](ctx=>{
         if(ctx.srcAttr<ctx.dstAttr){
           ctx.sendToDst(ctx.srcAttr)
-        }else if(ctx.dstAttr<ctx.srcAttr){
+          ctx.sendToSrc(ctx.srcAttr)
+        }else {
           ctx.sendToSrc(ctx.dstAttr)
+          ctx.sendToDst(ctx.dstAttr)
         }
       },math.min)
 
-      val newOperationGraph=operationGraph.outerJoinVertices(newIds){
-        case (_,oldData,newData)=>newData.getOrElse(oldData)
-      }.cache()
+      val newOperationGraph=Graph(newIds,operationGraph.edges).cache()
       operationGraph.unpersist(false)
       operationGraph=newOperationGraph
       oldNumberOfComponents=numberOfComponents
@@ -66,8 +66,8 @@ object PropagationBasedPartitioning {
     val (vertexMap: Map[VertexId, Int], newNumberOfCummunities: Int, strategy: ByComponentIdPartitionStrategy) = buildPartitioningStrategy(graph, numParts, checkpointingFrequency)
     logger.info(s"Partitioning graph using coarsed map with ${vertexMap.size} entries and ${newNumberOfCummunities} partitions")
     val out=new CustomGraphPartitioningImplementation[VD,ED](graph).partitionBy(strategy).cache()
-    out.edges.count()
-    out.vertices.count()
+    out.edges.foreachPartition((_)=>{})
+    out.edges.foreachPartition((_)=>{})
     graph.unpersist(false)
     out
   }

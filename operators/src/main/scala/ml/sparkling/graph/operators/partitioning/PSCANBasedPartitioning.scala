@@ -38,8 +38,8 @@ object PSCANBasedPartitioning {
     logger.info("Computing components using PSCAN")
     val (communities, numberOfCommunities): (Graph[ComponentID, ED], VertexId) = PSCAN.computeConnectedComponentsUsing(graph, numberOfPartitions)
     logger.info("Components computed!")
-    communities.unpersist(false)
     val (coarsedVertexMap, coarsedNumberOfPartitions) = ParallelPartitioningUtils.coarsePartitions(numberOfPartitions, numberOfCommunities, communities.vertices)
+    communities.unpersist(false)
     (numberOfCommunities, coarsedVertexMap, coarsedNumberOfPartitions)
   }
 }

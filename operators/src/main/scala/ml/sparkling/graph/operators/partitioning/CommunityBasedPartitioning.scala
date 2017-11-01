@@ -20,7 +20,10 @@ object CommunityBasedPartitioning {
   def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],communityDetectionMethod:CommunityDetectionMethod[VD,ED],numParts:Int= -1)(implicit sc:SparkContext): Graph[VD, ED] ={
     val numberOfPartitions=if (numParts== -1) sc.defaultParallelism else numParts
     val communities: Graph[ComponentID, ED] = communityDetectionMethod(graph)
-    val numberOfCommunities=communities.vertices.values.distinct().count()
+    val numberOfCommunities=communities.vertices.values.mapPartitions(data=>data.toSet.iterator).treeAggregate(scala.collection.mutable.Set[VertexId]())(
+      (a,b)=>a += b,
+      (a,b)=>a ++= b
+    ).size
     val (coarsedVertexMap,coarsedNumberOfPartitions) = ParallelPartitioningUtils.coarsePartitions(numberOfPartitions,numberOfCommunities,communities.vertices)
     val strategy=ByComponentIdPartitionStrategy(coarsedVertexMap,coarsedNumberOfPartitions)
     logger.info(s"Partitioning graph using coarsed map with ${coarsedVertexMap.size} entries  and ${coarsedNumberOfPartitions} partitions")
