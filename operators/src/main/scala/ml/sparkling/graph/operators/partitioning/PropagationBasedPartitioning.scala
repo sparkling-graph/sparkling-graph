@@ -45,7 +45,7 @@ object PropagationBasedPartitioning {
       operationGraph.unpersist(false)
       operationGraph=newOperationGraph
       oldNumberOfComponents=numberOfComponents
-      numberOfComponents=operationGraph.vertices.map(_._2).distinct().count()
+      numberOfComponents=operationGraph.vertices.map(_._2).countApproxDistinct()
       if(iteration%checkpointingFrequency==0){
         oldComponents.checkpoint();
         operationGraph.checkpoint();
