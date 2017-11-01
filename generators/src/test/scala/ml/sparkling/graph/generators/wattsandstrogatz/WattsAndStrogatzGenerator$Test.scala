@@ -21,8 +21,9 @@ class WattsAndStrogatzGenerator$Test(implicit val ctx:SparkContext) extends Gene
     val graph = WattsAndStrogatzGenerator.generate(config)
     Then("Graph should be generated correctly")
     graph.vertices.count() should equal(numberOfNodes)
-    graph.edges.count() should equal(numberOfNodes*meanDegree/2)
-    graph.degrees.values.sum()/numberOfNodes should equal(meanDegree)
+    graph.edges.count() should equal(numberOfNodes*meanDegree)
+    graph.inDegrees.values.sum()/numberOfNodes should equal(meanDegree)
+    graph.outDegrees.values.sum()/numberOfNodes should equal(meanDegree)
   }
 
 
@@ -37,10 +38,11 @@ class WattsAndStrogatzGenerator$Test(implicit val ctx:SparkContext) extends Gene
     val graph = WattsAndStrogatzGenerator.generate(config)
     Then("Graph should be generated correctly")
     graph.vertices.count() should equal(numberOfNodes)
-    graph.edges.count() should equal(numberOfNodes*meanDegree/2)
+    graph.edges.count() should equal(numberOfNodes*meanDegree)
     val edges = graph.edges.map(e => (e.srcId, e.dstId)).sortByKey().collect()
     edges.toSet should  not equal  ( (0 to numberOfNodes-1).flatMap(n=>Iterator((n,(n-1+numberOfNodes)%numberOfNodes),(n,(n+1+numberOfNodes)%numberOfNodes))).toSet)
-    graph.degrees.values.sum()/numberOfNodes should be(meanDegree.toDouble +- 1e-5)
+    graph.inDegrees.values.sum()/numberOfNodes should be(meanDegree.toDouble +- 1e-5)
+    graph.outDegrees.values.sum()/numberOfNodes should be(meanDegree.toDouble +- 1e-5)
   }
 
 }

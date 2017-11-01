@@ -19,7 +19,7 @@ object WattsAndStrogatzGenerator extends GraphGenerator[WattsAndStrogatzGenerato
     val vertexTuples: RDD[(Long, Long)] = ctx
       .parallelize((0l to configuration.numberOfNodes - 1), partitions)
       .flatMap(vId => {
-        val moves = 1l to configuration.meanDegree / 2 toList
+        val moves = 1l to configuration.meanDegree  toList
         val next = moves.map(move => (vId, (vId + move) % numberOfNodes))
         next
       }).distinct(partitions)
@@ -60,12 +60,12 @@ object WattsAndStrogatzGenerator extends GraphGenerator[WattsAndStrogatzGenerato
     } else {
       rewiredTuples
     };
-    val collectedVertices=outVertices.localCheckpoint()
-    outVertices.unpersist(false)
-    collectedVertices.foreachPartition(_=>())
-    val edges=collectedVertices.map{
+    val edges=outVertices.map{
       case (v1,v2)=>Edge(v1,v2,0)
     }
+    edges.persist(configuration.storageLevel)
+    edges.localCheckpoint()
+    edges.foreachPartition(_=>())
     val out=Graph.fromEdges(edges, 0,edgeStorageLevel = configuration.storageLevel,vertexStorageLevel = configuration.storageLevel)
     out
   }
@@ -73,7 +73,7 @@ object WattsAndStrogatzGenerator extends GraphGenerator[WattsAndStrogatzGenerato
 
 case class WattsAndStrogatzGeneratorConfiguration(val numberOfNodes: Long,
                                                   val meanDegree: Long,
-                                                  val rewiringProbability: Double, mixing: Boolean = false,
+                                                  val rewiringProbability: Double, mixing: Boolean = true,
                                                   val randomNumberGeneratorProvider: RandomNumberGeneratorProvider = RandomNumbers.ScalaRandomNumberGeneratorProvider,
-                                                  val storageLevel:StorageLevel=StorageLevel.MEMORY_ONLY,
+                                                  val storageLevel:StorageLevel=StorageLevel.MEMORY_AND_DISK_SER,
                                                   val partitions:Int = -1) extends GraphGeneratorConfiguration
