@@ -33,14 +33,12 @@ object PropagationBasedPartitioning {
       val newIds=operationGraph.aggregateMessages[VertexId](ctx=>{
         if(ctx.srcAttr<ctx.dstAttr){
           ctx.sendToDst(ctx.srcAttr)
-          ctx.sendToSrc(ctx.srcAttr)
-        }else {
+        }else if(ctx.dstAttr<ctx.srcAttr) {
           ctx.sendToSrc(ctx.dstAttr)
-          ctx.sendToDst(ctx.dstAttr)
         }
       },math.min)
 
-      val newOperationGraph=Graph(newIds,operationGraph.edges).cache()
+      val newOperationGraph=operationGraph.joinVertices(newIds)((_,_,newData)=>newData).cache()
       operationGraph=newOperationGraph
       oldNumberOfComponents=numberOfComponents
       numberOfComponents=operationGraph.vertices.map(_._2).countApproxDistinct()

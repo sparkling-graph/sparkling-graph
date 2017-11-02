@@ -34,7 +34,10 @@ case object PSCAN extends CommunityDetectionAlgorithm{
       })
 
     val componentsGraph=cutOffGraph.connectedComponents()
-    Graph(componentsGraph.vertices,graph.edges)
+
+    graph.outerJoinVertices(componentsGraph.vertices)((vId,oldData,newData)=>{
+      newData.getOrElse(defaultComponentId)
+    })
   }
 
   def computeConnectedComponentsUsing[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],requiredNumberOfComponents:Int=32):(Graph[ComponentID,ED],Long)={
