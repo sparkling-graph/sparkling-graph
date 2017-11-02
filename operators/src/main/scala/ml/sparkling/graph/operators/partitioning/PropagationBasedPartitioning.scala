@@ -67,8 +67,7 @@ object PropagationBasedPartitioning {
     logger.info(s"Partitioning graph using coarsed map with ${vertexMap.size} entries and ${newNumberOfCummunities} partitions")
     val out=new CustomGraphPartitioningImplementation[VD,ED](graph).partitionBy(strategy).cache()
     out.edges.foreachPartition((_)=>{})
-    out.edges.foreachPartition((_)=>{})
-    graph.unpersist(false)
+    out.vertices.foreachPartition((_)=>{})
     out
   }
 

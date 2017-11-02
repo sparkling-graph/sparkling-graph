@@ -51,10 +51,7 @@ class CustomGraphPartitioningImplementation[VD:ClassTag,ED:ClassTag](graph:Graph
     val prePartitionedGraph=graph.partitionBy(partitionStrategy,partitionStrategy.partitions)
     val partitionedEdges=prePartitionedGraph.edges;
     val partitionedVertices=prePartitionedGraph.vertices.partitionBy(partitionStrategy)
-    val out=Graph.fromEdges(partitionedEdges,null.asInstanceOf[VD])
-    prePartitionedGraph.unpersist(false)
-    partitionedEdges.unpersist(false)
-    partitionedVertices.unpersist(false)
+    val out=Graph(partitionedVertices,partitionedEdges)
     out
   }
 }

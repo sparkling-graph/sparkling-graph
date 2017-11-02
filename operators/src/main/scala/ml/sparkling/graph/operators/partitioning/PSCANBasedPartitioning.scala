@@ -23,7 +23,7 @@ object PSCANBasedPartitioning {
     logger.info(s"Partitioning graph using coarsed map with ${coarsedVertexMap.size} entries and ${coarsedNumberOfPartitions} partitions (before ${numberOfCommunities})")
     val out=new CustomGraphPartitioningImplementation[VD,ED](graph).partitionBy(strategy).cache()
     out.edges.foreachPartition((_)=>{})
-    graph.unpersist(false)
+    out.vertices.foreachPartition((_)=>{})
     out
   }
 
