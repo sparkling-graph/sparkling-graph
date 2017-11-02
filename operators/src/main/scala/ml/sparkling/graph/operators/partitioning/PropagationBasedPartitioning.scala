@@ -29,7 +29,6 @@ object PropagationBasedPartitioning {
     while ((numberOfComponents>numberOfPartitions && numberOfComponents!=1 && oldNumberOfComponents!=numberOfComponents) || oldNumberOfComponents>Int.MaxValue){
       logger.info(s"Propagation based partitioning: iteration:$iteration, last number of components:$oldNumberOfComponents, current number of components:$numberOfComponents")
       iteration=iteration+1;
-      oldComponents.unpersist(false)
       oldComponents=operationGraph.vertices
       val newIds=operationGraph.aggregateMessages[VertexId](ctx=>{
         if(ctx.srcAttr<ctx.dstAttr){
@@ -42,13 +41,9 @@ object PropagationBasedPartitioning {
       },math.min)
 
       val newOperationGraph=Graph(newIds,operationGraph.edges).cache()
-      operationGraph.unpersist(false)
       operationGraph=newOperationGraph
       oldNumberOfComponents=numberOfComponents
-      numberOfComponents=operationGraph.vertices.map(_._2).mapPartitions(data=>data.toSet.iterator).treeAggregate(scala.collection.mutable.Set[VertexId]())(
-        (a,b)=>a += b,
-        (a,b)=>a ++= b
-      ).size
+      numberOfComponents=operationGraph.vertices.map(_._2).countApproxDistinct()
       if(iteration%checkpointingFrequency==0){
         oldComponents.checkpoint();
         operationGraph.checkpoint();
@@ -58,7 +53,6 @@ object PropagationBasedPartitioning {
       }
     }
     val (communities,numberOfCommunities)=(oldComponents,oldNumberOfComponents)
-    communities.unpersist(false)
     return ParallelPartitioningUtils.coarsePartitions(numberOfPartitions, numberOfCommunities, communities)
   }
 

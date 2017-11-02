@@ -53,7 +53,6 @@ object ParallelPartitioningUtils {
             }
           }
         }.sortBy(_._2.length,numPartitions = partitions).cache()
-        communities.unpersist()
         communities=newCommunities;
         communitiesCount=communities.count()
       }
