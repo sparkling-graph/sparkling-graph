@@ -22,7 +22,7 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
     val partitionedGraph: Graph[Int, Int] = PropagationBasedPartitioning.partitionGraphBy(graph,4)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (4)
-      partitionedGraph.vertices.partitions.size  should equal (4)
+      partitionedGraph.triplets.partitions.size  should equal (4)
     graph.unpersist(true)
   }
 
@@ -34,7 +34,7 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
     val partitionedGraph: Graph[Int, Int] = PropagationBasedPartitioning.partitionGraphBy(graph,1)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (1)
-    partitionedGraph.vertices.partitions.size  should equal (1)
+    partitionedGraph.triplets.partitions.size  should equal (1)
     graph.unpersist(true)
   }
 
@@ -47,7 +47,7 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
     val partitionedGraph: Graph[Int, Int] = PropagationBasedPartitioning.partitionGraphBy(graph,3)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (3)
-    partitionedGraph.vertices.partitions.size  should equal (3)
+    partitionedGraph.triplets.partitions.size  should equal (3)
     graph.unpersist(true)
   }
 
@@ -59,14 +59,15 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
     val partitionedGraph: Graph[Int, Int] =PropagationBasedPartitioning.partitionGraphBy(graph,24).cache()
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (24)
-    partitionedGraph.vertices.partitions.size  should equal (24)
+    partitionedGraph.triplets.partitions.size  should equal (24)
     graph.edges.count() should  equal (partitionedGraph.edges.count())
     graph.vertices.count() should  equal (partitionedGraph.vertices.count())
+    graph.triplets.count() should  equal (partitionedGraph.triplets.count())
     graph.unpersist(true)
     partitionedGraph.unpersist(true)
   }
 
-  ignore should "Dynamic partitioning for random graph   be computed in apropriate time"  taggedAs(Slow) in{
+  ignore should "Dynamic partitioning for random graph be computed in apropriate time"  taggedAs(Slow) in{
     for (x<-0 to 3) {
       logger.info(s"Run $x")
       Given("graph")
@@ -75,14 +76,14 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
       val (partitionedGraph, partitioningTime): (Graph[Int, Int], Long) = time("Partitioning")(PropagationBasedPartitioning.partitionGraphBy(graph, 24))
       Then("Should compute partitions correctly")
       partitionedGraph.edges.partitions.size should equal(24)
-      partitionedGraph.vertices.partitions.size should equal(24)
+      partitionedGraph.triplets.partitions.size should equal(24)
       partitioningTime should be < (10000l)
       graph.unpersist(true)
       partitionedGraph.unpersist(true)
     }
   }
 
-   ignore  should "Dynamic partitioning for random graph give faster results for eignevector"  taggedAs(Slow) in{
+   ignore should "Dynamic partitioning for random graph give faster results for eignevector"  taggedAs(Slow) in{
     for (x<-0 to 3) {
       logger.info(s"Run $x")
       Given("graph")

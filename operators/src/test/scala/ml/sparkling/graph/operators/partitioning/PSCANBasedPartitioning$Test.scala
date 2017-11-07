@@ -24,6 +24,7 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
     val partitionedGraph: Graph[Int, Int] = PSCANBasedPartitioning.partitionGraphBy(graph,4)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (4)
+    partitionedGraph.triplets.partitions.size  should equal (4)
     graph.unpersist(true)
   }
 
@@ -35,6 +36,7 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
     val partitionedGraph: Graph[Int, Int] = PSCANBasedPartitioning.partitionGraphBy(graph,1)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (1)
+    partitionedGraph.triplets.partitions.size  should equal (1)
     graph.unpersist(true)
   }
 
@@ -46,6 +48,7 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
     val partitionedGraph: Graph[Int, Int] =PSCANBasedPartitioning.partitionGraphBy(graph,5)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (5)
+    partitionedGraph.triplets.partitions.size  should equal (5)
     graph.unpersist(true)
   }
 
@@ -56,6 +59,7 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
     val partitionedGraph: Graph[Int, Int] =PSCANBasedPartitioning.partitionGraphBy(graph,24)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (24)
+    partitionedGraph.triplets.partitions.size  should equal (24)
     graph.unpersist(true)
   }
 
@@ -69,6 +73,7 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
       val (partitionedGraph, partitioningTime): (Graph[Int, Int], Long) = time("Partitioning")(PSCANBasedPartitioning.partitionGraphBy(graph, 24))
       Then("Should compute partitions correctly")
       partitionedGraph.edges.partitions.size should equal(24)
+      partitionedGraph.triplets.partitions.size  should equal (24)
       partitioningTime should be < (50000l)
       graph.unpersist(true)
       partitionedGraph.unpersist(true)
@@ -85,6 +90,7 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
     val partitionedGraph: Graph[Int, Int] =PSCANBasedPartitioning.partitionGraphBy(graph,24)
     Then("Should compute partitions correctly")
     partitionedGraph.edges.partitions.size  should equal (24)
+    partitionedGraph.triplets.partitions.size  should equal (24)
     graph.unpersist(true)
   }
 

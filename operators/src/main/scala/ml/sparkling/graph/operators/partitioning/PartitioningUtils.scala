@@ -48,11 +48,7 @@ object PartitioningUtils {
 
 class CustomGraphPartitioningImplementation[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED]){
   def partitionBy(partitionStrategy: ByComponentIdPartitionStrategy): Graph[VD, ED] = {
-    val prePartitionedGraph=graph.partitionBy(partitionStrategy,partitionStrategy.partitions)
-    val partitionedEdges=prePartitionedGraph.edges;
-    val partitionedVertices=prePartitionedGraph.vertices.partitionBy(partitionStrategy)
-    val out=Graph(partitionedVertices,partitionedEdges)
-    out
+    graph.partitionBy(partitionStrategy,partitionStrategy.partitions)
   }
 }
 
