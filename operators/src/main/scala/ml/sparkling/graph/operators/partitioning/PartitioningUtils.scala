@@ -2,11 +2,12 @@ package ml.sparkling.graph.operators.partitioning
 
 import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID
 import org.apache.log4j.Logger
-import org.apache.spark.{ Partitioner}
+import org.apache.spark.Partitioner
 import org.apache.spark.graphx._
 
 import scala.collection.immutable
-import scala.reflect.{ClassTag}
+import scala.collection.mutable.ListBuffer
+import scala.reflect.ClassTag
 
 
 /**
@@ -20,27 +21,36 @@ object PartitioningUtils {
   def coarsePartitions(numberOfPartitions: PartitionID, numberOfCommunities: Long, vertexToCommunityId: Map[VertexId, ComponentID]): (Map[VertexId, Int], Int) = {
     val (map,size)=if (numberOfCommunities > numberOfPartitions) {
       logger.info(s"Number of communities ($numberOfCommunities) is bigger thant requested number of partitions ($numberOfPartitions)")
-      var communities= vertexToCommunityId.toList.map(t => (t._2, t._1)).groupBy(t => t._1).toList.sortBy(_._2.length);
+      val communities= ListBuffer(vertexToCommunityId.toList.map(t => (t._2, t._1)).groupBy(t => t._1).toList
+        .map{ case (id,data)=>(id,ListBuffer(data:_*))}.sortBy(_._2.length):_*);
+      var lastAddedSize= -1
+      var lastAddedIndex= -1
       while (communities.length > numberOfPartitions && communities.length >= 2) {
         logger.debug(s"Coarsing two smallest communities into one community, size before coarse: ${communities.length}")
-        communities= communities match{
-          case (firstCommunityId,firstData)::(secondCommunityId,secondData)::tail=>{
-            val entity=(Math.min(firstCommunityId,secondCommunityId),firstData:::secondData)
-            val entityLength=entity._2.length
-            val i=tail.toStream.zipWithIndex.find{
-              case ((_,list),_)=>list.length>=entityLength
-            }.map{
-              case ((_,_),index)=>index
-            }.getOrElse(tail.length)
-            val (before,after)=tail.splitAt(i)
-            before ::: (entity :: after)
-          }
-          case t::Nil=>t::Nil
-          case _ => Nil
+            val (firstCommunityId,firstData)=communities.head
+            communities.remove(0)
+            val (secondCommunityId,secondData)=communities.head
+            communities.remove(0)
+            firstData++=secondData
+            val entity=(Math.min(firstCommunityId,secondCommunityId),firstData)
+            val entityLength=firstData.length
+            val i = if(entityLength==lastAddedSize){
+              lastAddedIndex=Math.max(lastAddedIndex-1,0)
+              lastAddedIndex
+            }else{
+              val i = communities.toStream.zipWithIndex.find {
+                case ((_, list), _) => list.length >= entityLength
+              }.map {
+                case ((_, _), index) => index
+              }.getOrElse(communities.length)
+              lastAddedSize=entityLength
+              lastAddedIndex=i
+              i
+            }
+            communities.insert(i,entity)
         }
-      }
       (communities.flatMap {
-        case (community: ComponentID, data: immutable.Seq[(ComponentID, VertexId)]) => data.map {
+        case (community, data) => data.map {
           case (_, id) => (id, community)
         }
       }.toMap, communities.map(_._1).toSet.size)
