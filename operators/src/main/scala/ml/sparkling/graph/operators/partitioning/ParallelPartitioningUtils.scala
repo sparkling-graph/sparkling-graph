@@ -25,14 +25,12 @@ object ParallelPartitioningUtils {
     }
     val (map, size) = if (numberOfCommunities > numberOfPartitions && numberOfCommunities > parallelLimit) {
       logger.info(s"Number of communities ($numberOfCommunities) is bigger thant requested number of partitions ($numberOfPartitions), using $partitions partitions")
-      var communities = vertexToCommunityId.map(t => (t._2, t._1)).aggregateByKey(ListBuffer[VertexId](), partitions)(
+      var communities = vertexToCommunityId.map(t => (t._2, t._1)).aggregateByKey(List[VertexId](), partitions)(
         (buff, id) => {
-         buff+=id
-          buff
+         id::buff
         },
         (buff1, buff2) => {
-          buff1 ++=buff2
-          buff1
+          buff1 ::: buff2
         }
       ).repartition(partitions).sortBy(_._2.length)
       var communitiesCount = communities.count()
@@ -44,7 +42,9 @@ object ParallelPartitioningUtils {
           (id, data) => {
             if (id == 0) {
               var reduced = 0
-              val localData = ListBuffer(data.toSeq:_*);
+              val localData = ListBuffer(data.map{
+                case (id,data)=>(id,ListBuffer(data:_*))
+              }toSeq:_*);
               val maxSize = localData.last._2.length
               var continue = true
               var lastAddedSize = -1
@@ -77,7 +77,9 @@ object ParallelPartitioningUtils {
                   reduced += 1
                 }
               }
-              localData.toIterator
+              localData.toIterator.map{
+                case (id,data)=>(id,data.toList)
+              }
             } else {
               data
             }
@@ -95,10 +97,7 @@ object ParallelPartitioningUtils {
       logger.info(s"Not using parallel coarsing for $numberOfCommunities (requested $numberOfPartitions using $parallelLimit parallel limit and $partitions partitions)")
       (vertexToCommunityId, numberOfCommunities.toInt)
     }
-    val componentsIds = map.map(_._2).distinct.zipWithIndex()
-    val outMap = map.map {
-      case (vId, cId) => (cId, vId)
-    }.join(componentsIds).map(_._2).treeAggregate(mutable.Map.empty[VertexId, ComponentID])(
+    val outMap = map.treeAggregate(mutable.Map.empty[VertexId, ComponentID])(
       (buff, t) => {
         buff += ((t._1, t._2.toInt)); buff
       },

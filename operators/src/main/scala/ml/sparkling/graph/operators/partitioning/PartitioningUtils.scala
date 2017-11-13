@@ -1,6 +1,7 @@
 package ml.sparkling.graph.operators.partitioning
 
 import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID
+import ml.sparkling.graph.operators.utils.LoggerHolder
 import org.apache.log4j.Logger
 import org.apache.spark.Partitioner
 import org.apache.spark.graphx._
@@ -27,9 +28,9 @@ object PartitioningUtils {
       var lastAddedIndex= -1
       while (communities.length > numberOfPartitions && communities.length >= 2) {
         logger.debug(s"Coarsing two smallest communities into one community, size before coarse: ${communities.length}")
-            val (firstCommunityId,firstData)=communities.head
+            val (firstCommunityId,firstData)=communities(0)
+            val (secondCommunityId,secondData)=communities(1)
             communities.remove(0)
-            val (secondCommunityId,secondData)=communities.head
             communities.remove(0)
             firstData++=secondData
             val entity=(Math.min(firstCommunityId,secondCommunityId),firstData)
@@ -58,8 +59,8 @@ object PartitioningUtils {
       logger.info(s"Number of communities ($numberOfCommunities) is not bigger thant requested number of partitions ($numberOfPartitions)")
       (vertexToCommunityId, numberOfCommunities.toInt)
     }
-    val componentsIds: List[ComponentID] =map.values.toSet.toList
-    val componentMapper: Map[ComponentID, Int] =componentsIds.zipWithIndex.toMap
+    val componentsIds: List[ComponentID] = map.values.toList.distinct
+    val componentMapper: Map[ComponentID, Int] = componentsIds.zipWithIndex.toMap
     val outMap: Map[VertexId, Int] =map.mapValues(componentMapper).map(identity)
     (outMap,size)
   }
@@ -73,10 +74,14 @@ class CustomGraphPartitioningImplementation[VD:ClassTag,ED:ClassTag](graph:Graph
 }
 
 case class ByComponentIdPartitionStrategy(idMap:Map[VertexId, Int],partitions:Int) extends Partitioner  with  PartitionStrategy{
+
   override def getPartition(src: VertexId, dst: VertexId, numParts: PartitionID): PartitionID = {
-    val vertex1Component: Int = idMap.getOrElse(src,Int.MaxValue)
-    val vertex2Component: Int = idMap.getOrElse(dst,Int.MaxValue)
-    Math.min(vertex1Component,vertex2Component)
+    val logger=LoggerHolder.log
+    val vertex1Component: Int = idMap(src)
+    val vertex2Component: Int = idMap(dst)
+    val partition=Math.min(vertex1Component,vertex2Component)
+    logger.debug(s"Partitioning edge $src($vertex1Component) - $dst($vertex2Component) to $partition")
+    partition
   }
 
   override def numPartitions: PartitionID = partitions
