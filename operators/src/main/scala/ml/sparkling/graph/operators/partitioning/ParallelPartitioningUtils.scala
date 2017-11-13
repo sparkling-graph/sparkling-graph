@@ -17,7 +17,7 @@ object ParallelPartitioningUtils {
   val logger=Logger.getLogger(ParallelPartitioningUtils.getClass())
 
   def coarsePartitions(numberOfPartitions: PartitionID, numberOfCommunities: Long, vertexToCommunityId: RDD[(VertexId, ComponentID)],parallelLimit:Long=50000,givenPartitions:Int= -1):(Map[VertexId, Int], Int) = {
-    val partitions= if(givenPartitions<1){vertexToCommunityId.context.defaultParallelism} else {givenPartitions}
+    val partitions= if(givenPartitions<1){vertexToCommunityId.partitions.length} else {givenPartitions}
     val (map,size)=if (numberOfCommunities > numberOfPartitions) {
       logger.info(s"Number of communities ($numberOfCommunities) is bigger thant requested number of partitions ($numberOfPartitions)")
       var communities= vertexToCommunityId.map(t => (t._2, t._1)).aggregateByKey(List[VertexId](),partitions)(
@@ -36,6 +36,8 @@ object ParallelPartitioningUtils {
                 var localData = data.toList;
                 var continue = true
                 val maxSize = localData.last._2.length
+                var lastAddedSize= -1
+                var lastAddedIndex= -1
                 while (reduced < toReduce && continue) {
                   localData match {
                     case (fId, fData) :: (sId, sData) :: tail => {
@@ -44,11 +46,19 @@ object ParallelPartitioningUtils {
                         val data=fData:::sData
                         val entity = (Math.min(fId, sId), data)
                         val entityLength = data.length
-                        val i = tail.toStream.zipWithIndex.find {
-                          case ((_, list), _) => list.length >= entityLength
-                        }.map {
-                          case ((_, _), index) => index
-                        }.getOrElse(tail.length)
+                        val i = if(entityLength==lastAddedSize){
+                          lastAddedIndex=Math.max(lastAddedIndex-1,0)
+                          lastAddedIndex
+                        }else{
+                          val i = tail.toStream.zipWithIndex.find {
+                            case ((_, list), _) => list.length >= entityLength
+                          }.map {
+                            case ((_, _), index) => index
+                          }.getOrElse(tail.length)
+                          lastAddedSize=entityLength
+                          lastAddedIndex=i
+                          i
+                        }
                         val (before, after) = tail.splitAt(i)
                         localData = before ::: (entity :: after)
                         reduced += 1
