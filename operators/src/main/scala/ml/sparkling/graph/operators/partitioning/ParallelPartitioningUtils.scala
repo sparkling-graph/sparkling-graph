@@ -17,7 +17,7 @@ object ParallelPartitioningUtils {
   @transient
   val logger = Logger.getLogger(ParallelPartitioningUtils.getClass())
 
-  def coarsePartitions(numberOfPartitions: PartitionID, numberOfCommunities: Long, vertexToCommunityId: RDD[(VertexId, ComponentID)], parallelLimit: Long = 5, givenPartitions: Int = -1): (Map[VertexId, Int], Int) = {
+  def coarsePartitions(numberOfPartitions: PartitionID, numberOfCommunities: Long, vertexToCommunityId: RDD[(VertexId, ComponentID)], parallelLimit: Long = 50000, givenPartitions: Int = -1): (Map[VertexId, Int], Int) = {
     val partitions = if (givenPartitions < 1) {
       vertexToCommunityId.sparkContext.defaultParallelism
     } else {
