@@ -17,20 +17,22 @@ object ParallelPartitioningUtils {
   @transient
   val logger = Logger.getLogger(ParallelPartitioningUtils.getClass())
 
-  def coarsePartitions(numberOfPartitions: PartitionID, numberOfCommunities: Long, vertexToCommunityId: RDD[(VertexId, ComponentID)], parallelLimit: Long = 50000, givenPartitions: Int = -1): (Map[VertexId, Int], Int) = {
+  def coarsePartitions(numberOfPartitions: PartitionID, numberOfCommunities: Long, vertexToCommunityId: RDD[(VertexId, ComponentID)], parallelLimit: Long = 5, givenPartitions: Int = -1): (Map[VertexId, Int], Int) = {
     val partitions = if (givenPartitions < 1) {
       vertexToCommunityId.sparkContext.defaultParallelism
     } else {
       givenPartitions
     }
-    val (map, size) = if (numberOfCommunities > numberOfPartitions) {
+    val (map, size) = if (numberOfCommunities > numberOfPartitions && numberOfCommunities > parallelLimit) {
       logger.info(s"Number of communities ($numberOfCommunities) is bigger thant requested number of partitions ($numberOfPartitions), using $partitions partitions")
-      var communities = vertexToCommunityId.map(t => (t._2, t._1)).aggregateByKey(List[VertexId](), partitions)(
+      var communities = vertexToCommunityId.map(t => (t._2, t._1)).aggregateByKey(ListBuffer[VertexId](), partitions)(
         (buff, id) => {
-          id :: buff
+         buff+=id
+          buff
         },
         (buff1, buff2) => {
-          buff1 ::: buff2
+          buff1 ++=buff2
+          buff1
         }
       ).repartition(partitions).sortBy(_._2.length)
       var communitiesCount = communities.count()
@@ -54,7 +56,8 @@ object ParallelPartitioningUtils {
                 if (continue) {
                   localData.remove(0)
                   localData.remove(0)
-                  val data = fData:::sData
+                  fData++=sData
+                  val data = fData
                   val entity = (Math.min(fId, sId), data)
                   val entityLength = data.length
                   val i = if (entityLength == lastAddedSize) {
@@ -89,7 +92,7 @@ object ParallelPartitioningUtils {
       }
       (outMap, communitiesCount.toInt)
     } else {
-      logger.info(s"Number of communities ($numberOfCommunities) is not bigger thant requested number of partitions ($numberOfPartitions)")
+      logger.info(s"Not using parallel coarsing for $numberOfCommunities (requested $numberOfPartitions using $parallelLimit parallel limit and $partitions partitions)")
       (vertexToCommunityId, numberOfCommunities.toInt)
     }
     val componentsIds = map.map(_._2).distinct.zipWithIndex()

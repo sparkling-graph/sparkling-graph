@@ -95,7 +95,7 @@ case object PSCAN extends CommunityDetectionAlgorithm{
     }
     logger.info(s"Using PSCAN with  $numberOfComponents components ($requiredNumberOfComponents required)")
     edgesWithSimilarity.unpersist(false)
-    val out=Graph(components.vertices,graph.edges)
+    val out=graph.outerJoinVertices(components.vertices)((_,_,newData)=>newData.get)
     components.unpersist(false)
     (out,numberOfComponents)
   }
