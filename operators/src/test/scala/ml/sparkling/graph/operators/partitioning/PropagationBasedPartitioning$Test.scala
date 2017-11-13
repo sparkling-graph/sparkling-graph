@@ -87,7 +87,7 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
     for (x<-0 to 3) {
       logger.info(s"Run $x")
       Given("graph")
-      val graphInit: Graph[Int, Int] = GraphGenerators.rmatGraph(sc, 50000, 1050000).partitionBy(EdgePartition2D,8)
+      val graphInit: Graph[Int, Int] = GraphGenerators.rmatGraph(sc, 100000, 2050000).partitionBy(EdgePartition2D,8)
       val graph=Graph.fromEdges(graphInit.edges,0).cache()
       graph.edges.foreachPartition((_)=>{})
       graph.vertices.foreachPartition((_)=>{})

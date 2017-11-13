@@ -16,46 +16,58 @@ object ParallelPartitioningUtils {
   @transient
   val logger=Logger.getLogger(ParallelPartitioningUtils.getClass())
 
-  def coarsePartitions(numberOfPartitions: PartitionID, numberOfCommunities: Long, vertexToCommunityId: RDD[(VertexId, ComponentID)],parallelLimit:Long=50000,givenPartitions:Int= -1):(Map[VertexId, Int], Int) = {
+  def coarsePartitions(numberOfPartitions: PartitionID, numberOfCommunities: Long, vertexToCommunityId: RDD[(VertexId, ComponentID)],parallelLimit:Long=5,givenPartitions:Int= -1):(Map[VertexId, Int], Int) = {
     val partitions= if(givenPartitions<1){vertexToCommunityId.context.defaultParallelism} else {givenPartitions}
     val (map,size)=if (numberOfCommunities > numberOfPartitions) {
       logger.info(s"Number of communities ($numberOfCommunities) is bigger thant requested number of partitions ($numberOfPartitions)")
-      var communities= vertexToCommunityId.map(t => (t._2, t._1)).aggregateByKey(mutable.ListBuffer.empty[VertexId],partitions)(
-        (buff,id)=>{buff+=id;buff},
-        (buff1,buff2)=>{buff1 ++= buff2;buff1}
-      ).sortBy(_._2.length,numPartitions = partitions).repartition(partitions)
+      var communities= vertexToCommunityId.map(t => (t._2, t._1)).aggregateByKey(List[VertexId](),partitions)(
+        (buff,id)=> id :: buff ,
+        (buff1,buff2)=>buff1:::buff2
+      ).sortBy(_._2.length,numPartitions = partitions)
       var communitiesCount=communities.count()
-      while (communitiesCount > numberOfPartitions &&communitiesCount  >= 2 && communitiesCount>parallelLimit) {
+      var oldCommunitiesCount = -1l
+      while (communitiesCount > numberOfPartitions &&communitiesCount  >= 2 && communitiesCount>parallelLimit && oldCommunitiesCount != communitiesCount) {
         val toReduce=communitiesCount - numberOfPartitions
         logger.info(s"Coarsing two smallest communities into one community, size before coarse: ${communitiesCount}, need to coarse $toReduce")
-        val newCommunities= communities.mapPartitionsWithIndex{
-          case (id,data)=>{
-            if(id==0){
-              var reduced=0
-              var continue=true
-              var localData=data.toList;
-              val maxSize=localData.last._2.length
-              while (reduced<toReduce&&continue){
-                localData match {
-                case (fId,fData)::(sId,sData)::tail=>{
-                  continue=fData.length<=maxSize&&sData.length<=maxSize
-                  if(continue){
-                    fData++=sData
-                    localData=((Math.min(fId,sId),fData)::tail).sortBy(_._2.length)
-                    reduced += 1
+        val newCommunities= communities.mapPartitionsWithIndex(
+         (id, data) => {
+              if (id == 0) {
+                var reduced = 0
+                var localData = data.toList;
+                var continue = true
+                val maxSize = localData.last._2.length
+                while (reduced < toReduce && continue) {
+                  localData match {
+                    case (fId, fData) :: (sId, sData) :: tail => {
+                      continue = fData.length <= maxSize && sData.length <= maxSize
+                      if (continue) {
+                        val data=fData:::sData
+                        val entity = (Math.min(fId, sId), data)
+                        val entityLength = data.length
+                        val i = tail.toStream.zipWithIndex.find {
+                          case ((_, list), _) => list.length >= entityLength
+                        }.map {
+                          case ((_, _), index) => index
+                        }.getOrElse(tail.length)
+                        val (before, after) = tail.splitAt(i)
+                        localData = before ::: (entity :: after)
+                        reduced += 1
+                      }
+                    }
+                    case _ => {
+                      continue = false
+                    }
                   }
                 }
-                case _ => {continue=false}
+                localData.toIterator
+              } else {
+                data
               }
-            }
-              localData.toIterator
-            }else{
-              data
-            }
-          }
-        }.sortBy(_._2.length,numPartitions = partitions).cache()
-        communities=newCommunities;
+            },true).sortBy(_._2.length,numPartitions = partitions).cache()
+        communities=newCommunities
+        oldCommunitiesCount=communitiesCount
         communitiesCount=communities.count()
+        logger.info(s"Coarsed communities: $communitiesCount , from $oldCommunitiesCount")
       }
       val outMap=communities.flatMap{
         case (community, data) => data.map((id) => (id, community))
