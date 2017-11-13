@@ -24,7 +24,17 @@ object PartitioningUtils {
       while (communities.length > numberOfPartitions && communities.length >= 2) {
         logger.debug(s"Coarsing two smallest communities into one community, size before coarse: ${communities.length}")
         communities= communities match{
-          case (firstCommunityId,firstData)::(secondCommunityId,secondData)::tail=>((Math.min(firstCommunityId,secondCommunityId),firstData:::secondData)::tail).sortBy(_._2.length)
+          case (firstCommunityId,firstData)::(secondCommunityId,secondData)::tail=>{
+            val entity=(Math.min(firstCommunityId,secondCommunityId),firstData:::secondData)
+            val entityLength=entity._2.length
+            val i=tail.toStream.zipWithIndex.filter{
+              case ((_,list),_)=>list.length>=entityLength
+            }.map{
+              case ((_,_),index)=>index
+            }.headOption.getOrElse(tail.length)
+            val (before,after)=tail.splitAt(i)
+            before ::: (entity :: after)
+          }
           case t::Nil=>t::Nil
           case _ => Nil
         }
