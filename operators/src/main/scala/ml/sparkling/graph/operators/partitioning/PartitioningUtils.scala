@@ -27,11 +27,11 @@ object PartitioningUtils {
           case (firstCommunityId,firstData)::(secondCommunityId,secondData)::tail=>{
             val entity=(Math.min(firstCommunityId,secondCommunityId),firstData:::secondData)
             val entityLength=entity._2.length
-            val i=tail.toStream.zipWithIndex.filter{
+            val i=tail.toStream.zipWithIndex.find{
               case ((_,list),_)=>list.length>=entityLength
             }.map{
               case ((_,_),index)=>index
-            }.headOption.getOrElse(tail.length)
+            }.getOrElse(tail.length)
             val (before,after)=tail.splitAt(i)
             before ::: (entity :: after)
           }
