@@ -24,7 +24,7 @@ object ParallelPartitioningUtils {
       givenPartitions
     }
     val (map, size) = if (numberOfCommunities > numberOfPartitions) {
-      logger.info(s"Number of communities ($numberOfCommunities) is bigger thant requested number of partitions ($numberOfPartitions)")
+      logger.info(s"Number of communities ($numberOfCommunities) is bigger thant requested number of partitions ($numberOfPartitions), using $partitions partitions")
       var communities = vertexToCommunityId.map(t => (t._2, t._1)).aggregateByKey(List[VertexId](), partitions)(
         (buff, id) => {
           id :: buff
@@ -32,7 +32,7 @@ object ParallelPartitioningUtils {
         (buff1, buff2) => {
           buff1 ::: buff2
         }
-      ).sortBy(_._2.length)
+      ).repartition(partitions).sortBy(_._2.length)
       var communitiesCount = communities.count()
       var oldCommunitiesCount = -1l
       while (communitiesCount > numberOfPartitions && communitiesCount >= 2 && communitiesCount > parallelLimit && oldCommunitiesCount != communitiesCount) {
@@ -78,7 +78,7 @@ object ParallelPartitioningUtils {
             } else {
               data
             }
-          }, true).sortBy(_._2.length).cache()
+          }, true).repartition(partitions).sortBy(_._2.length).cache()
         communities = newCommunities
         oldCommunitiesCount = communitiesCount
         communitiesCount = communities.count()
