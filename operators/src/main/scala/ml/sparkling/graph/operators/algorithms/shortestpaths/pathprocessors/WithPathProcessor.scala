@@ -25,8 +25,9 @@ class WithPathProcessor[VD,ED]() extends  PathProcessor[VD,ED,Map[VertexId,(ED,S
   }
 
 
-  def extendPaths(targetVertexId:VertexId,map:PathsMap,vertexId:VertexId,distance:ED)(implicit num:Numeric[ED]): PathsMap ={
-   map.filterKeys(_!=targetVertexId).mapValues(extendPathsSet(_,vertexId,distance)).map(identity)
+  def extendPathsMerging(targetVertexId:VertexId,map:PathsMap,vertexId:VertexId,distance:ED,map2:PathsMap)(implicit num:Numeric[ED]): PathsMap ={
+    val extended=map.filterKeys(_!=targetVertexId).mapValues(extendPathsSet(_,vertexId,distance)).map(identity)
+    mergePathContainers(extended,map2)
   }
 
   private def extendPathsSet(pathSet:PathsSet,vertexId:VertexId,distance:ED)(implicit num:Numeric[ED]):PathsSet={

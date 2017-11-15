@@ -11,11 +11,14 @@ class SingleVertexProcessor[VD, ED](computedVertexId:VertexId) extends PathProce
 
   override def getNewContainerForPaths(): Double = 0d
 
-  override def extendPaths(targetVertexId: VertexId, currentValue: Double, vertexId: VertexId, distance: ED)(implicit num: Numeric[ED]): Double = {
-    if(targetVertexId==computedVertexId || currentValue == 0)
-      0d
-    else
-      currentValue+num.toDouble(distance)
+  override def extendPathsMerging(targetVertexId: VertexId, currentValue: Double, vertexId: VertexId, distance: ED, currentValue2: Double)(implicit num: Numeric[ED]): Double = {
+    val currentExtended= {
+      if (targetVertexId == computedVertexId || currentValue == 0)
+        0d
+      else
+        currentValue + num.toDouble(distance)
+    }
+    mergePathContainers(currentExtended,currentValue2)
   }
 
   override def mergePathContainers(map1: Double, map2: Double)(implicit num: Numeric[ED]): Double = {

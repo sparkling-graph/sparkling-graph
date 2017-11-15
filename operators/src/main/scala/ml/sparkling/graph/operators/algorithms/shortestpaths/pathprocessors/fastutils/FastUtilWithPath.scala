@@ -18,14 +18,15 @@ class FastUtilWithPath[VD,ED]() extends  PathProcessor[VD,ED,WithPathContainer]{
   private type PathsSet=ObjectOpenHashSet[JPath]
   private type PathsMap=Long2ObjectOpenHashMap[JPath]
   private type SinglePath=ObjectArrayList[JDouble]
+  private val DEFAULT_CONTAINER_SIZE=64
   def EMPTY_CONTAINER=getNewContainerForPaths(0)
 
   def getNewContainerForPaths() ={
-    new PathsMap(16,0.5f).asInstanceOf[WithPathContainer]
+    new PathsMap(DEFAULT_CONTAINER_SIZE,0.25f).asInstanceOf[WithPathContainer]
   }
 
   def getNewContainerForPaths(size:Int) ={
-    new PathsMap(size,0.5f).asInstanceOf[WithPathContainer]
+    new PathsMap(size,0.25f).asInstanceOf[WithPathContainer]
   }
 
   def putNewPath(map:WithPathContainer,to:VertexId,weight:ED)(implicit num:Numeric[ED]): WithPathContainer={
@@ -52,17 +53,15 @@ class FastUtilWithPath[VD,ED]() extends  PathProcessor[VD,ED,WithPathContainer]{
   }
 
 
-  def extendPaths(targetVertexId:VertexId,map:WithPathContainer,vertexId:VertexId,distance:ED)(implicit num:Numeric[ED]): WithPathContainer ={
-    val out=getNewContainerForPaths(map.size())
+  def extendPathsMerging(targetVertexId:VertexId,map:WithPathContainer,vertexId:VertexId,distance:ED,map2:WithPathContainer)(implicit num:Numeric[ED]): WithPathContainer ={
+    val out=map2.asInstanceOf[PathsMap].clone().asInstanceOf[WithPathContainer]
     map.forEach(new BiConsumer[JLong,JPathCollection](){
       def accept(k: JLong, u: JPathCollection) = {
         if (!targetVertexId.equals(k)) {
+          val map2Value: JPathCollection =Option(map2.get(k)).getOrElse(ObjectSets.EMPTY_SET.asInstanceOf[JPathCollection])
           val coll=extendPathsSet(targetVertexId,map.get(k), vertexId, distance)
-          if(coll.size()>0){
-            out.put(k,coll)
-          }
-        }else{
-          out.remove(k)
+          val value=mergePathSets(coll,map2Value)
+          out.put(k,value)
         }
       }
     })
@@ -99,7 +98,7 @@ class FastUtilWithPath[VD,ED]() extends  PathProcessor[VD,ED,WithPathContainer]{
       case -1 => set1.asInstanceOf[PathsSet].clone()
     }
   }
-  private def getPathsContainer(size:Int=50): JPathCollection ={
+  private def getPathsContainer(size:Int=DEFAULT_CONTAINER_SIZE): JPathCollection ={
     new PathsSet(size,1)
   }
 }

@@ -117,7 +117,7 @@ case object ShortestPathsAlgorithm  {
       (agg:ListBuffer[VertexId],data:VertexId)=>{agg+=data;agg},
       (agg:ListBuffer[VertexId],agg2:ListBuffer[VertexId])=>{agg++=agg2;agg}
     ).toList;
-    val outGraph:Graph[FastUtilWithDistance.DataMap ,ED] = graph.mapVertices((vId,data)=>new FastUtilWithDistance.DataMap)
+    val outGraph:Graph[FastUtilWithDistance.DataMap ,ED] = graph.mapVertices((_,_)=>new FastUtilWithDistance.DataMap)
     outGraph.cache()
     val vertices =vertexIds.grouped(bucketSize.toInt).toList
     val numberOfIterations=vertices.size
@@ -146,17 +146,14 @@ case object ShortestPathsAlgorithm  {
 
   private def sendMessage[VD, ED, PT](treatAsUndirected: Boolean, pathProcessor: PathProcessor[VD, ED, PT])(edge: EdgeTriplet[PT, ED])(implicit num: Numeric[ED]): Iterator[(VertexId, PT)] = {
     if (treatAsUndirected) {
-      val extendedDst = pathProcessor.extendPaths(edge.srcId,edge.dstAttr, edge.dstId, edge.attr);
-      val mergedSrc = pathProcessor.mergePathContainers(extendedDst, edge.srcAttr);
-      val itSrc = if (!edge.srcAttr.equals(mergedSrc)) Iterator((edge.srcId, extendedDst)) else Iterator.empty
-      val extendedSrc = pathProcessor.extendPaths(edge.dstId,edge.srcAttr, edge.srcId, edge.attr);
-      val mergedDst = pathProcessor.mergePathContainers(extendedSrc, edge.dstAttr);
-      val itDst = if (!edge.dstAttr.equals(mergedDst)) Iterator((edge.dstId, extendedSrc)) else Iterator.empty
+      val extendedDst = pathProcessor.extendPathsMerging(edge.srcId,edge.dstAttr, edge.dstId, edge.attr, edge.srcAttr);
+      val itSrc = if (!edge.srcAttr.equals(extendedDst)) Iterator((edge.srcId, extendedDst)) else Iterator.empty
+      val extendedSrc = pathProcessor.extendPathsMerging(edge.dstId,edge.srcAttr, edge.srcId, edge.attr, edge.dstAttr);
+      val itDst = if (!edge.dstAttr.equals(extendedSrc)) Iterator((edge.dstId, extendedSrc)) else Iterator.empty
       itSrc ++ itDst
     } else {
-      val extendedDst = pathProcessor.extendPaths(edge.srcId,edge.dstAttr, edge.dstId, edge.attr);
-      val merged = pathProcessor.mergePathContainers(extendedDst, edge.srcAttr);
-      if (!edge.srcAttr.equals(merged)) Iterator((edge.srcId, extendedDst)) else Iterator.empty
+      val extendedDst = pathProcessor.extendPathsMerging(edge.srcId,edge.dstAttr, edge.dstId, edge.attr, edge.srcAttr);
+      if (!edge.srcAttr.equals(extendedDst)) Iterator((edge.srcId, extendedDst)) else Iterator.empty
     }
   }
 

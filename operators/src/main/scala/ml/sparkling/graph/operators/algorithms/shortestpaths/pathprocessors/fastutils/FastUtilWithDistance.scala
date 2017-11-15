@@ -17,7 +17,7 @@ import scala.collection.JavaConversions._
 class FastUtilWithDistance[VD, ED]() extends PathProcessor[VD, ED, DataMap] {
   def EMPTY_CONTAINER = getNewContainerForPaths()
   def getNewContainerForPaths() = {
-   new DataMap(16,0.5f)
+   new DataMap(64,0.25f)
   }
 
   def putNewPath(map: DataMap, to: VertexId, weight: ED)(implicit num: Numeric[ED]): DataMap = {
@@ -28,11 +28,14 @@ class FastUtilWithDistance[VD, ED]() extends PathProcessor[VD, ED, DataMap] {
 
   def mergePathContainers(map1: DataMap, map2: DataMap)(implicit num: Numeric[ED]):DataMap = {
     val out=map1.clone()
-    map2.foreach{case (key,inValue)=>{
-      val map1Value: JDouble =Option(map1.get(key)).getOrElse(inValue)
-      val map2Value: JDouble =  inValue
-      val value: JDouble = min(map1Value, map2Value);
-      out.put(key, value)
+    map2.foreach{case (key: JLong,inValue: JDouble)=>{
+      val longKey=key.toLong
+      val value: Double =if(map1.containsKey(longKey)) {
+        min(inValue,map1.get(key.toLong))
+      }else{
+        inValue
+      }
+      out.put(longKey, value)
     }}
     out
   }
@@ -45,11 +48,17 @@ class FastUtilWithDistance[VD, ED]() extends PathProcessor[VD, ED, DataMap] {
     }
   }
 
-  def extendPaths(targetVertexId:VertexId,map: DataMap, vertexId: VertexId, distance: ED)(implicit num: Numeric[ED]):DataMap = {
-    val out=map.clone()
+  def extendPathsMerging(targetVertexId:VertexId,map: DataMap, vertexId: VertexId, distance: ED,map2: DataMap)(implicit num: Numeric[ED]):DataMap = {
+    val out=map2.clone()
     val toAdd=num.toDouble(distance)
-    map.keySet().foreach{ (key: JLong) => {
-        out.addTo(key, toAdd)
+    map.foreach{case (key: JLong,inValue: JDouble)=>{
+      val longKey=key.toLong
+      val value: Double =if(map2.containsKey(longKey)) {
+        min(inValue+toAdd,map2.get(longKey))
+      }else{
+        inValue+toAdd
+      }
+      out.put(longKey,value)
     }}
     out.remove(targetVertexId)
     out
