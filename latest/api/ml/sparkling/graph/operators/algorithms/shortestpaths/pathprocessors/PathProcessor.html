@@ -100,16 +100,16 @@
       </span>
       </h4>
       
-    </li><li name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor#extendPaths" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="extendPaths(targetVertexId:org.apache.spark.graphx.VertexId,map:PS,vertexId:org.apache.spark.graphx.VertexId,distance:ED)(implicitnum:Numeric[ED]):PS"></a>
-      <a id="extendPaths(VertexId,PS,VertexId,ED)(Numeric[ED]):PS"></a>
+    </li><li name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor#extendPathsMerging" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="extendPathsMerging(targetVertexId:org.apache.spark.graphx.VertexId,map:PS,vertexId:org.apache.spark.graphx.VertexId,distance:ED,map2:PS)(implicitnum:Numeric[ED]):PS"></a>
+      <a id="extendPathsMerging(VertexId,PS,VertexId,ED,PS)(Numeric[ED]):PS"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">abstract </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">extendPaths</span><span class="params">(<span name="targetVertexId">targetVertexId: <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span></span>, <span name="map">map: <span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.PS">PS</span></span>, <span name="vertexId">vertexId: <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span></span>, <span name="distance">distance: <span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.ED">ED</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="num">num: <span class="extype" name="scala.Numeric">Numeric</span>[<span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.ED">ED</span>]</span>)</span><span class="result">: <span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.PS">PS</span></span>
+        <span class="name">extendPathsMerging</span><span class="params">(<span name="targetVertexId">targetVertexId: <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span></span>, <span name="map">map: <span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.PS">PS</span></span>, <span name="vertexId">vertexId: <span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span></span>, <span name="distance">distance: <span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.ED">ED</span></span>, <span name="map2">map2: <span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.PS">PS</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="num">num: <span class="extype" name="scala.Numeric">Numeric</span>[<span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.ED">ED</span>]</span>)</span><span class="result">: <span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.PS">PS</span></span>
       </span>
       </h4>
       
@@ -126,16 +126,16 @@
       </span>
       </h4>
       
-    </li><li name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor#mergePathContainers" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="mergePathContainers(map1:PS,map2:PS)(implicitnum:Numeric[ED]):PS"></a>
-      <a id="mergePathContainers(PS,PS)(Numeric[ED]):PS"></a>
+    </li><li name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor#processNewMessages" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="processNewMessages(map1:PS,map2:PS)(implicitnum:Numeric[ED]):PS"></a>
+      <a id="processNewMessages(PS,PS)(Numeric[ED]):PS"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">abstract </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">mergePathContainers</span><span class="params">(<span name="map1">map1: <span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.PS">PS</span></span>, <span name="map2">map2: <span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.PS">PS</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="num">num: <span class="extype" name="scala.Numeric">Numeric</span>[<span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.ED">ED</span>]</span>)</span><span class="result">: <span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.PS">PS</span></span>
+        <span class="name">processNewMessages</span><span class="params">(<span name="map1">map1: <span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.PS">PS</span></span>, <span name="map2">map2: <span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.PS">PS</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="num">num: <span class="extype" name="scala.Numeric">Numeric</span>[<span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.ED">ED</span>]</span>)</span><span class="result">: <span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.PS">PS</span></span>
       </span>
       </h4>
       
@@ -338,6 +338,19 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor#mergeMessages" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="mergeMessages(map1:PS,map2:PS)(implicitnum:Numeric[ED]):PS"></a>
+      <a id="mergeMessages(PS,PS)(Numeric[ED]):PS"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">mergeMessages</span><span class="params">(<span name="map1">map1: <span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.PS">PS</span></span>, <span name="map2">map2: <span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.PS">PS</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="num">num: <span class="extype" name="scala.Numeric">Numeric</span>[<span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.ED">ED</span>]</span>)</span><span class="result">: <span class="extype" name="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor.PS">PS</span></span>
+      </span>
+      </h4>
+      
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
