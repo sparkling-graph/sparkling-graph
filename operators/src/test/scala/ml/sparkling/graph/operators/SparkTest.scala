@@ -53,7 +53,7 @@ class SparkTest extends Spec with BeforeAndAfterAll  {
   override def nestedSuites = {
     Vector(
       new ApproximatedShortestPathsAlgorithm$Test,
-            new ShortestPathsAlgorithm$Test,
+      new ShortestPathsAlgorithm$Test,
       new VertexEmbeddedness$Test,
       new PropagationBasedPartitioning$Test,
       new PSCANBasedPartitioning$Test,
