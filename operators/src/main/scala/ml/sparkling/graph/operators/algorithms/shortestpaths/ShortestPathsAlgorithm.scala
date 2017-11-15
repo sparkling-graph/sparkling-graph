@@ -44,13 +44,13 @@ case object ShortestPathsAlgorithm  {
         edgeContext.sendToDst(edgeIn)
       }
     },
-      pathProcessor.mergePathContainers
+      pathProcessor.mergeMessages
     )
     val initMap: Graph[PT, ED] = graph.outerJoinVertices(initDistances)((vId, old, newValue) => newValue.getOrElse(pathProcessor.getNewContainerForPaths()))
     val out=initMap.pregel[PT](pathProcessor.EMPTY_CONTAINER)(
       vprog = vertexProgram(pathProcessor),
       sendMsg = sendMessage(treatAsUndirected,pathProcessor),
-      mergeMsg =  pathProcessor.mergePathContainers
+      mergeMsg =  pathProcessor.mergeMessages
     )
     out
   }
@@ -159,7 +159,7 @@ case object ShortestPathsAlgorithm  {
 
 
   private def vertexProgram[VD, ED, PT](pathProcessor: PathProcessor[VD, ED, PT])(vId: VertexId, data: PT, message: PT)(implicit num: Numeric[ED]) = {
-    pathProcessor.mergePathContainers(data, message)
+    pathProcessor.processNewMessages(data, message)
   }
 
   def computeAPSPToDirectory[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], outDirectory: String, treatAsUndirected: Boolean, bucketSize:Long)(implicit num: Numeric[ED]): Unit = {

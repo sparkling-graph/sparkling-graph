@@ -17,13 +17,13 @@ class WithDistanceProcessor[VD, ED]() extends PathProcessor[VD, ED, Map[VertexId
     map + (to->weight)
   }
 
-  def mergePathContainers(map1: Map[VertexId, ED], map2: Map[VertexId, ED])(implicit num: Numeric[ED]) = {
+  def processNewMessages(map1: Map[VertexId, ED], map2: Map[VertexId, ED])(implicit num: Numeric[ED]) = {
     (map1.keySet.par ++ map2.keySet.par).map(vId=>(vId,num.min(map1.getOrElse(vId,map2(vId)),map2.getOrElse(vId,map1(vId))))).toMap.seq.map(identity)
   }
 
   def extendPathsMerging(targetVertexId:VertexId,map: Map[VertexId, ED], vertexId: VertexId, distance: ED,map2: Map[VertexId, ED])(implicit num: Numeric[ED]) = {
     val extended= map.par.filterKeys(_!=targetVertexId).mapValues(num.plus(_,distance)).toMap.seq.map(identity)
-    mergePathContainers(extended,map2)
+    processNewMessages(extended,map2)
   }
 
 }

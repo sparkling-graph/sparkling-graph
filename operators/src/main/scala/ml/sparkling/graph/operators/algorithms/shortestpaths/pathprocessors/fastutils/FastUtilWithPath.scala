@@ -39,8 +39,13 @@ class FastUtilWithPath[VD,ED]() extends  PathProcessor[VD,ED,WithPathContainer]{
     out
   }
 
-  def mergePathContainers(map1:WithPathContainer,map2:WithPathContainer)(implicit num:Numeric[ED]):WithPathContainer={
+  def processNewMessages(map1:WithPathContainer,map2:WithPathContainer)(implicit num:Numeric[ED]):WithPathContainer={
     val out=map2.asInstanceOf[PathsMap].clone().asInstanceOf[WithPathContainer]
+    mergeMessages(map1,out)
+  }
+
+  override def mergeMessages(map1:WithPathContainer, map2:WithPathContainer)(implicit num:Numeric[ED]):WithPathContainer={
+    val out=map2
     map1.forEach(new BiConsumer[JLong,JPathCollection](){
       def accept(key: JLong, u: JPathCollection) = {
         val map2Value: JPathCollection =Option(map2.get(key)).getOrElse(ObjectSets.EMPTY_SET.asInstanceOf[JPathCollection])

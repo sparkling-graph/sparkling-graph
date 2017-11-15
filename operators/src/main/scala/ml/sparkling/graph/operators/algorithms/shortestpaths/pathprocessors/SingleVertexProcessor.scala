@@ -18,10 +18,10 @@ class SingleVertexProcessor[VD, ED](computedVertexId:VertexId) extends PathProce
       else
         currentValue + num.toDouble(distance)
     }
-    mergePathContainers(currentExtended,currentValue2)
+    processNewMessages(currentExtended,currentValue2)
   }
 
-  override def mergePathContainers(map1: Double, map2: Double)(implicit num: Numeric[ED]): Double = {
+  override def processNewMessages(map1: Double, map2: Double)(implicit num: Numeric[ED]): Double = {
     (map1,map2) match{
       case (0d,_)=> map2
       case (_,0d)=> map1

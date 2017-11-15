@@ -20,14 +20,14 @@ class WithPathProcessor[VD,ED]() extends  PathProcessor[VD,ED,Map[VertexId,(ED,S
     (map + (to -> (weight,Set(to::Nil)))).map(identity)
   }
 
-  def mergePathContainers(map1:PathsMap,map2:PathsMap)(implicit num:Numeric[ED]):PathsMap={
+  def processNewMessages(map1:PathsMap,map2:PathsMap)(implicit num:Numeric[ED]):PathsMap={
     (map1.keySet ++ map2.keySet).map(vId=>(vId,mergePathSets(map1.get(vId),map2.get(vId)))).toMap.map(identity)
   }
 
 
   def extendPathsMerging(targetVertexId:VertexId,map:PathsMap,vertexId:VertexId,distance:ED,map2:PathsMap)(implicit num:Numeric[ED]): PathsMap ={
     val extended=map.filterKeys(_!=targetVertexId).mapValues(extendPathsSet(_,vertexId,distance)).map(identity)
-    mergePathContainers(extended,map2)
+    processNewMessages(extended,map2)
   }
 
   private def extendPathsSet(pathSet:PathsSet,vertexId:VertexId,distance:ED)(implicit num:Numeric[ED]):PathsSet={
