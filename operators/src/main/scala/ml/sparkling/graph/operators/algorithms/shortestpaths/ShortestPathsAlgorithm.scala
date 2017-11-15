@@ -46,11 +46,11 @@ case object ShortestPathsAlgorithm  {
     },
       pathProcessor.mergeMessages
     )
-    val initMap: Graph[PT, ED] = graph.outerJoinVertices(initDistances)((vId, old, newValue) => newValue.getOrElse(pathProcessor.getNewContainerForPaths()))
+    val initMap: Graph[PT, ED] = graph.outerJoinVertices(initDistances)((_, _, newValue) => newValue.getOrElse(pathProcessor.getNewContainerForPaths()))
     val out=initMap.pregel[PT](pathProcessor.EMPTY_CONTAINER)(
       vprog = vertexProgram(pathProcessor),
       sendMsg = sendMessage(treatAsUndirected,pathProcessor),
-      mergeMsg =  pathProcessor.mergeMessages
+      mergeMsg =  pathProcessor.processNewMessages
     )
     out
   }
@@ -153,7 +153,11 @@ case object ShortestPathsAlgorithm  {
       itSrc ++ itDst
     } else {
       val extendedDst = pathProcessor.extendPathsMerging(edge.srcId,edge.dstAttr, edge.dstId, edge.attr, edge.srcAttr);
-      if (!edge.srcAttr.equals(extendedDst)) Iterator((edge.srcId, extendedDst)) else Iterator.empty
+      if (!edge.srcAttr.equals(extendedDst)){
+        Iterator((edge.srcId, extendedDst))
+      } else {
+        Iterator.empty
+      }
     }
   }
 

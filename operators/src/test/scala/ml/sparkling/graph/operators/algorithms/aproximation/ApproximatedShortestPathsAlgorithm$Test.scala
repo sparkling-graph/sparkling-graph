@@ -104,6 +104,7 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
     val graph=GraphGenerators.rmatGraph(sc,2000,40000)
     graph.vertices.collect()
     graph.edges.collect()
+     sc.parallelize((1 to 10000)).map(_*1000).treeReduce(_+_)
     When("Computes shortest paths")
     val (_,exactTime) =time("Exact shortest paths for RMAT graph")(ShortestPathsAlgorithm.computeShortestPathsLengths(graph))
     val (_,approximationTime) =time("Aproximated shortest paths  for grid graph")(ApproximatedShortestPathsAlgorithm.computeShortestPaths(graph ))

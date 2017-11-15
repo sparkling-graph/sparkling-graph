@@ -15,7 +15,7 @@ import scala.collection.JavaConversions._
  * Path processor that utilizes it.unimi.dsi.fastutil as data store, and computes only distances
  */
 class FastUtilWithDistance[VD, ED]() extends PathProcessor[VD, ED, DataMap] {
-  def EMPTY_CONTAINER = getNewContainerForPaths()
+  def EMPTY_CONTAINER = new DataMap(0)
   def getNewContainerForPaths() = {
    new DataMap(64,0.25f)
   }
@@ -56,15 +56,16 @@ class FastUtilWithDistance[VD, ED]() extends PathProcessor[VD, ED, DataMap] {
     val out=map2.clone()
     val toAdd=num.toDouble(distance)
     map.foreach{case (key: JLong,inValue: JDouble)=>{
-      val longKey=key.toLong
-      val value: Double =if(map2.containsKey(longKey)) {
-        min(inValue+toAdd,map2.get(longKey))
-      }else{
-        inValue+toAdd
+      if(!targetVertexId.equals(key)){
+        val longKey=key.toLong
+        val value: Double =if(map2.containsKey(longKey)) {
+          min(inValue+toAdd,map2.get(longKey))
+        }else{
+          inValue+toAdd
+        }
+        out.put(longKey,value)
       }
-      out.put(longKey,value)
     }}
-    out.remove(targetVertexId)
     out
   }
 

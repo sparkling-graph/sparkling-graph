@@ -25,7 +25,7 @@ object Dependencies {
   val fastUtils = l ++= Seq(Compile.fastUtils)
 
   object Compile {
-    val fastUtils = "it.unimi.dsi" % "fastutil" % "7.2.0"
+    val fastUtils = "it.unimi.dsi" % "fastutil" % "8.1.0"
 
     val sparkCSV = "com.databricks" %% "spark-csv" % "1.2.0"
     val sparkXML = "com.databricks" %% "spark-xml" % "0.4.0"

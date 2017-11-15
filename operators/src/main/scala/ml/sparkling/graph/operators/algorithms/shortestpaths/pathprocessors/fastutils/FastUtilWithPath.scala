@@ -70,7 +70,6 @@ class FastUtilWithPath[VD,ED]() extends  PathProcessor[VD,ED,WithPathContainer]{
         }
       }
     })
-    out.remove(targetVertexId)
     out
   }
 

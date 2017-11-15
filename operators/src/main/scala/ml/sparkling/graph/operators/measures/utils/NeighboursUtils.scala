@@ -41,7 +41,7 @@ object NeighboursUtils {
                                                     treatAsUndirected: Boolean = false,
                                                     vertexPredicate: SimpleVertexPredicate = AllPathPredicate) = {
 
-    val withNeighboursVertices = graph.mapVertices((vId,data)=>new NeighbourSet())
+    val withNeighboursVertices = graph.mapVertices((_,_)=>new NeighbourSet())
      .aggregateMessages[NeighbourSet](
         sendMsg=edgeContext=>{
           edgeContext.sendToSrc(if(vertexPredicate(edgeContext.dstId)) setWith(edgeContext.dstId) else new NeighbourSet(0))
@@ -52,13 +52,12 @@ object NeighboursUtils {
           }
         },
       mergeMsg = (s1,s2)=>{
-      val out=s1.clone()
-        out.addAll(s2)
-        out
+        s1.addAll(s2)
+        s1
       }
       )
     graph
-      .outerJoinVertices(withNeighboursVertices)((vId, oldValue, newValue) => newValue.getOrElse(new NeighbourSet(0)))
+      .outerJoinVertices(withNeighboursVertices)((_, _, newValue) => newValue.getOrElse(new NeighbourSet(0)))
   }
 
   /**
