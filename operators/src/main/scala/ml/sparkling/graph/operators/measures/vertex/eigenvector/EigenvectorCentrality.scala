@@ -26,7 +26,7 @@ object EigenvectorCentrality extends VertexMeasure[Double]{
                       continuePredicate:ContinuePredicate=convergenceAndIterationPredicate(1e-6))(implicit num:Numeric[ED])={
     val numberOfNodes=graph.numVertices
     val startingValue=1.0/numberOfNodes
-    var computationGraph=graph.mapVertices((vId,data)=>startingValue)
+    var computationGraph=graph.mapVertices((_,_)=>startingValue)
     var iteration=0
     var oldValue=0d
     var newValue=0d
@@ -42,10 +42,10 @@ object EigenvectorCentrality extends VertexMeasure[Double]{
         }
       },
       mergeMsg = (a,b)=>a+b)
-      val normalizationValue=Math.sqrt(iterationRDD.map{case (vId,e)=>Math.pow(e,2)}.sum())
-      computationGraph=computationGraph.outerJoinVertices(iterationRDD)((vId,oldValue,newValue)=>if(normalizationValue==0) 0 else newValue.getOrElse(0d)/normalizationValue)
+      val normalizationValue=Math.sqrt(iterationRDD.map{case (_,e)=>Math.pow(e,2)}.sum())
+      computationGraph=computationGraph.outerJoinVertices(iterationRDD)((_,_,newValue)=>if(normalizationValue==0) 0 else newValue.getOrElse(0d)/normalizationValue)
       oldValue=newValue
-      newValue=computationGraph.vertices.map{case (vId,e)=>e}.sum()/numberOfNodes
+      newValue=computationGraph.vertices.map{case (_,e)=>e}.sum()/numberOfNodes
       iterationRDD.unpersist()
       iteration+=1
     }

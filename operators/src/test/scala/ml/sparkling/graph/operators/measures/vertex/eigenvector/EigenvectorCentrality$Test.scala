@@ -5,6 +5,8 @@ import ml.sparkling.graph.operators.MeasureTest
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
 import ml.sparkling.graph.operators.OperatorsDSL._
+
+import scala.util.Random
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
@@ -63,6 +65,24 @@ class EigenvectorCentrality$Test(implicit sc:SparkContext)   extends MeasureTest
       (1,0.5), (2,0.5), (3,0.5), (4,0.5)
     ))
     graph.unpersist(true)
+  }
+
+  "Eigenvector " should " take edge weight into account" in{
+    Given("graph")
+    val filePath = getClass.getResource("/graphs/4_nodes_full")
+    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
+    val graphWeighted=graph.mapEdges(edge=>{
+      1.0/(edge.srcId+edge.dstId)
+    })
+    When("Computes eigenvector")
+    val resultUnweighted=EigenvectorCentrality.compute(graph,VertexMeasureConfiguration[Int,Int](true))
+    val resultWeighted=EigenvectorCentrality.compute(graphWeighted,VertexMeasureConfiguration[Int,Double](true))
+    Then("Should calculate eigenvector correctly")
+    resultUnweighted.vertices.collect().sortBy{case (vId,data)=>vId} should not equal (
+      resultWeighted.vertices.collect().sortBy{case (vId,data)=>vId})
+    graph.unpersist(true)
+    resultUnweighted.unpersist(true)
+    resultWeighted.unpersist(true)
   }
 
 
