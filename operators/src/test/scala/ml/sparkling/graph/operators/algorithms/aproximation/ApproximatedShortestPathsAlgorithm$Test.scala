@@ -107,7 +107,7 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
      sc.parallelize((1 to 10000)).map(_*1000).treeReduce(_+_)
     When("Computes shortest paths")
     val (_,exactTime) =time("Exact shortest paths for RMAT graph")(ShortestPathsAlgorithm.computeShortestPathsLengths(graph))
-    val (_,approximationTime) =time("Aproximated shortest paths  for grid graph")(ApproximatedShortestPathsAlgorithm.computeShortestPaths(graph ))
+    val (_,approximationTime) =time("Aproximated shortest paths  for RMAT graph")(ApproximatedShortestPathsAlgorithm.computeShortestPaths(graph ))
 
     Then("Approximation should be faster")
     approximationTime should be <=(exactTime)

@@ -1,9 +1,13 @@
 package ml.sparkling.graph.operators.algorithms.shortestpaths
 
 import ml.sparkling.graph.operators.MeasureTest
+import ml.sparkling.graph.operators.algorithms.aproximation.ApproximatedShortestPathsAlgorithm
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.FastUtilWithDistance.DataMap
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.Graph
+import org.apache.spark.graphx.lib.ShortestPaths
+import org.apache.spark.graphx.util.GraphGenerators
+import org.scalatest.tagobjects.Slow
 
 import scala.collection.JavaConversions._
 
@@ -134,7 +138,20 @@ class ShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extends MeasureTes
     graph.unpersist(true)
   }
 
+  " Our shortest paths for random RMAT graph " should "not take longer thant GraphX"  taggedAs(Slow) in{
+    Given("graph")
+    val graph=GraphGenerators.rmatGraph(sc,2000,40000)
+    graph.vertices.collect()
+    graph.edges.collect()
+    sc.parallelize((1 to 10000)).map(_*1000).treeReduce(_+_)
+    When("Computes shortest paths")
+    val (_,oursTime) =time("Ours shortest paths for RMAT graph")(ShortestPathsAlgorithm.computeShortestPathsLengths(graph))
+    val (_,graphxTime) =time("Graphx shortest paths  for RMAT graph")(ShortestPaths.run(graph,graph.vertices.collect().map(_._1).toList))
 
+    Then("Approximation should be faster")
+    oursTime should be <(graphxTime)
+    graph.unpersist(true)
+  }
 
   "Undirected graphs" should "be handled correctly" in{
     Given("graph")
