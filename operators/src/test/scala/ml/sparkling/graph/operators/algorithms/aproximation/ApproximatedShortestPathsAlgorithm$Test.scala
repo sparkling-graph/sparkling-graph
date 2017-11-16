@@ -23,9 +23,13 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
     val verticesSortedById=shortestPaths.vertices.collect().map{
       case (vId,data)=>(vId,data.toMap)
     }.toSet
-    verticesSortedById  should equal (
-      Set((1,Map(2 -> 1.0, 5 -> 8.0, 4 -> 5.0, 3 -> 2.0)), (3,Map(5 -> 2.0, 4 -> 1.0)), (5,Map()), (2,Map(5 -> 8.0, 4 -> 2.0, 3 -> 1.0)), (4,Map(5 -> 1.0)))
-    )
+    verticesSortedById  should equal (Set(
+      (3,Map(5 -> 2.0, 4 -> 1.0, 3 -> 0.0)),
+      (2,Map(5 -> 8.0, 4 -> 2.0, 3 -> 1.0, 2 -> 0.0)),
+      (5,Map(5 -> 0.0)),
+      (1,Map(5 -> 8.0, 1 -> 0.0, 2 -> 1.0, 3 -> 2.0, 4 -> 5.0)),
+      (4,Map(5 -> 1.0, 4 -> 0.0))
+    ))
     graph.unpersist(true)
   }
 
@@ -40,11 +44,11 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
       case (vId,data)=>(vId,data.toMap)
     }.toSet
     verticesSortedById  should equal (Set(
-      (2,Map(5 -> 2.0, 4 -> 2.0, 1 -> 1.0, 3 -> 1.0)),
-      (4,Map(2 -> 2.0, 5 -> 1.0, 1 -> 2.0, 3 -> 1.0)),
-      (3,Map(2 -> 1.0, 5 -> 2.0, 4 -> 1.0, 1 -> 2.0)),
-      (1,Map(2 -> 1.0, 5 -> 1.0, 4 -> 2.0, 3 -> 2.0)),
-      (5,Map(2 -> 2.0, 4 -> 1.0, 1 -> 1.0, 3 -> 2.0))) )
+      (2,Map(2->0.0, 5 -> 2.0, 4 -> 2.0, 1 -> 1.0, 3 -> 1.0)),
+      (4,Map(4->0.0, 2 -> 2.0, 5 -> 1.0, 1 -> 2.0, 3 -> 1.0)),
+      (3,Map(3->0.0, 2 -> 1.0, 5 -> 2.0, 4 -> 1.0, 1 -> 2.0)),
+      (1,Map(1->0.0, 2 -> 1.0, 5 -> 1.0, 4 -> 2.0, 3 -> 2.0)),
+      (5,Map(5->0.0, 2 -> 2.0, 4 -> 1.0, 1 -> 1.0, 3 -> 2.0))) )
     graph.unpersist(true)
   }
 
@@ -58,7 +62,7 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
     val verticesSortedById=shortestPaths.vertices.map{
       case (vId,data)=>(vId,data.toMap)
     }.collect().toSet
-    verticesSortedById should equal (Set((1,Map()), (2,Map()), (3,Map()), (4,Map()), (5,Map())))
+    verticesSortedById should equal (Set((1,Map((1->0.0))), (2,Map()), (3,Map()), (4,Map()), (5,Map())))
     graph.unpersist(true)
   }
 
@@ -74,7 +78,7 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
     }.collect().toSet
     verticesSortedById should equal (Set(
       (1,Map(2->1)),
-      (2,Map()),
+      (2,Map(2->0)),
       (3,Map()),
       (4,Map()),
       (5,Map())
@@ -101,7 +105,7 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
 
    " Approximation for random RMAT graph " should "not take longer thant exact computing"  taggedAs(Slow) in{
     Given("graph")
-    val graph=GraphGenerators.rmatGraph(sc,2000,40000)
+    val graph=GraphGenerators.rmatGraph(sc,2000,80000)
     graph.vertices.collect()
     graph.edges.collect()
      sc.parallelize((1 to 10000)).map(_*1000).treeReduce(_+_)

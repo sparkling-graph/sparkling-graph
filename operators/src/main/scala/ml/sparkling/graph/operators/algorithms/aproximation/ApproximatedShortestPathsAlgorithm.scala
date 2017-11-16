@@ -59,12 +59,13 @@ case object ApproximatedShortestPathsAlgorithm  {
             paths.put(t,modifier(vertexId,t,u))
           }
         });
+        paths.remove(vertexId)
         (vertexId,paths)
       }
     })
     val fromMapped: RDD[(VertexId, (List[VertexId], JDouble))] =modifiedPaths.join(coarsedGraph.vertices,100).mapPartitions(
       iter=>iter.flatMap{
-        case (from,(data,componentFrom) )=>{
+        case (_,(data,componentFrom) )=>{
           data.map{
             case (to,len)=>(to.toLong,(componentFrom,len))
           }
@@ -75,7 +76,7 @@ case object ApproximatedShortestPathsAlgorithm  {
     val toJoined: RDD[(VertexId, ((List[VertexId], JDouble), List[VertexId]))] =fromMapped.join(coarsedGraph.vertices)
     val toMapped: RDD[(VertexId, (List[VertexId], JDouble))] =toJoined.mapPartitions((iter)=>{
       iter.flatMap{
-        case (to,((componentFrom,len),componentTo))=>{
+        case (_,((componentFrom,len),componentTo))=>{
           componentFrom.map(
             (fromId)=>(fromId,(componentTo,len))
           )
@@ -105,8 +106,8 @@ case object ApproximatedShortestPathsAlgorithm  {
     })
       .aggregateByKey[ListBuffer[VertexId]](ListBuffer[VertexId]())((agg,e)=>{agg+=e;agg},(agg1,agg2)=>{agg1++=agg2;agg1})
     val graphWithNeighbours=outGraph.outerJoinVertices(neighboursExchanged) {
-      case (id, data, Some(newData)) => newData
-      case (id, data, None) => ListBuffer[VertexId]()
+      case (_, _, Some(newData)) => newData
+      case (_, _, None) => ListBuffer[VertexId]()
     }
     val secondLevelNeighbours: RDD[(VertexId, ListBuffer[VertexId])] =graphWithNeighbours.triplets.mapPartitions(
       (data)=>{
@@ -123,10 +124,17 @@ case object ApproximatedShortestPathsAlgorithm  {
       case (vId,(firstOpt,secondOpt))=>(vId,(firstOpt.map(d=>d.map(id=>(id,one)))::(secondOpt.map(_.map(id=>(id,two))))::Nil).flatten.flatten.filter(_._1!=vId))
     }
     val out: Graph[ListBuffer[(VertexId, JDouble)], ED] =outGraph.joinVertices(neighbours){
-      case (id,data,newData)=>data++newData
+      case (_,data,newData)=>data++newData
     }
     out.mapVertices{
-      case (id,data)=>data.groupBy(_._1).mapValues(l=>l.map(_._2).min).map(identity)
+      case (id,data)=>
+        val out=data.groupBy(_._1).mapValues(l=>l.map(_._2).min).map(identity)
+        if(vertexPredicate(id)){
+          out + (id -> 0.0)
+        }
+        else{
+          out
+        }
     }
   }
 
