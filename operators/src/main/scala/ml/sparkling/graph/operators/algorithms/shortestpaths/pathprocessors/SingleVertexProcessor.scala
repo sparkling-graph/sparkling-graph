@@ -13,10 +13,10 @@ class SingleVertexProcessor[VD, ED](computedVertexId:VertexId) extends PathProce
 
   override def extendPathsMerging(targetVertexId: VertexId, currentValue: Double, vertexId: VertexId, distance: ED, currentValue2: Double)(implicit num: Numeric[ED]): Double = {
     val currentExtended= {
-      if (targetVertexId == computedVertexId || currentValue == 0)
-        0d
-      else
+      if (vertexId == computedVertexId || currentValue != 0)
         currentValue + num.toDouble(distance)
+      else
+        0.0
     }
     processNewMessages(currentExtended,currentValue2)
   }
