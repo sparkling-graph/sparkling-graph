@@ -5,6 +5,7 @@ import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTy
 import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes._
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.FastUtilWithDistance.DataMap
+import ml.sparkling.graph.operators.utils.LoggerHolder
 import org.apache.spark.graphx.VertexId
 
 import scala.collection.JavaConversions._

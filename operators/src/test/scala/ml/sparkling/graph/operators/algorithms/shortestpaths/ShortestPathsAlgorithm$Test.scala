@@ -140,16 +140,34 @@ class ShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extends MeasureTes
 
   " Our shortest paths for random RMAT graph " should "not take longer thant GraphX"  taggedAs(Slow) in{
     Given("graph")
-    val graph=GraphGenerators.rmatGraph(sc,2000,40000)
+    val graph=GraphGenerators.rmatGraph(sc,500,10000).mapEdges(_=>1)
     graph.vertices.collect()
     graph.edges.collect()
     sc.parallelize((1 to 10000)).map(_*1000).treeReduce(_+_)
     When("Computes shortest paths")
-    val (_,oursTime) =time("Ours shortest paths for RMAT graph")(ShortestPathsAlgorithm.computeShortestPathsLengths(graph))
-    val (_,graphxTime) =time("Graphx shortest paths  for RMAT graph")(ShortestPaths.run(graph,graph.vertices.collect().map(_._1).toList))
+    val (ourData,oursTime) =time("Ours shortest paths for RMAT graph")(ShortestPathsAlgorithm.computeShortestPathsLengths(graph))
+    val (graphXData,graphxTime) =time("Graphx shortest paths  for RMAT graph")(ShortestPaths.run(graph,graph.vertices.collect().map(_._1).toList))
 
     Then("Approximation should be faster")
     oursTime should be <(graphxTime)
+    (ourData.vertices.flatMap{
+      case (id,data)=>data.toList.map{
+        case (id2,dist)=>((id,id2),dist.toInt)
+      }
+    }.collect() ++ (graphXData.vertices.flatMap{
+      case (id,data)=>data.toList.map{
+        case (id2,dist)=>{
+          ((id,id2),dist)
+        }
+      }
+    }.collect())).filter{
+      case ((id,id2),_)=>id!=id2  //GraphX shortestpaths includes in all vertices distance 0 to self by default what is not correct
+    }.groupBy(_._1).map{
+      case (id,data)=>{
+        withClue(id){data should have length(2)}
+        (id,data(0)._2-data(1)._2)
+      }
+    }.filter(_._2 != 0) shouldBe empty
     graph.unpersist(true)
   }
 
