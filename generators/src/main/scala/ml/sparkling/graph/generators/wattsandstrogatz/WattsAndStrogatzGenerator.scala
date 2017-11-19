@@ -63,8 +63,8 @@ object WattsAndStrogatzGenerator extends GraphGenerator[WattsAndStrogatzGenerato
     val edges=outVertices.map{
       case (v1,v2)=>Edge(v1,v2,0)
     }
+    edges.checkpoint()
     edges.persist(configuration.storageLevel)
-    edges.localCheckpoint()
     edges.foreachPartition(_=>())
     val out=Graph.fromEdges(edges, 0,edgeStorageLevel = configuration.storageLevel,vertexStorageLevel = configuration.storageLevel)
     out
