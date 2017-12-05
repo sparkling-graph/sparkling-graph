@@ -28,7 +28,7 @@ class WattsAndStrogatzGenerator$Test(implicit val ctx:SparkContext) extends Gene
 
 
 
-  "Correct directed graph with appropriate mean degree" should "be generated when probability of rewiring is not 0" in {
+  "Correct directed graph with appropriate mean degree" should "be generated when probability of rewiring is high (0.9)" in {
     Given("Generator configuration")
     val numberOfNodes = 10
     val meanDegree = 2
