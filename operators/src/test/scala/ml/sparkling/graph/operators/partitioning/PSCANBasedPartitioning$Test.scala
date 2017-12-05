@@ -54,7 +54,7 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
 
   "Dynamic partitioning for random graph" should  " be computed" in{
     Given("graph")
-    val graph:Graph[Int,Int]=GraphGenerators.rmatGraph(sc,65536,65536*8)
+    val graph:Graph[Int,Int]=GraphGenerators.rmatGraph(sc,1000,1000*8)
     When("Partition using PSCAN")
     val partitionedGraph: Graph[Int, Int] =PSCANBasedPartitioning.partitionGraphBy(graph,24)
     Then("Should compute partitions correctly")
@@ -85,7 +85,7 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
     val seededRandomNumberGeneratorProvider:RandomNumberGeneratorProvider=(givenSeed:Long)=>{
       ScalaRandomNumberGenerator(givenSeed+1024)
     }
-    val graph:Graph[Int,Int]=WattsAndStrogatzGenerator.generate(WattsAndStrogatzGeneratorConfiguration(65536,8,0.5,true,seededRandomNumberGeneratorProvider)).cache()
+    val graph:Graph[Int,Int]=WattsAndStrogatzGenerator.generate(WattsAndStrogatzGeneratorConfiguration(1000,8,0.5,true,seededRandomNumberGeneratorProvider)).cache()
     When("Partition using PSCAN")
     val partitionedGraph: Graph[Int, Int] =PSCANBasedPartitioning.partitionGraphBy(graph,24)
     Then("Should compute partitions correctly")
