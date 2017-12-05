@@ -36,7 +36,6 @@ class SparkTest extends Spec with BeforeAndAfterAll  {
     val conf = new SparkConf()
       .setMaster(master)
       .setAppName(appName)
-      .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
     val out=new SparkContext(conf)
     out.setCheckpointDir(file.toString)
     out
