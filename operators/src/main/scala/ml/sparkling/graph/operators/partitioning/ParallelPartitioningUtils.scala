@@ -105,7 +105,7 @@ object ParallelPartitioningUtils {
         buff1 ++= buff2;
         buff1
       }
-    ).toMap
+    ,3).toMap
     PartitioningUtils.coarsePartitions(numberOfPartitions, size, outMap)
   }
 }

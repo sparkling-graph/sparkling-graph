@@ -40,7 +40,7 @@ case object PSCAN extends CommunityDetectionAlgorithm{
     })
   }
 
-  def computeConnectedComponentsUsing[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],requiredNumberOfComponents:Int=32):(Graph[ComponentID,ED],Long)={
+  def computeConnectedComponentsUsing[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],requiredNumberOfComponents:Int=32, maxIterations:Int=Int.MaxValue):(Graph[ComponentID,ED],Long)={
     val neighbours: Graph[NeighbourSet, ED] = NeighboursUtils.getWithNeighbours(graph,treatAsUndirected = true)
     val edgesWithSimilarity: Graph[VertexId, Double] =neighbours.mapTriplets(edge=>{
       val sizeOfIntersection=intersectSize(edge.srcAttr,edge.dstAttr)
@@ -48,11 +48,12 @@ case object PSCAN extends CommunityDetectionAlgorithm{
       sizeOfIntersection/denominator
     }).mapVertices((vId,_)=>vId).cache()
     neighbours.unpersist(false)
-    val edgesWeights=edgesWithSimilarity.edges.map(_.attr).mapPartitions(_.toSet.iterator).treeAggregate(mutable.Set.empty[Double])(
+    val edgesWeightsRaw=edgesWithSimilarity.edges.map(_.attr).mapPartitions(_.toSet.iterator).treeAggregate(mutable.Set.empty[Double])(
       (agg:mutable.Set[Double],data:Double)=>{agg+=data;agg},
       (agg:mutable.Set[Double],agg2:mutable.Set[Double])=>{agg++=agg2;agg}
-    ,3).toList.sorted;
-    var min=0
+    ,3)
+    val edgesWeights = (edgesWeightsRaw ++ (-1.0 :: 2.0 :: Nil)).toList.sorted
+    var min = 0
     var max=edgesWeights.length-1
     val wholeMax=edgesWeights.length-1
     var components=edgesWithSimilarity.mapVertices((vId,_)=>vId).cache()
@@ -63,7 +64,7 @@ case object PSCAN extends CommunityDetectionAlgorithm{
       val index=Math.floor((min+max)/2.0).toInt
       val cutOffValue= edgesWeights(index);
       logger.info(s"Evaluating PSCAN for epsilon=$cutOffValue")
-      val componentsGraph=new PSCANConnectedComponents(cutOffValue).run(edgesWithSimilarity).cache()
+      val componentsGraph=new PSCANConnectedComponents(cutOffValue).run(edgesWithSimilarity,maxIterations=maxIterations).cache()
       val currentNumberOfComponents=componentsGraph.vertices.map(_._2).countApproxDistinct()
       logger.info(s"PSCAN resulted in $currentNumberOfComponents components ($requiredNumberOfComponents required)")
       if(currentNumberOfComponents>=requiredNumberOfComponents&&(Math.abs(requiredNumberOfComponents-currentNumberOfComponents)<Math.abs(requiredNumberOfComponents-numberOfComponents)||numberOfComponents<requiredNumberOfComponents)){
@@ -95,8 +96,7 @@ case object PSCAN extends CommunityDetectionAlgorithm{
     }
     logger.info(s"Using PSCAN with  $numberOfComponents components ($requiredNumberOfComponents required)")
     edgesWithSimilarity.unpersist(false)
-    val out=graph.outerJoinVertices(components.vertices)((_,_,newData)=>newData.get)
-    components.unpersist(false)
+    val out=graph.outerJoinVertices(components.vertices)((_,_,newData)=>newData.get).cache()
     (out,numberOfComponents)
   }
 

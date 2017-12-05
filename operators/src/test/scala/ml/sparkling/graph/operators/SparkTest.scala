@@ -36,6 +36,7 @@ class SparkTest extends Spec with BeforeAndAfterAll  {
     val conf = new SparkConf()
       .setMaster(master)
       .setAppName(appName)
+      .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
     val out=new SparkContext(conf)
     out.setCheckpointDir(file.toString)
     out
@@ -52,12 +53,12 @@ class SparkTest extends Spec with BeforeAndAfterAll  {
 
   override def nestedSuites = {
     Vector(
+      new PSCANBasedPartitioning$Test,
       new ApproximatedShortestPathsAlgorithm$Test,
       new ShortestPathsAlgorithm$Test,
       new EigenvectorCentrality$Test,
       new VertexEmbeddedness$Test,
       new PropagationBasedPartitioning$Test,
-      new PSCANBasedPartitioning$Test,
       new PSCAN$Test,
       new Modularity$Test,
       new CommunityBasedPartitioning$Test,

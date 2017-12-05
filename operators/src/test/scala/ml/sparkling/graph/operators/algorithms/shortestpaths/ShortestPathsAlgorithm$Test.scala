@@ -139,7 +139,9 @@ class ShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extends MeasureTes
 
   " Our shortest paths for random RMAT graph " should "not take longer thant GraphX"  taggedAs(Slow) in{
     Given("graph")
-    val graph=GraphGenerators.rmatGraph(sc,500,10000).mapEdges(_=>1)
+    val size=500
+    val meanDegree=20
+    val graph=GraphGenerators.rmatGraph(sc,size,meanDegree*size).mapEdges(_=>1)
     graph.vertices.collect()
     graph.edges.collect()
     sc.parallelize((1 to 10000)).map(_*1000).treeReduce(_+_)
