@@ -20,7 +20,7 @@ object PSCANBasedPartitioning {
   @transient
   val logger=Logger.getLogger(PSCANBasedPartitioning.getClass())
 
-  def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],numberOfPartitions:Int, maxIterations:Int = 25)(implicit sc:SparkContext): Graph[VD, ED] ={
+  def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],numberOfPartitions:Int, maxIterations:Int = Int.MaxValue)(implicit sc:SparkContext): Graph[VD, ED] ={
     val (numberOfCommunities: VertexId,  coarsedVertexMap: Map[VertexId, Int], coarsedNumberOfPartitions: Int, strategy: ByComponentIdPartitionStrategy) = buildPartitioningStrategy(graph, numberOfPartitions, maxIterations = maxIterations)
     logger.info(s"Partitioning graph using coarsed map with ${coarsedVertexMap.size} entries and ${coarsedNumberOfPartitions} partitions (before ${numberOfCommunities})")
     val out=new CustomGraphPartitioningImplementation[VD,ED](graph).partitionBy(strategy).cache()
@@ -30,13 +30,13 @@ object PSCANBasedPartitioning {
   }
 
 
-  def buildPartitioningStrategy[ED: ClassTag, VD: ClassTag](graph: Graph[VD, ED], numberOfPartitions: Int, maxIterations:Int = 25)(implicit sc:SparkContext) = {
+  def buildPartitioningStrategy[ED: ClassTag, VD: ClassTag](graph: Graph[VD, ED], numberOfPartitions: Int, maxIterations:Int = Int.MaxValue)(implicit sc:SparkContext) = {
     val (numberOfCommunities: VertexId, coarsedVertexMap: Map[VertexId, Int], coarsedNumberOfPartitions: Int) = precomputePartitions(graph, numberOfPartitions, maxIterations = maxIterations)
     val strategy = ByComponentIdPartitionStrategy(coarsedVertexMap, coarsedNumberOfPartitions)
     (numberOfCommunities, coarsedVertexMap, coarsedNumberOfPartitions, strategy)
   }
 
-  def precomputePartitions[ED: ClassTag, VD: ClassTag](graph: Graph[VD, ED], numberOfPartitions: Int, maxIterations:Int = 25)(implicit sc:SparkContext) = {
+  def precomputePartitions[ED: ClassTag, VD: ClassTag](graph: Graph[VD, ED], numberOfPartitions: Int, maxIterations:Int = Int.MaxValue)(implicit sc:SparkContext) = {
     logger.info("Computing components using PSCAN")
     val (communities, numberOfCommunities): (Graph[ComponentID, ED], VertexId) = PSCAN.computeConnectedComponentsUsing(graph, numberOfPartitions, maxIterations = maxIterations)
     val computationData=communities.vertices.map(t=>t).localCheckpoint()

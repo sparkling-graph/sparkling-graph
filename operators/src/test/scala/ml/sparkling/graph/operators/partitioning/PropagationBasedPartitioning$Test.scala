@@ -53,7 +53,6 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
 
   "Dynamic partitioning for random graph" should  " be computed" in{
     Given("graph")
-    val filePath = getClass.getResource("/graphs/coarsening_to_3")
     val graph:Graph[Int,Int]=GraphGenerators.rmatGraph(sc,1000,10000)
     When("Partition using Propagation method")
     val partitionedGraph: Graph[Int, Int] =PropagationBasedPartitioning.partitionGraphBy(graph,24).cache()
@@ -65,6 +64,24 @@ class PropagationBasedPartitioning$Test(implicit sc:SparkContext) extends Measur
     graph.triplets.count() should  equal (partitionedGraph.triplets.count())
     graph.unpersist(true)
     partitionedGraph.unpersist(true)
+  }
+
+    ignore should "Dynamic partitioning should  be balanced" in{  //TODO: Data balance can be improved!
+      for (_<-0 to 3) {
+        Given("graph")
+        val size = 65550
+        val meanDegree = 8
+        val graph: Graph[Int, Int] = GraphGenerators.rmatGraph(sc, size, meanDegree * size)
+        When("Partition using Propagation method")
+        val partitionedGraph: Graph[Int, Int] = PropagationBasedPartitioning.partitionGraphBy(graph, 945).cache()
+        val partitionsSizes = partitionedGraph.triplets.mapPartitions(d => Iterator(d.size)).collect().toList
+        val meanSize = partitionsSizes.sum / partitionsSizes.size.toDouble
+        val variance = partitionsSizes.map(n => Math.pow(n - meanSize, 2)).sum / (partitionsSizes.size - 1).toDouble
+        val stdDev = Math.sqrt(variance)
+        Then("Should compute partitions correctly")
+        logger.error(s"STDDev: ${stdDev}")
+        //stdDev should be <= 10.0
+      }
   }
 
   ignore should "Dynamic partitioning for random graph be computed in apropriate time"  taggedAs(Slow) in{

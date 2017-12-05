@@ -63,7 +63,23 @@ class PSCANBasedPartitioning$Test(implicit sc:SparkContext) extends MeasureTest 
     graph.unpersist(true)
   }
 
-
+  ignore should "Dynamic partitioning should  be balanced" in{  //TODO: Data balance can be improved!
+    for (_<-0 to 3) {
+      Given("graph")
+      val size = 65550
+      val meanDegree = 8
+      val graph: Graph[Int, Int] = GraphGenerators.rmatGraph(sc, size, meanDegree * size)
+      When("Partition using Propagation method")
+      val partitionedGraph: Graph[Int, Int] = PSCANBasedPartitioning.partitionGraphBy(graph,24).cache()
+      val partitionsSizes = partitionedGraph.triplets.mapPartitions(d => Iterator(d.size)).collect().toList
+      val meanSize = partitionsSizes.sum / partitionsSizes.size.toDouble
+      val variance = partitionsSizes.map(n => Math.pow(n - meanSize, 2)).sum / (partitionsSizes.size - 1).toDouble
+      val stdDev = Math.sqrt(variance)
+      Then("Should compute partitions correctly")
+      logger.error(s"STDDev: ${stdDev}")
+      //stdDev should be <= 10.0
+    }
+  }
   ignore should "Dynamic partitioning for random graph be computed in apropriate time"  taggedAs(Slow) in{
     for (x<-0 to 3) {
       logger.info(s"Run $x")

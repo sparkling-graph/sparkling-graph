@@ -79,7 +79,7 @@ case class ByComponentIdPartitionStrategy(idMap:Map[VertexId, Int],partitions:In
     val logger=LoggerHolder.log
     val vertex1Component: Int = idMap(src)
     val vertex2Component: Int = idMap(dst)
-    val partition=Math.min(vertex1Component,vertex2Component)
+    val partition=Math.max(vertex1Component,vertex2Component)  // TODO: Add possiibility to configure method of partition selection
     logger.debug(s"Partitioning edge $src($vertex1Component) - $dst($vertex2Component) to $partition")
     partition
   }
