@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!DOCTYPE html >
 <html>
         <head>
           <title>partitioning - ml.sparkling.graph.operators.partitioning</title>
@@ -9,6 +8,11 @@
           
       <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
       <link href="../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../../lib/tools.tooltip.js"></script>
+      
       <script type="text/javascript">
          if(top === self) {
             var url = '../../../../../index.html';
@@ -24,9 +28,13 @@
         </head>
         <body class="value">
       <div id="definition">
-        <img src="../../../../../lib/package_big.png" />
+        <img alt="Package" src="../../../../../lib/package_big.png" />
         <p id="owner"><a href="../../../../package.html" class="extype" name="ml">ml</a>.<a href="../../../package.html" class="extype" name="ml.sparkling">sparkling</a>.<a href="../../package.html" class="extype" name="ml.sparkling.graph">graph</a>.<a href="../package.html" class="extype" name="ml.sparkling.graph.operators">operators</a></p>
-        <h1>partitioning</h1>
+        <h1>partitioning</h1><span class="permalink">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.package" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
       </div>
 
       <h4 id="signature" class="signature">
@@ -67,9 +75,13 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a href="ByComponentIdPartitionStrategy.html"><span class="name">ByComponentIdPartitionStrategy</span></a><span class="params">(<span name="idMap">idMap: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>, <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Int" class="extype" target="_top">Int</a>]</span>, <span name="partitions">partitions: <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Int" class="extype" target="_top">Int</a></span>)</span><span class="result"> extends <span class="extype" name="org.apache.spark.Partitioner">Partitioner</span> with <span class="extype" name="org.apache.spark.graphx.PartitionStrategy">PartitionStrategy</span> with <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Product" class="extype" target="_top">Product</a> with <a href="http://www.scala-lang.org/api/2.10.6/index.html#scala.Serializable" class="extype" target="_top">Serializable</a></span>
+        <a href="ByComponentIdPartitionStrategy.html"><span class="name">ByComponentIdPartitionStrategy</span></a><span class="params">(<span name="idMap">idMap: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="org.apache.spark.graphx.VertexId">VertexId</span>, <span class="extype" name="scala.Int">Int</span>]</span>, <span name="partitions">partitions: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result"> extends <span class="extype" name="org.apache.spark.Partitioner">Partitioner</span> with <span class="extype" name="org.apache.spark.graphx.PartitionStrategy">PartitionStrategy</span> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
-      </h4>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.package@ByComponentIdPartitionStrategyextendsPartitionerwithPartitionStrategywithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
       
     </li></ol>
             </div>
@@ -78,7 +90,7 @@
 
         <div id="values" class="values members">
               <h3>Value Members</h3>
-              <ol><li name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+              <ol><li name="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="CommunityBasedPartitioning"></a>
       <a id="CommunityBasedPartitioning:CommunityBasedPartitioning"></a>
       <h4 class="signature">
@@ -89,9 +101,15 @@
       <span class="symbol">
         <a href="CommunityBasedPartitioning$.html"><span class="name">CommunityBasedPartitioning</span></a>
       </span>
-      </h4>
-      <p class="comment cmt">Created by Roman Bartusiak (roman.</p>
-    </li><li name="ml.sparkling.graph.operators.partitioning.PSCANBasedPartitioning" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.package@CommunityBasedPartitioning" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).</p><div class="fullcomment"><div class="comment cmt"><p>Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
+First approach to community based graph partitioning. It is not efficient due to need of gathering vertex to component id on driver node.
+</p></div></div>
+    </li><li name="ml.sparkling.graph.operators.partitioning.PSCANBasedPartitioning" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="PSCANBasedPartitioning"></a>
       <a id="PSCANBasedPartitioning:PSCANBasedPartitioning"></a>
       <h4 class="signature">
@@ -102,8 +120,14 @@
       <span class="symbol">
         <a href="PSCANBasedPartitioning$.html"><span class="name">PSCANBasedPartitioning</span></a>
       </span>
-      </h4>
-      <p class="comment cmt">Created by Roman Bartusiak (roman.</p>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.package@PSCANBasedPartitioning" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).</p><div class="fullcomment"><div class="comment cmt"><p>Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
+First approach to community based graph partitioning. It is not efficient due to need of gathering vertex to component id on driver node.
+</p></div></div>
     </li><li name="ml.sparkling.graph.operators.partitioning.ParallelPartitioningUtils" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="ParallelPartitioningUtils"></a>
       <a id="ParallelPartitioningUtils:ParallelPartitioningUtils"></a>
@@ -115,8 +139,12 @@
       <span class="symbol">
         <a href="ParallelPartitioningUtils$.html"><span class="name">ParallelPartitioningUtils</span></a>
       </span>
-      </h4>
-      <p class="comment cmt">Created by  Roman Bartusiak &lt;riomus@gmail.</p>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.package@ParallelPartitioningUtils" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Created by  Roman Bartusiak &lt;riomus@gmail.com&gt; on 12.05.17.</p>
     </li><li name="ml.sparkling.graph.operators.partitioning.PartitioningUtils" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="PartitioningUtils"></a>
       <a id="PartitioningUtils:PartitioningUtils"></a>
@@ -128,9 +156,13 @@
       <span class="symbol">
         <a href="PartitioningUtils$.html"><span class="name">PartitioningUtils</span></a>
       </span>
-      </h4>
-      <p class="comment cmt">Created by  Roman Bartusiak &lt;riomus@gmail.</p>
-    </li><li name="ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.package@PartitioningUtils" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Created by  Roman Bartusiak &lt;riomus@gmail.com&gt; on 12.05.17.</p>
+    </li><li name="ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="PropagationBasedPartitioning"></a>
       <a id="PropagationBasedPartitioning:PropagationBasedPartitioning"></a>
       <h4 class="signature">
@@ -141,8 +173,14 @@
       <span class="symbol">
         <a href="PropagationBasedPartitioning$.html"><span class="name">PropagationBasedPartitioning</span></a>
       </span>
-      </h4>
-      <p class="comment cmt">Created by Roman Bartusiak (roman.</p>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#ml.sparkling.graph.operators.partitioning.package@PropagationBasedPartitioning" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).</p><div class="fullcomment"><div class="comment cmt"><p>Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
+First approach to community based graph partitioning. It is not efficient due to need of gathering vertex to component id on driver node.
+</p></div></div>
     </li></ol>
             </div>
 
@@ -168,6 +206,7 @@
       <div id="tooltip"></div>
 
       <div id="footer">  </div>
-      <script defer="defer" type="text/javascript" id="jquery-js" src="../../../../../lib/jquery.js"></script><script defer="defer" type="text/javascript" id="jquery-ui-js" src="../../../../../lib/jquery-ui.js"></script><script defer="defer" type="text/javascript" id="tools-tooltip-js" src="../../../../../lib/tools.tooltip.js"></script><script defer="defer" type="text/javascript" id="template-js" src="../../../../../lib/template.js"></script>
+
+
     </body>
       </html>
