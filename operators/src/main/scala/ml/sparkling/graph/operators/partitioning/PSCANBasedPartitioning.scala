@@ -27,6 +27,7 @@ object PSCANBasedPartitioning {
     val out=graph.partitionBy(strategy,numberOfPartitions).cache()
     out.edges.foreachPartition((_)=>{})
     out.triplets.foreachPartition((_)=>{})
+    out.vertices.foreachPartition((_)=>{})
     out
   }
 

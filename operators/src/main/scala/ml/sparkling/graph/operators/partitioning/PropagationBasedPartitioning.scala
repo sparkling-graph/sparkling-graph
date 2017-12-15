@@ -16,8 +16,7 @@ object PropagationBasedPartitioning {
 
   val logger=Logger.getLogger(PropagationBasedPartitioning.getClass())
 
-  def precomputePartitions[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],numParts:Int= -1,checkpointingFrequency:Int=50)(implicit sc:SparkContext):(Map[VertexId, Int], Int)={
-    val numberOfPartitions=if (numParts== -1) sc.defaultParallelism else numParts
+  def precomputePartitions[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],numParts:Int, checkpointingFrequency:Int=50)(implicit sc:SparkContext):(Map[VertexId, Int], Int)={
     var operationGraph=graph.mapVertices{
       case (vId,_)=>vId
     }.cache()
@@ -26,7 +25,7 @@ object PropagationBasedPartitioning {
     var numberOfComponents=graph.numVertices;
     var oldNumberOfComponents=Long.MaxValue;
     var iteration=0;
-    while ((numberOfComponents>numberOfPartitions && numberOfComponents!=1 && oldNumberOfComponents!=numberOfComponents) || oldNumberOfComponents>Int.MaxValue){
+    while ((numberOfComponents>numParts && numberOfComponents!=1 && oldNumberOfComponents!=numberOfComponents) || oldNumberOfComponents>Int.MaxValue){
       logger.info(s"Propagation based partitioning: iteration:$iteration, last number of components:$oldNumberOfComponents, current number of components:$numberOfComponents")
       iteration=iteration+1;
       oldComponents=operationGraph.vertices
@@ -51,15 +50,18 @@ object PropagationBasedPartitioning {
       }
     }
     val (communities,numberOfCommunities)=(oldComponents,oldNumberOfComponents)
-    return ParallelPartitioningUtils.coarsePartitions(numberOfPartitions, numberOfCommunities, communities)
+    return ParallelPartitioningUtils.coarsePartitions(numParts, numberOfCommunities, communities)
   }
 
   def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],numParts:Int= -1,checkpointingFrequency:Int=50)(implicit sc:SparkContext): Graph[VD, ED] ={
-    val (vertexMap: Map[VertexId, Int], newNumberOfCommunities: Int, strategy: ByComponentIdPartitionStrategy) = buildPartitioningStrategy(graph, numParts, checkpointingFrequency)
+    val numberOfPartitions=if (numParts== -1) sc.defaultParallelism else numParts
+    val (vertexMap: Map[VertexId, Int], newNumberOfCommunities: Int, strategy: ByComponentIdPartitionStrategy) =
+      buildPartitioningStrategy(graph, numberOfPartitions, checkpointingFrequency)
     logger.info(s"Partitioning graph using coarsed map with ${vertexMap.size} entries and ${newNumberOfCommunities} partitions")
-    val out=graph.partitionBy(strategy,numParts).cache()
+    val out=graph.partitionBy(strategy,numberOfPartitions).cache()
     out.edges.foreachPartition((_)=>{})
     out.vertices.foreachPartition((_)=>{})
+    out.triplets.foreachPartition((_)=>{})
     out
   }
 
