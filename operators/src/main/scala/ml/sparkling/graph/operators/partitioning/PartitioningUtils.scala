@@ -66,13 +66,6 @@ object PartitioningUtils {
   }
 }
 
-
-class CustomGraphPartitioningImplementation[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED]){
-  def partitionBy(partitionStrategy: ByComponentIdPartitionStrategy): Graph[VD, ED] = {
-    graph.partitionBy(partitionStrategy,partitionStrategy.partitions)
-  }
-}
-
 case class ByComponentIdPartitionStrategy(idMap:Map[VertexId, Int],partitions:Int) extends Partitioner  with  PartitionStrategy{
 
   override def getPartition(src: VertexId, dst: VertexId, numParts: PartitionID): PartitionID = {

@@ -4,6 +4,7 @@ import java.util.UUID
 
 import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID
 import ml.sparkling.graph.operators.algorithms.community.pscan.PSCAN
+import ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning.logger
 import org.apache.log4j.Logger
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.{Graph, VertexId}
@@ -23,7 +24,7 @@ object PSCANBasedPartitioning {
   def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],numberOfPartitions:Int, maxIterations:Int = Int.MaxValue)(implicit sc:SparkContext): Graph[VD, ED] ={
     val (numberOfCommunities: VertexId,  coarsedVertexMap: Map[VertexId, Int], coarsedNumberOfPartitions: Int, strategy: ByComponentIdPartitionStrategy) = buildPartitioningStrategy(graph, numberOfPartitions, maxIterations = maxIterations)
     logger.info(s"Partitioning graph using coarsed map with ${coarsedVertexMap.size} entries and ${coarsedNumberOfPartitions} partitions (before ${numberOfCommunities})")
-    val out=new CustomGraphPartitioningImplementation[VD,ED](graph).partitionBy(strategy).cache()
+    val out=graph.partitionBy(strategy,numberOfPartitions).cache()
     out.edges.foreachPartition((_)=>{})
     out.triplets.foreachPartition((_)=>{})
     out
@@ -32,7 +33,8 @@ object PSCANBasedPartitioning {
 
   def buildPartitioningStrategy[ED: ClassTag, VD: ClassTag](graph: Graph[VD, ED], numberOfPartitions: Int, maxIterations:Int = Int.MaxValue)(implicit sc:SparkContext) = {
     val (numberOfCommunities: VertexId, coarsedVertexMap: Map[VertexId, Int], coarsedNumberOfPartitions: Int) = precomputePartitions(graph, numberOfPartitions, maxIterations = maxIterations)
-    val strategy = ByComponentIdPartitionStrategy(coarsedVertexMap, coarsedNumberOfPartitions)
+    logger.info(s"Requested $numberOfPartitions partitions, computed $coarsedNumberOfPartitions")
+    val strategy = ByComponentIdPartitionStrategy(coarsedVertexMap, numberOfPartitions)
     (numberOfCommunities, coarsedVertexMap, coarsedNumberOfPartitions, strategy)
   }
 
