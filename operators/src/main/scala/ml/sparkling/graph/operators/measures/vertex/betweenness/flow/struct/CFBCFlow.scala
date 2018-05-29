@@ -7,8 +7,8 @@ import org.apache.spark.graphx.VertexId
   */
 class CFBCFlow(val src: VertexId, val dst: VertexId, val potential: Double, val completed: Boolean, val aliveThrough: Int) extends Serializable {
   def supplyValue(vertexId: VertexId) = vertexId match {
-    case src => 1
-    case dst => -1
+    case `src` => 1
+    case `dst` => -1
     case _ => 0
   }
 

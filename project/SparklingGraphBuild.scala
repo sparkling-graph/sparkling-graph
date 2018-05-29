@@ -18,7 +18,7 @@ object SparklingGraphBuild extends Build {
     organization := "ml.sparkling",
     autoAPIMappings := true,
     releasePublishArtifactsAction := PgpKeys.publishSigned.value,
-    licenses += ("GNU General Public License 3.0", url("http://www.gnu.org/licenses/gpl-3.0.en.html"))
+    licenses += ("BSD 2-clause \"Simplified\" License", url("https://opensource.org/licenses/BSD-2-Clause"))
   )
   lazy val root = Project(id = "sparkling-graph",
     base = file("."), settings = buildSettings)
