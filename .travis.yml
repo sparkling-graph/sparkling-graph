@@ -22,7 +22,8 @@ after_success:
 
 deploy:
   provider: script
-  script: sbt ghpages-push-site && sbt publish
+  script:
+   - publish.sh
   on:
     branch: master
 
