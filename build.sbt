@@ -3,7 +3,6 @@ import ml.sparkling.graph.Dependencies
 val ghToken = sys.env.getOrElse("GH_TOKEN", default = "git")
 val ghHost = sys.env.getOrElse("GH_HOST", default = "github.com/sparkling-graph/sparkling-graph.git")
 val ghRepo = s"https://${ghToken}@${ghHost}"
-val commitMessage = sys.env.getOrElse("SBT_GHPAGES_COMMIT_MESSAGE", "[ci skip] updated site")
 parallelExecution in ThisBuild := true
 
 lazy val buildSettings = Dependencies.Versions ++ Seq(
@@ -18,12 +17,8 @@ lazy val root = Project(id = "sparkling-graph",
   .settings(
         siteSubdirName in ScalaUnidoc := "latest/api",
         addMappingsToSiteDir(mappings in(ScalaUnidoc, packageDoc), siteSubdirName in ScalaUnidoc),
-        git.remoteRepo := ghRepo,
-//        ghpagesPushSite := {
-//          GitKeys.gitRunner.value("add", ".")(ghpagesSynchLocal.value, streams.value.log)
-//          GitKeys.gitRunner.value("commit", "-m", commitMessage, "--allow-empty")(ghpagesSynchLocal.value, streams.value.log)
-//          GitKeys.gitRunner.value("push", "--force", "--quiet", s"${ghRepo}")(ghpagesSynchLocal.value, streams.value.log)
-//        }
+        git.remoteRepo := ghRepo
+
 )
   .aggregate(api, loaders, operators,generators, examples,experiments,utils)
 lazy val loaders = Project(id = "sparkling-graph-loaders",
