@@ -19,13 +19,10 @@ script:
 - sbt clean coverage test && sbt coverageAggregate
 after_success:
 - bash <(curl -s https://codecov.io/bash)
+- sbt publish
+- sbt ghpagesPushSite
 
-deploy:
-  provider: script
-  script:
-   - publish.sh
-  on:
-    branch: master
+
 
 notifications:
   webhooks:
