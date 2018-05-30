@@ -1,6 +1,4 @@
-import ml.sparkling.graph.{SparklingGraphBuild,Dependencies}
-
-SparklingGraphBuild.buildSettings
+import ml.sparkling.graph.{Dependencies}
 Dependencies.graphx
 Dependencies.sparkCSV
 Dependencies.test

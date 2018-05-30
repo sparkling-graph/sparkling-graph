@@ -1,6 +1,7 @@
 package ml.sparkling.graph.operators.partitioning
 
 import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID
+import ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning.VertexOperator
 import ml.sparkling.graph.operators.utils.LoggerHolder
 import org.apache.log4j.Logger
 import org.apache.spark.Partitioner
@@ -66,15 +67,17 @@ object PartitioningUtils {
   }
 }
 
-case class ByComponentIdPartitionStrategy(idMap:Map[VertexId, Int],partitions:Int) extends Partitioner  with  PartitionStrategy{
+case class ByComponentIdPartitionStrategy(idMap:Map[VertexId, Int],
+                                          partitions:Int,
+                                          vertexOperator: VertexOperator) extends Partitioner  with  PartitionStrategy{
 
   override def getPartition(src: VertexId, dst: VertexId, numParts: PartitionID): PartitionID = {
     val logger=LoggerHolder.log
     val vertex1Component: Int = idMap(src)
     val vertex2Component: Int = idMap(dst)
-    val partition=Math.max(vertex1Component,vertex2Component)  // TODO: Add possiibility to configure method of partition selection
+    val partition=vertexOperator(vertex1Component, vertex2Component)
     logger.debug(s"Partitioning edge $src($vertex1Component) - $dst($vertex2Component) to $partition")
-    partition
+    partition.toInt
   }
 
   override def numPartitions: PartitionID = partitions

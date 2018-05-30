@@ -4,7 +4,7 @@ import java.util.UUID
 
 import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.ComponentID
 import ml.sparkling.graph.operators.algorithms.community.pscan.PSCAN
-import ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning.logger
+import ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning.{DefaultPartitionOperator, logger}
 import org.apache.log4j.Logger
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.{Graph, VertexId}
@@ -35,7 +35,7 @@ object PSCANBasedPartitioning {
   def buildPartitioningStrategy[ED: ClassTag, VD: ClassTag](graph: Graph[VD, ED], numberOfPartitions: Int, maxIterations:Int = Int.MaxValue)(implicit sc:SparkContext) = {
     val (numberOfCommunities: VertexId, coarsedVertexMap: Map[VertexId, Int], coarsedNumberOfPartitions: Int) = precomputePartitions(graph, numberOfPartitions, maxIterations = maxIterations)
     logger.info(s"Requested $numberOfPartitions partitions, computed $coarsedNumberOfPartitions")
-    val strategy = ByComponentIdPartitionStrategy(coarsedVertexMap, numberOfPartitions)
+    val strategy = ByComponentIdPartitionStrategy(coarsedVertexMap, numberOfPartitions, DefaultPartitionOperator)
     (numberOfCommunities, coarsedVertexMap, coarsedNumberOfPartitions, strategy)
   }
 

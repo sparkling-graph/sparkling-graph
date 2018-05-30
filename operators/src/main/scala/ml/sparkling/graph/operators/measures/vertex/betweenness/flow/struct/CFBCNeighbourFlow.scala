@@ -36,7 +36,10 @@ object CFBCNeighbourFlow extends Serializable {
 
     def mergePotential(acc1: NeighbourFlowStats, acc2: NeighbourFlowStats) = acc1.merge(acc2)
 
-    val (src, dst) = flows.headOption.map(_.key) match { case Some(k) => k }
+    val (src, dst) = flows.headOption.map(_.key) match {
+      case Some(k) => k
+      case None => throw new RuntimeException("Empty flows!")
+    }
     val aggregaeFunc = aggregatePotential(vertex.getFlow((src, dst))) _
     val stats = flows.aggregate(NeighbourFlowStats.empty)(aggregaeFunc, mergePotential)
     CFBCNeighbourFlow(src, dst, stats.potential, stats.sumPotentialDiff, flows.size, stats.allCompleted, stats.anyCompleted)

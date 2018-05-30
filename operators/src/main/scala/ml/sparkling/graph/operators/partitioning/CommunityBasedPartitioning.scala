@@ -2,6 +2,7 @@ package ml.sparkling.graph.operators.partitioning
 
 
 import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection.{CommunityDetectionAlgorithm, CommunityDetectionMethod, ComponentID}
+import ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning.DefaultPartitionOperator
 import org.apache.log4j.Logger
 import org.apache.spark.{Partitioner, SparkContext}
 import org.apache.spark.broadcast.Broadcast
@@ -22,7 +23,7 @@ object CommunityBasedPartitioning {
     val communities: Graph[ComponentID, ED] = communityDetectionMethod(graph)
     val numberOfCommunities=communities.vertices.values.countApproxDistinct()
     val (coarsedVertexMap,coarsedNumberOfPartitions) = ParallelPartitioningUtils.coarsePartitions(numberOfPartitions,numberOfCommunities,communities.vertices)
-    val strategy=ByComponentIdPartitionStrategy(coarsedVertexMap,coarsedNumberOfPartitions)
+    val strategy=ByComponentIdPartitionStrategy(coarsedVertexMap,coarsedNumberOfPartitions, DefaultPartitionOperator)
     logger.info(s"Partitioning graph using coarsed map with ${coarsedVertexMap.size} entries  and ${coarsedNumberOfPartitions} partitions")
     val out=graph.partitionBy(strategy,numberOfCommunities.toInt).cache()
     out.edges.foreachPartition((_)=>{})

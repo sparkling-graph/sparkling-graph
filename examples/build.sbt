@@ -1,7 +1,6 @@
-import ml.sparkling.graph.{SparklingGraphBuild,Dependencies}
+import ml.sparkling.graph.{Dependencies}
 
 
-SparklingGraphBuild.buildSettings
 Dependencies.sparkMLLib
 Dependencies.sparkSQL
 Dependencies.test

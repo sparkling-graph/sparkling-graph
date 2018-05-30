@@ -74,6 +74,7 @@ object MatrixCreator extends Serializable {
             val data =rest
            (head.toDouble.toInt,data)
           }
+          case _ => throw new RuntimeException("Incorrect data!")
         }.cache()
         logger.info(s"Files to process ${tail.length}")
         val outData=tail.zipWithIndex.foldLeft(startData){
@@ -81,6 +82,7 @@ object MatrixCreator extends Serializable {
             logger.info(s"Processing file ${index}")
             val loadedData=loadWithPartitions(ctx, file,partitions).map(s=>s.split(delimiter).toList).map{
               case head::tail =>(head.toDouble.toInt,tail)
+              case _ => throw new RuntimeException("Incorrect data!")
             }.cache()
             val out=data.fullOuterJoin(loadedData).map{
               case (id,(Some(d1),Some(d2)))=>(id,d1:::d2)

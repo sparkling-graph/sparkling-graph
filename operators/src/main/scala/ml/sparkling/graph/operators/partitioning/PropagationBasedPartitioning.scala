@@ -56,10 +56,11 @@ object PropagationBasedPartitioning {
   }
 
   def partitionGraphBy[VD:ClassTag,ED:ClassTag](graph:Graph[VD,ED],numParts:Int= -1,checkpointingFrequency:Int=50,
-                                                vertexOperator: VertexOperator = DefaultVertexOperator)(implicit sc:SparkContext): Graph[VD, ED] ={
+                                                vertexOperator: VertexOperator = DefaultVertexOperator,
+                                                partitionOperator: VertexOperator = DefaultPartitionOperator)(implicit sc:SparkContext): Graph[VD, ED] ={
     val numberOfPartitions=if (numParts== -1) sc.defaultParallelism else numParts
     val (vertexMap: Map[VertexId, Int], newNumberOfCommunities: Int, strategy: ByComponentIdPartitionStrategy) =
-      buildPartitioningStrategy(graph, numberOfPartitions, checkpointingFrequency, vertexOperator)
+      buildPartitioningStrategy(graph, numberOfPartitions, checkpointingFrequency, partitionOperator)
     logger.info(s"Partitioning graph using coarsed map with ${vertexMap.size} entries and ${newNumberOfCommunities} partitions")
     val out=graph.partitionBy(strategy,numberOfPartitions).cache()
     out.edges.foreachPartition((_)=>{})
@@ -73,7 +74,7 @@ object PropagationBasedPartitioning {
                                                             vertexOperator: VertexOperator)(implicit sc:SparkContext) = {
     val (vertexMap, newNumberOfCommunities) = precomputePartitions(graph, numParts, checkpointingFrequency, vertexOperator);
     logger.info(s"Requested $numParts partitions, computed $newNumberOfCommunities")
-    val strategy = ByComponentIdPartitionStrategy(vertexMap, numParts)
+    val strategy = ByComponentIdPartitionStrategy(vertexMap, numParts, vertexOperator)
     (vertexMap, newNumberOfCommunities, strategy)
   }
 
@@ -83,6 +84,11 @@ object PropagationBasedPartitioning {
   object DefaultVertexOperator extends VertexOperator{
     def apply(v1: VertexId, v2: VertexId): VertexId = {
       math.min(v1, v2)
+    }
+  }
+  object DefaultPartitionOperator extends VertexOperator{
+    def apply(v1: VertexId, v2: VertexId): VertexId = {
+      math.max(v1, v2)
     }
   }
 }

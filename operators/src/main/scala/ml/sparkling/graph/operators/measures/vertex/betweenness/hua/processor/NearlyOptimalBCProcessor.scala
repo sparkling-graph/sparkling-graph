@@ -104,7 +104,8 @@ class NearlyOptimalBCProcessor[VD, ED: ClassTag](graph: Graph[VD, ED]) extends S
       }
     })
 
-    val createdFlows = expandMessages.map({ case (root, expand: List[BFSBCExtendMessage]) =>
+    val createdFlows = expandMessages.map({
+      case (root, expand: List[BFSBCExtendMessage @unchecked]) =>
       if (msgVertex2.contains(root)) throw new Error("Attempt to create duplicate of vertex")
       val sigma = expand.map(_.sigma).sum
       val distance = expand.headOption.map(_.distance).getOrElse(.0)
