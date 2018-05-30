@@ -17,8 +17,8 @@ lazy val root = Project(id = "sparkling-graph",
   .settings(
         siteSubdirName in ScalaUnidoc := "latest/api",
         addMappingsToSiteDir(mappings in(ScalaUnidoc, packageDoc), siteSubdirName in ScalaUnidoc),
-        git.remoteRepo := ghRepo
-
+        git.remoteRepo := ghRepo,
+          publishTo := sonatypePublishTo.value
 )
   .aggregate(api, loaders, operators,generators, examples,experiments,utils)
 lazy val loaders = Project(id = "sparkling-graph-loaders",
