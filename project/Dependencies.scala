@@ -8,7 +8,7 @@ object Dependencies {
   lazy val sparkVersion = settingKey[String]("The version of Spark to use.")
 
   val Versions = Seq(
-    crossScalaVersions := Seq("2.11.7","2.10.6", "2.12.8"),
+    crossScalaVersions := Seq("2.11.7", "2.12.8"),
     scalaVersion := Option(System.getenv().get("TRAVIS_SCALA_VERSION")).getOrElse(crossScalaVersions.value.head),
     sparkVersion := "2.4.0"
   )
@@ -32,7 +32,7 @@ object Dependencies {
 
     object Test {
       val scalatest = Def.setting {
-        "org.scalatest" %% "scalatest" % "2.2.4" % "test"
+        "org.scalatest" %% "scalatest" % "3.0.5" % "test"
       }
       val mockito = Def.setting {
         "org.mockito" % "mockito-all" % "1.10.19" % "test"
