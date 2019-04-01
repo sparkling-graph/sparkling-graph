@@ -19,7 +19,7 @@ object Dependencies {
   val graphx = l ++= Seq(Provided.sparkCore.value, Provided.sparkGraphx.value)
   val sparkSQL = l ++= Seq(Provided.sparkSQL.value)
   val sparkMLLib = l ++= Seq(Provided.sparkMLLib.value)
-  val sparkCSV = l ++= Seq(Compile.sparkCSV, Provided.sparkSQL.value)
+  // val sparkCSV = l ++= Seq(Compile.sparkCSV, Provided.sparkSQL.value)
   val sparkXML = l ++= Seq(Compile.sparkXML, Provided.sparkSQL.value)
   val test = l ++= Seq(Compile.Test.scalatest.value,Compile.Test.mockito.value)
   val fastUtils = l ++= Seq(Compile.fastUtils)
@@ -27,8 +27,8 @@ object Dependencies {
   object Compile {
     val fastUtils = "it.unimi.dsi" % "fastutil" % "8.1.0"
 
-    val sparkCSV = "com.databricks" %% "spark-csv" % "1.2.0"
-    val sparkXML = "com.databricks" %% "spark-xml" % "0.4.0"
+    // val sparkCSV = "com.databricks" %% "spark-csv" % "1.2.0"
+    val sparkXML = "com.databricks" %% "spark-xml" % "0.5.0"
 
     object Test {
       val scalatest = Def.setting {
