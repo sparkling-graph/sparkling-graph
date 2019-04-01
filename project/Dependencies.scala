@@ -10,7 +10,7 @@ object Dependencies {
   val Versions = Seq(
     crossScalaVersions := Seq("2.11.7","2.10.6", "2.12.8"),
     scalaVersion := Option(System.getenv().get("TRAVIS_SCALA_VERSION")).getOrElse(crossScalaVersions.value.head),
-    sparkVersion := "2.0.0"
+    sparkVersion := "2.4.0"
   )
   val l = libraryDependencies
 
