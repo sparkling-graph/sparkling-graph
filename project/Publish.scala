@@ -16,19 +16,11 @@ object Publish extends AutoPlugin {
     releaseEarlyWith in Global := SonatypePublisher,
     pgpPublicRing := file("./travis/local.pubring.asc"),
     pgpSecretRing := file("./travis/local.secring.asc"),
-    pomExtra := (
-      <url>https://sparkling.ml</url>
-        <scm>
-          <url>git@github.com:sparkling-graph/sparkling-graph.git</url>
-          <connection>scm:git:git@github.com:sparkling-graph/sparkling-graph.git</connection>
-        </scm>
-        <developers>
-          <developer>
-            <id>riomus</id>
-            <name>Roman Bartusiak</name>
-            <url>http://bartusiak.ml</url>
-          </developer>
-        </developers>)
+    licenses := Seq("BSD 2-Clause" -> url("http://opensource.org/licenses/BSD-2-Clause")),
+    homepage := Some(url("https://github.com/sparkling-graph/sparkling-graph")),
+    developers := List(Developer("riomus", "Roman Bartusiak", "$riomus@gmail.com", url("https://bartusiak.ml"))),
+    scmInfo := Some(ScmInfo(url("https://github.com/sparkling-graph/sparkling-graph"), "scm:git:git@github.com:sparkling-graph/sparkling-graph.git")),
+
   )
 
   override def trigger = allRequirements
