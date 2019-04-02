@@ -12,8 +12,8 @@ object Publish extends AutoPlugin {
     publishMavenStyle := true,
     pomIncludeRepository := { _ => false },
     useGpg := false,
-    pgpPublicRing := file("./travis/local.pubring.asc")
-    pgpSecretRing := file("./travis/local.secring.asc")
+    pgpPublicRing := file("./travis/local.pubring.asc"),
+    pgpSecretRing := file("./travis/local.secring.asc"),
     pomExtra := (
       <url>https://sparkling.ml</url>
         <scm>
