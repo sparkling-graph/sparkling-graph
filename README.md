@@ -11,11 +11,11 @@ SparklingGraph provides easy to use set of features that will give you ability t
 
 # Versioning
 
-Since commit `9249c16` project is using git versioning (for example 0.3.0+10-4f489199). All artifacts from now one will be published to maven central, so there is no need to use snapshot versions that are not reproducible.
+Since commit `3246714` project is using git versioning (for example `0.0.7+140-32467140` or `0.0.7+140-32467140+20190402-2057-SNAPSHOT`). All artifacts from now one will be published to snapshot without version overriding. New approach will also add abbility to reproduce each version. Release versions will use normal tag based approach.
 
 # Dependencies
 
-Since commit `9249c16` you can get artifacts for any master branch commits using `git describe` command. 
+Since commit `3246714` you can get artifacts for any master branch commits using `git describe` command. 
 
 ## Snapshot
 ```

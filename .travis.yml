@@ -17,8 +17,6 @@ before_script:
 - git config --global user.email "riomus@gmail.com"
 before_install:
   - git fetch --tags
-
-
 script:
 - sbt clean compile coverage test coverageReport coverageAggregate
 after_success:
