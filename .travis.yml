@@ -15,15 +15,15 @@ before_script:
 - git config --global user.name "Travis CI"
 - git config --global user.email "riomus@gmail.com"
 before_install:
-- if [ $TRAVIS_PULL_REQUEST = 'false' ]; then openssl aes-256-cbc -K $encrypted_3f2ea4997928_key
-  -iv $encrypted_3f2ea4997928_iv -in travis/secrets.tar.enc -out travis/local.secrets.tar
-  -d; tar xv -C travis -f travis/secrets.tar; fi
+- if [ $TRAVIS_PULL_REQUEST = 'false' ]; then
+   openssl aes-256-cbc -K $encrypted_3f2ea4997928_key -iv $encrypted_3f2ea4997928_iv -in travis/secrets.tar.enc -out travis/local.secrets.tar -d;
+   tar xv -C travis -f travis/local.secrets.tar;
+  fi
 script:
 - sbt clean compile coverage test coverageReport coverageAggregate
 after_success:
 - bash <(curl -s https://codecov.io/bash)
-- if [ $TRAVIS_PULL_REQUEST = 'false' ]; then sbt releaseEarly; 
-  fi
+- if [ $TRAVIS_PULL_REQUEST = 'false' ]; then sbt releaseEarly; fi
 - test $TRAVIS_BRANCH = "master" && sbt ghpagesPushSite
 notifications:
   webhooks:
