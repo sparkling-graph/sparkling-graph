@@ -12,6 +12,7 @@ object Publish extends AutoPlugin {
     publishMavenStyle := true,
     pomIncludeRepository := { _ => false },
     useGpg := false,
+    releaseEarlyWith in Global := SonatypePublisher,
     pgpPublicRing := file("./travis/local.pubring.asc"),
     pgpSecretRing := file("./travis/local.secring.asc"),
     pomExtra := (
