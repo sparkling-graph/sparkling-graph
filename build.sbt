@@ -5,7 +5,7 @@ val ghHost = sys.env.getOrElse("GH_HOST", default = "github.com/sparkling-graph/
 val ghRepo = s"https://${ghToken}@${ghHost}"
 parallelExecution in ThisBuild := true
 
-lazy val buildSettings = Seq(
+lazy val buildSettings = Dependencies.Versions ++ Seq(
   organization := "ml.sparkling",
   autoAPIMappings := true
 )
