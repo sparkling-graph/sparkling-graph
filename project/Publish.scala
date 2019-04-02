@@ -4,6 +4,7 @@ import sbt.Keys._
 import sbt._
 import sbtrelease.ReleasePlugin.autoImport._
 import com.typesafe.sbt.SbtPgp.autoImportImpl._
+import ch.epfl.scala.sbt.release.ReleaseEarlyPlugin.autoImport._
 object Publish extends AutoPlugin {
 
 

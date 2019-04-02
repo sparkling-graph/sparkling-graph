@@ -9,7 +9,14 @@ SparklingGraph provides easy to use set of features that will give you ability t
  - Scala 2.11 or 2.12
  - Spark 2.4.0  (or compatible)
 
+# Versioning
+
+Since commit `9249c16` project is using git versioning (for example 0.3.0+10-4f489199). All artifacts from now one will be published to maven central, so there is no need to use snapshot versions that are not reproducible.
+
 # Dependencies
+
+Since commit `9249c16` you can get artifacts for any master branch commits using `git describe` command. 
+
 ## Snapshot
 ```
 resolvers +=  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
