@@ -2,8 +2,9 @@ language: scala
 jdk: oraclejdk8
 sudo: false
 scala:
-- 2.11.7
 - 2.12.8
+- 2.11.7
+
 cache:
   directories:
   - "$HOME/.ivy2/cache"
@@ -15,15 +16,14 @@ before_script:
 - git config --global user.name "Travis CI"
 - git config --global user.email "riomus@gmail.com"
 before_install:
-- if [ $TRAVIS_PULL_REQUEST = 'false' ]; then
-    openssl aes-256-cbc -K $encrypted_3f2ea4997928_key -iv $encrypted_3f2ea4997928_iv -in travis/secrets.tar.enc -out travis/local.secrets.tar -d;
-    tar xv -C travis -f travis/local.secrets.tar;
-  fi
+  - git fetch --tags
+
+
 script:
 - sbt clean compile coverage test coverageReport coverageAggregate
 after_success:
 - bash <(curl -s https://codecov.io/bash)
-- if [ $TRAVIS_PULL_REQUEST = 'false' ]; then sbt releaseEarly; fi
+- if [ $TRAVIS_PULL_REQUEST = 'false' ]; then sbt ci-release; fi
 - test $TRAVIS_BRANCH = "master" && sbt ghpagesPushSite
 notifications:
   webhooks:
@@ -44,3 +44,4 @@ env:
   - secure: V+TJlEGki5cmw5ZTBKmXjtXShEG7HcnF1vq15nRtKv9o7bLK719/+0n7kLkHzicovUWKiinIadQ5160XukgPcKaWhz3CAIi1ZDP8gynMiiy8p/GR+cUcIFMSPr4FKGVs90Vx8ba9nsPNXBRbM00esAe4Kk+CtPL1OzLf1MUKv/Wl8Wt058udRLmqwt4vWDIIoVaAuAfwdk+b1eab+rKxaw76MmwKCe79uaPdvRPWNgD+jtrzMmn67H56b51WX+XAYGCgmpdZZWxoMZeai8bcmYoX06zrZ3VvvBdici1LMuV/cwmPxAZ6B9BvR6yMumbksEdUPe1xlqLGfJkf5l5QLR+Qb+jk3UTQw2znzN5xzEw+ABtWWUOvN/kPIc5rdx4AYACu4Z5oUHfDmh0lLzcSz7tyis7JIsqO0YWQKe3fyHJftwjyBeNCaK8oJbli4t3AUxJlM4WOFeYCtKQkCzHSuCBDIBFilIijYEmWYxuXTgAZGeOw3FbNTMArjLFxwO5s3JDpR1pldEyn+toHYgCz3fIN/DJOqQ8hbYlW1RDfxI87WZ50aY/Cfiko6llNCXfforNpCQHs+O4+NDDxOiEQ+sDvQ/oaKJbjDdF4boOcfLLR2C0UaQ/gs4L1u6zVb8pU8YzC98MZOq7+8uwk2EUo7kcYWHg+kAOjdDiR4qTk0zs=
   - secure: CuxDj9QaRytfJ9g8JukBah9HyZT8oyRGq8bFGz3B3R2+W0ojZ7eTA0lzSCcwIAfrx6FcCRIc6Zu+ZIBcOVW5qwrVu2XTXo2bEvnnPqKIZjjiYP8JEPSD7+0zXlgzJd79bBF/Bb71SvYeZ8N68Idl8MrCBj1YUR95bizYiaCclnL+XrIV4h8PKZ3Cuh5tmi9XUIPLTje0guHi6GF+cTEGH7BQ5vXqlk1AIHH0SCJHUZ6p6zbM/+500km+BfLdd3p3l7NYDHngKisOlIeX1MkbxyGjmXHEwKP1xAOqcUZmsQDEULIEZvvVo3yVEVAWy8dWhQRVcN3v6jLe7Z8zt9/tDVsC15Hncmfy9BbuqM8HmgXi8l5qjcipSrltrgyKK/IlmNKmIlLtNNlvU0QV0cvYY6JnBmv3JX6hjlCRsnNUKq36lbqPLH/n+jSJChPE2QnceqZvKjrj66lpwx3MYRu3cbvpfP1NOXb5vJ4tf2h5SRQ0gTDBdejsnNwjpmIsGAx2WW+TU5MEveVHFUtcN22YVL20yJ2+C0QSVjY/9vdQbNIbHDZ58IGZ0fy8zgjpGKhll+8xnI4HKmBDbOAXbpuUWlDc+2iRl6pJGqelqLy4bk57xf7WUj18e56XOMP8gY+tqJJC2X6lM2kMoq82pGi4gX/HBNlXHKXyszu7DF094s0=
   - secure: tBbv6vj+b1kV9rota9opHPesj914YKuU77qy4pwEOVbhJf/fGoYipRwi8pS9CuYegqM1G2KcyJA0b7SSLIKZyzs0/4ONqWTd/Y7hJCQHYIz50Iy+kdodXREHMOpuyPbuXS98C8IwNTc5NaL6lF/Ejdr2PsjJX4PGB4veuePhzOL8dIr7OUR0tf6QqK2lZkV3q9hcBxPyl+JNUpyrY59x5LPBZpcqxUlTO+U1w7m8EGQjVcPqnj6Okct6pi2xEstZ0Kz2kLsNB4YfFoiaC2GE3fw8U4LTK5r2+kk26GK/HTqA63/AdKJ3igrcHoeph/nVcdztr8qr3BSGj2dr7gS6jwTsf+ndJEO0kaUMNYSnNnzOiF8/95JsQPCxtKngxJ18tZJP0GMZEyZNjWEqsLwHczNpmTWZhb1gJ/vQYZ6+Q52TPJgGaprCj5W+/rIAYH9qUYKJRMIqD7BV/3ZhKEmRcWFSdGTyWMhzbzVlY3gGuEuLElhCyHzBJGiDrvMGT+ugNcXlhnJIRHRJCAIo9wlkNfS8fn3wNZMLVo3T1Ao7/txVG5mCMkNdq/j29ZmG2xFpjI/TWX15Bvoz4aCJ5YEdoLMu5wfjVWIR34IyDZ7Loe+sVXBSqiZqsy5+bQgnuFK9qEgfKPf+v47ZfkP7qIaPZ69ef3d5aRg241GorFla8rY=
+  - secure: DT2CD33P4A72p6J3Qbp+46s0DYxlUIIv+XWf7WUX3hcvfuaqpwM5Bz2SU1Ty8XEK5YxwQw63tWAdzOQLlkkx5w0W2cOyY6+FKOhcSgWZjRqxABuifmEvvJA4U3t+gw1V6v5/yehuRZ8Tm+2wZbOMpI+a7VScZBIvoK48vmJVUaQVPnfVn3bIncZL8YZExl+qd5nfH0ZgmB3+vAYz18Z9Z5ME/P0ZoXWnLd6PUtN49Sbm/F1LrblYLZZSR91n76AbDLKk7gbDwLZTE+ACI3UoYOXSJoF7rlcjTDlEBusDCPUbMaO10OLDCRxkK0WhEuG17RrGqJ1ZiXmSaTJrQ1Y+FrJ2NpYmmcLBXQ0dQM6xqBsQE5mIYR0DPYzc/rVonAcytj62fEfP77/1yowpD9+t4RkzBiWiNns3R6hSeZBtfGEMONmGZlhgbLe6zlGRMkhF7aN13W/9MvmDIifPPJlvXfi8qfzxmnCJmobeyagyIcWL6sYODSqi9A52Vgc+LMhRWYBUKe3k3Qzmc/0+h6aMbFFwUfXGqqiLY6koXkFwjWFCy3qVUgf0v9MBJwPnuXdN1deTk2yeSETfEqPBsUZLsxzLTrlbvuIfsUN4yGwAYiGK7f+kjbzU27H+zJZKrn8a1F4pt61WnK0REgE4+8x20gJbqyEgpZ3WPnctEpu9yds=

@@ -9,4 +9,4 @@ addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.3")
 resolvers += "Spark Package Main Repo" at "https://dl.bintray.com/spark-packages/maven"
 resolvers += Resolver.bintrayIvyRepo("s22s", "sbt-plugins")
 addSbtPlugin("org.spark-packages" % "sbt-spark-package" % "0.2.7-astraea.1")
-addSbtPlugin("ch.epfl.scala" % "sbt-release-early" % "2.1.1")
+addSbtPlugin("com.geirsson" % "sbt-ci-release" % "1.2.2")
