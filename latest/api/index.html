@@ -1,158 +1,344 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
           <title></title>
           <meta name="description" content="" />
           <meta name="keywords" content="" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="lib/index.css" media="screen" type="text/css" rel="stylesheet" />
-      <link href="lib/template.css" media="screen" type="text/css" rel="stylesheet" />
-      <link href="lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
       <script type="text/javascript" src="lib/jquery.js"></script>
-      <script type="text/javascript" src="lib/jquery.panzoom.min.js"></script>
-      <script type="text/javascript" src="lib/jquery.mousewheel.min.js"></script>
+      <script type="text/javascript" src="lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="lib/jquery.layout.js"></script>
       <script type="text/javascript" src="lib/index.js"></script>
-      <script type="text/javascript" src="index.js"></script>
       <script type="text/javascript" src="lib/scheduler.js"></script>
-      <script type="text/javascript" src="lib/template.js"></script>
-      <script type="text/javascript" src="lib/tools.tooltip.js"></script>
-      
-      <script type="text/javascript">
-        /* this variable can be used by the JS to determine the path to the root document */
-        var toRoot = '';
-      </script>
     
         </head>
         <body>
-      <div id="search">
-        <span id="doc-title"><span id="doc-version"></span></span>
-        <span class="close-results"><span class="left">&lt;</span> Back</span>
-        <div id="textfilter">
-          <span class="input">
-            <input autocapitalize="none" placeholder="Search" id="index-input" type="text" accesskey="/" />
-            <i class="clear material-icons"></i>
-            <i id="search-icon" class="material-icons"></i>
-          </span>
-        </div>
+      <div id="library">
+        <img class="class icon" alt="class icon" src="lib/class.png" />
+        <img class="trait icon" alt="trait icon" src="lib/trait.png" />
+        <img class="object icon" alt="trait icon" src="lib/object.png" />
+        <img class="package icon" alt="trait icon" src="lib/package.png" />
+      </div>
+      <div id="browser" class="ui-layout-west">
+      <div class="ui-west-center">
+      <div id="filter">
+          <div id="textfilter"></div>
+          <div id="letters"><a target="template" href="index/index-_.html">#</a><a target="template" href="index/index-a.html">A</a><a target="template" href="index/index-b.html">B</a><a target="template" href="index/index-c.html">C</a><a target="template" href="index/index-d.html">D</a><a target="template" href="index/index-e.html">E</a><a target="template" href="index/index-f.html">F</a><a target="template" href="index/index-g.html">G</a><a target="template" href="index/index-h.html">H</a><a target="template" href="index/index-i.html">I</a><a target="template" href="index/index-j.html">J</a><a target="template" href="index/index-k.html">K</a><a target="template" href="index/index-l.html">L</a><a target="template" href="index/index-m.html">M</a><a target="template" href="index/index-n.html">N</a><a target="template" href="index/index-o.html">O</a><a target="template" href="index/index-p.html">P</a><a target="template" href="index/index-q.html">Q</a><a target="template" href="index/index-r.html">R</a><a target="template" href="index/index-s.html">S</a><a target="template" href="index/index-t.html">T</a><a target="template" href="index/index-u.html">U</a><a target="template" href="index/index-v.html">V</a><a target="template" href="index/index-w.html">W</a><span>X</span><span>Y</span><span>Z</span> – <span>deprecated</span></div>
+      </div>
+      <div class="pack" id="tpl">
+            
+            <ol class="templates"></ol>
+            <ol class="packages"> <li class="pack" title="ml">
+            <a class="tplshow" href="ml/package.html" target="template">ml</a>
+            <ol class="templates"></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling">
+            <a class="tplshow" href="ml/sparkling/package.html" target="template">ml.sparkling</a>
+            <ol class="templates"></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph">
+            <a class="tplshow" href="ml/sparkling/graph/package.html" target="template">ml.sparkling.graph</a>
+            <ol class="templates"></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.api">
+            <a class="tplshow" href="ml/sparkling/graph/api/package.html" target="template">ml.sparkling.graph.api</a>
+            <ol class="templates"></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.api.generators">
+            <a class="tplshow" href="ml/sparkling/graph/api/generators/package.html" target="template">ml.sparkling.graph.api.generators</a>
+            <ol class="templates"><li title="ml.sparkling.graph.api.generators.BasicGeneratorConfigurations"><a class="tplshow" href="ml/sparkling/graph/api/generators/BasicGeneratorConfigurations$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">BasicGeneratorConfigurations</span></a></li><li title="ml.sparkling.graph.api.generators.GraphGenerator"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/api/generators/GraphGenerator.html" target="template"><span class="class">(class)</span><span class="tplLink">GraphGenerator</span></a></li><li title="ml.sparkling.graph.api.generators.GraphGeneratorConfiguration"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/api/generators/GraphGeneratorConfiguration.html" target="template"><span class="trait">(trait)</span><span class="tplLink">GraphGeneratorConfiguration</span></a></li><li title="ml.sparkling.graph.api.generators.RandomNumbers"><a class="tplshow" href="ml/sparkling/graph/api/generators/RandomNumbers$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">RandomNumbers</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.api.loaders">
+            <a class="tplshow" href="ml/sparkling/graph/api/loaders/package.html" target="template">ml.sparkling.graph.api.loaders</a>
+            <ol class="templates"><li title="ml.sparkling.graph.api.loaders.GraphLoading"><a class="tplshow" href="ml/sparkling/graph/api/loaders/GraphLoading$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">GraphLoading</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.api.operators">
+            <a class="tplshow" href="ml/sparkling/graph/api/operators/package.html" target="template">ml.sparkling.graph.api.operators</a>
+            <ol class="templates"><li title="ml.sparkling.graph.api.operators.IterativeComputation"><a class="tplshow" href="ml/sparkling/graph/api/operators/IterativeComputation$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">IterativeComputation</span></a></li></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.api.operators.algorithms">
+            <a class="tplshow" href="ml/sparkling/graph/api/operators/algorithms/package.html" target="template">ml.sparkling.graph.api.operators.algorithms</a>
+            <ol class="templates"></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.api.operators.algorithms.coarsening">
+            <a class="tplshow" href="ml/sparkling/graph/api/operators/algorithms/coarsening/package.html" target="template">ml.sparkling.graph.api.operators.algorithms.coarsening</a>
+            <ol class="templates"><li title="ml.sparkling.graph.api.operators.algorithms.coarsening.CoarseningAlgorithm"><a class="tplshow" href="ml/sparkling/graph/api/operators/algorithms/coarsening/CoarseningAlgorithm$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">CoarseningAlgorithm</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.api.operators.algorithms.community">
+            <a class="tplshow" href="ml/sparkling/graph/api/operators/algorithms/community/package.html" target="template">ml.sparkling.graph.api.operators.algorithms.community</a>
+            <ol class="templates"><li title="ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection"><a class="tplshow" href="ml/sparkling/graph/api/operators/algorithms/community/CommunityDetection$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">CommunityDetection</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.api.operators.algorithms.link">
+            <a class="tplshow" href="ml/sparkling/graph/api/operators/algorithms/link/package.html" target="template">ml.sparkling.graph.api.operators.algorithms.link</a>
+            <ol class="templates"><li title="ml.sparkling.graph.api.operators.algorithms.link.MeasureBasedLnkPredictor"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/api/operators/algorithms/link/MeasureBasedLnkPredictor.html" target="template"><span class="trait">(trait)</span><span class="tplLink">MeasureBasedLnkPredictor</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.api.operators.algorithms.shortestpaths">
+            <a class="tplshow" href="ml/sparkling/graph/api/operators/algorithms/shortestpaths/package.html" target="template">ml.sparkling.graph.api.operators.algorithms.shortestpaths</a>
+            <ol class="templates"><li title="ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPaths"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/api/operators/algorithms/shortestpaths/ShortestPaths.html" target="template"><span class="trait">(trait)</span><span class="tplLink">ShortestPaths</span></a></li><li title="ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes"><a class="tplshow" href="ml/sparkling/graph/api/operators/algorithms/shortestpaths/ShortestPathsTypes$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">ShortestPathsTypes</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li></ol>
+          </li><li class="pack" title="ml.sparkling.graph.api.operators.measures">
+            <a class="tplshow" href="ml/sparkling/graph/api/operators/measures/package.html" target="template">ml.sparkling.graph.api.operators.measures</a>
+            <ol class="templates"><li title="ml.sparkling.graph.api.operators.measures.EdgeMeasure"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/api/operators/measures/EdgeMeasure.html" target="template"><span class="trait">(trait)</span><span class="tplLink">EdgeMeasure</span></a></li><li title="ml.sparkling.graph.api.operators.measures.GraphIndependentMeasure"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/api/operators/measures/GraphIndependentMeasure.html" target="template"><span class="trait">(trait)</span><span class="tplLink">GraphIndependentMeasure</span></a></li><li title="ml.sparkling.graph.api.operators.measures.VertexDependentGraphMeasure"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/api/operators/measures/VertexDependentGraphMeasure.html" target="template"><span class="trait">(trait)</span><span class="tplLink">VertexDependentGraphMeasure</span></a></li><li title="ml.sparkling.graph.api.operators.measures.VertexMeasure"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/api/operators/measures/VertexMeasure.html" target="template"><span class="trait">(trait)</span><span class="tplLink">VertexMeasure</span></a></li><li title="ml.sparkling.graph.api.operators.measures.VertexMeasureConfiguration"><a class="tplshow" href="ml/sparkling/graph/api/operators/measures/VertexMeasureConfiguration$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="ml/sparkling/graph/api/operators/measures/VertexMeasureConfiguration.html" target="template"><span class="case class">(case class)</span><span class="tplLink">VertexMeasureConfiguration</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.api.operators.partitioning">
+            <a class="tplshow" href="ml/sparkling/graph/api/operators/partitioning/package.html" target="template">ml.sparkling.graph.api.operators.partitioning</a>
+            <ol class="templates"><li title="ml.sparkling.graph.api.operators.partitioning.DataAwarePartitionStrategy"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/api/operators/partitioning/DataAwarePartitionStrategy.html" target="template"><span class="class">(class)</span><span class="tplLink">DataAwarePartitionStrategy</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li></ol>
+          </li></ol>
+          </li><li class="pack" title="ml.sparkling.graph.examples">
+            <a class="tplshow" href="ml/sparkling/graph/examples/package.html" target="template">ml.sparkling.graph.examples</a>
+            <ol class="templates"><li title="ml.sparkling.graph.examples.ApproximateShortestPathsToDirectory"><a class="tplshow" href="ml/sparkling/graph/examples/ApproximateShortestPathsToDirectory$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">ApproximateShortestPathsToDirectory</span></a></li><li title="ml.sparkling.graph.examples.ExampleApp"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/examples/ExampleApp.html" target="template"><span class="class">(class)</span><span class="tplLink">ExampleApp</span></a></li><li title="ml.sparkling.graph.examples.GraphDescriptionFromCSV"><a class="tplshow" href="ml/sparkling/graph/examples/GraphDescriptionFromCSV$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">GraphDescriptionFromCSV</span></a></li><li title="ml.sparkling.graph.examples.MatrixCreator"><a class="tplshow" href="ml/sparkling/graph/examples/MatrixCreator$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">MatrixCreator</span></a></li><li title="ml.sparkling.graph.examples.NetworkRandomization"><a class="tplshow" href="ml/sparkling/graph/examples/NetworkRandomization$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">NetworkRandomization</span></a></li><li title="ml.sparkling.graph.examples.ShortestPathLengthsFromCSV"><a class="tplshow" href="ml/sparkling/graph/examples/ShortestPathLengthsFromCSV$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">ShortestPathLengthsFromCSV</span></a></li><li title="ml.sparkling.graph.examples.ShortestPathsToDirectory"><a class="tplshow" href="ml/sparkling/graph/examples/ShortestPathsToDirectory$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">ShortestPathsToDirectory</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.experiments">
+            <a class="tplshow" href="ml/sparkling/graph/experiments/package.html" target="template">ml.sparkling.graph.experiments</a>
+            <ol class="templates"></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.experiments.describe">
+            <a class="tplshow" href="ml/sparkling/graph/experiments/describe/package.html" target="template">ml.sparkling.graph.experiments.describe</a>
+            <ol class="templates"><li title="ml.sparkling.graph.experiments.describe.FullGraphDescriptor"><a class="tplshow" href="ml/sparkling/graph/experiments/describe/FullGraphDescriptor$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">FullGraphDescriptor</span></a></li><li title="ml.sparkling.graph.experiments.describe.GraphDescriptor"><a class="tplshow" href="ml/sparkling/graph/experiments/describe/GraphDescriptor$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">GraphDescriptor</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li></ol>
+          </li><li class="pack" title="ml.sparkling.graph.generators">
+            <a class="tplshow" href="ml/sparkling/graph/generators/package.html" target="template">ml.sparkling.graph.generators</a>
+            <ol class="templates"></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.generators.ring">
+            <a class="tplshow" href="ml/sparkling/graph/generators/ring/package.html" target="template">ml.sparkling.graph.generators.ring</a>
+            <ol class="templates"><li title="ml.sparkling.graph.generators.ring.RingGenerator"><a class="tplshow" href="ml/sparkling/graph/generators/ring/RingGenerator$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">RingGenerator</span></a></li><li title="ml.sparkling.graph.generators.ring.RingGeneratorConfiguration"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/generators/ring/RingGeneratorConfiguration.html" target="template"><span class="case class">(case class)</span><span class="tplLink">RingGeneratorConfiguration</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.generators.wattsandstrogatz">
+            <a class="tplshow" href="ml/sparkling/graph/generators/wattsandstrogatz/package.html" target="template">ml.sparkling.graph.generators.wattsandstrogatz</a>
+            <ol class="templates"><li title="ml.sparkling.graph.generators.wattsandstrogatz.WattsAndStrogatzGenerator"><a class="tplshow" href="ml/sparkling/graph/generators/wattsandstrogatz/WattsAndStrogatzGenerator$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">WattsAndStrogatzGenerator</span></a></li><li title="ml.sparkling.graph.generators.wattsandstrogatz.WattsAndStrogatzGeneratorConfiguration"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/generators/wattsandstrogatz/WattsAndStrogatzGeneratorConfiguration.html" target="template"><span class="case class">(case class)</span><span class="tplLink">WattsAndStrogatzGeneratorConfiguration</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li></ol>
+          </li><li class="pack" title="ml.sparkling.graph.loaders">
+            <a class="tplshow" href="ml/sparkling/graph/loaders/package.html" target="template">ml.sparkling.graph.loaders</a>
+            <ol class="templates"></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.loaders.csv">
+            <a class="tplshow" href="ml/sparkling/graph/loaders/csv/package.html" target="template">ml.sparkling.graph.loaders.csv</a>
+            <ol class="templates"><li title="ml.sparkling.graph.loaders.csv.CSVLoader"><a class="tplshow" href="ml/sparkling/graph/loaders/csv/CSVLoader$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">CSVLoader</span></a></li><li title="ml.sparkling.graph.loaders.csv.CsvLoaderConfig"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/loaders/csv/CsvLoaderConfig.html" target="template"><span class="case class">(case class)</span><span class="tplLink">CsvLoaderConfig</span></a></li><li title="ml.sparkling.graph.loaders.csv.DataFrameReaderConfigurator"><a class="tplshow" href="ml/sparkling/graph/loaders/csv/DataFrameReaderConfigurator$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">DataFrameReaderConfigurator</span></a></li><li title="ml.sparkling.graph.loaders.csv.GraphFromCsv"><a class="tplshow" href="ml/sparkling/graph/loaders/csv/GraphFromCsv$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">GraphFromCsv</span></a></li></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.loaders.csv.providers">
+            <a class="tplshow" href="ml/sparkling/graph/loaders/csv/providers/package.html" target="template">ml.sparkling.graph.loaders.csv.providers</a>
+            <ol class="templates"><li title="ml.sparkling.graph.loaders.csv.providers.EdgeProviders"><a class="tplshow" href="ml/sparkling/graph/loaders/csv/providers/EdgeProviders$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">EdgeProviders</span></a></li><li title="ml.sparkling.graph.loaders.csv.providers.GraphProviders"><a class="tplshow" href="ml/sparkling/graph/loaders/csv/providers/GraphProviders$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">GraphProviders</span></a></li><li title="ml.sparkling.graph.loaders.csv.providers.PropertyProviders"><a class="tplshow" href="ml/sparkling/graph/loaders/csv/providers/PropertyProviders$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">PropertyProviders</span></a></li><li title="ml.sparkling.graph.loaders.csv.providers.VertexProviders"><a class="tplshow" href="ml/sparkling/graph/loaders/csv/providers/VertexProviders$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">VertexProviders</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.loaders.csv.types">
+            <a class="tplshow" href="ml/sparkling/graph/loaders/csv/types/package.html" target="template">ml.sparkling.graph.loaders.csv.types</a>
+            <ol class="templates"><li title="ml.sparkling.graph.loaders.csv.types.CSVTypes"><a class="tplshow" href="ml/sparkling/graph/loaders/csv/types/CSVTypes$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">CSVTypes</span></a></li><li title="ml.sparkling.graph.loaders.csv.types.Types"><a class="tplshow" href="ml/sparkling/graph/loaders/csv/types/Types$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">Types</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.loaders.csv.utils">
+            <a class="tplshow" href="ml/sparkling/graph/loaders/csv/utils/package.html" target="template">ml.sparkling.graph.loaders.csv.utils</a>
+            <ol class="templates"><li title="ml.sparkling.graph.loaders.csv.utils.DefaultTransformers"><a class="tplshow" href="ml/sparkling/graph/loaders/csv/utils/DefaultTransformers$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">DefaultTransformers</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li></ol>
+          </li><li class="pack" title="ml.sparkling.graph.loaders.graphml">
+            <a class="tplshow" href="ml/sparkling/graph/loaders/graphml/package.html" target="template">ml.sparkling.graph.loaders.graphml</a>
+            <ol class="templates"><li title="ml.sparkling.graph.loaders.graphml.GraphFromGraphML"><a class="tplshow" href="ml/sparkling/graph/loaders/graphml/GraphFromGraphML$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">GraphFromGraphML</span></a></li><li title="ml.sparkling.graph.loaders.graphml.GraphMLFormat"><a class="tplshow" href="ml/sparkling/graph/loaders/graphml/GraphMLFormat$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">GraphMLFormat</span></a></li><li title="ml.sparkling.graph.loaders.graphml.GraphMLLoader"><a class="tplshow" href="ml/sparkling/graph/loaders/graphml/GraphMLLoader$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">GraphMLLoader</span></a></li><li title="ml.sparkling.graph.loaders.graphml.GraphMLTypes"><a class="tplshow" href="ml/sparkling/graph/loaders/graphml/GraphMLTypes$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">GraphMLTypes</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li></ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators">
+            <a class="tplshow" href="ml/sparkling/graph/operators/package.html" target="template">ml.sparkling.graph.operators</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.OperatorsDSL"><a class="tplshow" href="ml/sparkling/graph/operators/OperatorsDSL$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">OperatorsDSL</span></a></li></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.operators.algorithms">
+            <a class="tplshow" href="ml/sparkling/graph/operators/algorithms/package.html" target="template">ml.sparkling.graph.operators.algorithms</a>
+            <ol class="templates"></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.operators.algorithms.aproximation">
+            <a class="tplshow" href="ml/sparkling/graph/operators/algorithms/aproximation/package.html" target="template">ml.sparkling.graph.operators.algorithms.aproximation</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.algorithms.aproximation.AnyMatchingComponentPredicate"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/aproximation/AnyMatchingComponentPredicate.html" target="template"><span class="case class">(case class)</span><span class="tplLink">AnyMatchingComponentPredicate</span></a></li><li title="ml.sparkling.graph.operators.algorithms.aproximation.ApproximatedShortestPathsAlgorithm"><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/aproximation/ApproximatedShortestPathsAlgorithm$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">ApproximatedShortestPathsAlgorithm</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.algorithms.bfs">
+            <a class="tplshow" href="ml/sparkling/graph/operators/algorithms/bfs/package.html" target="template">ml.sparkling.graph.operators.algorithms.bfs</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.algorithms.bfs.BFSShortestPath"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/bfs/BFSShortestPath.html" target="template"><span class="class">(class)</span><span class="tplLink">BFSShortestPath</span></a></li></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.operators.algorithms.bfs.predicate">
+            <a class="tplshow" href="ml/sparkling/graph/operators/algorithms/bfs/predicate/package.html" target="template">ml.sparkling.graph.operators.algorithms.bfs.predicate</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.algorithms.bfs.predicate.BFSPredicate"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/bfs/predicate/BFSPredicate.html" target="template"><span class="trait">(trait)</span><span class="tplLink">BFSPredicate</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.algorithms.bfs.processor">
+            <a class="tplshow" href="ml/sparkling/graph/operators/algorithms/bfs/processor/package.html" target="template">ml.sparkling.graph.operators.algorithms.bfs.processor</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.algorithms.bfs.processor.BFSProcessor"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/bfs/processor/BFSProcessor.html" target="template"><span class="trait">(trait)</span><span class="tplLink">BFSProcessor</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li></ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.algorithms.coarsening">
+            <a class="tplshow" href="ml/sparkling/graph/operators/algorithms/coarsening/package.html" target="template">ml.sparkling.graph.operators.algorithms.coarsening</a>
+            <ol class="templates"></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.operators.algorithms.coarsening.labelpropagation">
+            <a class="tplshow" href="ml/sparkling/graph/operators/algorithms/coarsening/labelpropagation/package.html" target="template">ml.sparkling.graph.operators.algorithms.coarsening.labelpropagation</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.algorithms.coarsening.labelpropagation.ChangedStats"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/coarsening/labelpropagation/ChangedStats.html" target="template"><span class="case class">(case class)</span><span class="tplLink">ChangedStats</span></a></li><li title="ml.sparkling.graph.operators.algorithms.coarsening.labelpropagation.ChangedStatsAgregator"><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/coarsening/labelpropagation/ChangedStatsAgregator$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">ChangedStatsAgregator</span></a></li><li title="ml.sparkling.graph.operators.algorithms.coarsening.labelpropagation.LPCoarsening"><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/coarsening/labelpropagation/LPCoarsening$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">LPCoarsening</span></a></li><li title="ml.sparkling.graph.operators.algorithms.coarsening.labelpropagation.ToNewId"><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/coarsening/labelpropagation/ToNewId$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">ToNewId</span></a></li><li title="ml.sparkling.graph.operators.algorithms.coarsening.labelpropagation.VertexWrapper"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/coarsening/labelpropagation/VertexWrapper.html" target="template"><span class="case class">(case class)</span><span class="tplLink">VertexWrapper</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li></ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.algorithms.community">
+            <a class="tplshow" href="ml/sparkling/graph/operators/algorithms/community/package.html" target="template">ml.sparkling.graph.operators.algorithms.community</a>
+            <ol class="templates"></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.operators.algorithms.community.pscan">
+            <a class="tplshow" href="ml/sparkling/graph/operators/algorithms/community/pscan/package.html" target="template">ml.sparkling.graph.operators.algorithms.community.pscan</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.algorithms.community.pscan.PSCAN"><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/community/pscan/PSCAN$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">PSCAN</span></a></li><li title="ml.sparkling.graph.operators.algorithms.community.pscan.PSCANConnectedComponents"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/community/pscan/PSCANConnectedComponents.html" target="template"><span class="class">(class)</span><span class="tplLink">PSCANConnectedComponents</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li></ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.algorithms.link">
+            <a class="tplshow" href="ml/sparkling/graph/operators/algorithms/link/package.html" target="template">ml.sparkling.graph.operators.algorithms.link</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.algorithms.link.BasicLinkPredictor"><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/link/BasicLinkPredictor$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">BasicLinkPredictor</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.algorithms.pregel">
+            <a class="tplshow" href="ml/sparkling/graph/operators/algorithms/pregel/package.html" target="template">ml.sparkling.graph.operators.algorithms.pregel</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.algorithms.pregel.Pregel"><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/pregel/Pregel$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">Pregel</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.algorithms.random">
+            <a class="tplshow" href="ml/sparkling/graph/operators/algorithms/random/package.html" target="template">ml.sparkling.graph.operators.algorithms.random</a>
+            <ol class="templates"></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.operators.algorithms.random.ctrw">
+            <a class="tplshow" href="ml/sparkling/graph/operators/algorithms/random/ctrw/package.html" target="template">ml.sparkling.graph.operators.algorithms.random.ctrw</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.algorithms.random.ctrw.ContinuousTimeRandomWalk"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/random/ctrw/ContinuousTimeRandomWalk.html" target="template"><span class="class">(class)</span><span class="tplLink">ContinuousTimeRandomWalk</span></a></li></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.operators.algorithms.random.ctrw.factory">
+            <a class="tplshow" href="ml/sparkling/graph/operators/algorithms/random/ctrw/factory/package.html" target="template">ml.sparkling.graph.operators.algorithms.random.ctrw.factory</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.algorithms.random.ctrw.factory.MessageFactory"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/random/ctrw/factory/MessageFactory.html" target="template"><span class="class">(class)</span><span class="tplLink">MessageFactory</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.algorithms.random.ctrw.processor">
+            <a class="tplshow" href="ml/sparkling/graph/operators/algorithms/random/ctrw/processor/package.html" target="template">ml.sparkling.graph.operators.algorithms.random.ctrw.processor</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.algorithms.random.ctrw.processor.CTRWProcessor"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/random/ctrw/processor/CTRWProcessor.html" target="template"><span class="class">(class)</span><span class="tplLink">CTRWProcessor</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.algorithms.random.ctrw.struct">
+            <a class="tplshow" href="ml/sparkling/graph/operators/algorithms/random/ctrw/struct/package.html" target="template">ml.sparkling.graph.operators.algorithms.random.ctrw.struct</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.algorithms.random.ctrw.struct.CTRWMessage"><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/random/ctrw/struct/CTRWMessage$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/random/ctrw/struct/CTRWMessage.html" target="template"><span class="class">(class)</span><span class="tplLink">CTRWMessage</span></a></li><li title="ml.sparkling.graph.operators.algorithms.random.ctrw.struct.CTRWVertex"><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/random/ctrw/struct/CTRWVertex$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/random/ctrw/struct/CTRWVertex.html" target="template"><span class="class">(class)</span><span class="tplLink">CTRWVertex</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li></ol>
+          </li></ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.algorithms.shortestpaths">
+            <a class="tplshow" href="ml/sparkling/graph/operators/algorithms/shortestpaths/package.html" target="template">ml.sparkling.graph.operators.algorithms.shortestpaths</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgorithm"><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/shortestpaths/ShortestPathsAlgorithm$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">ShortestPathsAlgorithm</span></a></li></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors">
+            <a class="tplshow" href="ml/sparkling/graph/operators/algorithms/shortestpaths/pathprocessors/package.html" target="template">ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathListComparator"><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/shortestpaths/pathprocessors/PathListComparator$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">PathListComparator</span></a></li><li title="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.PathProcessor"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/shortestpaths/pathprocessors/PathProcessor.html" target="template"><span class="trait">(trait)</span><span class="tplLink">PathProcessor</span></a></li><li title="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.SingleVertexProcessor"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/shortestpaths/pathprocessors/SingleVertexProcessor.html" target="template"><span class="class">(class)</span><span class="tplLink">SingleVertexProcessor</span></a></li><li title="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.WithDistanceProcessor"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/shortestpaths/pathprocessors/WithDistanceProcessor.html" target="template"><span class="class">(class)</span><span class="tplLink">WithDistanceProcessor</span></a></li><li title="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.WithPathProcessor"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/shortestpaths/pathprocessors/WithPathProcessor.html" target="template"><span class="class">(class)</span><span class="tplLink">WithPathProcessor</span></a></li></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils">
+            <a class="tplshow" href="ml/sparkling/graph/operators/algorithms/shortestpaths/pathprocessors/fastutils/package.html" target="template">ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.FastUtilDataTypes"><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/shortestpaths/pathprocessors/fastutils/FastUtilDataTypes$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">FastUtilDataTypes</span></a></li><li title="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.FastUtilWithDistance"><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/shortestpaths/pathprocessors/fastutils/FastUtilWithDistance$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/shortestpaths/pathprocessors/fastutils/FastUtilWithDistance.html" target="template"><span class="class">(class)</span><span class="tplLink">FastUtilWithDistance</span></a></li><li title="ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.FastUtilWithPath"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/algorithms/shortestpaths/pathprocessors/fastutils/FastUtilWithPath.html" target="template"><span class="class">(class)</span><span class="tplLink">FastUtilWithPath</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li></ol>
+          </li></ol>
+          </li></ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.measures">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/package.html" target="template">ml.sparkling.graph.operators.measures</a>
+            <ol class="templates"></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.operators.measures.edge">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/edge/package.html" target="template">ml.sparkling.graph.operators.measures.edge</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.edge.AdamicAdar"><a class="tplshow" href="ml/sparkling/graph/operators/measures/edge/AdamicAdar$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">AdamicAdar</span></a></li><li title="ml.sparkling.graph.operators.measures.edge.CommonNeighbours"><a class="tplshow" href="ml/sparkling/graph/operators/measures/edge/CommonNeighbours$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">CommonNeighbours</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.measures.graph">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/graph/package.html" target="template">ml.sparkling.graph.operators.measures.graph</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.graph.FreemanCentrality"><a class="tplshow" href="ml/sparkling/graph/operators/measures/graph/FreemanCentrality$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">FreemanCentrality</span></a></li><li title="ml.sparkling.graph.operators.measures.graph.Modularity"><a class="tplshow" href="ml/sparkling/graph/operators/measures/graph/Modularity$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">Modularity</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.measures.utils">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/utils/package.html" target="template">ml.sparkling.graph.operators.measures.utils</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.utils.CollectionsUtils"><a class="tplshow" href="ml/sparkling/graph/operators/measures/utils/CollectionsUtils$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">CollectionsUtils</span></a></li><li title="ml.sparkling.graph.operators.measures.utils.NeighboursUtils"><a class="tplshow" href="ml/sparkling/graph/operators/measures/utils/NeighboursUtils$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">NeighboursUtils</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.measures.vertex">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/package.html" target="template">ml.sparkling.graph.operators.measures.vertex</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.Degree"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/Degree$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">Degree</span></a></li><li title="ml.sparkling.graph.operators.measures.vertex.NeighborhoodConnectivity"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/NeighborhoodConnectivity$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">NeighborhoodConnectivity</span></a></li><li title="ml.sparkling.graph.operators.measures.vertex.VertexEmbeddedness"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/VertexEmbeddedness$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">VertexEmbeddedness</span></a></li></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.operators.measures.vertex.betweenness">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.betweenness</a>
+            <ol class="templates"></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.operators.measures.vertex.betweenness.edmonds">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/edmonds/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.betweenness.edmonds</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.edmonds.EdmondsBC"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/edmonds/EdmondsBC$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/edmonds/EdmondsBC.html" target="template"><span class="class">(class)</span><span class="tplLink">EdmondsBC</span></a></li><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.edmonds.EdmondsBCAggregator"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/edmonds/EdmondsBCAggregator.html" target="template"><span class="class">(class)</span><span class="tplLink">EdmondsBCAggregator</span></a></li></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.operators.measures.vertex.betweenness.edmonds.predicate">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/edmonds/predicate/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.betweenness.edmonds.predicate</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.edmonds.predicate.EdmondsBCPredicate"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/edmonds/predicate/EdmondsBCPredicate.html" target="template"><span class="class">(class)</span><span class="tplLink">EdmondsBCPredicate</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.measures.vertex.betweenness.edmonds.processor">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/edmonds/processor/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.betweenness.edmonds.processor</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.edmonds.processor.EdmondsBCProcessor"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/edmonds/processor/EdmondsBCProcessor.html" target="template"><span class="class">(class)</span><span class="tplLink">EdmondsBCProcessor</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.measures.vertex.betweenness.edmonds.struct">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/edmonds/struct/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.betweenness.edmonds.struct</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.edmonds.struct.EdmondsVertex"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/edmonds/struct/EdmondsVertex$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/edmonds/struct/EdmondsVertex.html" target="template"><span class="class">(class)</span><span class="tplLink">EdmondsVertex</span></a></li></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.operators.measures.vertex.betweenness.edmonds.struct.messages">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/edmonds/struct/messages/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.betweenness.edmonds.struct.messages</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.edmonds.struct.messages.EdmondsMessage"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/edmonds/struct/messages/EdmondsMessage$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/edmonds/struct/messages/EdmondsMessage.html" target="template"><span class="class">(class)</span><span class="tplLink">EdmondsMessage</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li></ol>
+          </li></ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.measures.vertex.betweenness.flow">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/flow/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.betweenness.flow</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.flow.CurrentFlowBC"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/flow/CurrentFlowBC.html" target="template"><span class="class">(class)</span><span class="tplLink">CurrentFlowBC</span></a></li></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.operators.measures.vertex.betweenness.flow.factory">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/flow/factory/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.betweenness.flow.factory</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.flow.factory.FlowFactory"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/flow/factory/FlowFactory.html" target="template"><span class="trait">(trait)</span><span class="tplLink">FlowFactory</span></a></li></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.operators.measures.vertex.betweenness.flow.factory.impl">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/flow/factory/impl/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.betweenness.flow.factory.impl</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.flow.factory.impl.DefaultFlowFactory"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/flow/factory/impl/DefaultFlowFactory.html" target="template"><span class="class">(class)</span><span class="tplLink">DefaultFlowFactory</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li></ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.measures.vertex.betweenness.flow.generator">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/flow/generator/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.betweenness.flow.generator</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.flow.generator.FlowGenerator"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/flow/generator/FlowGenerator.html" target="template"><span class="trait">(trait)</span><span class="tplLink">FlowGenerator</span></a></li></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.operators.measures.vertex.betweenness.flow.generator.impl">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/flow/generator/impl/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.betweenness.flow.generator.impl</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.flow.generator.impl.RandomFlowGenerator"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/flow/generator/impl/RandomFlowGenerator.html" target="template"><span class="class">(class)</span><span class="tplLink">RandomFlowGenerator</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li></ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.measures.vertex.betweenness.flow.processor">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/flow/processor/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.betweenness.flow.processor</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.flow.processor.CFBCProcessor"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/flow/processor/CFBCProcessor.html" target="template"><span class="class">(class)</span><span class="tplLink">CFBCProcessor</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.measures.vertex.betweenness.flow.struct">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/flow/struct/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.betweenness.flow.struct</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.flow.struct.CFBCFlow"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/flow/struct/CFBCFlow$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/flow/struct/CFBCFlow.html" target="template"><span class="class">(class)</span><span class="tplLink">CFBCFlow</span></a></li><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.flow.struct.CFBCNeighbourFlow"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/flow/struct/CFBCNeighbourFlow$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/flow/struct/CFBCNeighbourFlow.html" target="template"><span class="class">(class)</span><span class="tplLink">CFBCNeighbourFlow</span></a></li><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.flow.struct.CFBCVertex"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/flow/struct/CFBCVertex$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/flow/struct/CFBCVertex.html" target="template"><span class="class">(class)</span><span class="tplLink">CFBCVertex</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li></ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.measures.vertex.betweenness.hua">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.betweenness.hua</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.hua.HuaBC"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/HuaBC$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">HuaBC</span></a></li><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.hua.NearlyOptimalBC"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/NearlyOptimalBC.html" target="template"><span class="class">(class)</span><span class="tplLink">NearlyOptimalBC</span></a></li></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.operators.measures.vertex.betweenness.hua.predicate">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/predicate/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.betweenness.hua.predicate</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.hua.predicate.NOInitBFSPredicate"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/predicate/NOInitBFSPredicate.html" target="template"><span class="class">(class)</span><span class="tplLink">NOInitBFSPredicate</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.measures.vertex.betweenness.hua.processor">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/processor/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.betweenness.hua.processor</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.hua.processor.NearlyOptimalBCProcessor"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/processor/NearlyOptimalBCProcessor.html" target="template"><span class="class">(class)</span><span class="tplLink">NearlyOptimalBCProcessor</span></a></li><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.hua.processor.NOInitBFSProcessor"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/processor/NOInitBFSProcessor.html" target="template"><span class="class">(class)</span><span class="tplLink">NOInitBFSProcessor</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.measures.vertex.betweenness.hua.struct">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/struct/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.betweenness.hua.struct</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.hua.struct.NOBFSVertex"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/struct/NOBFSVertex$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/struct/NOBFSVertex.html" target="template"><span class="class">(class)</span><span class="tplLink">NOBFSVertex</span></a></li><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.hua.struct.NOVertex"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/struct/NOVertex$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/struct/NOVertex.html" target="template"><span class="class">(class)</span><span class="tplLink">NOVertex</span></a></li></ol>
+            <ol class="packages"> <li class="pack" title="ml.sparkling.graph.operators.measures.vertex.betweenness.hua.struct.messages">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/struct/messages/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.betweenness.hua.struct.messages</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.hua.struct.messages.BCAggregationMessage"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/struct/messages/BCAggregationMessage$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/struct/messages/BCAggregationMessage.html" target="template"><span class="class">(class)</span><span class="tplLink">BCAggregationMessage</span></a></li><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.hua.struct.messages.BFSBCConfirmMessage"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/struct/messages/BFSBCConfirmMessage$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/struct/messages/BFSBCConfirmMessage.html" target="template"><span class="class">(class)</span><span class="tplLink">BFSBCConfirmMessage</span></a></li><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.hua.struct.messages.BFSBCExtendMessage"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/struct/messages/BFSBCExtendMessage$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/struct/messages/BFSBCExtendMessage.html" target="template"><span class="class">(class)</span><span class="tplLink">BFSBCExtendMessage</span></a></li><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.hua.struct.messages.BFSConfirmMessage"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/struct/messages/BFSConfirmMessage$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/struct/messages/BFSConfirmMessage.html" target="template"><span class="class">(class)</span><span class="tplLink">BFSConfirmMessage</span></a></li><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.hua.struct.messages.BFSExpandMessage"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/struct/messages/BFSExpandMessage$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/struct/messages/BFSExpandMessage.html" target="template"><span class="class">(class)</span><span class="tplLink">BFSExpandMessage</span></a></li><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.hua.struct.messages.DFSPointer"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/struct/messages/DFSPointer$.html" target="template"><span class="object">(object)</span></a><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/struct/messages/DFSPointer.html" target="template"><span class="class">(class)</span><span class="tplLink">DFSPointer</span></a></li><li title="ml.sparkling.graph.operators.measures.vertex.betweenness.hua.struct.messages.NOMessage"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/betweenness/hua/struct/messages/NOMessage.html" target="template"><span class="trait">(trait)</span><span class="tplLink">NOMessage</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li></ol>
+          </li></ol>
+          </li></ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.measures.vertex.closenes">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/closenes/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.closenes</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.closenes.Closeness"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/closenes/Closeness$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">Closeness</span></a></li><li title="ml.sparkling.graph.operators.measures.vertex.closenes.ClosenessUtils"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/closenes/ClosenessUtils$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">ClosenessUtils</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.measures.vertex.clustering">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/clustering/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.clustering</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.clustering.LocalClustering"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/clustering/LocalClustering$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">LocalClustering</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.measures.vertex.eigenvector">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/eigenvector/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.eigenvector</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.eigenvector.EigenvectorCentrality"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/eigenvector/EigenvectorCentrality$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">EigenvectorCentrality</span></a></li><li title="ml.sparkling.graph.operators.measures.vertex.eigenvector.EigenvectorUtils"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/eigenvector/EigenvectorUtils$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">EigenvectorUtils</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.measures.vertex.hits">
+            <a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/hits/package.html" target="template">ml.sparkling.graph.operators.measures.vertex.hits</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.measures.vertex.hits.Hits"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/hits/Hits$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">Hits</span></a></li><li title="ml.sparkling.graph.operators.measures.vertex.hits.HitsUtils"><a class="tplshow" href="ml/sparkling/graph/operators/measures/vertex/hits/HitsUtils$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">HitsUtils</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li></ol>
+          </li></ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.partitioning">
+            <a class="tplshow" href="ml/sparkling/graph/operators/partitioning/package.html" target="template">ml.sparkling.graph.operators.partitioning</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.partitioning.ByComponentIdPartitionStrategy"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/partitioning/ByComponentIdPartitionStrategy.html" target="template"><span class="case class">(case class)</span><span class="tplLink">ByComponentIdPartitionStrategy</span></a></li><li title="ml.sparkling.graph.operators.partitioning.CommunityBasedPartitioning"><a class="tplshow" href="ml/sparkling/graph/operators/partitioning/CommunityBasedPartitioning$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">CommunityBasedPartitioning</span></a></li><li title="ml.sparkling.graph.operators.partitioning.ParallelPartitioningUtils"><a class="tplshow" href="ml/sparkling/graph/operators/partitioning/ParallelPartitioningUtils$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">ParallelPartitioningUtils</span></a></li><li title="ml.sparkling.graph.operators.partitioning.PartitioningUtils"><a class="tplshow" href="ml/sparkling/graph/operators/partitioning/PartitioningUtils$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">PartitioningUtils</span></a></li><li title="ml.sparkling.graph.operators.partitioning.PropagationBasedPartitioning"><a class="tplshow" href="ml/sparkling/graph/operators/partitioning/PropagationBasedPartitioning$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">PropagationBasedPartitioning</span></a></li><li title="ml.sparkling.graph.operators.partitioning.PSCANBasedPartitioning"><a class="tplshow" href="ml/sparkling/graph/operators/partitioning/PSCANBasedPartitioning$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">PSCANBasedPartitioning</span></a></li><li title="ml.sparkling.graph.operators.partitioning.RandomVertexOperator"><a class="tplshow" href="ml/sparkling/graph/operators/partitioning/RandomVertexOperator$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">RandomVertexOperator</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.predicates">
+            <a class="tplshow" href="ml/sparkling/graph/operators/predicates/package.html" target="template">ml.sparkling.graph.operators.predicates</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.predicates.AllPathPredicate"><a class="tplshow" href="ml/sparkling/graph/operators/predicates/AllPathPredicate$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">AllPathPredicate</span></a></li><li title="ml.sparkling.graph.operators.predicates.ByIdPredicate"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/predicates/ByIdPredicate.html" target="template"><span class="case class">(case class)</span><span class="tplLink">ByIdPredicate</span></a></li><li title="ml.sparkling.graph.operators.predicates.ByIdsPredicate"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/predicates/ByIdsPredicate.html" target="template"><span class="case class">(case class)</span><span class="tplLink">ByIdsPredicate</span></a></li><li title="ml.sparkling.graph.operators.predicates.InArrayPredicate"><div class="placeholder"></div><a class="tplshow" href="ml/sparkling/graph/operators/predicates/InArrayPredicate.html" target="template"><span class="case class">(case class)</span><span class="tplLink">InArrayPredicate</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li><li class="pack" title="ml.sparkling.graph.operators.utils">
+            <a class="tplshow" href="ml/sparkling/graph/operators/utils/package.html" target="template">ml.sparkling.graph.operators.utils</a>
+            <ol class="templates"><li title="ml.sparkling.graph.operators.utils.BetweennessUtils"><a class="tplshow" href="ml/sparkling/graph/operators/utils/BetweennessUtils$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">BetweennessUtils</span></a></li><li title="ml.sparkling.graph.operators.utils.LoggerHolder"><a class="tplshow" href="ml/sparkling/graph/operators/utils/LoggerHolder$.html" target="template"><span class="object">(object)</span><div class="placeholder"></div><span class="tplLink">LoggerHolder</span></a></li></ol>
+            <ol class="packages"> </ol>
+          </li></ol>
+          </li></ol>
+          </li></ol>
+          </li></ol>
+          </li></ol>
+          </div></div><script src="index.js"></script>
     </div>
-      <div id="search-results">
-        <div id="search-progress">
-          <div id="progress-fill"></div>
-        </div>
-        <div id="results-content">
-          <div id="entity-results"></div>
-          <div id="member-results"></div>
-        </div>
-      </div>
-      <div id="content-scroll-container" style="-webkit-overflow-scrolling: touch;">
-        <div id="content-container" style="-webkit-overflow-scrolling: touch;">
-          <div id="subpackage-spacer">
-            <div id="packages">
-              <h1>Packages</h1>
-              <ul>
-                <li name="_root_.root" visbl="pub" class="indented0 current" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="_root_"></a><a id="root:_root_"></a>
-      <span class="permalink">
-      <a href="index.html#_root_" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">package</span>
-      </span>
-      <span class="symbol">
-        <span class="name">root</span>
-      </span>
-      
-      
-    </li><li name="_root_.ml" visbl="pub" class="indented1 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="ml"></a><a id="ml:ml"></a>
-      <span class="permalink">
-      <a href="index.html#ml" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">package</span>
-      </span>
-      <span class="symbol">
-        <a title="" href="ml/index.html"><span class="name">ml</span></a>
-      </span>
-      
-      
-    </li>
-              </ul>
-            </div>
-          </div>
-          <div id="content">
-            <body class="package value">
-      <div id="definition">
-        <div class="big-circle package">p</div>
-        
-        <h1>root package<span class="permalink">
-      <a href="index.html" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span></h1>
-        
-      </div>
-
-      <h4 id="signature" class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">package</span>
-      </span>
-      <span class="symbol">
-        <span class="name">root</span>
-      </span>
-      </h4>
-
-      
-          <div id="comment" class="fullcommenttop"></div>
-        
-
-      
-
-      <div id="template">
-        <div id="allMembers">
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-        </div>
-
-        <div id="inheritedMembers">
-        
-        
-        </div>
-
-        <div id="groupedMembers">
-        <div class="group" name="Ungrouped">
-              <h3>Ungrouped</h3>
-              
-            </div>
-        </div>
-
-      </div>
-
-      <div id="tooltip"></div>
-
-      <div id="footer">  </div>
-    </body>
-          </div>
-        </div>
+      <div id="content" class="ui-layout-center">
+        <iframe id="template" name="template" src="package.html"></iframe>
       </div>
     </body>
       </html>
