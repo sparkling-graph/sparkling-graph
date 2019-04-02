@@ -12,13 +12,8 @@ object Publish extends AutoPlugin {
     publishMavenStyle := true,
     pomIncludeRepository := { _ => false },
     useGpg := false,
-    publishTo := {
-      val nexus = "https://oss.sonatype.org/"
-      if (isSnapshot.value)
-        Some("snapshots" at nexus + "content/repositories/snapshots")
-      else
-        Some("releases" at nexus + "service/local/staging/deploy/maven2")
-    },
+    pgpPublicRing := file("./travis/local.pubring.asc")
+    pgpSecretRing := file("./travis/local.secring.asc")
     pomExtra := (
       <url>https://sparkling.ml</url>
         <scm>
