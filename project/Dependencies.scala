@@ -8,9 +8,9 @@ object Dependencies {
   lazy val sparkVersion = settingKey[String]("The version of Spark to use.")
 
   val Versions = Seq(
-    crossScalaVersions := Seq("2.11.7","2.10.6"),
+    crossScalaVersions := Seq("2.11.7", "2.12.8"),
     scalaVersion := Option(System.getenv().get("TRAVIS_SCALA_VERSION")).getOrElse(crossScalaVersions.value.head),
-    sparkVersion := "2.0.0"
+    sparkVersion := "2.4.0"
   )
   val l = libraryDependencies
 
@@ -19,7 +19,7 @@ object Dependencies {
   val graphx = l ++= Seq(Provided.sparkCore.value, Provided.sparkGraphx.value)
   val sparkSQL = l ++= Seq(Provided.sparkSQL.value)
   val sparkMLLib = l ++= Seq(Provided.sparkMLLib.value)
-  val sparkCSV = l ++= Seq(Compile.sparkCSV, Provided.sparkSQL.value)
+  // val sparkCSV = l ++= Seq(Compile.sparkCSV, Provided.sparkSQL.value)
   val sparkXML = l ++= Seq(Compile.sparkXML, Provided.sparkSQL.value)
   val test = l ++= Seq(Compile.Test.scalatest.value,Compile.Test.mockito.value)
   val fastUtils = l ++= Seq(Compile.fastUtils)
@@ -27,12 +27,12 @@ object Dependencies {
   object Compile {
     val fastUtils = "it.unimi.dsi" % "fastutil" % "8.1.0"
 
-    val sparkCSV = "com.databricks" %% "spark-csv" % "1.2.0"
-    val sparkXML = "com.databricks" %% "spark-xml" % "0.4.0"
+    // val sparkCSV = "com.databricks" %% "spark-csv" % "1.2.0"
+    val sparkXML = "com.databricks" %% "spark-xml" % "0.5.0"
 
     object Test {
       val scalatest = Def.setting {
-        "org.scalatest" %% "scalatest" % "2.2.4" % "test"
+        "org.scalatest" %% "scalatest" % "3.0.5" % "test"
       }
       val mockito = Def.setting {
         "org.mockito" % "mockito-all" % "1.10.19" % "test"

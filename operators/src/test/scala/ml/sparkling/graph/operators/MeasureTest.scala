@@ -8,7 +8,7 @@ import org.scalatest._
 /**
  * Created by Roman Bartusiak (roman.bartusiak@pwr.edu.pl http://riomus.github.io).
  */
-abstract class MeasureTest(implicit sc:SparkContext)  extends FlatSpec with BeforeAndAfterAll with GivenWhenThen with Matchers with BeforeAndAfterEach{
+abstract class MeasureTest(implicit sc:SparkContext)  extends FlatSpec with BeforeAndAfterAll with GivenWhenThen with Matchers{
   def time[T](str: String)(thunk: => T): (T,Long) = {
     logger.info(s"$str...")
     val t1 = System.currentTimeMillis
@@ -27,13 +27,6 @@ abstract class MeasureTest(implicit sc:SparkContext)  extends FlatSpec with Befo
     out.edges.setName(s"Graph edges ${file}")
     out.triplets.setName(s"Graph triplets ${file}")
     out
-    out
   }
-
-
-  override def  beforeEach(testData: TestData) = {
-    logger.info(s"${Console.GREEN} Running test ${testData.name} ${Console.RESET} ")
-  }
-
 
 }
