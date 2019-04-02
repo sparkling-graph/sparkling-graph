@@ -3,6 +3,7 @@ package ml.sparkling.graph
 import sbt.Keys._
 import sbt._
 import sbtrelease.ReleasePlugin.autoImport._
+import com.typesafe.sbt.SbtPgp.autoImportImpl._
 object Publish extends AutoPlugin {
 
 
@@ -10,6 +11,7 @@ object Publish extends AutoPlugin {
     releaseCrossBuild:= true,
     publishMavenStyle := true,
     pomIncludeRepository := { _ => false },
+    useGpg := false,
     publishTo := {
       val nexus = "https://oss.sonatype.org/"
       if (isSnapshot.value)
