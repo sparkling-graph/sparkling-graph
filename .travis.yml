@@ -2,8 +2,8 @@ language: scala
 jdk: oraclejdk8
 sudo: false
 scala:
-  - 2.10.6
   - 2.11.7
+  - 2.12.8
 cache:
   directories:
     - $HOME/.ivy2/cache
@@ -15,12 +15,23 @@ before_cache:
 before_script:
 - git config --global user.name "Travis CI"
 - git config --global user.email "riomus@gmail.com"
-script:
-- sbt clean coverage test && sbt coverageAggregate
-after_success:
-- bash <(curl -s https://codecov.io/bash)
-- sbt publishSigned
-- sbt ghpagesPushSite
+before_install:
+ - echo "$PGP_SECRET" | base64 --decode | gpg --import
+ - echo "$PGP_TRUST" | base64 --decode | gpg --import-ownertrus
+
+jobs:
+  include:
+    - stage: build
+      script: sbt clean coverage test coverageReport coverageAggregate
+    - stage: coverageReport
+      if: branch=master
+      script: bash <(curl -s https://codecov.io/bash)
+    - stage: publish
+      if: branch=master
+      script: sbt publishSigned
+    - stage: ghPages
+      if: branch=master
+      script: sbt ghpagesPushSite
 
 
 
