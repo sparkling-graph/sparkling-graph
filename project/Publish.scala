@@ -2,8 +2,8 @@ package ml.sparkling.graph
 
 import sbt.Keys._
 import sbt._
+import com.typesafe.sbt.SbtPgp.autoImportImpl._
 import ch.epfl.scala.sbt.release.ReleaseEarlyPlugin.autoImport._
-
 object Publish extends AutoPlugin {
 
 
@@ -15,6 +15,7 @@ object Publish extends AutoPlugin {
     homepage := Some(url("https://github.com/sparkling-graph/sparkling-graph")),
     developers := List(Developer("riomus", "Roman Bartusiak", "riomus@gmail.com", url("https://bartusiak.ml"))),
     scmInfo := Some(ScmInfo(url("https://github.com/sparkling-graph/sparkling-graph"), "scm:git:git@github.com:sparkling-graph/sparkling-graph.git")),
+
   )
 
   override def trigger = allRequirements
