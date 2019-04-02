@@ -10,11 +10,6 @@ object Publish extends AutoPlugin {
     releaseCrossBuild:= true,
     publishMavenStyle := true,
     pomIncludeRepository := { _ => false },
-    usePgpKeyHex("A44F4298D7CDB995"),
-    pgpPublicRing := baseDirectory.value / "project" / ".gnupg" / "pubring.gpg"
-    pgpSecretRing := baseDirectory.value / "project" / ".gnupg" / "secring.gpg",
-    pgpPassphrase := sys.env.get("PGP_PASS").map(_.toArray),
-    useGpg := false,
     publishTo := {
       val nexus = "https://oss.sonatype.org/"
       if (isSnapshot.value)
@@ -32,7 +27,7 @@ object Publish extends AutoPlugin {
           <developer>
             <id>riomus</id>
             <name>Roman Bartusiak</name>
-            <url>http://www.riomus.ml</url>
+            <url>http://bartusiak.ml</url>
           </developer>
         </developers>)
   )
