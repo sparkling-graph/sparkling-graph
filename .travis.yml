@@ -20,7 +20,7 @@ script:
 - sbt clean compile coverage test coverageReport coverageAggregate
 after_success:
 - bash <(curl -s https://codecov.io/bash)
-- if [ $TRAVIS_PULL_REQUEST = 'false' ]; then sbt ci-release; fi
+- test $TRAVIS_BRANCH = "master" && sbt ci-release
 - test $TRAVIS_BRANCH = "master" && sbt ghpagesPushSite
 notifications:
   webhooks:
