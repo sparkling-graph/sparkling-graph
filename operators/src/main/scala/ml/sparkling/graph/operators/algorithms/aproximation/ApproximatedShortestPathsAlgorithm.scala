@@ -65,7 +65,7 @@ case object ApproximatedShortestPathsAlgorithm {
       }
     })
     val fromMapped: RDD[(VertexId, (List[VertexId], JDouble))] = modifiedPaths
-      .join(coarsedGraph.vertices)
+      .join(coarsedGraph.vertices, Math.max(modifiedPaths.partitions.length, coarsedGraph.vertices.partitions.length))
       .mapPartitions(
         iter => iter.flatMap {
           case (_, (data, componentFrom)) => {
@@ -77,7 +77,7 @@ case object ApproximatedShortestPathsAlgorithm {
       )
 
     val toJoined: RDD[(VertexId, ((List[VertexId], JDouble), List[VertexId]))] = fromMapped
-      .join(coarsedGraph.vertices)
+      .join(coarsedGraph.vertices, Math.max(fromMapped.partitions.length, coarsedGraph.vertices.partitions.length))
     val toMapped: RDD[(VertexId, (List[VertexId], JDouble))] = toJoined
       .mapPartitions((iter) => {
         iter.flatMap {
