@@ -2,7 +2,7 @@ package ml.sparkling.graph.operators
 
 import ml.sparkling.graph.api.operators.algorithms.community.CommunityDetection._
 import ml.sparkling.graph.api.operators.measures.{EdgeMeasure, VertexMeasureConfiguration}
-import ml.sparkling.graph.operators.algorithms.coarsening.labelpropagation.LPCoarsening
+import ml.sparkling.graph.operators.algorithms.coarsening.labelpropagation.{LPCoarsening, SimpleLPCoarsening}
 import ml.sparkling.graph.operators.algorithms.community.pscan.PSCAN._
 import ml.sparkling.graph.operators.algorithms.link.BasicLinkPredictor
 import ml.sparkling.graph.operators.measures.edge.{AdamicAdar, CommonNeighbours}
@@ -32,6 +32,7 @@ object OperatorsDSL {
       computeConnectedComponents(graph,epsilon)
 
     def LPCoarse(treatAsUndirected:Boolean=false)=LPCoarsening.coarse(graph,treatAsUndirected = treatAsUndirected)
+    def simpleLPCoarse(treatAsUndirected:Boolean=false)=SimpleLPCoarsening.coarse(graph,treatAsUndirected = treatAsUndirected)
 
     def closenessCentrality(vertexMeasureConfiguration: VertexMeasureConfiguration[VD, ED]=VertexMeasureConfiguration())(implicit num:Numeric[ED])=
       Closeness.compute(graph,vertexMeasureConfiguration)

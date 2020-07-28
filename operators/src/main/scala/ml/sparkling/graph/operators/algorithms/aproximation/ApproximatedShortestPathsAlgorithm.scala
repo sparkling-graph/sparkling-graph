@@ -6,7 +6,7 @@ import java.util.function.BiConsumer
 import ml.sparkling.graph.api.operators.IterativeComputation.{VertexPredicate, _}
 import ml.sparkling.graph.api.operators.algorithms.coarsening.CoarseningAlgorithm.Component
 import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.{JDouble, JLong, JMap}
-import ml.sparkling.graph.operators.algorithms.coarsening.labelpropagation.LPCoarsening
+import ml.sparkling.graph.operators.algorithms.coarsening.labelpropagation.{SimpleLPCoarsening}
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.{PathProcessor, SingleVertexProcessor}
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.{FastUtilWithDistance, FastUtilWithPath}
 import ml.sparkling.graph.operators.predicates.{AllPathPredicate, ByIdPredicate, ByIdsPredicate}
@@ -32,7 +32,7 @@ case object ApproximatedShortestPathsAlgorithm  {
   val defaultPathModifier:PathModifier= (fromVertex:VertexId, toVertex:VertexId, path:JDouble)=>defaultNewPath(path)
 
   def computeShortestPathsLengthsUsing[VD:ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexPredicate: SimpleVertexPredicate= AllPathPredicate, treatAsUndirected: Boolean = true,modifier:PathModifier=defaultPathModifier)(implicit num: Numeric[ED]):Graph[Iterable[(VertexId,JDouble)],ED] = {
-    val coarsedGraph=LPCoarsening.coarse(graph,treatAsUndirected)
+    val coarsedGraph=SimpleLPCoarsening.coarse(graph,treatAsUndirected)
     computeShortestPathsLengthsWithoutCoarsingUsing(graph,coarsedGraph,vertexPredicate,treatAsUndirected,modifier)
   }
 
@@ -146,18 +146,27 @@ case object ApproximatedShortestPathsAlgorithm  {
     computeShortestPathsLengthsUsing(graph,vertexPredicate,treatAsUndirected,modifier=defaultPathModifier)
   }
 
-  def computeShortestPathsLengthsIterativeUsing[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], coarsedGraph: Graph[Component, ED], bucketSizeProvider: BucketSizeProvider[Component,ED], treatAsUndirected: Boolean = true,modifier:PathModifier=defaultPathModifier)(implicit num: Numeric[ED]):Graph[Iterable[(VertexId,JDouble)],ED] = {
-    val coarsedShortestPaths: Graph[DataMap, ED] =ShortestPathsAlgorithm.computeShortestPathsLengthsIterative[Component,ED](coarsedGraph,bucketSizeProvider,treatAsUndirected)
+  def computeShortestPathsLengthsIterativeUsing[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED],
+                                                                            coarsedGraph: Graph[Component, ED],
+                                                                            bucketSizeProvider: BucketSizeProvider[Component,ED],
+                                                                            treatAsUndirected: Boolean = true,
+                                                                            modifier:PathModifier=defaultPathModifier,
+                                                                            checkpointingFrequency:Int=20)(implicit num: Numeric[ED]):Graph[Iterable[(VertexId,JDouble)],ED] = {
+    val coarsedShortestPaths: Graph[DataMap, ED] =ShortestPathsAlgorithm.computeShortestPathsLengthsIterative[Component,ED](coarsedGraph,bucketSizeProvider,treatAsUndirected,
+      checkpointingFrequency=checkpointingFrequency)
     aproximatePaths(graph, coarsedGraph, coarsedShortestPaths,modifier,treatAsUndirected=treatAsUndirected)
   }
 
-  def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[Component,ED], treatAsUndirected: Boolean = true,modifier:PathModifier=defaultPathModifier)(implicit num: Numeric[ED]):Graph[Iterable[(VertexId,JDouble)],ED] = {
-    val coarsedGraph=LPCoarsening.coarse(graph,treatAsUndirected)
-    computeShortestPathsLengthsIterativeUsing(graph,coarsedGraph,bucketSizeProvider,treatAsUndirected)
+  def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[Component,ED],
+                                                                       treatAsUndirected: Boolean = true,
+                                                                       modifier:PathModifier=defaultPathModifier,
+                                                                       checkpointingFrequency:Int=20)(implicit num: Numeric[ED]):Graph[Iterable[(VertexId,JDouble)],ED] = {
+    val coarsedGraph=SimpleLPCoarsening.coarse(graph,treatAsUndirected)
+    computeShortestPathsLengthsIterativeUsing(graph,coarsedGraph,bucketSizeProvider,treatAsUndirected, checkpointingFrequency=checkpointingFrequency)
   }
 
   def computeAPSPToDirectory[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], outDirectory: String, treatAsUndirected: Boolean, bucketSize:Long)(implicit num: Numeric[ED]): Unit = {
-    val coarsedGraph=LPCoarsening.coarse(graph,treatAsUndirected)
+    val coarsedGraph=SimpleLPCoarsening.coarse(graph,treatAsUndirected)
     logger.info(s"Coarsed graph has size ${coarsedGraph.vertices.count()} in comparision to ${graph.vertices.count()}")
     val verticesGroups = coarsedGraph.vertices.map(_._1).sortBy(k => k).collect().grouped(bucketSize.toInt).zipWithIndex.toList
     val numberOfIterations=verticesGroups.length;
