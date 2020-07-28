@@ -63,7 +63,9 @@ case object ApproximatedShortestPathsAlgorithm  {
         (vertexId,paths)
       }
     })
-    val fromMapped: RDD[(VertexId, (List[VertexId], JDouble))] =modifiedPaths.join(coarsedGraph.vertices).mapPartitions(
+    val fromMapped: RDD[(VertexId, (List[VertexId], JDouble))] =modifiedPaths
+      .join(coarsedGraph.vertices)
+      .mapPartitions(
       iter=>iter.flatMap{
         case (_,(data,componentFrom) )=>{
           data.map{
@@ -73,8 +75,10 @@ case object ApproximatedShortestPathsAlgorithm  {
       }
     )
 
-    val toJoined: RDD[(VertexId, ((List[VertexId], JDouble), List[VertexId]))] =fromMapped.join(coarsedGraph.vertices)
-    val toMapped: RDD[(VertexId, (List[VertexId], JDouble))] =toJoined.mapPartitions((iter)=>{
+    val toJoined: RDD[(VertexId, ((List[VertexId], JDouble), List[VertexId]))] =fromMapped
+      .join(coarsedGraph.vertices)
+    val toMapped: RDD[(VertexId, (List[VertexId], JDouble))] =toJoined
+      .mapPartitions((iter)=>{
       iter.flatMap{
         case (_,((componentFrom,len),componentTo))=>{
           componentFrom.map(
@@ -121,9 +125,12 @@ case object ApproximatedShortestPathsAlgorithm  {
     ).aggregateByKey[ListBuffer[VertexId]](ListBuffer[VertexId]())((agg, e)=>{agg++=e;agg}, (agg1, agg2)=>{agg1++=agg2;agg1})
 
 
-    val neighbours=neighboursExchanged.fullOuterJoin(secondLevelNeighbours).map{
+    val neighbours=neighboursExchanged
+      .fullOuterJoin(secondLevelNeighbours)
+      .map{
       case (vId,(firstOpt,secondOpt))=>(vId,(firstOpt.map(d=>d.map(id=>(id,one)))::(secondOpt.map(_.map(id=>(id,two))))::Nil).flatten.flatten.filter(_._1!=vId))
     }
+
     val out: Graph[ListBuffer[(VertexId, JDouble)], ED] =outGraph.joinVertices(neighbours){
       case (_,data,newData)=>data++newData
     }
