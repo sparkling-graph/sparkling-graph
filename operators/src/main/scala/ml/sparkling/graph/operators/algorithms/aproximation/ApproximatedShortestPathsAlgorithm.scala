@@ -88,7 +88,7 @@ case object ApproximatedShortestPathsAlgorithm  {
       }
     })
     logger.info(s"Number of partitions in toMapped RDD ${toMapped.partitions.length}")
-    val toMappedGroups=toMapped.aggregateByKey(ListBuffer[(List[VertexId], JDouble)]())(
+    val toMappedGroups: RDD[(VertexId, ListBuffer[(VertexId, JDouble)])] =toMapped.aggregateByKey(ListBuffer[(List[VertexId], JDouble)]())(
       (agg,data)=>{agg+=data;agg},
       (agg1,agg2)=>{agg1++=agg2;agg1}
     ).mapPartitions((iter: Iterator[(VertexId, ListBuffer[(List[VertexId], JDouble)])]) =>{
@@ -104,8 +104,8 @@ case object ApproximatedShortestPathsAlgorithm  {
     val neighboursExchanged: RDD[(VertexId,ListBuffer[VertexId])] =outGraph.edges
       .mapPartitions((data)=>{
         data.flatMap((edge)=>{
-          val toSrc= if(vertexPredicate(edge.dstId)) Iterable((edge.srcId,edge.dstId)) else Iterable()
-          val toDst= if(vertexPredicate(edge.srcId) && treatAsUndirected) Iterable((edge.dstId,edge.srcId)) else Iterable()
+          val toSrc= if(vertexPredicate(edge.dstId)) Iterable((edge.srcId,edge.dstId)) else Iterable.empty
+          val toDst= if(vertexPredicate(edge.srcId) && treatAsUndirected) Iterable((edge.dstId,edge.srcId)) else Iterable.empty
           toSrc++toDst
         })
     })
@@ -118,7 +118,7 @@ case object ApproximatedShortestPathsAlgorithm  {
       (data)=>{
         data.flatMap((edge)=>{
           val toSrc= Iterable((edge.srcId,edge.dstAttr))
-          val toDst= if(treatAsUndirected) Iterable((edge.dstId,edge.srcAttr)) else Iterable()
+          val toDst= if(treatAsUndirected) Iterable((edge.dstId,edge.srcAttr)) else Iterable.empty
           toSrc++toDst
         })
       }
