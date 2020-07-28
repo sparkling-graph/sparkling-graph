@@ -37,9 +37,9 @@ case object SimpleLPCoarsening extends CoarseningAlgorithm{
     }
     logger.info(s"Number of vertices after coarse: ${newVertices.count()}")
     val newEdges=graph.edges.map(e=>(e.srcId,e))
-      .join(components.vertices).map{
+      .join(components.vertices, graph.vertices.partitions.length).map{
       case (_,(edge,newSrc))=>(edge.dstId,(edge,newSrc))
-    }.join(components.vertices).map{
+    }.join(components.vertices, graph.vertices.partitions.length).map{
       case (_,((edge,newSrc),newDst))=>Edge(newSrc,newDst,edge.attr)
     }.filter(e=>e.srcId!=e.dstId)
     Graph(newVertices,newEdges).groupEdges(edgeValueSelector.getValue)

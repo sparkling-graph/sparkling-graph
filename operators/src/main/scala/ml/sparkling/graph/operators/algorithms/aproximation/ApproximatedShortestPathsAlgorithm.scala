@@ -53,6 +53,7 @@ case object ApproximatedShortestPathsAlgorithm {
 
   def aproximatePaths[ED: ClassTag, VD: ClassTag](graph: Graph[VD, ED], coarsedGraph: Graph[Component, ED], coarsedShortestPaths: Graph[DataMap, ED], modifier: PathModifier = defaultPathModifier, vertexPredicate: SimpleVertexPredicate = AllPathPredicate, treatAsUndirected: Boolean)(implicit num: Numeric[ED]): Graph[Iterable[(VertexId, JDouble)], ED] = {
     logger.info("Aproximating shortes paths");
+    logger.info(s"Number of partitions in coarsed graph ${coarsedShortestPaths.vertices.partitions.length}")
     val modifiedPaths = coarsedShortestPaths.vertices.mapPartitions(iter => iter.map {
       case (vertexId: VertexId, paths: DataMap) => {
         paths.forEach(new BiConsumer[JLong, JDouble] {
@@ -76,6 +77,7 @@ case object ApproximatedShortestPathsAlgorithm {
         }
       )
 
+    logger.info(s"Number of partitions in fromMapped RDD ${fromMapped.partitions.length}")
     val toJoined: RDD[(VertexId, ((List[VertexId], JDouble), List[VertexId]))] = fromMapped
       .join(coarsedGraph.vertices, Math.max(fromMapped.partitions.length, coarsedGraph.vertices.partitions.length))
     val toMapped: RDD[(VertexId, (List[VertexId], JDouble))] = toJoined
