@@ -141,7 +141,7 @@ case object ApproximatedShortestPathsAlgorithm {
 
 
     val neighbours = neighboursExchanged
-      .fullOuterJoin(secondLevelNeighbours)
+      .fullOuterJoin(secondLevelNeighbours, coarsedGraph.vertices.partitions.length)
       .map {
         case (vId, (firstOpt, secondOpt)) => (vId, (firstOpt.map(d => d.map(id => (id, one))) :: (secondOpt.map(_.map(id => (id, two)))) :: Nil).flatten.flatten.filter(_._1 != vId))
       }
