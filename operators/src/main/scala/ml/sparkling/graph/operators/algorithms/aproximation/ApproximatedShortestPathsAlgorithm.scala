@@ -53,7 +53,7 @@ case object ApproximatedShortestPathsAlgorithm {
 
   def aproximatePaths[ED: ClassTag, VD: ClassTag](graph: Graph[VD, ED], coarsedGraph: Graph[Component, ED], coarsedShortestPaths: Graph[DataMap, ED], modifier: PathModifier = defaultPathModifier, vertexPredicate: SimpleVertexPredicate = AllPathPredicate, treatAsUndirected: Boolean)(implicit num: Numeric[ED]): Graph[Iterable[(VertexId, JDouble)], ED] = {
     logger.info("Aproximating shortes paths");
-    logger.info(s"Number of partitions in coarsed graph ${coarsedShortestPaths.vertices.partitions.length}")
+    logger.info(s"Number of partitions in coarsed graph paths ${coarsedShortestPaths.vertices.partitions.length}")
     val modifiedPaths = coarsedShortestPaths.vertices.mapPartitions(iter => iter.map {
       case (vertexId: VertexId, paths: DataMap) => {
         paths.forEach(new BiConsumer[JLong, JDouble] {
@@ -175,6 +175,7 @@ case object ApproximatedShortestPathsAlgorithm {
                                                                             treatAsUndirected: Boolean = true,
                                                                             modifier: PathModifier = defaultPathModifier,
                                                                             checkpointingFrequency: Int = 20)(implicit num: Numeric[ED]): Graph[Iterable[(VertexId, JDouble)], ED] = {
+    logger.info(s"Number of partitions in coarsed graph ${coarsedGraph.vertices.partitions.length}")
     val coarsedShortestPaths: Graph[DataMap, ED] = ShortestPathsAlgorithm.computeShortestPathsLengthsIterative[Component, ED](coarsedGraph, bucketSizeProvider, treatAsUndirected,
       checkpointingFrequency = checkpointingFrequency)
     aproximatePaths(graph, coarsedGraph, coarsedShortestPaths, modifier, treatAsUndirected = treatAsUndirected)
