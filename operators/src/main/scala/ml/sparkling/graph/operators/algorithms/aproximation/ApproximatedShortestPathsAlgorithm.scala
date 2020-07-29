@@ -107,15 +107,36 @@ case object ApproximatedShortestPathsAlgorithm {
             componentFrom.flatMap(
               (fromId) => {
                 val base =  (fromId, (componentTo, len)) :: Nil
-                val undirected = if(treatAsUndirected) {(fromId, (componentFrom.filter(_ != fromId), two)) :: Nil} else Nil
+                val undirected = if(treatAsUndirected) {
+                  val selectedComponentElements = componentFrom.filter(vertexPredicate(_))
+                  if(selectedComponentElements.length>0) {
+                    (fromId, (selectedComponentElements, two)) :: Nil
+                  } else {
+                    Nil
+                  }
+                } else Nil
                 base ++ undirected
               }
             )
           }
         }
       })
-    logger.info(s"Number of partitions in toMapped RDD ${toMapped.partitions.length}")
-    val toMappedGroups: RDD[(VertexId, ListBuffer[(VertexId, JDouble)])] = toMapped.aggregateByKey(ListBuffer[(List[VertexId], JDouble)]())(
+    val toMappedCorrected = if(!treatAsUndirected) {
+      toMapped.union(coarsedGraph.vertices.flatMap{
+        case (vId, component) => {
+          val selectedComponentElements = component.filter(vertexPredicate(_))
+          if(selectedComponentElements.length>0) {
+            (vId, (selectedComponentElements, one)) :: Nil
+          } else {
+            Nil
+          }
+        }
+      })
+    } else {
+      toMapped
+    }
+    logger.info(s"Number of partitions in toMappedCorrected RDD ${toMappedCorrected.partitions.length}")
+    val toMappedGroups: RDD[(VertexId, ListBuffer[(VertexId, JDouble)])] = toMappedCorrected.aggregateByKey(ListBuffer[(List[VertexId], JDouble)]())(
       (agg, data) => {
         agg += data; agg
       },

@@ -1,8 +1,9 @@
 package ml.sparkling.graph.operators.algorithms.aproximation
+import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.JDouble
 import org.scalatest.tagobjects.Slow
 import ml.sparkling.graph.operators.MeasureTest
 import org.apache.spark.SparkContext
-import org.apache.spark.graphx.Graph
+import org.apache.spark.graphx.{Graph, VertexId}
 import ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgorithm
 import org.apache.log4j.Logger
 import org.apache.spark.graphx.util.GraphGenerators
@@ -79,10 +80,10 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
     When("Computes shortest paths")
     val shortestPaths=ApproximatedShortestPathsAlgorithm.computeSingleShortestPathsLengths(graph,1, treatAsUndirected = false)
     Then("Should calculate shortest paths correctly")
-    val verticesSortedById=shortestPaths.vertices.map{
-      case (vId,data)=>(vId,data.toMap)
+    val verticesSortedById: Set[(VertexId, Map[VertexId, JDouble])] =shortestPaths.vertices.map{
+      case (vId,data: Iterable[(VertexId, JDouble)])=>(vId,data.toMap)
     }.collect().toSet
-    verticesSortedById should equal (Set((1,Map((1->0.0))), (2,Map()), (3,Map()), (4,Map()), (5,Map())))
+    verticesSortedById should equal (Set((1,Map(, 1->0.0)), (2,Map()), (3,Map()), (4,Map()), (5,Map())))
     graph.unpersist(true)
   }
 
@@ -98,7 +99,7 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
     }.collect().toSet
     verticesSortedById should equal (Set(
       (1,Map(2->1)),
-      (2,Map(2->0)),
+      (2,Map()),
       (3,Map()),
       (4,Map()),
       (5,Map())
