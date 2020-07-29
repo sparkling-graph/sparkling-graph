@@ -36,22 +36,39 @@ case object ApproximatedShortestPathsAlgorithm {
     computeShortestPathsLengthsWithoutCoarsingUsing(graph, coarsedGraph, vertexPredicate, treatAsUndirected, modifier)
   }
 
-  def computeShortestPathsLengthsWithoutCoarsingUsing[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], coarsedGraph: Graph[Component, ED], vertexPredicate: SimpleVertexPredicate = AllPathPredicate, treatAsUndirected: Boolean = true, modifier: PathModifier = defaultPathModifier)(implicit num: Numeric[ED]): Graph[Iterable[(VertexId, JDouble)], ED] = {
+  def computeShortestPathsLengthsWithoutCoarsingUsing[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED],
+                                                                                  coarsedGraph: Graph[Component, ED],
+                                                                                  vertexPredicate: SimpleVertexPredicate = AllPathPredicate,
+                                                                                  treatAsUndirected: Boolean = true,
+                                                                                  modifier: PathModifier = defaultPathModifier,
+                                                                                  secondLevelNeighborhoodCorrection: Boolean = true)(implicit num: Numeric[ED]): Graph[Iterable[(VertexId, JDouble)], ED] = {
     val newVertexPredicate: VertexPredicate[Component] = AnyMatchingComponentPredicate(vertexPredicate);
     val coarsedShortestPaths: Graph[DataMap, ED] = ShortestPathsAlgorithm.computeShortestPathsLengths(coarsedGraph, newVertexPredicate, treatAsUndirected)
-    aproximatePaths(graph, coarsedGraph, coarsedShortestPaths, modifier, vertexPredicate, treatAsUndirected)
+    aproximatePaths(graph, coarsedGraph, coarsedShortestPaths, modifier, vertexPredicate, treatAsUndirected, secondLevelNeighborhoodCorrection = secondLevelNeighborhoodCorrection)
   }
 
-  def computeShortestPathsForDirectoryComputationUsing[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], coarsedGraph: Graph[Component, ED], vertexPredicate: SimpleVertexPredicate = AllPathPredicate, treatAsUndirected: Boolean = true, modifier: PathModifier = defaultPathModifier)(implicit num: Numeric[ED]): Graph[Iterable[(VertexId, JDouble)], ED] = {
+  def computeShortestPathsForDirectoryComputationUsing[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED],
+                                                                                   coarsedGraph: Graph[Component, ED],
+                                                                                   vertexPredicate: SimpleVertexPredicate = AllPathPredicate,
+                                                                                   treatAsUndirected: Boolean = true,
+                                                                                   modifier: PathModifier = defaultPathModifier,
+                                                                                   secondLevelNeighborhoodCorrection: Boolean = true)(implicit num: Numeric[ED]): Graph[Iterable[(VertexId, JDouble)], ED] = {
     val newVertexPredicate: VertexPredicate[Component] = SimpleWrapper(vertexPredicate)
     val newIds: Set[VertexId] = coarsedGraph.vertices.filter {
       case (vid, component) => vertexPredicate(vid)
     }.treeAggregate[Set[VertexId]](Set())(seqOp = (agg, id) => agg ++ id._2, combOp = (agg1, agg2) => agg1 ++ agg2)
     val coarsedShortestPaths: Graph[DataMap, ED] = ShortestPathsAlgorithm.computeShortestPathsLengths(coarsedGraph, newVertexPredicate, treatAsUndirected)
-    aproximatePaths(graph, coarsedGraph, coarsedShortestPaths, modifier, vertexPredicate = ByIdsPredicate(newIds), treatAsUndirected = treatAsUndirected)
+    aproximatePaths(graph, coarsedGraph, coarsedShortestPaths, modifier, vertexPredicate = ByIdsPredicate(newIds),
+      treatAsUndirected = treatAsUndirected, secondLevelNeighborhoodCorrection = secondLevelNeighborhoodCorrection)
   }
 
-  def aproximatePaths[ED: ClassTag, VD: ClassTag](graph: Graph[VD, ED], coarsedGraph: Graph[Component, ED], coarsedShortestPaths: Graph[DataMap, ED], modifier: PathModifier = defaultPathModifier, vertexPredicate: SimpleVertexPredicate = AllPathPredicate, treatAsUndirected: Boolean)(implicit num: Numeric[ED]): Graph[Iterable[(VertexId, JDouble)], ED] = {
+  def aproximatePaths[ED: ClassTag, VD: ClassTag](graph: Graph[VD, ED],
+                                                  coarsedGraph: Graph[Component, ED],
+                                                  coarsedShortestPaths: Graph[DataMap, ED],
+                                                  modifier: PathModifier = defaultPathModifier,
+                                                  vertexPredicate: SimpleVertexPredicate = AllPathPredicate,
+                                                  treatAsUndirected: Boolean,
+                                                  secondLevelNeighborhoodCorrection: Boolean = true)(implicit num: Numeric[ED]): Graph[Iterable[(VertexId, JDouble)], ED] = {
     logger.info("Aproximating shortes paths");
     logger.info(s"Number of partitions in coarsed graph paths ${coarsedShortestPaths.vertices.partitions.length}")
     val modifiedPaths = coarsedShortestPaths.vertices.mapPartitions(iter => iter.map {
@@ -121,6 +138,33 @@ case object ApproximatedShortestPathsAlgorithm {
       }, (agg1, agg2) => {
         agg1 ++= agg2; agg1
       })
+    val neighbours =  if(secondLevelNeighborhoodCorrection) {
+      secondLevelNeighborhood(coarsedGraph, treatAsUndirected, outGraph, neighboursExchanged)
+    } else {
+      neighboursExchanged.map {
+        case (vId, data) => (vId, data.map(id => (id, one)).filter(_._1 != vId))
+      }
+    }
+    val out: Graph[ListBuffer[(VertexId, JDouble)], ED] = outGraph.outerJoinVertices(neighbours) {
+      case (_, data, Some(newData)) => data ++ newData
+      case (_ ,data, None) => data
+    }
+    out.mapVertices {
+      case (id, data) =>
+        val out = data.groupBy(_._1).mapValues(l => l.map(_._2).min).map(identity)
+        if (vertexPredicate(id)) {
+          out + (id -> 0.0)
+        }
+        else {
+          out
+        }
+    }
+  }
+
+  private def secondLevelNeighborhood[VD: ClassTag, ED: ClassTag](coarsedGraph: Graph[Component, ED],
+                                                                  treatAsUndirected: Boolean,
+                                                                  outGraph: Graph[ListBuffer[(VertexId, JDouble)], ED],
+                                                                  neighboursExchanged: RDD[(VertexId, ListBuffer[VertexId])]) = {
     val graphWithNeighbours = outGraph.outerJoinVertices(neighboursExchanged) {
       case (_, _, Some(newData)) => newData
       case (_, _, None) => ListBuffer[VertexId]()
@@ -134,31 +178,17 @@ case object ApproximatedShortestPathsAlgorithm {
         })
       }
     ).aggregateByKey[ListBuffer[VertexId]](ListBuffer[VertexId]())((agg, e) => {
-      agg ++= e; agg
+      agg ++= e;
+      agg
     }, (agg1, agg2) => {
-      agg1 ++= agg2; agg1
+      agg1 ++= agg2;
+      agg1
     })
-
-
-    val neighbours = neighboursExchanged
+    neighboursExchanged
       .fullOuterJoin(secondLevelNeighbours, coarsedGraph.vertices.partitions.length)
       .map {
         case (vId, (firstOpt, secondOpt)) => (vId, (firstOpt.map(d => d.map(id => (id, one))) :: (secondOpt.map(_.map(id => (id, two)))) :: Nil).flatten.flatten.filter(_._1 != vId))
       }
-
-    val out: Graph[ListBuffer[(VertexId, JDouble)], ED] = outGraph.joinVertices(neighbours) {
-      case (_, data, newData) => data ++ newData
-    }
-    out.mapVertices {
-      case (id, data) =>
-        val out = data.groupBy(_._1).mapValues(l => l.map(_._2).min).map(identity)
-        if (vertexPredicate(id)) {
-          out + (id -> 0.0)
-        }
-        else {
-          out
-        }
-    }
   }
 
   def computeSingleShortestPathsLengths[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], vertexId: VertexId, treatAsUndirected: Boolean = true, modifier: PathModifier = defaultPathModifier)(implicit num: Numeric[ED]): Graph[Iterable[(VertexId, JDouble)], ED] = {
@@ -174,19 +204,22 @@ case object ApproximatedShortestPathsAlgorithm {
                                                                             bucketSizeProvider: BucketSizeProvider[Component, ED],
                                                                             treatAsUndirected: Boolean = true,
                                                                             modifier: PathModifier = defaultPathModifier,
-                                                                            checkpointingFrequency: Int = 20)(implicit num: Numeric[ED]): Graph[Iterable[(VertexId, JDouble)], ED] = {
+                                                                            checkpointingFrequency: Int = 20,
+                                                                            secondLevelNeighborhoodCorrection: Boolean = true)(implicit num: Numeric[ED]): Graph[Iterable[(VertexId, JDouble)], ED] = {
     logger.info(s"Number of partitions in coarsed graph ${coarsedGraph.vertices.partitions.length}")
     val coarsedShortestPaths: Graph[DataMap, ED] = ShortestPathsAlgorithm.computeShortestPathsLengthsIterative[Component, ED](coarsedGraph, bucketSizeProvider, treatAsUndirected,
       checkpointingFrequency = checkpointingFrequency)
-    aproximatePaths(graph, coarsedGraph, coarsedShortestPaths, modifier, treatAsUndirected = treatAsUndirected)
+    aproximatePaths(graph, coarsedGraph, coarsedShortestPaths, modifier, treatAsUndirected = treatAsUndirected, secondLevelNeighborhoodCorrection = secondLevelNeighborhoodCorrection)
   }
 
   def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[Component, ED],
                                                                        treatAsUndirected: Boolean = true,
                                                                        modifier: PathModifier = defaultPathModifier,
-                                                                       checkpointingFrequency: Int = 20)(implicit num: Numeric[ED]): Graph[Iterable[(VertexId, JDouble)], ED] = {
+                                                                       checkpointingFrequency: Int = 20,
+                                                                       secondLevelNeighborhoodCorrection: Boolean = true)(implicit num: Numeric[ED]): Graph[Iterable[(VertexId, JDouble)], ED] = {
     val coarsedGraph = SimpleLPCoarsening.coarse(graph, treatAsUndirected)
-    computeShortestPathsLengthsIterativeUsing(graph, coarsedGraph, bucketSizeProvider, treatAsUndirected, checkpointingFrequency = checkpointingFrequency)
+    computeShortestPathsLengthsIterativeUsing(graph, coarsedGraph, bucketSizeProvider, treatAsUndirected,
+      checkpointingFrequency = checkpointingFrequency, secondLevelNeighborhoodCorrection = secondLevelNeighborhoodCorrection)
   }
 
   def computeAPSPToDirectory[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], outDirectory: String, treatAsUndirected: Boolean, bucketSize: Long)(implicit num: Numeric[ED]): Unit = {
