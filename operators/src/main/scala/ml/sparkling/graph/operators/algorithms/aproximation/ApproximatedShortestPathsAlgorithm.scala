@@ -6,7 +6,7 @@ import java.util.function.BiConsumer
 import ml.sparkling.graph.api.operators.IterativeComputation.{VertexPredicate, _}
 import ml.sparkling.graph.api.operators.algorithms.coarsening.CoarseningAlgorithm.Component
 import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.{JDouble, JLong, JMap}
-import ml.sparkling.graph.operators.algorithms.coarsening.labelpropagation.{SimpleLPCoarsening}
+import ml.sparkling.graph.operators.algorithms.coarsening.labelpropagation.SimpleLPCoarsening
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.{PathProcessor, SingleVertexProcessor}
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.{FastUtilWithDistance, FastUtilWithPath}
 import ml.sparkling.graph.operators.predicates.{AllPathPredicate, ByIdPredicate, ByIdsPredicate}
@@ -16,6 +16,7 @@ import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fast
 import org.apache.log4j.Logger
 import org.apache.spark.rdd.RDD
 
+import scala.collection.AbstractSeq
 import scala.collection.mutable.ListBuffer
 import scala.collection.JavaConversions._
 import scala.reflect.ClassTag
@@ -138,11 +139,12 @@ case object ApproximatedShortestPathsAlgorithm {
       }, (agg1, agg2) => {
         agg1 ++= agg2; agg1
       })
-    val neighbours =  if(secondLevelNeighborhoodCorrection) {
+    val neighbours: RDD[(VertexId, List[(VertexId, JDouble)])] =  if(secondLevelNeighborhoodCorrection) {
       secondLevelNeighborhood(coarsedGraph, treatAsUndirected, outGraph, neighboursExchanged)
     } else {
+      val one: JDouble = 1.0
       neighboursExchanged.map {
-        case (vId, data) => (vId, data.map(id => (id, one)).filter(_._1 != vId))
+        case (vId, data: ListBuffer[VertexId]) => (vId, data.map(id => (id, one)).filter(_._1 != vId).toList)
       }
     }
     val out: Graph[ListBuffer[(VertexId, JDouble)], ED] = outGraph.outerJoinVertices(neighbours) {
@@ -161,10 +163,13 @@ case object ApproximatedShortestPathsAlgorithm {
     }
   }
 
-  private def secondLevelNeighborhood[VD: ClassTag, ED: ClassTag](coarsedGraph: Graph[Component, ED],
+  private def secondLevelNeighborhood[ED: ClassTag](coarsedGraph: Graph[Component, ED],
                                                                   treatAsUndirected: Boolean,
                                                                   outGraph: Graph[ListBuffer[(VertexId, JDouble)], ED],
                                                                   neighboursExchanged: RDD[(VertexId, ListBuffer[VertexId])]) = {
+
+    val one: JDouble = 1.0
+    val two: JDouble = 2.0
     val graphWithNeighbours = outGraph.outerJoinVertices(neighboursExchanged) {
       case (_, _, Some(newData)) => newData
       case (_, _, None) => ListBuffer[VertexId]()

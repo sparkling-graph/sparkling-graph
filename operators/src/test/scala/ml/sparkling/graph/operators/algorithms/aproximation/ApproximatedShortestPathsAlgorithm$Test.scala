@@ -52,6 +52,26 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
     graph.unpersist(true)
   }
 
+  "Approximated shortest paths for undirected ring graph" should "be correctly calculated without second level neighborhood correction" in{
+    Given("graph")
+    val filePath = getClass.getResource("/graphs/5_nodes_ring")
+    val graph:Graph[Int,Int]=loadGraph(filePath.toString)
+    When("Computes shortest paths")
+    val shortestPaths =ApproximatedShortestPathsAlgorithm.computeShortestPathsLengthsIterative(graph,
+      (g:Graph[_,_])=>1, secondLevelNeighborhoodCorrection = false)
+    Then("Should calculate shortest paths correctly")
+    val verticesSortedById=shortestPaths.vertices.collect().map{
+      case (vId,data)=>(vId,data.toMap)
+    }.toSet
+    verticesSortedById  should equal (Set(
+      (5,Map(5 -> 0.0, 1 -> 1.0, 2 -> 2.0, 3 -> 5.0, 4 -> 1.0)),
+      (1,Map(5 -> 1.0, 1 -> 0.0, 2 -> 1.0, 3 -> 5.0, 4 -> 5.0)),
+      (2,Map(5 -> 2.0, 1 -> 1.0, 2 -> 0.0, 3 -> 1.0, 4 -> 5.0)),
+      (3,Map(5 -> 5.0, 1 -> 5.0, 2 -> 1.0, 3 -> 0.0, 4 -> 1.0)),
+      (4,Map(5 -> 1.0, 1 -> 5.0, 2 -> 5.0, 3 -> 1.0, 4 -> 0.0))) )
+    graph.unpersist(true)
+  }
+
   "Single shortest paths 1 for simple graph" should "be correctly calculated" in{
     Given("graph")
     val filePath = getClass.getResource("/graphs/5_nodes_directed")
