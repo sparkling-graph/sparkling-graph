@@ -98,12 +98,18 @@ case object ApproximatedShortestPathsAlgorithm {
     logger.info(s"Number of partitions in fromMapped RDD ${fromMapped.partitions.length}")
     val toJoined: RDD[(VertexId, ((List[VertexId], JDouble), List[VertexId]))] = fromMapped
       .join(coarsedGraph.vertices, Math.max(fromMapped.partitions.length, coarsedGraph.vertices.partitions.length))
+    val one: JDouble = 1.0
+    val two: JDouble = 2.0
     val toMapped: RDD[(VertexId, (List[VertexId], JDouble))] = toJoined
       .mapPartitions((iter) => {
         iter.flatMap {
           case (_, ((componentFrom, len), componentTo)) => {
-            componentFrom.map(
-              (fromId) => (fromId, (componentTo, len))
+            componentFrom.flatMap(
+              (fromId) => {
+                val base =  (fromId, (componentTo, len)) :: Nil
+                val undirected = if(treatAsUndirected) {(fromId, (componentFrom.filter(_ != fromId), two)) :: Nil} else Nil
+                base ++ undirected
+              }
             )
           }
         }
@@ -124,8 +130,7 @@ case object ApproximatedShortestPathsAlgorithm {
       }
     })
     val outGraph = Graph(toMappedGroups, graph.edges, ListBuffer[(VertexId, JDouble)]())
-    val one: JDouble = 1.0
-    val two: JDouble = 2.0
+
     val neighboursExchanged: RDD[(VertexId, ListBuffer[VertexId])] = outGraph.edges
       .mapPartitions((data) => {
         data.flatMap((edge) => {
@@ -142,7 +147,6 @@ case object ApproximatedShortestPathsAlgorithm {
     val neighbours: RDD[(VertexId, List[(VertexId, JDouble)])] =  if(secondLevelNeighborhoodCorrection) {
       secondLevelNeighborhood(coarsedGraph, treatAsUndirected, outGraph, neighboursExchanged)
     } else {
-      val one: JDouble = 1.0
       neighboursExchanged.map {
         case (vId, data: ListBuffer[VertexId]) => (vId, data.map(id => (id, one)).filter(_._1 != vId).toList)
       }

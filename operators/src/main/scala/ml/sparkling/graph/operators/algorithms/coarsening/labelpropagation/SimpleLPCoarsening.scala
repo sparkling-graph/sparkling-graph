@@ -25,7 +25,7 @@ case object SimpleLPCoarsening extends CoarseningAlgorithm{
         val toSrc = if(triplet.dstId<triplet.srcId  && triplet.dstId == triplet.dstAttr && triplet.dstId < triplet.srcAttr )  (triplet.srcId, triplet.dstId):: Nil else Nil
         val toDstReset = if (triplet.srcId != triplet.srcAttr && triplet.dstAttr == triplet.srcId ) (triplet.dstId, triplet.dstId):: Nil else Nil
         val toSrcReset = if (triplet.dstId != triplet.dstAttr && triplet.srcAttr == triplet.dstId ) (triplet.srcId, triplet.srcId):: Nil else Nil
-        val result = if(treatAsUndirected) toDst ++ toDstReset ++ toSrc ++ toSrcReset else toDst ++ toDstReset
+        val result = if(treatAsUndirected) {toDst ++ toDstReset ++ toSrc ++ toSrcReset} else {toDst ++ toDstReset}
         result.iterator
       },
       mergeMsg = (id1, id2) => Math.min(id1, id2)
