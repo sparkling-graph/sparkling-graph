@@ -99,7 +99,7 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
     }.collect().toSet
     verticesSortedById should equal (Set(
       (1,Map(2->1)),
-      (2,Map()),
+      (2,Map(2 -> 0)),
       (3,Map()),
       (4,Map()),
       (5,Map())
