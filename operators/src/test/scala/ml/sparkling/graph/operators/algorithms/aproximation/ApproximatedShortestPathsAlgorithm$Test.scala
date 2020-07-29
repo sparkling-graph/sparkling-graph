@@ -83,7 +83,7 @@ class ApproximatedShortestPathsAlgorithm$Test(implicit sc:SparkContext)   extend
     val verticesSortedById: Set[(VertexId, Map[VertexId, JDouble])] =shortestPaths.vertices.map{
       case (vId,data: Iterable[(VertexId, JDouble)])=>(vId,data.toMap)
     }.collect().toSet
-    verticesSortedById should equal (Set((1,Map(, 1->0.0)), (2,Map()), (3,Map()), (4,Map()), (5,Map())))
+    verticesSortedById should equal (Set((1,Map(1->0.0)), (2,Map()), (3,Map()), (4,Map()), (5,Map())))
     graph.unpersist(true)
   }
 
