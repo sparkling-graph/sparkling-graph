@@ -106,10 +106,10 @@ case object ApproximatedShortestPathsAlgorithm {
           case (_, ((componentFrom, len), componentTo)) => {
             componentFrom.flatMap(
               (fromId) => {
-                val base =  (fromId, (componentTo, len)) :: Nil
-                val undirected = if(treatAsUndirected) {
+                val base = (fromId, (componentTo, len)) :: Nil
+                val undirected = if (treatAsUndirected) {
                   val selectedComponentElements = componentFrom.filter(vertexPredicate(_))
-                  if(selectedComponentElements.length>0) {
+                  if (selectedComponentElements.length > 0) {
                     (fromId, (selectedComponentElements, two)) :: Nil
                   } else {
                     Nil
@@ -121,11 +121,11 @@ case object ApproximatedShortestPathsAlgorithm {
           }
         }
       })
-    val toMappedCorrected = if(!treatAsUndirected) {
-      toMapped.union(coarsedGraph.vertices.flatMap{
+    val toMappedCorrected = if (!treatAsUndirected) {
+      toMapped.union(coarsedGraph.vertices.flatMap {
         case (vId, component) => {
           val selectedComponentElements = component.filter(vertexPredicate(_))
-          if(selectedComponentElements.length>0) {
+          if (selectedComponentElements.length > 0) {
             (vId, (selectedComponentElements, one)) :: Nil
           } else {
             Nil
@@ -138,10 +138,12 @@ case object ApproximatedShortestPathsAlgorithm {
     logger.info(s"Number of partitions in toMappedCorrected RDD ${toMappedCorrected.partitions.length}")
     val toMappedGroups: RDD[(VertexId, ListBuffer[(VertexId, JDouble)])] = toMappedCorrected.aggregateByKey(ListBuffer[(List[VertexId], JDouble)]())(
       (agg, data) => {
-        agg += data; agg
+        agg += data;
+        agg
       },
       (agg1, agg2) => {
-        agg1 ++= agg2; agg1
+        agg1 ++= agg2;
+        agg1
       }
     ).mapPartitions((iter: Iterator[(VertexId, ListBuffer[(List[VertexId], JDouble)])]) => {
       iter.map {
@@ -161,20 +163,28 @@ case object ApproximatedShortestPathsAlgorithm {
         })
       })
       .aggregateByKey[ListBuffer[VertexId]](ListBuffer[VertexId]())((agg, e) => {
-        agg += e; agg
+        agg += e;
+        agg
       }, (agg1, agg2) => {
-        agg1 ++= agg2; agg1
+        agg1 ++= agg2;
+        agg1
       })
-    val neighbours: RDD[(VertexId, List[(VertexId, JDouble)])] =  if(secondLevelNeighborhoodCorrection) {
+    val neighbours: RDD[(VertexId, List[(VertexId, JDouble)])] = if (secondLevelNeighborhoodCorrection) {
       secondLevelNeighborhood(coarsedGraph, treatAsUndirected, outGraph, neighboursExchanged)
     } else {
-      neighboursExchanged.map {
-        case (vId, data: ListBuffer[VertexId]) => (vId, data.map(id => (id, one)).filter(_._1 != vId).toList)
+      neighboursExchanged.flatMap {
+        case (vId, data: ListBuffer[VertexId]) => {
+          val targets = data.filter(vertexPredicate(_)).filter(_ != vId).map(id => (id, one)).toList
+          if (targets.length > 0)
+            (vId, targets) :: Nil
+          else
+            Nil
+        }
       }
     }
     val out: Graph[ListBuffer[(VertexId, JDouble)], ED] = outGraph.outerJoinVertices(neighbours) {
       case (_, data, Some(newData)) => data ++ newData
-      case (_ ,data, None) => data
+      case (_, data, None) => data
     }
     out.mapVertices {
       case (id, data) =>
@@ -189,9 +199,9 @@ case object ApproximatedShortestPathsAlgorithm {
   }
 
   private def secondLevelNeighborhood[ED: ClassTag](coarsedGraph: Graph[Component, ED],
-                                                                  treatAsUndirected: Boolean,
-                                                                  outGraph: Graph[ListBuffer[(VertexId, JDouble)], ED],
-                                                                  neighboursExchanged: RDD[(VertexId, ListBuffer[VertexId])]) = {
+                                                    treatAsUndirected: Boolean,
+                                                    outGraph: Graph[ListBuffer[(VertexId, JDouble)], ED],
+                                                    neighboursExchanged: RDD[(VertexId, ListBuffer[VertexId])]) = {
 
     val one: JDouble = 1.0
     val two: JDouble = 2.0
