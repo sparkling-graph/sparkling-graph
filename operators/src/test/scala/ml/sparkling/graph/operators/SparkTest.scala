@@ -3,7 +3,7 @@ package ml.sparkling.graph.operators
 import java.nio.file.{Files, Path}
 
 import ml.sparkling.graph.operators.algorithms.aproximation.ApproximatedShortestPathsAlgorithm$Test
-import ml.sparkling.graph.operators.algorithms.coarsening.labelpropagation.LPCoarsening$Test
+import ml.sparkling.graph.operators.algorithms.coarsening.labelpropagation.{LPCoarsening$Test, SimpleLPCoarsening$Test}
 import ml.sparkling.graph.operators.algorithms.community.pscan.PSCAN$Test
 import ml.sparkling.graph.operators.algorithms.link.BasicLinkPredictor$Test
 import ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgorithm$Test
@@ -52,9 +52,10 @@ class SparkTest extends Spec with BeforeAndAfterAll  {
 
   override def nestedSuites = {
     Vector(
+      new ApproximatedShortestPathsAlgorithm$Test,
+      new SimpleLPCoarsening$Test,
       new PSCANBasedPartitioning$Test,
       new PropagationBasedPartitioning$Test,
-      new ApproximatedShortestPathsAlgorithm$Test,
       new ShortestPathsAlgorithm$Test,
       new EigenvectorCentrality$Test,
       new VertexEmbeddedness$Test,
@@ -69,7 +70,8 @@ class SparkTest extends Spec with BeforeAndAfterAll  {
       new BasicLinkPredictor$Test,
       new Closeness$Test,
       new BetweennessEdmonds$Test,
-      new BetweennessHua$Test
+      new BetweennessHua$Test,
+      new LPCoarsening$Test
     )
   }
 
