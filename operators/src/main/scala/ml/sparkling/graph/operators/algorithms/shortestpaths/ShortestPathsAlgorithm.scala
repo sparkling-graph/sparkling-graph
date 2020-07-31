@@ -109,13 +109,11 @@ case object ShortestPathsAlgorithm  {
   def computeShortestPathsLengthsIterative[VD: ClassTag, ED: ClassTag](graph: Graph[VD, ED], bucketSizeProvider: BucketSizeProvider[VD,ED], treatAsUndirected: Boolean = false,checkpointingFrequency:Int=20)(implicit num: Numeric[ED]) = {
     val bucketSize=bucketSizeProvider(graph)
     logger.info(s"Computing APSP using iterative approach with bucket of size ${bucketSize}")
-    graph.cache()
-    val vertexIds=graph.vertices.map{case (vId,data)=>vId}.treeAggregate(mutable.ListBuffer.empty[VertexId])(
+    val vertexIds=graph.vertices.map{case (vId,_)=>vId}.treeAggregate(mutable.ListBuffer.empty[VertexId])(
       (agg:ListBuffer[VertexId],data:VertexId)=>{agg+=data;agg},
       (agg:ListBuffer[VertexId],agg2:ListBuffer[VertexId])=>{agg++=agg2;agg}
     ).toList;
     val outGraph:Graph[FastUtilWithDistance.DataMap ,ED] = graph.mapVertices((_,_)=>new FastUtilWithDistance.DataMap)
-    outGraph.cache()
     val vertices =vertexIds.grouped(bucketSize.toInt).toList
     val numberOfIterations=vertices.size
     val (out,_)=vertices.foldLeft((outGraph,1)){
@@ -127,13 +125,12 @@ case object ShortestPathsAlgorithm  {
           acc.vertices.foreachPartition(_=>{})
           acc.edges.foreachPartition(_=>{})
         }
-        acc.cache()
         val vertexPredicate=ByIdsPredicate(vertexIds.toSet)
-        val computed=computeShortestPathsLengths(graph,vertexPredicate,treatAsUndirected).cache()
-        val outGraphInner=acc.outerJoinVertices(computed.vertices)((vId,outMap,computedMap)=>{
+        val computed=computeShortestPathsLengths(graph,vertexPredicate,treatAsUndirected)
+        val outGraphInner=acc.outerJoinVertices(computed.vertices)((_,outMap,computedMap)=>{
           computedMap.flatMap(m=>{outMap.putAll(m);Option(outMap)}).getOrElse(outMap)
-        })
-        outGraphInner.cache()
+        }).cache()
+        acc.unpersist(true)
         (outGraphInner,iteration+1)
      }
     }
@@ -167,12 +164,12 @@ case object ShortestPathsAlgorithm  {
     val vertices= graph.vertices.map(_._1).sortBy(k => k).collect();
     val verticesGroups =vertices.grouped(bucketSize.toInt).zipWithIndex.toList
     val numberOfIterations=verticesGroups.length;
-    graph.cache()
+    val cachedGraph = graph.cache()
     (verticesGroups).foreach{
       case (group,iteration) => {
         logger.info(s"Shortest Paths iteration ${iteration+1} from  ${numberOfIterations}")
-        val shortestPaths = ShortestPathsAlgorithm.computeShortestPathsLengths(graph, new ByIdsPredicate(group.toSet), treatAsUndirected)
-        val joinedGraph = graph
+        val shortestPaths = ShortestPathsAlgorithm.computeShortestPathsLengths(cachedGraph, new ByIdsPredicate(group.toSet), treatAsUndirected)
+        val joinedGraph = cachedGraph
           .outerJoinVertices(shortestPaths.vertices)((vId, data, newData) => (data, newData.getOrElse(new FastUtilWithDistance.DataMap)))
         joinedGraph.vertices.values.map {
           case (vertex, data: util.Map[JLong, JDouble]) => {
@@ -185,7 +182,9 @@ case object ShortestPathsAlgorithm  {
       }
     }
 
+    cachedGraph.unpersist(true)
 
-    graph.vertices.map(t => List(t._1, t._2).mkString(";")).saveAsTextFile(s"${outDirectory}/index")
+
+    cachedGraph.vertices.map(t => List(t._1, t._2).mkString(";")).saveAsTextFile(s"${outDirectory}/index")
   }
 }
