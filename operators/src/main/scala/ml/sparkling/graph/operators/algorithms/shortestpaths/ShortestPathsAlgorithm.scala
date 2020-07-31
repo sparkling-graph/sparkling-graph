@@ -5,6 +5,7 @@ import java.util
 
 import ml.sparkling.graph.api.operators.IterativeComputation._
 import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes._
+import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.FastUtilWithDistance.DataMap
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.{FastUtilWithDistance, FastUtilWithPath}
 import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.{PathProcessor, SingleVertexProcessor}
 import ml.sparkling.graph.operators.predicates.{AllPathPredicate, ByIdPredicate, ByIdsPredicate}
@@ -117,7 +118,7 @@ case object ShortestPathsAlgorithm  {
     val vertices =vertexIds.grouped(bucketSize.toInt).toList
     val numberOfIterations=vertices.size
     val (out,_)=vertices.foldLeft((outGraph,1)){
-      case ((acc,iteration),vertexIds)=>{
+      case ((acc: Graph[DataMap, ED],iteration: PartitionID),vertexIds)=>{
         logger.info(s"Shortest Paths iteration ${iteration} from  ${numberOfIterations}")
         if(iteration%checkpointingFrequency==0){
           logger.info(s"Chceckpointing graph")
@@ -127,10 +128,9 @@ case object ShortestPathsAlgorithm  {
         }
         val vertexPredicate=ByIdsPredicate(vertexIds.toSet)
         val computed=computeShortestPathsLengths(graph,vertexPredicate,treatAsUndirected)
-        val outGraphInner=acc.outerJoinVertices(computed.vertices)((_,outMap,computedMap)=>{
+        val outGraphInner: Graph[DataMap, ED] =acc.outerJoinVertices(computed.vertices)((_, outMap, computedMap)=>{
           computedMap.flatMap(m=>{outMap.putAll(m);Option(outMap)}).getOrElse(outMap)
-        }).cache()
-        acc.unpersist(true)
+        })
         (outGraphInner,iteration+1)
      }
     }
@@ -164,7 +164,7 @@ case object ShortestPathsAlgorithm  {
     val vertices= graph.vertices.map(_._1).sortBy(k => k).collect();
     val verticesGroups =vertices.grouped(bucketSize.toInt).zipWithIndex.toList
     val numberOfIterations=verticesGroups.length;
-    val cachedGraph = graph.cache()
+    val cachedGraph = graph
     (verticesGroups).foreach{
       case (group,iteration) => {
         logger.info(s"Shortest Paths iteration ${iteration+1} from  ${numberOfIterations}")
@@ -181,8 +181,6 @@ case object ShortestPathsAlgorithm  {
         shortestPaths.unpersist(blocking = false)
       }
     }
-
-    cachedGraph.unpersist(true)
 
 
     cachedGraph.vertices.map(t => List(t._1, t._2).mkString(";")).saveAsTextFile(s"${outDirectory}/index")

@@ -7,8 +7,6 @@ import ml.sparkling.graph.api.operators.IterativeComputation.{VertexPredicate, _
 import ml.sparkling.graph.api.operators.algorithms.coarsening.CoarseningAlgorithm.Component
 import ml.sparkling.graph.api.operators.algorithms.shortestpaths.ShortestPathsTypes.{JDouble, JLong, JMap}
 import ml.sparkling.graph.operators.algorithms.coarsening.labelpropagation.SimpleLPCoarsening
-import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.{PathProcessor, SingleVertexProcessor}
-import ml.sparkling.graph.operators.algorithms.shortestpaths.pathprocessors.fastutils.{FastUtilWithDistance, FastUtilWithPath}
 import ml.sparkling.graph.operators.predicates.{AllPathPredicate, ByIdPredicate, ByIdsPredicate}
 import org.apache.spark.graphx.{EdgeTriplet, Graph, _}
 import ml.sparkling.graph.operators.algorithms.shortestpaths.ShortestPathsAlgorithm
